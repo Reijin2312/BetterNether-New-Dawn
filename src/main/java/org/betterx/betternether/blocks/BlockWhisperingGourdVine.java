@@ -11,9 +11,9 @@ import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -47,7 +47,7 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
     }
 
     @Override
-    public ItemInteractionResult useItemOn(
+    public InteractionResult useItemOn(
             ItemStack itemStack,
             BlockState state,
             Level world,
@@ -58,7 +58,7 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
     ) {
         ItemStack tool = player.getItemInHand(hand);
         if (BaseShearsItem.isShear(tool) && state.getValue(SHAPE) == BlockProperties.TripleShape.MIDDLE) {
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 BlocksHelper.setWithUpdate(world, pos, state.setValue(SHAPE, BlockProperties.TripleShape.BOTTOM));
                 world.addFreshEntity(new ItemEntity(
                         world,
@@ -78,7 +78,7 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
                     ));
                 }
             }
-            return ItemInteractionResult.sidedSuccess(world.isClientSide);
+            return world.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         } else {
             return super.useItemOn(itemStack, state, world, pos, player, hand, hit);
         }
@@ -86,13 +86,13 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
 
     @Override
     public @Nullable LootTable.Builder registerBlockLoot(
-            @NotNull ResourceLocation location,
+            @NotNull Identifier location,
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
         var fruityState = LootItemBlockStatePropertyCondition
                 .hasBlockStateProperties(this)
-                .setProperties(net.minecraft.advancements.critereon.StatePropertiesPredicate.Builder
+                .setProperties(net.minecraft.advancements.criterion.StatePropertiesPredicate.Builder
                         .properties()
                         .hasProperty(SHAPE, BlockProperties.TripleShape.TOP))
                 .invert();

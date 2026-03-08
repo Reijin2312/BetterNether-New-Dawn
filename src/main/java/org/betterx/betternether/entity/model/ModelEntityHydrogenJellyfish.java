@@ -1,8 +1,6 @@
 package org.betterx.betternether.entity.model;
 
-import org.betterx.betternether.entity.EntityHydrogenJellyfish;
-
-import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,10 +8,9 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-import com.google.common.collect.ImmutableList;
-
-public class ModelEntityHydrogenJellyfish extends AgeableListModel<EntityHydrogenJellyfish> {
+public class ModelEntityHydrogenJellyfish extends EntityModel<LivingEntityRenderState> {
     public final static String BODY_TOP = "body_top";
 
     public static LayerDefinition getTexturedModelData() {
@@ -125,6 +122,7 @@ public class ModelEntityHydrogenJellyfish extends AgeableListModel<EntityHydroge
     //private final ModelPart[] leg_details;
 
     public ModelEntityHydrogenJellyfish(ModelPart root) {
+        super(root);
         this.body = root.getChild(PartNames.BODY);
 
         legs_1 = new ModelPart[LEGS];
@@ -141,24 +139,9 @@ public class ModelEntityHydrogenJellyfish extends AgeableListModel<EntityHydroge
     }
 
     @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of();
-    }
-
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.body);
-    }
-
-    @Override
-    public void setupAnim(
-            EntityHydrogenJellyfish entity,
-            float limbAngle,
-            float limbDistance,
-            float animationProgress,
-            float headYaw,
-            float headPitch
-    ) {
+    public void setupAnim(LivingEntityRenderState state) {
+        super.setupAnim(state);
+        float animationProgress = state.ageInTicks;
         double time = animationProgress * 0.03;
 
         body.setPos(0, (float) Math.sin(time) * 8 - 42, 0);

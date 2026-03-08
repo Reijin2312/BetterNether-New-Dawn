@@ -49,7 +49,7 @@ public class NetherSet extends EquipmentSet {
 
             ToolSlot.PropertiesBuilder shearPropertiesBuilder = (slot, tier) -> toolPropertiesBuilder
                     .build(slot, tier)
-                    .durability((int) (tier.toolTier.getUses() * 0.75));
+                    .durability((int) (tier.toolTier.durability() * 0.75));
 
             add(ToolSlot.PICKAXE_SLOT, NetherPickaxe::new, toolPropertiesBuilder);
             add(ToolSlot.AXE_SLOT, NetherAxe::new, toolPropertiesBuilder);

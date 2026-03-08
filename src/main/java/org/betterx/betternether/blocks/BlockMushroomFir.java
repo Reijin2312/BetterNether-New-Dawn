@@ -9,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -20,8 +19,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood {
     public static final EnumProperty<MushroomFirShape> SHAPE = EnumProperty.create("shape", MushroomFirShape.class);
@@ -98,8 +97,7 @@ public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood 
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         MushroomFirShape shape = state.getValue(SHAPE);
         return shape == MushroomFirShape.BOTTOM || shape == MushroomFirShape.MIDDLE
                 ? new ItemStack(NetherBlocks.MAT_MUSHROOM_FIR.getStem())
@@ -127,11 +125,13 @@ public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood 
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         return canSurvive(state, world, pos) ? state : Blocks.AIR.defaultBlockState();
     }

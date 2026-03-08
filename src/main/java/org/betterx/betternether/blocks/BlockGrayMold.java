@@ -13,8 +13,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockGrayMold extends BlockMold implements BehaviourPlant {
     private static final VoxelShape SHAPE = box(4, 0, 4, 12, 8, 12);
@@ -23,7 +21,6 @@ public class BlockGrayMold extends BlockMold implements BehaviourPlant {
         super(MapColor.COLOR_GRAY);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(3) == 0) {
             world.addParticle(
@@ -40,7 +37,7 @@ public class BlockGrayMold extends BlockMold implements BehaviourPlant {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
-        Vec3 vec3d = state.getOffset(view, pos);
+        Vec3 vec3d = state.getOffset(pos);
         return SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
     }
 }

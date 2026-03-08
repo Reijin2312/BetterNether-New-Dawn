@@ -7,13 +7,11 @@ import org.betterx.betternether.entity.render.*;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
-@OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(modid = BetterNether.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BetterNether.MOD_ID, value = Dist.CLIENT)
 public class EntityRenderRegistry {
     private static final String DEFAULT_LAYER = "main";
     public static final ModelLayerLocation FIREFLY_MODEL = registerMain("firefly");
@@ -51,4 +49,3 @@ public class EntityRenderRegistry {
         event.registerLayerDefinition(SKULL_MODEL, ModelSkull::getTexturedModelData);
     }
 }
-

@@ -12,8 +12,6 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +37,6 @@ public abstract class BNPane extends IronBarsBlock implements IRenderTypeable {
         return BNRenderLayer.TRANSLUCENT;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean skipRendering(BlockState state, BlockState neighbor, Direction facing) {
         if (neighbor.getBlock() == this) {
             if (!facing.getAxis().isHorizontal()) {
@@ -95,6 +92,3 @@ public abstract class BNPane extends IronBarsBlock implements IRenderTypeable {
         );
     }
 }
-
-
-

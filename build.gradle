@@ -3,9 +3,21 @@ plugins {
     id 'maven-publish'
 
     id 'net.neoforged.moddev' version "${moddev_version}"
+    id "com.diffplug.spotless" version "6.25.0"
 
     id "com.modrinth.minotaur" version "2.+"
     id "com.matthewprenger.cursegradle" version "1.4.0"
+}
+
+spotless {
+    java {
+        target 'src/*/java/**/*.java'
+        targetExclude 'src/main/generated/**'
+        trimTrailingWhitespace()
+        endWithNewline()
+        removeUnusedImports()
+        indentWithSpaces(4)
+    }
 }
 
 archivesBaseName = project.archives_base_name
@@ -60,13 +72,14 @@ neoForge {
         server {
             server()
         }
-        data {
-            data()
+        clientData {
+            clientData()
             programArguments.addAll(
                     "--mod", modId,
                     "--all",
                     "--output", file("src/main/generated").toString(),
-                    "--existing", file("src/main/resources").toString()
+                    "--existing", file("src/main/resources").toString(),
+                    "--existing", file("src/main/generated").toString()
             )
         }
     }
@@ -101,11 +114,14 @@ dependencies {
 
     // compile against the API
     compileOnly "mcp.mobius.waila:wthit-api:neo-${project.wthit_version}"
-    // run against the full jar
-    runtimeOnly "mcp.mobius.waila:wthit:neo-${project.wthit_version}"
+    // WTHIT runtime currently targets older mappings and crashes datagen on 1.21.11.
+    // Keep compileOnly for integration code, but skip runtime loading in dev runs.
+    // runtimeOnly "mcp.mobius.waila:wthit:neo-${project.wthit_version}"
 
     compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
-    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+    // EMI 1.21 artifact is not runtime-compatible with 1.21.11 mappings yet.
+    // Keep compileOnly for integration sources, but skip loading EMI in dev runs.
+    // runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 
     println "Using local BCLib: ${local_bclib}"
     if (local_bclib) {
@@ -141,15 +157,32 @@ sourceSets {
     }
 }
 
-def datagenTaskDeps = [tasks.matching { it.name == "runData" }]
+def datagenTaskDeps = []
+def addDatagenTask = { Project p ->
+    if (p.tasks.names.contains("runClientData")) {
+        datagenTaskDeps << p.tasks.named("runClientData")
+    } else if (p.tasks.names.contains("runData")) {
+        datagenTaskDeps << p.tasks.named("runData")
+    }
+}
+
+addDatagenTask(project)
 if (local_bclib) {
-    datagenTaskDeps << project(":BCLib").tasks.matching { it.name == "runData" }
+    addDatagenTask(project(":BCLib"))
 }
 if (local_wunderlib) {
-    datagenTaskDeps << project(":wunderlib").tasks.matching { it.name == "runData" }
+    addDatagenTask(project(":wunderlib"))
 }
 if (local_wover) {
-    datagenTaskDeps << project(":WorldWeaver").tasks.matching { it.name == "runData" }
+    // WorldWeaver aggregate datagen currently chains API subproject runs that are not standalone mods.
+    // Skip it here to keep BetterNether datagen stable.
+    gradle.projectsEvaluated {
+        project(":WorldWeaver").subprojects.each { sub ->
+            sub.tasks.matching { it.name == "runClientData" || it.name == "runData" }.configureEach {
+                enabled = false
+            }
+        }
+    }
 }
 
 tasks.register("generateBetterXResources") {
@@ -179,7 +212,15 @@ subprojects { subproject ->
 
 processResources {
     println "Version: ${project.mod_version}"
-    inputs.property "version", project.mod_version
+    inputs.properties([
+            "mod_id": modId,
+            "version": project.mod_version,
+            "minecraft_version": project.minecraft_version,
+            "neoforge_version": project.neoforge_version,
+            "bclib_version": project.bclib_version,
+            "wover_version": project.wover_version,
+            "wunderlib_version": project.wunderlib_version
+    ])
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     filesMatching("META-INF/neoforge.mods.toml") {
@@ -417,11 +458,15 @@ tasks.named("compileJava") {
     finalizedBy(tasks.named("fixMixinRefmap"))
 }
 
-tasks.matching { it.name == "runData" }.configureEach {
+tasks.matching { it.name == "runClientData" || it.name == "runData" }.configureEach {
     dependsOn(tasks.named("fixMixinRefmap"))
     finalizedBy(tasks.named("syncGeneratedResources"))
     // Datagen runs against named classes; disable refmap remapping to avoid obf targets.
     systemProperty "mixin.env.disableRefMap", "true"
+}
+
+tasks.matching { it.name == "runClient" || it.name == "runServer" || it.name == "runClientData" }.configureEach {
+    dependsOn(tasks.named("fixMixinRefmap"))
 }
 
 tasks.matching { it.name == "createMinecraftArtifacts" }.configureEach {

@@ -3,9 +3,7 @@
   "category": "building",
   "group": "planks",
   "key": {
-    "#": {
-      "item": "betternether:mushroom_fir_stem"
-    }
+    "#": "betternether:mushroom_fir_stem"
   },
   "pattern": [
     "##",

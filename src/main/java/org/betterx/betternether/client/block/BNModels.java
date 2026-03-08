@@ -4,26 +4,27 @@ import org.betterx.bclib.util.Pair;
 import org.betterx.betternether.BetterNether;
 import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
-import net.minecraft.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.data.models.blockstates.Variant;
-import net.minecraft.data.models.blockstates.VariantProperties;
-import net.minecraft.data.models.model.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.random.Weighted;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.*;
 
 public class BNModels {
     private static final Map<String, ModelTemplate> TEMPLATES = new HashMap<>();
 
-    public static final ResourceLocation CROP_BLOCK_MODEL_LOCATION = BetterNether.C.mk("block/crop_block");
-    public static final ResourceLocation JUNGLE_PLANT_MODEL_LOCATION = BetterNether.C.mk("block/jungle_plant");
-    public static final ResourceLocation GRASS_FAN_MODEL_LOCATION = BetterNether.C.mk("block/grass_fan");
-    public static final ResourceLocation STAIRS_WITH_TOP_MODEL_LOCATION = BetterNether.C.mk("block/stairs_with_top");
+    public static final Identifier CROP_BLOCK_MODEL_LOCATION = BetterNether.C.mk("block/crop_block");
+    public static final Identifier JUNGLE_PLANT_MODEL_LOCATION = BetterNether.C.mk("block/jungle_plant");
+    public static final Identifier GRASS_FAN_MODEL_LOCATION = BetterNether.C.mk("block/grass_fan");
+    public static final Identifier STAIRS_WITH_TOP_MODEL_LOCATION = BetterNether.C.mk("block/stairs_with_top");
     public static final ModelTemplate STAIRS_WITH_TOP_MODEL = new ModelTemplate(
             Optional.of(STAIRS_WITH_TOP_MODEL_LOCATION),
             Optional.empty(),
@@ -31,22 +32,22 @@ public class BNModels {
     );
 
 
-    public record TextureSource(TextureSlot slot, ResourceLocation texture) {
-        public static TextureSource of(TextureSlot slot, ResourceLocation texture) {
+    public record TextureSource(TextureSlot slot, Identifier texture) {
+        public static TextureSource of(TextureSlot slot, Identifier texture) {
             return new TextureSource(slot, texture);
         }
     }
 
     public interface VariantSupplier {
-        Variant apply(ResourceLocation id, List<ResourceLocation> all);
+        Weighted<Variant> apply(Identifier id, List<Identifier> all);
     }
 
-    public record ModelSource(ResourceLocation parent, String suffix,
+    public record ModelSource(Identifier parent, String suffix,
                               List<VariantSupplier> variants,
                               List<TextureSource> textures) {
 
         public static ModelSource of(
-                ResourceLocation parent,
+                Identifier parent,
                 String suffix,
                 List<VariantSupplier> variants,
                 TextureSource... textures
@@ -56,8 +57,8 @@ public class BNModels {
     }
 
     public static void createComplex(WoverBlockModelGenerators generators, Block bl, List<ModelSource> sources) {
-        List<Pair<ModelSource, ResourceLocation>> models = sources.stream().map(s -> {
-            Optional<ResourceLocation> parent = s.parent() == null ? Optional.empty() : Optional.of(s.parent());
+        List<Pair<ModelSource, Identifier>> models = sources.stream().map(s -> {
+            Optional<Identifier> parent = s.parent() == null ? Optional.empty() : Optional.of(s.parent());
             Optional<String> suffix = (s.suffix() == null || s.suffix().trim().isEmpty())
                     ? Optional.empty()
                     : Optional.of(s.suffix());
@@ -70,13 +71,14 @@ public class BNModels {
             return new Pair<>(s, template.create(bl, mapping, generators.modelOutput()));
         }).toList();
 
-        List<ResourceLocation> allModels = models.stream().map(p -> p.second).toList();
-        final Variant[] variants = models
+        List<Identifier> allModels = models.stream().map(p -> p.second).toList();
+        final var variants = models
                 .stream()
                 .flatMap(m -> m.first.variants().stream().map(f -> f.apply(m.second, allModels)))
-                .toArray(Variant[]::new);
+                .toList();
 
-        generators.acceptBlockState(MultiVariantGenerator.multiVariant(bl, variants));
+        MultiVariant multiVariant = new MultiVariant(WeightedList.of(variants));
+        generators.acceptBlockState(MultiVariantGenerator.dispatch(bl, multiVariant));
 
         Item item = bl.asItem();
         ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(sources.get(0).textures.get(0).texture), generators.modelOutput());
@@ -98,7 +100,6 @@ public class BNModels {
         ));
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void provideGrassBlockModels(
             WoverBlockModelGenerators generators,
             Block bl,
@@ -108,12 +109,12 @@ public class BNModels {
         //crate a range of numbers from 0 to count and map each number to a string
         final var variants = new ArrayList<BNModels.ModelSource>(2 * count);
         for (int i = 1; i <= count; i++) {
-            final ResourceLocation texture = BetterNether.C.mk("block/" + baseName + "_" + i);
+            final Identifier texture = BetterNether.C.mk("block/" + baseName + "_" + i);
             variants.add(
                     BNModels.ModelSource.of(
                             WoverBlockModelGenerators.CROSS,
                             "_" + i,
-                            List.of((id, all) -> Variant.variant().with(VariantProperties.MODEL, id)),
+                            List.of((id, all) -> new Weighted<>(BlockModelGenerators.plainModel(id), 1)),
                             BNModels.TextureSource.of(TextureSlot.CROSS, texture)
                     )
             );
@@ -121,7 +122,7 @@ public class BNModels {
                     BNModels.ModelSource.of(
                             BNModels.CROP_BLOCK_MODEL_LOCATION,
                             "_" + (count + i),
-                            List.of((id, all) -> Variant.variant().with(VariantProperties.MODEL, id)),
+                            List.of((id, all) -> new Weighted<>(BlockModelGenerators.plainModel(id), 1)),
                             BNModels.TextureSource.of(TextureSlot.TEXTURE, texture)
                     )
             );
@@ -130,7 +131,6 @@ public class BNModels {
         BNModels.createComplex(generators, bl, variants);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void provideSimpleMultiStateBlock(
             WoverBlockModelGenerators generators,
             Block bl,
@@ -140,12 +140,12 @@ public class BNModels {
 
         final var variants = new ArrayList<BNModels.ModelSource>(suffixes.length);
         for (int i = 1; i <= suffixes.length; i++) {
-            final ResourceLocation texture = BetterNether.C.mk(baseName + suffixes[i - 1]);
+            final Identifier texture = BetterNether.C.mk(baseName + suffixes[i - 1]);
             variants.add(
                     BNModels.ModelSource.of(
                             WoverBlockModelGenerators.CUBE_ALL,
                             suffixes[i - 1],
-                            List.of((id, all) -> Variant.variant().with(VariantProperties.MODEL, id)),
+                            List.of((id, all) -> new Weighted<>(BlockModelGenerators.plainModel(id), 1)),
                             BNModels.TextureSource.of(TextureSlot.ALL, texture)
                     )
             );
@@ -154,4 +154,3 @@ public class BNModels {
         BNModels.createComplex(generators, bl, variants);
     }
 }
-

@@ -15,7 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -33,8 +33,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public abstract class BlockFireBowl extends BlockBaseNotFull {
     private static final VoxelShape SHAPE = box(0, 0, 0, 16, 12, 16);
@@ -70,12 +68,12 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
     }
 
     @Override
-    public VoxelShape getOcclusionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public VoxelShape getOcclusionShape(BlockState blockState) {
         return CULL_SHAPE;
     }
 
     @Override
-    public ItemInteractionResult useItemOn(
+    public InteractionResult useItemOn(
             ItemStack itemStack,
             BlockState state,
             Level world,
@@ -98,7 +96,7 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
                         1.0F,
                         world.random.nextFloat() * 0.4F + 0.8F
                 );
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else if (player.getMainHandItem().isEmpty() && state.getValue(LIT)) {
                 world.setBlockAndUpdate(pos, state.setValue(LIT, false));
                 world.playSound(
@@ -109,10 +107,10 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
                         1.0F,
                         world.random.nextFloat() * 0.4F + 0.8F
                 );
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ItemInteractionResult.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
@@ -122,7 +120,6 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (state.getValue(LIT)) {
             if (random.nextInt(24) == 0)
@@ -174,5 +171,3 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
         );
     }
 }
-
-

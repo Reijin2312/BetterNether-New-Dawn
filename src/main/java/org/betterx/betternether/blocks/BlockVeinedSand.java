@@ -8,9 +8,8 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,8 +18,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockVeinedSand extends BlockBase implements BlockTagProvider, BehaviourSand {
     public BlockVeinedSand() {
@@ -36,11 +35,13 @@ public class BlockVeinedSand extends BlockBase implements BlockTagProvider, Beha
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (world.getBlockState(pos.above()).getBlock() == NetherBlocks.SOUL_VEIN)
             return state;
@@ -49,14 +50,12 @@ public class BlockVeinedSand extends BlockBase implements BlockTagProvider, Beha
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(Blocks.SOUL_SAND);
     }
 
     @Override
-    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+    public void registerBlockTags(Identifier location, TagBootstrapContext<Block> context) {
         context.add(this, CommonBlockTags.SOUL_GROUND);
     }
 }
-

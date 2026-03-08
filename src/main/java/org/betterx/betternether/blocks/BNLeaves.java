@@ -3,10 +3,13 @@ package org.betterx.betternether.blocks;
 import org.betterx.bclib.behaviours.BehaviourBuilders;
 import org.betterx.bclib.blocks.BaseLeavesBlock;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -22,6 +25,11 @@ public class BNLeaves extends BaseLeavesBlock {
     }
 
     @Override
+    public MapCodec<? extends LeavesBlock> codec() {
+        return MapCodec.unit(this);
+    }
+
+    @Override
     public boolean isRandomlyTicking(BlockState blockState) {
         return false;
     }
@@ -32,5 +40,9 @@ public class BNLeaves extends BaseLeavesBlock {
 
     @Override
     public void tick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource random) {
+    }
+
+    @Override
+    protected void spawnFallingLeavesParticle(Level level, BlockPos blockPos, RandomSource random) {
     }
 }

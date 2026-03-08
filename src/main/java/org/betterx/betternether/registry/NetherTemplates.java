@@ -3,7 +3,7 @@ package org.betterx.betternether.registry;
 import org.betterx.betternether.BetterNether;
 import org.betterx.wover.item.api.smithing.SmithingTemplates;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.SmithingTemplateItem;
 
 import java.util.List;
@@ -12,8 +12,8 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 import net.minecraft.core.registries.Registries;
 
 public class NetherTemplates {
-    public static final ResourceLocation EMPTY_SLOT_BOWL = BetterNether.C.id("item/empty_slot_bowl");
-    public static final ResourceLocation EMPTY_SLOT_BLOCK = BetterNether.C.id("item/empty_slot_block");
+    public static final Identifier EMPTY_SLOT_BOWL = BetterNether.C.id("container/slot/bowl");
+    public static final Identifier EMPTY_SLOT_BLOCK = BetterNether.C.id("container/slot/block");
 
     public static SmithingTemplateItem NETHER_BOWL_SMITHING_TEMPLATE;
 

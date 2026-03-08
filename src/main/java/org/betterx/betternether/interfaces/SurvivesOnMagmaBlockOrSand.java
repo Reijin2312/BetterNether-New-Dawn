@@ -15,4 +15,3 @@ public interface SurvivesOnMagmaBlockOrSand extends SurvivesOnBlocks {
         return GROUND;
     }
 }
-

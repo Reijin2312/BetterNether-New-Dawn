@@ -16,7 +16,7 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+
+import java.util.stream.StreamSupport;
 
 public class NetherVegetation {
     private static final ModCore C = BetterNether.C;
@@ -112,11 +114,11 @@ public class NetherVegetation {
 
     private static final TagKey<Block> TERRAIN_TAG = TagKey.create(
             Registries.BLOCK,
-            ResourceLocation.fromNamespaceAndPath("wover", "surfaces/nether/terrain")
+            Identifier.fromNamespaceAndPath("wover", "surfaces/nether/terrain")
     );
     private static final TagKey<Block> NETHERRACK_TAG = TagKey.create(
             Registries.BLOCK,
-            ResourceLocation.fromNamespaceAndPath("wover", "surfaces/nether/netherrack")
+            Identifier.fromNamespaceAndPath("wover", "surfaces/nether/netherrack")
     );
     private static boolean bonemealSetupDone = false;
     private static boolean terrainTagLogged = false;
@@ -151,7 +153,7 @@ public class NetherVegetation {
             return;
         }
         terrainTagLogged = true;
-        Registry<Block> registry = level.registryAccess().registryOrThrow(Registries.BLOCK);
+        Registry<Block> registry = level.registryAccess().lookupOrThrow(Registries.BLOCK);
         logSurfaceTag(registry, TERRAIN_TAG, "wover:surfaces/nether/terrain");
         logSurfaceTag(registry, NETHERRACK_TAG, "wover:surfaces/nether/netherrack");
         logSurfaceTag(registry, CommonBlockTags.NETHER_STONES, "wover:surfaces/nether/stones");
@@ -159,12 +161,11 @@ public class NetherVegetation {
     }
 
     private static void logSurfaceTag(Registry<Block> registry, TagKey<Block> tagKey, String label) {
-        var tag = registry.getTag(tagKey);
-        if (tag.isEmpty()) {
+        var entries = StreamSupport.stream(registry.getTagOrEmpty(tagKey).spliterator(), false).toList();
+        if (entries.isEmpty()) {
             BetterNether.C.LOG.warn("Missing block tag {} for vegetation placement checks.", label);
             return;
         }
-        var entries = tag.get();
         boolean hasJungleGrass = entries.stream().anyMatch(holder -> holder.value() == NetherBlocks.JUNGLE_GRASS);
         BetterNether.C.LOG.info(
                 "Block tag {} size={}, has betternether:jungle_grass={}",

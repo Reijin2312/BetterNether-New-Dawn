@@ -52,7 +52,7 @@ public class BlockNeonEquisetum extends BaseVineBlock.Growing implements Survive
 //
 //    @Override
 //    public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
-//        Vec3 vec3d = state.getOffset(view, pos);
+//        Vec3 vec3d = state.getOffset(pos);
 //        return SHAPE_SELECTION.move(vec3d.x, vec3d.y, vec3d.z);
 //    }
 //
@@ -62,7 +62,7 @@ public class BlockNeonEquisetum extends BaseVineBlock.Growing implements Survive
 //    }
 //
 //    @Override
-//    public boolean propagatesSkylightDown(BlockState state, BlockGetter view, BlockPos pos) {
+//    public boolean propagatesSkylightDown(BlockState state) {
 //        return true;
 //    }
 //
@@ -156,11 +156,10 @@ public class BlockNeonEquisetum extends BaseVineBlock.Growing implements Survive
 //
 //    @Override
 //    public @org.jetbrains.annotations.Nullable LootTable.Builder registerBlockLoot(
-//            @NotNull ResourceLocation location,
+//            @NotNull Identifier location,
 //            @NotNull LootLookupProvider provider,
 //            @NotNull ResourceKey<LootTable> tableKey
 //    ) {
 //        return provider.dropWithSilkTouchOrHoeOrShears(this);
 //    }
 //}
-

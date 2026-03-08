@@ -3,9 +3,7 @@
   "category": "building",
   "group": "slab",
   "key": {
-    "#": {
-      "item": "betternether:rubeus_planks"
-    }
+    "#": "betternether:rubeus_planks"
   },
   "pattern": [
     "###"

@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -17,9 +16,11 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public abstract class BlockSmallLantern extends BlockBaseNotFull {
     private static final VoxelShape SHAPE_NORTH = box(5, 0, 8, 11, 16, 16);
@@ -29,7 +30,7 @@ public abstract class BlockSmallLantern extends BlockBaseNotFull {
     private static final VoxelShape SHAPE_UP = box(5, 0, 5, 11, 9, 11);
     private static final VoxelShape SHAPE_DOWN = box(5, 3, 5, 11, 16, 11);
 
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
     protected BlockSmallLantern() {
         super(Properties.ofFullCopy(NetherBlocks.CINCINNASITE_LANTERN).noOcclusion());
@@ -83,11 +84,13 @@ public abstract class BlockSmallLantern extends BlockBaseNotFull {
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (canSurvive(state, world, pos))
             return state;

@@ -3,9 +3,7 @@
   "category": "building",
   "group": "slab",
   "key": {
-    "#": {
-      "item": "betternether:anchor_tree_planks"
-    }
+    "#": "betternether:anchor_tree_planks"
   },
   "pattern": [
     "###"

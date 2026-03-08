@@ -5,12 +5,10 @@ import org.betterx.betternether.registry.BrewingRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.WorldlyContainer;
@@ -29,6 +27,8 @@ import net.minecraft.world.level.block.BrewingStandBlock;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -142,7 +142,7 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
             setChanged(world, pos, state);
         }
 
-        if (!blockEntity.level.isClientSide) {
+        if (!blockEntity.level.isClientSide()) {
             boolean[] bls = blockEntity.getSlotsEmpty();
             if (!Arrays.equals(bls, blockEntity.slotsEmptyLastTick)) {
                 blockEntity.slotsEmptyLastTick = bls;
@@ -214,11 +214,12 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
         }
 
         source.shrink(1);
-        if (source.getItem().hasCraftingRemainingItem()) {
-            ItemStack itemStack2 = new ItemStack(source.getItem().getCraftingRemainingItem());
+        ItemStack remainder = source.getItem().getCraftingRemainder();
+        if (!remainder.isEmpty()) {
+            ItemStack itemStack2 = remainder.copy();
             if (source.isEmpty()) {
                 source = itemStack2;
-            } else if (!world.isClientSide) {
+            } else if (!world.isClientSide()) {
                 Containers.dropItemStack(world, blockPos.getX(), blockPos.getY(),
                         blockPos.getZ(), itemStack2
                 );
@@ -230,19 +231,19 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
+    protected void loadAdditional(ValueInput tag) {
+        super.loadAdditional(tag);
         this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(tag, this.inventory, provider);
-        this.brewTime = tag.getShort("BrewTime");
-        this.fuel = tag.getByte("Fuel");
+        ContainerHelper.loadAllItems(tag, this.inventory);
+        this.brewTime = tag.getShortOr("BrewTime", (short) 0);
+        this.fuel = tag.getByteOr("Fuel", (byte) 0);
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
+    protected void saveAdditional(ValueOutput tag) {
+        super.saveAdditional(tag);
         tag.putShort("BrewTime", (short) this.brewTime);
-        ContainerHelper.saveAllItems(tag, this.inventory, provider);
+        ContainerHelper.saveAllItems(tag, this.inventory);
         tag.putByte("Fuel", (byte) this.fuel);
     }
 
@@ -287,7 +288,7 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
                 if (item == Items.BLAZE_POWDER) {
                     return true;
                 }
-                ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
+                Identifier id = BuiltInRegistries.ITEM.getKey(item);
                 return id.getNamespace().equals("biomemakeover") && id.getPath().equals("soul_embers");
             } else {
                 return (item == Items.POTION || item == Items.SPLASH_POTION || item == Items.LINGERING_POTION || item == Items.GLASS_BOTTLE) && this

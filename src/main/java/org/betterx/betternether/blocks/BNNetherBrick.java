@@ -9,4 +9,3 @@ public class BNNetherBrick extends BlockBase.Stone {
         super(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS));
     }
 }
-

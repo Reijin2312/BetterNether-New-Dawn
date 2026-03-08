@@ -1,8 +1,6 @@
 package org.betterx.betternether.entity.model;
 
-import org.betterx.betternether.entity.EntityFlyingPig;
-
-import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,11 +8,10 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 
-import com.google.common.collect.ImmutableList;
-
-public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
+public class ModelEntityFlyingPig extends EntityModel<LivingEntityRenderState> {
     public static LayerDefinition getTexturedModelData() {
         MeshDefinition modelData = new MeshDefinition();
         PartDefinition modelPartData = modelData.getRoot();
@@ -36,8 +33,8 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.ZERO
         );
-		/*this.head = new ModelPart(this, 0, 0);
-		this.head.addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);*/
+        /*this.head = new ModelPart(this, 0, 0);
+        this.head.addCuboid(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);*/
 
         modelPartData_HEAD.addOrReplaceChild(
                 PartNames.LEFT_EAR,
@@ -53,10 +50,10 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(-7.0F, -7.0F, -2.0F)
         );
-		/*ModelPart modelEar = new ModelPart(this, 32, 4);
-		modelEar.setPivot(-7.0F, -7.0F, -2.0F);
-		modelEar.addCuboid(0.0F, 0.0F, 0.0F, 5.0F, 5.0F, 1.0F);
-		this.head.addChild(modelEar);*/
+        /*ModelPart modelEar = new ModelPart(this, 32, 4);
+        modelEar.setPivot(-7.0F, -7.0F, -2.0F);
+        modelEar.addCuboid(0.0F, 0.0F, 0.0F, 5.0F, 5.0F, 1.0F);
+        this.head.addChild(modelEar);*/
 
         modelPartData_HEAD.addOrReplaceChild(
                 PartNames.RIGHT_EAR,
@@ -73,11 +70,11 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(2.0F, -7.0F, -2.0F)
         );
-		/*modelEar = new ModelPart(this, 32, 4);
-		modelEar.setPivot(2.0F, -7.0F, -2.0F);
-		modelEar.mirror = true;
-		modelEar.addCuboid(0.0F, 0.0F, 0.0F, 5.0F, 5.0F, 1.0F);
-		this.head.addChild(modelEar);*/
+        /*modelEar = new ModelPart(this, 32, 4);
+        modelEar.setPivot(2.0F, -7.0F, -2.0F);
+        modelEar.mirror = true;
+        modelEar.addCuboid(0.0F, 0.0F, 0.0F, 5.0F, 5.0F, 1.0F);
+        this.head.addChild(modelEar);*/
 
         modelPartData_HEAD.addOrReplaceChild(
                 PartNames.NOSE,
@@ -86,10 +83,10 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                .addBox(0.0F, 0.0F, 0.0F, 4.0F, 3.0F, 1.0F),
                 PartPose.offset(-2.0F, -1.0F, -5.0F)
         );
-		/*ModelPart piglet = new ModelPart(this, 32, 0);
-		piglet.setPivot(-2.0F, -1.0F, -5.0F);
-		piglet.addCuboid(0.0F, 0.0F, 0.0F, 4.0F, 3.0F, 1.0F);
-		this.head.addChild(piglet);*/
+        /*ModelPart piglet = new ModelPart(this, 32, 0);
+        piglet.setPivot(-2.0F, -1.0F, -5.0F);
+        piglet.addCuboid(0.0F, 0.0F, 0.0F, 4.0F, 3.0F, 1.0F);
+        this.head.addChild(piglet);*/
 
         PartDefinition modelPartData_BODY = modelPartData.addOrReplaceChild(
                 PartNames.BODY,
@@ -108,8 +105,8 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.ZERO
         );
-		/*this.body = new ModelPart(this, 0, 16);
-		this.body.addCuboid(-5.0F, 3.0F, -4.0F, 10.0F, 14.0F, 8.0F);*/
+        /*this.body = new ModelPart(this, 0, 16);
+        this.body.addCuboid(-5.0F, 3.0F, -4.0F, 10.0F, 14.0F, 8.0F);*/
 
         PartDefinition modelPartData_RW = modelPartData_BODY.addOrReplaceChild(
                 PartNames.RIGHT_WING,
@@ -125,10 +122,10 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(5, 2.5F, 0)
         );
-		/*this.rightWing = new ModelPart(this, 36, 10);
-		this.rightWing.setPivot(5, 2.5F, 0);
-		this.rightWing.addCuboid(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
-		this.body.addChild(this.rightWing);*/
+        /*this.rightWing = new ModelPart(this, 36, 10);
+        this.rightWing.setPivot(5, 2.5F, 0);
+        this.rightWing.addCuboid(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
+        this.body.addChild(this.rightWing);*/
 
         modelPartData_RW.addOrReplaceChild(
                 PartNames.RIGHT_WING_TIP,
@@ -144,10 +141,10 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(16.0F, 0.0F, 0.0F)
         );
-		/*this.rightWingTip = new ModelPart(this, 36, 26);
-		this.rightWingTip.setPivot(16.0F, 0.0F, 0.0F);
-		this.rightWingTip.addCuboid(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
-		this.rightWing.addChild(this.rightWingTip);*/
+        /*this.rightWingTip = new ModelPart(this, 36, 26);
+        this.rightWingTip.setPivot(16.0F, 0.0F, 0.0F);
+        this.rightWingTip.addCuboid(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
+        this.rightWing.addChild(this.rightWingTip);*/
 
         PartDefinition modelPartData_LW = modelPartData_BODY.addOrReplaceChild(
                 PartNames.LEFT_WING,
@@ -164,11 +161,11 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(-5, 2.5F, 0)
         );
-		/*this.leftWing = new ModelPart(this, 36, 10);
-		this.leftWing.mirror = true;
-		this.leftWing.setPivot(-5, 2.5F, 0);
-		this.leftWing.addCuboid(-16.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
-		this.body.addChild(this.leftWing);*/
+        /*this.leftWing = new ModelPart(this, 36, 10);
+        this.leftWing.mirror = true;
+        this.leftWing.setPivot(-5, 2.5F, 0);
+        this.leftWing.addCuboid(-16.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
+        this.body.addChild(this.leftWing);*/
 
         modelPartData_LW.addOrReplaceChild(
                 PartNames.LEFT_WING_TIP,
@@ -185,11 +182,11 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(-16.0F, 0.0F, 0.0F)
         );
-		/*this.leftWingTip = new ModelPart(this, 36, 26);
-		this.leftWingTip.mirror = true;
-		this.leftWingTip.setPivot(-16.0F, 0.0F, 0.0F);
-		this.leftWingTip.addCuboid(-16.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
-		this.leftWing.addChild(this.leftWingTip);*/
+        /*this.leftWingTip = new ModelPart(this, 36, 26);
+        this.leftWingTip.mirror = true;
+        this.leftWingTip.setPivot(-16.0F, 0.0F, 0.0F);
+        this.leftWingTip.addCuboid(-16.0F, 0.0F, 0.0F, 16.0F, 16.0F, 0.0F);
+        this.leftWing.addChild(this.leftWingTip);*/
 
         modelPartData_BODY.addOrReplaceChild(PartNames.TAIL, CubeListBuilder.create()
                                                                             .texOffs(0, 40)
@@ -201,10 +198,10 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                                                                     8.0F,
                                                                                     0.0F
                                                                             ), PartPose.offset(0, 17, 0));
-		/*tail = new ModelPart(this, 0, 40);
-		tail.setPivot(0, 17, 0);
-		tail.addCuboid(-4.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F);
-		this.body.addChild(tail);*/
+        /*tail = new ModelPart(this, 0, 40);
+        tail.setPivot(0, 17, 0);
+        tail.addCuboid(-4.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F);
+        this.body.addChild(tail);*/
 
         modelPartData_BODY.addOrReplaceChild(
                 PartNames.RIGHT_LEG,
@@ -220,10 +217,10 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(1.5F, 15, -4)
         );
-		/*this.legA = new ModelPart(this, 0, 48);
-		legA.setPivot(1.5F, 15, -4);
-		legA.addCuboid(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 3.0F);
-		this.body.addChild(legA);*/
+        /*this.legA = new ModelPart(this, 0, 48);
+        legA.setPivot(1.5F, 15, -4);
+        legA.addCuboid(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 3.0F);
+        this.body.addChild(legA);*/
 
         modelPartData_BODY.addOrReplaceChild(
                 PartNames.LEFT_LEG,
@@ -239,15 +236,15 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
                                ),
                 PartPose.offset(-4.5F, 15, -4)
         );
-		/*this.legB = new ModelPart(this, 0, 48);
-		legB.setPivot(-4.5F, 15, -4);
-		legB.addCuboid(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 3.0F);
-		this.body.addChild(legB);
+        /*this.legB = new ModelPart(this, 0, 48);
+        legB.setPivot(-4.5F, 15, -4);
+        legB.addCuboid(0.0F, 0.0F, 0.0F, 3.0F, 6.0F, 3.0F);
+        this.body.addChild(legB);
 
-		/*
-		this.textureWidth = 128;
-		this.textureHeight = 64;
-		 */
+        /*
+        this.textureWidth = 128;
+        this.textureHeight = 64;
+         */
         return LayerDefinition.create(modelData, 128, 64);
     }
 
@@ -262,6 +259,7 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
     private final ModelPart legB;
 
     public ModelEntityFlyingPig(ModelPart root) {
+        super(root);
         this.head = root.getChild(PartNames.HEAD);
         this.body = root.getChild(PartNames.BODY);
         this.tail = this.body.getChild(PartNames.TAIL);
@@ -276,25 +274,14 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
     }
 
     @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of(head);
-    }
+    public void setupAnim(LivingEntityRenderState state) {
+        super.setupAnim(state);
+        float animationProgress = state.ageInTicks;
+        float headYaw = state.yRot;
+        float headPitch = state.xRot;
+        boolean roosting = false;
 
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(body);
-    }
-
-    @Override
-    public void setupAnim(
-            EntityFlyingPig entity,
-            float limbAngle,
-            float limbDistance,
-            float animationProgress,
-            float headYaw,
-            float headPitch
-    ) {
-        if (entity.isRoosting()) {
+        if (roosting) {
             this.head.xRot = headPitch * 0.017453292F;
             this.head.yRot = 3.1415927F - headYaw * 0.017453292F;
             this.head.zRot = 3.1415927F;

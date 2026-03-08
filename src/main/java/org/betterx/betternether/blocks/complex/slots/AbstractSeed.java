@@ -5,7 +5,7 @@ import org.betterx.bclib.complexmaterials.WoodenComplexMaterial;
 import org.betterx.bclib.complexmaterials.entry.SimpleMaterialSlot;
 
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -23,7 +23,7 @@ public abstract class AbstractSeed extends SimpleMaterialSlot<WoodenComplexMater
 
 
     @Override
-    protected @Nullable void makeRecipe(RecipeOutput context, ComplexMaterial parentMaterial, ResourceLocation id) {
+    protected @Nullable void makeRecipe(RecipeOutput context, ComplexMaterial parentMaterial, Identifier id) {
 
     }
 

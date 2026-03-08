@@ -8,7 +8,10 @@ import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherItems;
 import org.betterx.wover.complex.api.equipment.ToolSlot;
 import org.betterx.wover.tabs.api.CreativeTabs;
+import org.betterx.wover.tabs.api.interfaces.CreativeTabPredicate;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 public class BECreativeTabs {
@@ -33,8 +36,16 @@ public class BECreativeTabs {
                 .createBlockOnlyTab(NetherBlocks.JUNGLE_GRASS)
                 .buildAndAdd()
                 .createItemOnlyTab(NetherItems.FLAMING_RUBY_SET.get(ToolSlot.PICKAXE_SLOT))
+                .setPredicate(item -> CreativeTabPredicate.ITEMS.contains(item) && !isDebugItem(item))
                 .buildAndAdd()
                 .processRegistries()
                 .registerAllTabs();
+    }
+
+    private static boolean isDebugItem(Item item) {
+        var key = BuiltInRegistries.ITEM.getKey(item);
+        return key != null
+                && BetterNether.MOD_ID.equals(key.getNamespace())
+                && key.getPath().startsWith("debug/");
     }
 }

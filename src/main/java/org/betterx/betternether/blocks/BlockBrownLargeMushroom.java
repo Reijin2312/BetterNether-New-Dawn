@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -23,8 +22,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockBrownLargeMushroom extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape TOP_CENTER_SHAPE = box(0, 0.1, 0, 16, 16, 16);
@@ -52,8 +51,7 @@ public class BlockBrownLargeMushroom extends BlockBaseNotFull implements AddMine
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         BrownMushroomShape shape = state.getValue(SHAPE);
         return shape == BrownMushroomShape.BOTTOM || shape == BrownMushroomShape.MIDDLE
                 ? new ItemStack(NetherBlocks.MAT_NETHER_MUSHROOM.getStem())
@@ -153,11 +151,13 @@ public class BlockBrownLargeMushroom extends BlockBaseNotFull implements AddMine
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         switch (state.getValue(SHAPE)) {
             case BOTTOM:
@@ -181,8 +181,7 @@ public class BlockBrownLargeMushroom extends BlockBaseNotFull implements AddMine
         }
     }
 
-    private BlockState getStateIfSame(BlockState state, LevelAccessor world, BlockPos pos) {
+    private BlockState getStateIfSame(BlockState state, LevelReader world, BlockPos pos) {
         return world.getBlockState(pos).getBlock() == this ? state : Blocks.AIR.defaultBlockState();
     }
 }
-

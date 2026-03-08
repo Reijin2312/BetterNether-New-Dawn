@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "chair",
   "key": {
-    "#": {
-      "item": "betternether:nether_reed_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "betternether:nether_reed_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "I ",

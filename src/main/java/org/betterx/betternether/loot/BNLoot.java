@@ -6,7 +6,7 @@ import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherTemplates;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -44,7 +44,7 @@ public class BNLoot {
     }
 
     private static void onLootTableLoad(LootTableLoadEvent event) {
-        final ResourceLocation id = event.getName();
+        final Identifier id = event.getName();
         final LootTable table = event.getTable();
 
         if (BuiltInLootTables.RUINED_PORTAL.equals(id) || BuiltInLootTables.NETHER_BRIDGE.equals(id)) {

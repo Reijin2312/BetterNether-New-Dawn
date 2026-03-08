@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "betternether:willow_stripped_bark"
-    }
+    "#": "betternether:willow_stripped_bark"
   },
   "pattern": [
     "##",

@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "nether_ruby_boots",
   "key": {
-    "#": {
-      "item": "betternether:nether_ruby"
-    }
+    "#": "#betternether:repair/nether_ruby"
   },
   "pattern": [
     "# #",

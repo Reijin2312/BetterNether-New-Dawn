@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "cincinnasite_sword",
   "key": {
-    "#": {
-      "item": "betternether:cincinnasite_ingot"
-    },
-    "I": {
-      "item": "betternether:nether_reed_stem"
-    }
+    "#": "#c:ingots/cincinnasite",
+    "I": "betternether:nether_reed_stem"
   },
   "pattern": [
     "#",

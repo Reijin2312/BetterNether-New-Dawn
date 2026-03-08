@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,6 +24,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockPottedPlant extends BlockBaseNotFull implements AddMineableHoe {
     public static final EnumProperty<PottedPlantShape> PLANT = BNBlockProperties.PLANT;
@@ -57,7 +58,7 @@ public class BlockPottedPlant extends BlockBaseNotFull implements AddMineableHoe
     public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
         Block block = state.getValue(PLANT).getBlock();
         BlockState plantState = block.defaultBlockState();
-        Vec3 vec3d = plantState.getOffset(view, pos);
+        Vec3 vec3d = plantState.getOffset(pos);
         return plantState.getShape(view, pos, ePos).move(-vec3d.x, -0.5 - vec3d.y, -vec3d.z);
     }
 
@@ -74,11 +75,13 @@ public class BlockPottedPlant extends BlockBaseNotFull implements AddMineableHoe
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (!canSurvive(state, world, pos))
             return Blocks.AIR.defaultBlockState();

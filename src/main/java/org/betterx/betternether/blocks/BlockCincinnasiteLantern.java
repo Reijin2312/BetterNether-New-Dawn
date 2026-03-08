@@ -10,6 +10,3 @@ public class BlockCincinnasiteLantern extends BlockBase implements BehaviourMeta
         super(BlockBehaviour.Properties.ofFullCopy(NetherBlocks.CINCINNASITE_BLOCK).lightLevel(state -> 15));
     }
 }
-
-
-

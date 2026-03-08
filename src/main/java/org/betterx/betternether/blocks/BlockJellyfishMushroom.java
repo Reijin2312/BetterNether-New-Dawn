@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -31,13 +30,13 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.ModList;
 
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape TOP_SHAPE = box(1, 0, 1, 15, 16, 15);
@@ -67,29 +66,29 @@ public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMinea
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(NetherBlocks.JELLYFISH_MUSHROOM_SAPLING);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter view, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         switch (state.getValue(SHAPE)) {
             case BOTTOM:
@@ -112,7 +111,7 @@ public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMinea
     }
 
     @Override
-    public void fallOn(Level world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void fallOn(Level world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         if (world.getBlockState(pos).getValue(SHAPE) != TripleShape.TOP)
             return;
         if (entity.isSuppressingBounce())
@@ -122,9 +121,9 @@ public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMinea
     }
 
     @Override
-    public void updateEntityAfterFallOn(BlockGetter world, Entity entity) {
+    public void updateEntityMovementAfterFallOn(BlockGetter world, Entity entity) {
         if (entity.isSuppressingBounce())
-            super.updateEntityAfterFallOn(world, entity);
+            super.updateEntityMovementAfterFallOn(world, entity);
         else
             this.bounce(entity);
     }

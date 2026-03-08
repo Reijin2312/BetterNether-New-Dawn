@@ -11,8 +11,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImmobile, BehaviourPortalFrame, BehaviourGlass {
     public BlockObsidianGlass() {
@@ -27,20 +25,16 @@ public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImm
         this.setRenderLayer(BNRenderLayer.TRANSLUCENT);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter view, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean skipRendering(BlockState state, BlockState neighbor, Direction facing) {
         return neighbor.getBlock() == this || super.skipRendering(state, neighbor, facing);
     }
 }
-
-

@@ -1,0 +1,2152 @@
+Compiled from "ClientHooks.java"
+public class net.neoforged.neoforge.client.ClientHooks {
+  public net.neoforged.neoforge.client.ClientHooks();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void resizeGuiLayers(int, int);
+    Code:
+       0: getstatic     #7                  // Field guiLayers:Ljava/util/Stack;
+       3: iload_0
+       4: iload_1
+       5: invokedynamic #13,  0             // InvokeDynamic #0:accept:(II)Ljava/util/function/Consumer;
+      10: invokevirtual #17                 // Method java/util/Stack.forEach:(Ljava/util/function/Consumer;)V
+      13: return
+
+  public static void clearGuiLayers(net.minecraft.client.Minecraft);
+    Code:
+       0: getstatic     #7                  // Field guiLayers:Ljava/util/Stack;
+       3: invokevirtual #23                 // Method java/util/Stack.isEmpty:()Z
+       6: ifne          16
+       9: aload_0
+      10: invokestatic  #27                 // Method popGuiLayerInternal:(Lnet/minecraft/client/Minecraft;)V
+      13: goto          0
+      16: return
+
+  public static void pushGuiLayer(net.minecraft.client.Minecraft, net.minecraft.client.gui.screens.Screen);
+    Code:
+       0: aload_0
+       1: getfield      #31                 // Field net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;
+       4: ifnull        18
+       7: getstatic     #7                  // Field guiLayers:Ljava/util/Stack;
+      10: aload_0
+      11: getfield      #31                 // Field net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;
+      14: invokevirtual #46                 // Method java/util/Stack.push:(Ljava/lang/Object;)Ljava/lang/Object;
+      17: pop
+      18: aload_0
+      19: aload_1
+      20: invokestatic  #50                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      23: checkcast     #38                 // class net/minecraft/client/gui/screens/Screen
+      26: putfield      #31                 // Field net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;
+      29: aload_1
+      30: aload_0
+      31: invokevirtual #55                 // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+      34: invokevirtual #59                 // Method com/mojang/blaze3d/platform/Window.getGuiScaledWidth:()I
+      37: aload_0
+      38: invokevirtual #55                 // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+      41: invokevirtual #65                 // Method com/mojang/blaze3d/platform/Window.getGuiScaledHeight:()I
+      44: invokevirtual #68                 // Method net/minecraft/client/gui/screens/Screen.init:(II)V
+      47: aload_0
+      48: invokevirtual #72                 // Method net/minecraft/client/Minecraft.getNarrator:()Lnet/minecraft/client/GameNarrator;
+      51: aload_1
+      52: invokevirtual #76                 // Method net/minecraft/client/gui/screens/Screen.getNarrationMessage:()Lnet/minecraft/network/chat/Component;
+      55: invokevirtual #80                 // Method net/minecraft/client/GameNarrator.saySystemNow:(Lnet/minecraft/network/chat/Component;)V
+      58: return
+
+  public static void popGuiLayer(net.minecraft.client.Minecraft);
+    Code:
+       0: getstatic     #7                  // Field guiLayers:Ljava/util/Stack;
+       3: invokevirtual #23                 // Method java/util/Stack.isEmpty:()Z
+       6: ifeq          15
+       9: aload_0
+      10: aconst_null
+      11: invokevirtual #86                 // Method net/minecraft/client/Minecraft.setScreen:(Lnet/minecraft/client/gui/screens/Screen;)V
+      14: return
+      15: aload_0
+      16: invokestatic  #27                 // Method popGuiLayerInternal:(Lnet/minecraft/client/Minecraft;)V
+      19: aload_0
+      20: getfield      #31                 // Field net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;
+      23: ifnull        40
+      26: aload_0
+      27: invokevirtual #72                 // Method net/minecraft/client/Minecraft.getNarrator:()Lnet/minecraft/client/GameNarrator;
+      30: aload_0
+      31: getfield      #31                 // Field net/minecraft/client/Minecraft.screen:Lnet/minecraft/client/gui/screens/Screen;
+      34: invokevirtual #76                 // Method net/minecraft/client/gui/screens/Screen.getNarrationMessage:()Lnet/minecraft/network/chat/Component;
+      37: invokevirtual #80                 // Method net/minecraft/client/GameNarrator.saySystemNow:(Lnet/minecraft/network/chat/Component;)V
+      40: return
+
+  public static net.minecraft.client.gui.Gui$HeartType firePlayerHeartTypeEvent(net.minecraft.world.entity.player.Player, net.minecraft.client.gui.Gui$HeartType);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #96                 // class net/neoforged/neoforge/client/event/PlayerHeartTypeEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #98                 // Method net/neoforged/neoforge/client/event/PlayerHeartTypeEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/client/gui/Gui$HeartType;)V
+      12: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #96                 // class net/neoforged/neoforge/client/event/PlayerHeartTypeEvent
+      20: invokevirtual #107                // Method net/neoforged/neoforge/client/event/PlayerHeartTypeEvent.getType:()Lnet/minecraft/client/gui/Gui$HeartType;
+      23: areturn
+
+  public static net.minecraft.resources.Identifier getArmorTexture(net.minecraft.world.item.ItemStack, net.minecraft.client.resources.model.EquipmentClientInfo$LayerType, net.minecraft.client.resources.model.EquipmentClientInfo$Layer, net.minecraft.resources.Identifier);
+    Code:
+       0: aload_0
+       1: invokestatic  #111                // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientItemExtensions.of:(Lnet/minecraft/world/item/ItemStack;)Lnet/neoforged/neoforge/client/extensions/common/IClientItemExtensions;
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: invokeinterface #117,  5          // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientItemExtensions.getArmorTexture:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/client/resources/model/EquipmentClientInfo$Layer;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/resources/Identifier;
+      13: astore        4
+      15: aload         4
+      17: ifnull        25
+      20: aload         4
+      22: goto          26
+      25: aload_3
+      26: areturn
+
+  public static boolean onClientPauseChangePre(boolean);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #121                // class net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Pre
+       6: dup
+       7: iload_0
+       8: invokespecial #123                // Method net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Pre."<init>":(Z)V
+      11: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: checkcast     #121                // class net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Pre
+      19: astore_1
+      20: aload_1
+      21: invokevirtual #126                // Method net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Pre.isCanceled:()Z
+      24: ireturn
+
+  public static void onClientPauseChangePost(boolean);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #129                // class net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Post
+       6: dup
+       7: iload_0
+       8: invokespecial #131                // Method net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Post."<init>":(Z)V
+      11: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static boolean renderSpecificFirstPersonHand(net.minecraft.world.InteractionHand, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, float, float, float, float, net.minecraft.world.item.ItemStack);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #132                // class net/neoforged/neoforge/client/event/RenderHandEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: iload_3
+      11: fload         4
+      13: fload         5
+      15: fload         6
+      17: fload         7
+      19: aload         8
+      21: invokespecial #134                // Method net/neoforged/neoforge/client/event/RenderHandEvent."<init>":(Lnet/minecraft/world/InteractionHand;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;IFFFFLnet/minecraft/world/item/ItemStack;)V
+      24: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      29: checkcast     #132                // class net/neoforged/neoforge/client/event/RenderHandEvent
+      32: invokevirtual #137                // Method net/neoforged/neoforge/client/event/RenderHandEvent.isCanceled:()Z
+      35: ireturn
+
+  public static boolean renderSpecificFirstPersonArm(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, net.minecraft.client.player.AbstractClientPlayer, net.minecraft.world.entity.HumanoidArm);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #138                // class net/neoforged/neoforge/client/event/RenderArmEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: iload_2
+      10: aload_3
+      11: aload         4
+      13: invokespecial #140                // Method net/neoforged/neoforge/client/event/RenderArmEvent."<init>":(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/entity/HumanoidArm;)V
+      16: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      21: checkcast     #138                // class net/neoforged/neoforge/client/event/RenderArmEvent
+      24: invokevirtual #143                // Method net/neoforged/neoforge/client/event/RenderArmEvent.isCanceled:()Z
+      27: ireturn
+
+  public static void onTextureAtlasStitched(net.minecraft.client.renderer.texture.TextureAtlas);
+    Code:
+       0: new           #144                // class net/neoforged/neoforge/client/event/TextureAtlasStitchedEvent
+       3: dup
+       4: aload_0
+       5: invokespecial #146                // Method net/neoforged/neoforge/client/event/TextureAtlasStitchedEvent."<init>":(Lnet/minecraft/client/renderer/texture/TextureAtlas;)V
+       8: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      11: return
+
+  public static void onBlockColorsInit(net.minecraft.client.color.block.BlockColors);
+    Code:
+       0: new           #155                // class net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$Block
+       3: dup
+       4: aload_0
+       5: invokespecial #157                // Method net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$Block."<init>":(Lnet/minecraft/client/color/block/BlockColors;)V
+       8: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      11: return
+
+  public static void copyModelProperties(net.minecraft.client.model.HumanoidModel<?>, net.minecraft.client.model.HumanoidModel<?>);
+    Code:
+       0: aload_0
+       1: getfield      #160                // Field net/minecraft/client/model/HumanoidModel.head:Lnet/minecraft/client/model/geom/ModelPart;
+       4: aload_1
+       5: getfield      #160                // Field net/minecraft/client/model/HumanoidModel.head:Lnet/minecraft/client/model/geom/ModelPart;
+       8: invokestatic  #166                // Method copyModelPartProperties:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V
+      11: aload_0
+      12: getfield      #170                // Field net/minecraft/client/model/HumanoidModel.hat:Lnet/minecraft/client/model/geom/ModelPart;
+      15: aload_1
+      16: getfield      #170                // Field net/minecraft/client/model/HumanoidModel.hat:Lnet/minecraft/client/model/geom/ModelPart;
+      19: invokestatic  #166                // Method copyModelPartProperties:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V
+      22: aload_0
+      23: getfield      #173                // Field net/minecraft/client/model/HumanoidModel.body:Lnet/minecraft/client/model/geom/ModelPart;
+      26: aload_1
+      27: getfield      #173                // Field net/minecraft/client/model/HumanoidModel.body:Lnet/minecraft/client/model/geom/ModelPart;
+      30: invokestatic  #166                // Method copyModelPartProperties:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V
+      33: aload_0
+      34: getfield      #176                // Field net/minecraft/client/model/HumanoidModel.rightArm:Lnet/minecraft/client/model/geom/ModelPart;
+      37: aload_1
+      38: getfield      #176                // Field net/minecraft/client/model/HumanoidModel.rightArm:Lnet/minecraft/client/model/geom/ModelPart;
+      41: invokestatic  #166                // Method copyModelPartProperties:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V
+      44: aload_0
+      45: getfield      #179                // Field net/minecraft/client/model/HumanoidModel.leftArm:Lnet/minecraft/client/model/geom/ModelPart;
+      48: aload_1
+      49: getfield      #179                // Field net/minecraft/client/model/HumanoidModel.leftArm:Lnet/minecraft/client/model/geom/ModelPart;
+      52: invokestatic  #166                // Method copyModelPartProperties:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V
+      55: aload_0
+      56: getfield      #182                // Field net/minecraft/client/model/HumanoidModel.rightLeg:Lnet/minecraft/client/model/geom/ModelPart;
+      59: aload_1
+      60: getfield      #182                // Field net/minecraft/client/model/HumanoidModel.rightLeg:Lnet/minecraft/client/model/geom/ModelPart;
+      63: invokestatic  #166                // Method copyModelPartProperties:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V
+      66: aload_0
+      67: getfield      #185                // Field net/minecraft/client/model/HumanoidModel.leftLeg:Lnet/minecraft/client/model/geom/ModelPart;
+      70: aload_1
+      71: getfield      #185                // Field net/minecraft/client/model/HumanoidModel.leftLeg:Lnet/minecraft/client/model/geom/ModelPart;
+      74: invokestatic  #166                // Method copyModelPartProperties:(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)V
+      77: return
+
+  public static java.lang.String fixDomain(java.lang.String, java.lang.String);
+    Code:
+       0: aload_1
+       1: bipush        58
+       3: invokevirtual #222                // Method java/lang/String.indexOf:(I)I
+       6: istore_2
+       7: iload_2
+       8: iconst_m1
+       9: if_icmpne     20
+      12: aload_0
+      13: aload_1
+      14: invokedynamic #228,  0            // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      19: areturn
+      20: aload_1
+      21: iload_2
+      22: iconst_1
+      23: iadd
+      24: aload_1
+      25: invokevirtual #232                // Method java/lang/String.length:()I
+      28: invokevirtual #235                // Method java/lang/String.substring:(II)Ljava/lang/String;
+      31: astore_3
+      32: iload_2
+      33: iconst_1
+      34: if_icmple     55
+      37: aload_1
+      38: iconst_0
+      39: iload_2
+      40: invokevirtual #235                // Method java/lang/String.substring:(II)Ljava/lang/String;
+      43: astore        4
+      45: aload         4
+      47: aload_0
+      48: aload_3
+      49: invokedynamic #239,  0            // InvokeDynamic #2:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      54: areturn
+      55: aload_0
+      56: aload_3
+      57: invokedynamic #228,  0            // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      62: areturn
+
+  public static float getFieldOfViewModifier(net.minecraft.world.entity.player.Player, float, float);
+    Code:
+       0: new           #242                // class net/neoforged/neoforge/client/event/ComputeFovModifierEvent
+       3: dup
+       4: aload_0
+       5: fload_1
+       6: fload_2
+       7: invokespecial #244                // Method net/neoforged/neoforge/client/event/ComputeFovModifierEvent."<init>":(Lnet/minecraft/world/entity/player/Player;FF)V
+      10: astore_3
+      11: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: aload_3
+      22: invokevirtual #247                // Method net/neoforged/neoforge/client/event/ComputeFovModifierEvent.getNewFovModifier:()F
+      25: freturn
+
+  public static float getFieldOfView(net.minecraft.client.renderer.GameRenderer, net.minecraft.client.Camera, float, float, boolean);
+    Code:
+       0: new           #251                // class net/neoforged/neoforge/client/event/ViewportEvent$ComputeFov
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: fload_2
+       7: fload_3
+       8: iload         4
+      10: invokespecial #253                // Method net/neoforged/neoforge/client/event/ViewportEvent$ComputeFov."<init>":(Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/Camera;FFZ)V
+      13: astore        5
+      15: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      18: aload         5
+      20: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: pop
+      26: aload         5
+      28: invokevirtual #256                // Method net/neoforged/neoforge/client/event/ViewportEvent$ComputeFov.getFOV:()F
+      31: freturn
+
+  public static net.neoforged.neoforge.client.event.CalculatePlayerTurnEvent getTurnPlayerValues(double, boolean);
+    Code:
+       0: new           #259                // class net/neoforged/neoforge/client/event/CalculatePlayerTurnEvent
+       3: dup
+       4: dload_0
+       5: iload_2
+       6: invokespecial #261                // Method net/neoforged/neoforge/client/event/CalculatePlayerTurnEvent."<init>":(DZ)V
+       9: astore_3
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_3
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_3
+      21: areturn
+
+  public static float getDetachedCameraDistance(net.minecraft.client.Camera, boolean, float, float, float, float);
+    Code:
+       0: new           #264                // class net/neoforged/neoforge/client/event/CalculateDetachedCameraDistanceEvent
+       3: dup
+       4: aload_0
+       5: iload_1
+       6: fload_2
+       7: fload_3
+       8: fload         4
+      10: fload         5
+      12: invokespecial #266                // Method net/neoforged/neoforge/client/event/CalculateDetachedCameraDistanceEvent."<init>":(Lnet/minecraft/client/Camera;ZFFFF)V
+      15: astore        6
+      17: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      20: aload         6
+      22: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      27: pop
+      28: aload         6
+      30: invokevirtual #269                // Method net/neoforged/neoforge/client/event/CalculateDetachedCameraDistanceEvent.getDistance:()F
+      33: freturn
+
+  public static void renderMainMenu(net.minecraft.client.gui.screens.TitleScreen, net.minecraft.client.gui.GuiGraphics, net.minecraft.client.gui.Font, int, int, int);
+    Code:
+       0: getstatic     #272                // Field net/neoforged/neoforge/client/ClientHooks$2.$SwitchMap$net$neoforged$neoforge$common$NeoForgeBuildType:[I
+       3: invokestatic  #278                // Method net/neoforged/neoforge/common/NeoForgeVersion.getBuildType:()Lnet/neoforged/neoforge/common/NeoForgeBuildType;
+       6: invokevirtual #284                // Method net/neoforged/neoforge/common/NeoForgeBuildType.ordinal:()I
+       9: iaload
+      10: lookupswitch  { // 2
+
+                     1: 36
+
+                     2: 74
+               default: 180
+          }
+      36: aload_1
+      37: aload_2
+      38: ldc_w         #289                // String loadwarning.neoforge.prbuild
+      41: invokestatic  #291                // InterfaceMethod net/minecraft/network/chat/Component.translatable:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+      44: iload_3
+      45: iconst_2
+      46: idiv
+      47: iconst_4
+      48: aload_2
+      49: invokestatic  #50                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      52: pop
+      53: bipush        9
+      55: iconst_1
+      56: iadd
+      57: iconst_2
+      58: idiv
+      59: iadd
+      60: iload         5
+      62: ldc_w         #297                // int 16777215
+      65: invokestatic  #298                // Method net/minecraft/util/ARGB.color:(II)I
+      68: invokevirtual #304                // Method net/minecraft/client/gui/GuiGraphics.drawCenteredString:(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V
+      71: goto          180
+      74: ldc_w         #310                // String neoforge.update.beta.1
+      77: iconst_2
+      78: anewarray     #2                  // class java/lang/Object
+      81: dup
+      82: iconst_0
+      83: getstatic     #312                // Field net/minecraft/ChatFormatting.RED:Lnet/minecraft/ChatFormatting;
+      86: invokevirtual #318                // Method net/minecraft/ChatFormatting.toString:()Ljava/lang/String;
+      89: aastore
+      90: dup
+      91: iconst_1
+      92: getstatic     #322                // Field net/minecraft/ChatFormatting.RESET:Lnet/minecraft/ChatFormatting;
+      95: invokevirtual #318                // Method net/minecraft/ChatFormatting.toString:()Ljava/lang/String;
+      98: aastore
+      99: invokestatic  #325                // InterfaceMethod net/minecraft/network/chat/Component.translatable:(Ljava/lang/String;[Ljava/lang/Object;)Lnet/minecraft/network/chat/MutableComponent;
+     102: getstatic     #312                // Field net/minecraft/ChatFormatting.RED:Lnet/minecraft/ChatFormatting;
+     105: invokevirtual #328                // Method net/minecraft/network/chat/MutableComponent.withStyle:(Lnet/minecraft/ChatFormatting;)Lnet/minecraft/network/chat/MutableComponent;
+     108: astore        6
+     110: aload_1
+     111: aload_2
+     112: aload         6
+     114: iload_3
+     115: iconst_2
+     116: idiv
+     117: iconst_4
+     118: iconst_0
+     119: aload_2
+     120: invokestatic  #50                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+     123: pop
+     124: bipush        9
+     126: iconst_1
+     127: iadd
+     128: imul
+     129: iadd
+     130: iload         5
+     132: ldc_w         #297                // int 16777215
+     135: invokestatic  #298                // Method net/minecraft/util/ARGB.color:(II)I
+     138: invokevirtual #304                // Method net/minecraft/client/gui/GuiGraphics.drawCenteredString:(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V
+     141: ldc_w         #334                // String neoforge.update.beta.2
+     144: invokestatic  #291                // InterfaceMethod net/minecraft/network/chat/Component.translatable:(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;
+     147: astore        6
+     149: aload_1
+     150: aload_2
+     151: aload         6
+     153: iload_3
+     154: iconst_2
+     155: idiv
+     156: iconst_4
+     157: iconst_1
+     158: aload_2
+     159: invokestatic  #50                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+     162: pop
+     163: bipush        9
+     165: iconst_1
+     166: iadd
+     167: imul
+     168: iadd
+     169: iload         5
+     171: ldc_w         #297                // int 16777215
+     174: invokestatic  #298                // Method net/minecraft/util/ARGB.color:(II)I
+     177: invokevirtual #304                // Method net/minecraft/client/gui/GuiGraphics.drawCenteredString:(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V
+     180: getstatic     #336                // Field net/neoforged/neoforge/client/ClientHooks$2.$SwitchMap$net$neoforged$fml$VersionChecker$Status:[I
+     183: invokestatic  #339                // Method net/neoforged/neoforge/internal/NeoForgeVersionCheck.getStatus:()Lnet/neoforged/fml/VersionChecker$Status;
+     186: invokevirtual #345                // Method net/neoforged/fml/VersionChecker$Status.ordinal:()I
+     189: iaload
+     190: lookupswitch  { // 2
+
+                     1: 216
+
+                     2: 216
+               default: 235
+          }
+     216: ldc_w         #348                // String neoforge.update.newversion
+     219: iconst_1
+     220: anewarray     #2                  // class java/lang/Object
+     223: dup
+     224: iconst_0
+     225: invokestatic  #350                // Method net/neoforged/neoforge/internal/NeoForgeVersionCheck.getTarget:()Ljava/lang/String;
+     228: aastore
+     229: invokestatic  #353                // Method net/minecraft/client/resources/language/I18n.get:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     232: goto          236
+     235: aconst_null
+     236: invokestatic  #359                // Method net/neoforged/neoforge/internal/BrandingControl.setForgeStatusLine:(Ljava/lang/String;)V
+     239: return
+
+  public static net.minecraft.client.resources.sounds.SoundInstance playSound(net.minecraft.client.sounds.SoundEngine, net.minecraft.client.resources.sounds.SoundInstance);
+    Code:
+       0: new           #365                // class net/neoforged/neoforge/client/event/sound/PlaySoundEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #367                // Method net/neoforged/neoforge/client/event/sound/PlaySoundEvent."<init>":(Lnet/minecraft/client/sounds/SoundEngine;Lnet/minecraft/client/resources/sounds/SoundInstance;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_2
+      21: invokevirtual #370                // Method net/neoforged/neoforge/client/event/sound/PlaySoundEvent.getSound:()Lnet/minecraft/client/resources/sounds/SoundInstance;
+      24: areturn
+
+  public static net.minecraft.sounds.Music selectMusic(net.minecraft.sounds.Music, net.minecraft.client.resources.sounds.SoundInstance);
+    Code:
+       0: new           #374                // class net/neoforged/neoforge/client/event/SelectMusicEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #376                // Method net/neoforged/neoforge/client/event/SelectMusicEvent."<init>":(Lnet/minecraft/sounds/Music;Lnet/minecraft/client/resources/sounds/SoundInstance;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_2
+      21: invokevirtual #379                // Method net/neoforged/neoforge/client/event/SelectMusicEvent.getMusic:()Lnet/minecraft/sounds/Music;
+      24: areturn
+
+  public static void drawScreen(net.minecraft.client.gui.screens.Screen, net.minecraft.client.gui.GuiGraphics, int, int, float);
+    Code:
+       0: getstatic     #7                  // Field guiLayers:Ljava/util/Stack;
+       3: aload_1
+       4: fload         4
+       6: invokedynamic #383,  0            // InvokeDynamic #3:accept:(Lnet/minecraft/client/gui/GuiGraphics;F)Ljava/util/function/Consumer;
+      11: invokevirtual #17                 // Method java/util/Stack.forEach:(Ljava/util/function/Consumer;)V
+      14: aload_0
+      15: aload_1
+      16: iload_2
+      17: iload_3
+      18: fload         4
+      20: invokestatic  #386                // Method drawScreenInternal:(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/gui/GuiGraphics;IIF)V
+      23: return
+
+  public static org.joml.Vector4f getFogColor(net.minecraft.client.Camera, float, net.minecraft.client.multiplayer.ClientLevel, int, float, float, float, float);
+    Code:
+       0: aload_2
+       1: aload_0
+       2: invokevirtual #402                // Method net/minecraft/client/Camera.blockPosition:()Lnet/minecraft/core/BlockPos;
+       5: invokevirtual #408                // Method net/minecraft/client/multiplayer/ClientLevel.getFluidState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;
+       8: astore        8
+      10: new           #414                // class org/joml/Vector4f
+      13: dup
+      14: fload         5
+      16: fload         6
+      18: fload         7
+      20: fconst_1
+      21: invokespecial #416                // Method org/joml/Vector4f."<init>":(FFFF)V
+      24: astore        9
+      26: aload_0
+      27: invokevirtual #419                // Method net/minecraft/client/Camera.position:()Lnet/minecraft/world/phys/Vec3;
+      30: getfield      #423                // Field net/minecraft/world/phys/Vec3.y:D
+      33: aload_0
+      34: invokevirtual #402                // Method net/minecraft/client/Camera.blockPosition:()Lnet/minecraft/core/BlockPos;
+      37: invokevirtual #428                // Method net/minecraft/core/BlockPos.getY:()I
+      40: i2f
+      41: aload         8
+      43: aload_2
+      44: aload_0
+      45: invokevirtual #402                // Method net/minecraft/client/Camera.blockPosition:()Lnet/minecraft/core/BlockPos;
+      48: invokevirtual #433                // Method net/minecraft/world/level/material/FluidState.getHeight:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
+      51: fadd
+      52: f2d
+      53: dcmpg
+      54: ifge          77
+      57: aload         8
+      59: invokestatic  #439                // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientFluidTypeExtensions.of:(Lnet/minecraft/world/level/material/FluidState;)Lnet/neoforged/neoforge/client/extensions/common/IClientFluidTypeExtensions;
+      62: aload_0
+      63: fload_1
+      64: aload_2
+      65: iload_3
+      66: fload         4
+      68: aload         9
+      70: invokeinterface #444,  7          // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientFluidTypeExtensions.modifyFogColor:(Lnet/minecraft/client/Camera;FLnet/minecraft/client/multiplayer/ClientLevel;IFLorg/joml/Vector4f;)Lorg/joml/Vector4f;
+      75: astore        9
+      77: new           #448                // class net/neoforged/neoforge/client/event/ViewportEvent$ComputeFogColor
+      80: dup
+      81: aload_0
+      82: fload_1
+      83: aload         9
+      85: invokevirtual #450                // Method org/joml/Vector4f.x:()F
+      88: aload         9
+      90: invokevirtual #452                // Method org/joml/Vector4f.y:()F
+      93: aload         9
+      95: invokevirtual #454                // Method org/joml/Vector4f.z:()F
+      98: invokespecial #456                // Method net/neoforged/neoforge/client/event/ViewportEvent$ComputeFogColor."<init>":(Lnet/minecraft/client/Camera;FFFF)V
+     101: astore        10
+     103: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+     106: aload         10
+     108: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+     113: pop
+     114: aload         9
+     116: aload         10
+     118: invokevirtual #459                // Method net/neoforged/neoforge/client/event/ViewportEvent$ComputeFogColor.getRed:()F
+     121: aload         10
+     123: invokevirtual #462                // Method net/neoforged/neoforge/client/event/ViewportEvent$ComputeFogColor.getGreen:()F
+     126: aload         10
+     128: invokevirtual #465                // Method net/neoforged/neoforge/client/event/ViewportEvent$ComputeFogColor.getBlue:()F
+     131: invokevirtual #468                // Method org/joml/Vector4f.set:(FFF)Lorg/joml/Vector4f;
+     134: pop
+     135: aload         9
+     137: areturn
+
+  public static void onSetupFog(net.minecraft.client.renderer.fog.environment.FogEnvironment, net.minecraft.world.level.material.FogType, net.minecraft.client.Camera, float, float, net.minecraft.client.renderer.fog.FogData);
+    Code:
+       0: aload_2
+       1: invokevirtual #472                // Method net/minecraft/client/Camera.entity:()Lnet/minecraft/world/entity/Entity;
+       4: invokevirtual #476                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+       7: aload_2
+       8: invokevirtual #402                // Method net/minecraft/client/Camera.blockPosition:()Lnet/minecraft/core/BlockPos;
+      11: invokevirtual #482                // Method net/minecraft/world/level/Level.getFluidState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;
+      14: astore        6
+      16: aload_2
+      17: invokevirtual #419                // Method net/minecraft/client/Camera.position:()Lnet/minecraft/world/phys/Vec3;
+      20: getfield      #423                // Field net/minecraft/world/phys/Vec3.y:D
+      23: aload_2
+      24: invokevirtual #402                // Method net/minecraft/client/Camera.blockPosition:()Lnet/minecraft/core/BlockPos;
+      27: invokevirtual #428                // Method net/minecraft/core/BlockPos.getY:()I
+      30: i2f
+      31: aload         6
+      33: aload_2
+      34: invokevirtual #472                // Method net/minecraft/client/Camera.entity:()Lnet/minecraft/world/entity/Entity;
+      37: invokevirtual #476                // Method net/minecraft/world/entity/Entity.level:()Lnet/minecraft/world/level/Level;
+      40: aload_2
+      41: invokevirtual #402                // Method net/minecraft/client/Camera.blockPosition:()Lnet/minecraft/core/BlockPos;
+      44: invokevirtual #433                // Method net/minecraft/world/level/material/FluidState.getHeight:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)F
+      47: fadd
+      48: f2d
+      49: dcmpg
+      50: ifge          70
+      53: aload         6
+      55: invokestatic  #439                // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientFluidTypeExtensions.of:(Lnet/minecraft/world/level/material/FluidState;)Lnet/neoforged/neoforge/client/extensions/common/IClientFluidTypeExtensions;
+      58: aload_2
+      59: aload_0
+      60: fload         4
+      62: fload_3
+      63: aload         5
+      65: invokeinterface #485,  6          // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientFluidTypeExtensions.modifyFogRender:(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/fog/environment/FogEnvironment;FFLnet/minecraft/client/renderer/fog/FogData;)V
+      70: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      73: new           #489                // class net/neoforged/neoforge/client/event/ViewportEvent$RenderFog
+      76: dup
+      77: aload_0
+      78: aload_1
+      79: aload_2
+      80: fload_3
+      81: aload         5
+      83: invokespecial #491                // Method net/neoforged/neoforge/client/event/ViewportEvent$RenderFog."<init>":(Lnet/minecraft/client/renderer/fog/environment/FogEnvironment;Lnet/minecraft/world/level/material/FogType;Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/fog/FogData;)V
+      86: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      91: pop
+      92: return
+
+  public static void onModifyBakingResult(net.minecraft.client.resources.model.ModelBakery$BakingResult, net.minecraft.client.renderer.texture.SpriteLoader$Preparations, net.minecraft.client.resources.model.ModelBakery);
+    Code:
+       0: aload_1
+       1: invokedynamic #494,  0            // InvokeDynamic #4:apply:(Lnet/minecraft/client/renderer/texture/SpriteLoader$Preparations;)Ljava/util/function/Function;
+       6: astore_3
+       7: new           #498                // class net/neoforged/neoforge/client/event/ModelEvent$ModifyBakingResult
+      10: dup
+      11: aload_0
+      12: aload_3
+      13: aload_2
+      14: invokespecial #500                // Method net/neoforged/neoforge/client/event/ModelEvent$ModifyBakingResult."<init>":(Lnet/minecraft/client/resources/model/ModelBakery$BakingResult;Ljava/util/function/Function;Lnet/minecraft/client/resources/model/ModelBakery;)V
+      17: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      20: return
+
+  public static void onModelBake(net.minecraft.client.resources.model.ModelManager, net.minecraft.client.resources.model.ModelBakery$BakingResult, net.minecraft.client.resources.model.ModelBakery);
+    Code:
+       0: new           #503                // class net/neoforged/neoforge/client/event/ModelEvent$BakingCompleted
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: invokespecial #505                // Method net/neoforged/neoforge/client/event/ModelEvent$BakingCompleted."<init>":(Lnet/minecraft/client/resources/model/ModelManager;Lnet/minecraft/client/resources/model/ModelBakery$BakingResult;Lnet/minecraft/client/resources/model/ModelBakery;)V
+      10: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      13: return
+
+  public static net.minecraft.client.resources.model.Material getBlockMaterial(net.minecraft.resources.Identifier);
+    Code:
+       0: new           #508                // class net/minecraft/client/resources/model/Material
+       3: dup
+       4: getstatic     #510                // Field net/minecraft/client/renderer/texture/TextureAtlas.LOCATION_BLOCKS:Lnet/minecraft/resources/Identifier;
+       7: aload_0
+       8: invokespecial #516                // Method net/minecraft/client/resources/model/Material."<init>":(Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;)V
+      11: areturn
+
+  public static net.minecraft.client.resources.model.Material getItemMaterial(net.minecraft.resources.Identifier);
+    Code:
+       0: new           #508                // class net/minecraft/client/resources/model/Material
+       3: dup
+       4: getstatic     #519                // Field net/minecraft/client/renderer/texture/TextureAtlas.LOCATION_ITEMS:Lnet/minecraft/resources/Identifier;
+       7: aload_0
+       8: invokespecial #516                // Method net/minecraft/client/resources/model/Material."<init>":(Lnet/minecraft/resources/Identifier;Lnet/minecraft/resources/Identifier;)V
+      11: areturn
+
+  public static boolean loadEntityShader(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.GameRenderer);
+    Code:
+       0: aload_0
+       1: ifnull        23
+       4: aload_0
+       5: invokevirtual #522                // Method net/minecraft/world/entity/Entity.getType:()Lnet/minecraft/world/entity/EntityType;
+       8: invokestatic  #525                // Method net/neoforged/neoforge/client/EntitySpectatorShaderManager.get:(Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/resources/Identifier;
+      11: astore_2
+      12: aload_2
+      13: ifnull        23
+      16: aload_1
+      17: aload_2
+      18: invokevirtual #530                // Method net/minecraft/client/renderer/GameRenderer.setPostEffect:(Lnet/minecraft/resources/Identifier;)V
+      21: iconst_1
+      22: ireturn
+      23: iconst_0
+      24: ireturn
+
+  public static boolean shouldCauseReequipAnimation(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack, int);
+    Code:
+       0: aload_0
+       1: invokevirtual #536                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+       4: istore_3
+       5: aload_1
+       6: invokevirtual #536                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+       9: istore        4
+      11: iload_3
+      12: ifeq          22
+      15: iload         4
+      17: ifeq          22
+      20: iconst_0
+      21: ireturn
+      22: iload_3
+      23: ifne          31
+      26: iload         4
+      28: ifeq          33
+      31: iconst_1
+      32: ireturn
+      33: iconst_0
+      34: istore        5
+      36: iload_2
+      37: iconst_m1
+      38: if_icmpeq     59
+      41: iload_2
+      42: getstatic     #539                // Field slotMainHand:I
+      45: if_icmpeq     52
+      48: iconst_1
+      49: goto          53
+      52: iconst_0
+      53: istore        5
+      55: iload_2
+      56: putstatic     #539                // Field slotMainHand:I
+      59: aload_0
+      60: invokevirtual #543                // Method net/minecraft/world/item/ItemStack.getItem:()Lnet/minecraft/world/item/Item;
+      63: aload_0
+      64: aload_1
+      65: iload         5
+      67: invokevirtual #547                // Method net/minecraft/world/item/Item.shouldCauseReequipAnimation:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z
+      70: ireturn
+
+  public static net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent$BossEventProgress onCustomizeBossEventProgress(net.minecraft.client.gui.GuiGraphics, com.mojang.blaze3d.platform.Window, net.minecraft.client.gui.components.LerpingBossEvent, int, int, int);
+    Code:
+       0: new           #553                // class net/neoforged/neoforge/client/event/CustomizeGuiOverlayEvent$BossEventProgress
+       3: dup
+       4: aload_1
+       5: aload_0
+       6: invokestatic  #555                // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+       9: invokevirtual #559                // Method net/minecraft/client/Minecraft.getDeltaTracker:()Lnet/minecraft/client/DeltaTracker;
+      12: aload_2
+      13: iload_3
+      14: iload         4
+      16: iload         5
+      18: invokespecial #563                // Method net/neoforged/neoforge/client/event/CustomizeGuiOverlayEvent$BossEventProgress."<init>":(Lcom/mojang/blaze3d/platform/Window;Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/client/gui/components/LerpingBossEvent;III)V
+      21: astore        6
+      23: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      26: aload         6
+      28: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      33: pop
+      34: aload         6
+      36: areturn
+
+  public static net.neoforged.neoforge.client.event.ScreenshotEvent onScreenshot(com.mojang.blaze3d.platform.NativeImage, java.io.File);
+    Code:
+       0: new           #566                // class net/neoforged/neoforge/client/event/ScreenshotEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #568                // Method net/neoforged/neoforge/client/event/ScreenshotEvent."<init>":(Lcom/mojang/blaze3d/platform/NativeImage;Ljava/io/File;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_2
+      21: areturn
+
+  public static void onClientChangeGameType(net.minecraft.client.multiplayer.PlayerInfo, net.minecraft.world.level.GameType, net.minecraft.world.level.GameType);
+    Code:
+       0: aload_1
+       1: aload_2
+       2: if_acmpeq     26
+       5: new           #571                // class net/neoforged/neoforge/client/event/ClientPlayerChangeGameTypeEvent
+       8: dup
+       9: aload_0
+      10: aload_1
+      11: aload_2
+      12: invokespecial #573                // Method net/neoforged/neoforge/client/event/ClientPlayerChangeGameTypeEvent."<init>":(Lnet/minecraft/client/multiplayer/PlayerInfo;Lnet/minecraft/world/level/GameType;Lnet/minecraft/world/level/GameType;)V
+      15: astore_3
+      16: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      19: aload_3
+      20: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: pop
+      26: return
+
+  public static void onMovementInputUpdate(net.minecraft.world.entity.player.Player, net.minecraft.client.player.ClientInput);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #576                // class net/neoforged/neoforge/client/event/MovementInputUpdateEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: invokespecial #578                // Method net/neoforged/neoforge/client/event/MovementInputUpdateEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/client/player/ClientInput;)V
+      12: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static boolean onScreenMouseClickedPre(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.MouseButtonEvent, boolean);
+    Code:
+       0: new           #581                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Pre
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: invokespecial #583                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Pre."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;Z)V
+      10: astore_3
+      11: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: checkcast     #581                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Pre
+      23: invokevirtual #586                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Pre.isCanceled:()Z
+      26: ireturn
+
+  public static boolean onScreenMouseClickedPost(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.MouseButtonEvent, boolean, boolean);
+    Code:
+       0: new           #587                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Post
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: iload_3
+       8: invokespecial #589                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Post."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;ZZ)V
+      11: astore        4
+      13: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: pop
+      24: aload         4
+      26: invokevirtual #592                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Post.getClickResult:()Z
+      29: ireturn
+
+  public static boolean onScreenMouseReleasedPre(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.MouseButtonEvent);
+    Code:
+       0: new           #595                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Pre
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #597                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Pre."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #595                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Pre
+      22: invokevirtual #600                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Pre.isCanceled:()Z
+      25: ireturn
+
+  public static boolean onScreenMouseReleasedPost(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.MouseButtonEvent, boolean);
+    Code:
+       0: new           #601                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Post
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: invokespecial #603                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Post."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;Z)V
+      10: astore_3
+      11: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: aload_3
+      22: invokevirtual #604                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Post.getReleaseResult:()Z
+      25: ireturn
+
+  public static boolean onScreenMouseDragPre(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.MouseButtonEvent, double, double);
+    Code:
+       0: new           #607                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Pre
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: dload_2
+       7: dload         4
+       9: invokespecial #609                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Pre."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;DD)V
+      12: astore        6
+      14: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      17: aload         6
+      19: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      24: checkcast     #607                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Pre
+      27: invokevirtual #612                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Pre.isCanceled:()Z
+      30: ireturn
+
+  public static void onScreenMouseDragPost(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.MouseButtonEvent, double, double);
+    Code:
+       0: new           #613                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Post
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: dload_2
+       7: dload         4
+       9: invokespecial #615                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Post."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;DD)V
+      12: astore        6
+      14: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      17: aload         6
+      19: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      24: pop
+      25: return
+
+  public static boolean onScreenMouseScrollPre(net.minecraft.client.MouseHandler, net.minecraft.client.gui.screens.Screen, double, double);
+    Code:
+       0: aload_1
+       1: invokevirtual #616                // Method net/minecraft/client/gui/screens/Screen.getMinecraft:()Lnet/minecraft/client/Minecraft;
+       4: invokevirtual #55                 // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+       7: astore        6
+       9: aload_0
+      10: invokevirtual #619                // Method net/minecraft/client/MouseHandler.xpos:()D
+      13: aload         6
+      15: invokevirtual #59                 // Method com/mojang/blaze3d/platform/Window.getGuiScaledWidth:()I
+      18: i2d
+      19: dmul
+      20: aload         6
+      22: invokevirtual #625                // Method com/mojang/blaze3d/platform/Window.getScreenWidth:()I
+      25: i2d
+      26: ddiv
+      27: dstore        7
+      29: aload_0
+      30: invokevirtual #628                // Method net/minecraft/client/MouseHandler.ypos:()D
+      33: aload         6
+      35: invokevirtual #65                 // Method com/mojang/blaze3d/platform/Window.getGuiScaledHeight:()I
+      38: i2d
+      39: dmul
+      40: aload         6
+      42: invokevirtual #631                // Method com/mojang/blaze3d/platform/Window.getScreenHeight:()I
+      45: i2d
+      46: ddiv
+      47: dstore        9
+      49: new           #634                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Pre
+      52: dup
+      53: aload_1
+      54: dload         7
+      56: dload         9
+      58: dload_2
+      59: dload         4
+      61: invokespecial #636                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Pre."<init>":(Lnet/minecraft/client/gui/screens/Screen;DDDD)V
+      64: astore        11
+      66: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      69: aload         11
+      71: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      76: checkcast     #634                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Pre
+      79: invokevirtual #639                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Pre.isCanceled:()Z
+      82: ireturn
+
+  public static void onScreenMouseScrollPost(net.minecraft.client.MouseHandler, net.minecraft.client.gui.screens.Screen, double, double);
+    Code:
+       0: aload_1
+       1: invokevirtual #616                // Method net/minecraft/client/gui/screens/Screen.getMinecraft:()Lnet/minecraft/client/Minecraft;
+       4: invokevirtual #55                 // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+       7: astore        6
+       9: aload_0
+      10: invokevirtual #619                // Method net/minecraft/client/MouseHandler.xpos:()D
+      13: aload         6
+      15: invokevirtual #59                 // Method com/mojang/blaze3d/platform/Window.getGuiScaledWidth:()I
+      18: i2d
+      19: dmul
+      20: aload         6
+      22: invokevirtual #625                // Method com/mojang/blaze3d/platform/Window.getScreenWidth:()I
+      25: i2d
+      26: ddiv
+      27: dstore        7
+      29: aload_0
+      30: invokevirtual #628                // Method net/minecraft/client/MouseHandler.ypos:()D
+      33: aload         6
+      35: invokevirtual #65                 // Method com/mojang/blaze3d/platform/Window.getGuiScaledHeight:()I
+      38: i2d
+      39: dmul
+      40: aload         6
+      42: invokevirtual #631                // Method com/mojang/blaze3d/platform/Window.getScreenHeight:()I
+      45: i2d
+      46: ddiv
+      47: dstore        9
+      49: new           #640                // class net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Post
+      52: dup
+      53: aload_1
+      54: dload         7
+      56: dload         9
+      58: dload_2
+      59: dload         4
+      61: invokespecial #642                // Method net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Post."<init>":(Lnet/minecraft/client/gui/screens/Screen;DDDD)V
+      64: astore        11
+      66: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      69: aload         11
+      71: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      76: pop
+      77: return
+
+  public static boolean onScreenKeyPressedPre(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.KeyEvent);
+    Code:
+       0: new           #643                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Pre
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #645                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Pre."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/KeyEvent;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #643                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Pre
+      22: invokevirtual #648                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Pre.isCanceled:()Z
+      25: ireturn
+
+  public static boolean onScreenKeyPressedPost(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.KeyEvent);
+    Code:
+       0: new           #649                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Post
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #651                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Post."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/KeyEvent;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #649                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Post
+      22: invokevirtual #652                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Post.isCanceled:()Z
+      25: ireturn
+
+  public static boolean onScreenKeyReleasedPre(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.KeyEvent);
+    Code:
+       0: new           #653                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Pre
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #655                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Pre."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/KeyEvent;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #653                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Pre
+      22: invokevirtual #656                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Pre.isCanceled:()Z
+      25: ireturn
+
+  public static boolean onScreenKeyReleasedPost(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.KeyEvent);
+    Code:
+       0: new           #657                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Post
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #659                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Post."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/KeyEvent;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #657                // class net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Post
+      22: invokevirtual #660                // Method net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Post.isCanceled:()Z
+      25: ireturn
+
+  public static boolean onScreenCharTypedPre(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.CharacterEvent);
+    Code:
+       0: new           #661                // class net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Pre
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #663                // Method net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Pre."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/CharacterEvent;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #661                // class net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Pre
+      22: invokevirtual #666                // Method net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Pre.isCanceled:()Z
+      25: ireturn
+
+  public static void onScreenCharTypedPost(net.minecraft.client.gui.screens.Screen, net.minecraft.client.input.CharacterEvent);
+    Code:
+       0: new           #667                // class net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Post
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #669                // Method net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Post."<init>":(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/CharacterEvent;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: return
+
+  public static boolean onMouseButtonPre(net.minecraft.client.input.MouseButtonInfo, int);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #670                // class net/neoforged/neoforge/client/event/InputEvent$MouseButton$Pre
+       6: dup
+       7: aload_0
+       8: iload_1
+       9: invokespecial #672                // Method net/neoforged/neoforge/client/event/InputEvent$MouseButton$Pre."<init>":(Lnet/minecraft/client/input/MouseButtonInfo;I)V
+      12: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: checkcast     #670                // class net/neoforged/neoforge/client/event/InputEvent$MouseButton$Pre
+      20: invokevirtual #675                // Method net/neoforged/neoforge/client/event/InputEvent$MouseButton$Pre.isCanceled:()Z
+      23: ireturn
+
+  public static void onMouseButtonPost(net.minecraft.client.input.MouseButtonInfo, int);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #676                // class net/neoforged/neoforge/client/event/InputEvent$MouseButton$Post
+       6: dup
+       7: aload_0
+       8: iload_1
+       9: invokespecial #678                // Method net/neoforged/neoforge/client/event/InputEvent$MouseButton$Post."<init>":(Lnet/minecraft/client/input/MouseButtonInfo;I)V
+      12: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static boolean onMouseScroll(net.minecraft.client.MouseHandler, double, double);
+    Code:
+       0: new           #679                // class net/neoforged/neoforge/client/event/InputEvent$MouseScrollingEvent
+       3: dup
+       4: dload_1
+       5: dload_3
+       6: aload_0
+       7: invokevirtual #681                // Method net/minecraft/client/MouseHandler.isLeftPressed:()Z
+      10: aload_0
+      11: invokevirtual #684                // Method net/minecraft/client/MouseHandler.isMiddlePressed:()Z
+      14: aload_0
+      15: invokevirtual #687                // Method net/minecraft/client/MouseHandler.isRightPressed:()Z
+      18: aload_0
+      19: invokevirtual #619                // Method net/minecraft/client/MouseHandler.xpos:()D
+      22: aload_0
+      23: invokevirtual #628                // Method net/minecraft/client/MouseHandler.ypos:()D
+      26: invokespecial #690                // Method net/neoforged/neoforge/client/event/InputEvent$MouseScrollingEvent."<init>":(DDZZZDD)V
+      29: astore        5
+      31: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      34: aload         5
+      36: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      41: checkcast     #679                // class net/neoforged/neoforge/client/event/InputEvent$MouseScrollingEvent
+      44: invokevirtual #693                // Method net/neoforged/neoforge/client/event/InputEvent$MouseScrollingEvent.isCanceled:()Z
+      47: ireturn
+
+  public static void onKeyInput(net.minecraft.client.input.KeyEvent, int);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #694                // class net/neoforged/neoforge/client/event/InputEvent$Key
+       6: dup
+       7: aload_0
+       8: iload_1
+       9: invokespecial #696                // Method net/neoforged/neoforge/client/event/InputEvent$Key."<init>":(Lnet/minecraft/client/input/KeyEvent;I)V
+      12: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      17: pop
+      18: return
+
+  public static net.neoforged.neoforge.client.event.InputEvent$InteractionKeyMappingTriggered onClickInput(int, net.minecraft.client.KeyMapping, net.minecraft.world.InteractionHand);
+    Code:
+       0: new           #699                // class net/neoforged/neoforge/client/event/InputEvent$InteractionKeyMappingTriggered
+       3: dup
+       4: iload_0
+       5: aload_1
+       6: aload_2
+       7: invokespecial #701                // Method net/neoforged/neoforge/client/event/InputEvent$InteractionKeyMappingTriggered."<init>":(ILnet/minecraft/client/KeyMapping;Lnet/minecraft/world/InteractionHand;)V
+      10: astore_3
+      11: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: aload_3
+      22: areturn
+
+  public static boolean isNameplateInRenderDistance(net.minecraft.world.entity.LivingEntity, double);
+    Code:
+       0: aload_0
+       1: getstatic     #704                // Field net/neoforged/neoforge/common/NeoForgeMod.NAMETAG_DISTANCE:Lnet/minecraft/core/Holder;
+       4: invokevirtual #710                // Method net/minecraft/world/entity/LivingEntity.getAttributeValue:(Lnet/minecraft/core/Holder;)D
+       7: dstore_3
+       8: dload_1
+       9: dload_3
+      10: dload_3
+      11: dmul
+      12: dcmpl
+      13: ifgt          20
+      16: iconst_1
+      17: goto          21
+      20: iconst_0
+      21: ireturn
+
+  public static boolean shouldRenderEffect(net.minecraft.world.effect.MobEffectInstance);
+    Code:
+       0: aload_0
+       1: invokestatic  #716                // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientMobEffectExtensions.of:(Lnet/minecraft/world/effect/MobEffectInstance;)Lnet/neoforged/neoforge/client/extensions/common/IClientMobEffectExtensions;
+       4: aload_0
+       5: invokeinterface #721,  2          // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientMobEffectExtensions.isVisibleInInventory:(Lnet/minecraft/world/effect/MobEffectInstance;)Z
+      10: ireturn
+
+  public static void registerLayerDefinition(net.minecraft.client.model.geom.ModelLayerLocation, java.util.function.Supplier<net.minecraft.client.model.geom.builders.LayerDefinition>);
+    Code:
+       0: getstatic     #725                // Field layerDefinitions:Ljava/util/Map;
+       3: aload_0
+       4: aload_1
+       5: invokeinterface #729,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      10: pop
+      11: return
+
+  public static void loadLayerDefinitions(com.google.common.collect.ImmutableMap$Builder<net.minecraft.client.model.geom.ModelLayerLocation, net.minecraft.client.model.geom.builders.LayerDefinition>);
+    Code:
+       0: getstatic     #725                // Field layerDefinitions:Ljava/util/Map;
+       3: aload_0
+       4: invokedynamic #735,  0            // InvokeDynamic #5:accept:(Lcom/google/common/collect/ImmutableMap$Builder;)Ljava/util/function/BiConsumer;
+       9: invokeinterface #738,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+      14: return
+
+  public static net.minecraft.client.model.object.skull.SkullModelBase getModdedSkullModel(net.minecraft.client.model.geom.EntityModelSet, net.minecraft.world.level.block.SkullBlock$Type);
+    Code:
+       0: getstatic     #741                // Field skullModelsByType:Ljava/util/Map;
+       3: aload_1
+       4: invokedynamic #744,  0            // InvokeDynamic #6:apply:()Ljava/util/function/Function;
+       9: invokeinterface #747,  3          // InterfaceMethod java/util/Map.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      14: checkcast     #750                // class java/util/function/Function
+      17: aload_0
+      18: invokeinterface #752,  2          // InterfaceMethod java/util/function/Function.apply:(Ljava/lang/Object;)Ljava/lang/Object;
+      23: checkcast     #754                // class net/minecraft/client/model/object/skull/SkullModelBase
+      26: areturn
+
+  public static void firePlayerLogin(net.minecraft.client.multiplayer.MultiPlayerGameMode, net.minecraft.client.player.LocalPlayer, net.minecraft.network.Connection);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #756                // class net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingIn
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokespecial #758                // Method net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingIn."<init>":(Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/network/Connection;)V
+      13: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: pop
+      19: return
+
+  public static void firePlayerLogout(net.minecraft.client.multiplayer.MultiPlayerGameMode, net.minecraft.client.player.LocalPlayer);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #761                // class net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingOut
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_1
+      10: ifnull        34
+      13: aload_1
+      14: getfield      #763                // Field net/minecraft/client/player/LocalPlayer.connection:Lnet/minecraft/client/multiplayer/ClientPacketListener;
+      17: ifnull        30
+      20: aload_1
+      21: getfield      #763                // Field net/minecraft/client/player/LocalPlayer.connection:Lnet/minecraft/client/multiplayer/ClientPacketListener;
+      24: invokevirtual #769                // Method net/minecraft/client/multiplayer/ClientPacketListener.getConnection:()Lnet/minecraft/network/Connection;
+      27: goto          35
+      30: aconst_null
+      31: goto          35
+      34: aconst_null
+      35: invokespecial #775                // Method net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingOut."<init>":(Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/network/Connection;)V
+      38: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      43: pop
+      44: return
+
+  public static void firePlayerRespawn(net.minecraft.client.multiplayer.MultiPlayerGameMode, net.minecraft.client.player.LocalPlayer, net.minecraft.client.player.LocalPlayer, net.minecraft.network.Connection);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #776                // class net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$Clone
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: invokespecial #778                // Method net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$Clone."<init>":(Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/network/Connection;)V
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: return
+
+  public static void onRegisterParticleProviders(net.minecraft.client.particle.ParticleResources);
+    Code:
+       0: new           #781                // class net/neoforged/neoforge/client/event/RegisterParticleProvidersEvent
+       3: dup
+       4: aload_0
+       5: invokespecial #783                // Method net/neoforged/neoforge/client/event/RegisterParticleProvidersEvent."<init>":(Lnet/minecraft/client/particle/ParticleResources;)V
+       8: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      11: return
+
+  public static void onRegisterKeyMappings(net.minecraft.client.Options, java.util.List<net.minecraft.client.KeyMapping$Category>);
+    Code:
+       0: new           #786                // class net/neoforged/neoforge/client/event/RegisterKeyMappingsEvent
+       3: dup
+       4: aload_0
+       5: invokespecial #788                // Method net/neoforged/neoforge/client/event/RegisterKeyMappingsEvent."<init>":(Lnet/minecraft/client/Options;)V
+       8: astore_2
+       9: aload_2
+      10: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      13: aload_2
+      14: aload_1
+      15: invokevirtual #791                // Method net/neoforged/neoforge/client/event/RegisterKeyMappingsEvent.sortAndStoreCategories:(Ljava/util/List;)V
+      18: return
+
+  public static net.minecraft.network.chat.Component onClientChat(net.minecraft.network.chat.ChatType$Bound, net.minecraft.network.chat.Component, java.util.UUID);
+    Code:
+       0: new           #795                // class net/neoforged/neoforge/client/event/ClientChatReceivedEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: invokespecial #797                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent."<init>":(Lnet/minecraft/network/chat/ChatType$Bound;Lnet/minecraft/network/chat/Component;Ljava/util/UUID;)V
+      10: astore_3
+      11: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: checkcast     #795                // class net/neoforged/neoforge/client/event/ClientChatReceivedEvent
+      23: invokevirtual #800                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent.isCanceled:()Z
+      26: ifeq          33
+      29: aconst_null
+      30: goto          37
+      33: aload_3
+      34: invokevirtual #801                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent.getMessage:()Lnet/minecraft/network/chat/Component;
+      37: areturn
+
+  public static net.minecraft.network.chat.Component onClientPlayerChat(net.minecraft.network.chat.ChatType$Bound, net.minecraft.network.chat.Component, net.minecraft.network.chat.PlayerChatMessage, java.util.UUID);
+    Code:
+       0: new           #804                // class net/neoforged/neoforge/client/event/ClientChatReceivedEvent$Player
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: aload_3
+       8: invokespecial #806                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent$Player."<init>":(Lnet/minecraft/network/chat/ChatType$Bound;Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/PlayerChatMessage;Ljava/util/UUID;)V
+      11: astore        4
+      13: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: checkcast     #804                // class net/neoforged/neoforge/client/event/ClientChatReceivedEvent$Player
+      26: invokevirtual #809                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent$Player.isCanceled:()Z
+      29: ifeq          36
+      32: aconst_null
+      33: goto          41
+      36: aload         4
+      38: invokevirtual #810                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent$Player.getMessage:()Lnet/minecraft/network/chat/Component;
+      41: areturn
+
+  public static net.minecraft.network.chat.Component onClientSystemChat(net.minecraft.network.chat.Component, boolean);
+    Code:
+       0: new           #811                // class net/neoforged/neoforge/client/event/ClientChatReceivedEvent$System
+       3: dup
+       4: aload_0
+       5: iload_1
+       6: invokespecial #813                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent$System."<init>":(Lnet/minecraft/network/chat/Component;Z)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: checkcast     #811                // class net/neoforged/neoforge/client/event/ClientChatReceivedEvent$System
+      22: invokevirtual #816                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent$System.isCanceled:()Z
+      25: ifeq          32
+      28: aconst_null
+      29: goto          36
+      32: aload_2
+      33: invokevirtual #817                // Method net/neoforged/neoforge/client/event/ClientChatReceivedEvent$System.getMessage:()Lnet/minecraft/network/chat/Component;
+      36: areturn
+
+  public static java.lang.String onClientSendMessage(java.lang.String);
+    Code:
+       0: new           #818                // class net/neoforged/neoforge/client/event/ClientChatEvent
+       3: dup
+       4: aload_0
+       5: invokespecial #820                // Method net/neoforged/neoforge/client/event/ClientChatEvent."<init>":(Ljava/lang/String;)V
+       8: astore_1
+       9: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      12: aload_1
+      13: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      18: checkcast     #818                // class net/neoforged/neoforge/client/event/ClientChatEvent
+      21: invokevirtual #822                // Method net/neoforged/neoforge/client/event/ClientChatEvent.isCanceled:()Z
+      24: ifeq          33
+      27: ldc_w         #823                // String
+      30: goto          37
+      33: aload_1
+      34: invokevirtual #825                // Method net/neoforged/neoforge/client/event/ClientChatEvent.getMessage:()Ljava/lang/String;
+      37: areturn
+
+  public static void handleUpdateRecipes(net.minecraft.client.multiplayer.ClientPacketListener, java.util.function.Consumer<net.minecraft.world.level.block.entity.FuelValues>);
+    Code:
+       0: aload_0
+       1: invokevirtual #827                // Method net/minecraft/client/multiplayer/ClientPacketListener.getConnectionType:()Lnet/neoforged/neoforge/network/connection/ConnectionType;
+       4: invokevirtual #831                // Method net/neoforged/neoforge/network/connection/ConnectionType.isNeoForge:()Z
+       7: ifeq          30
+      10: aload_1
+      11: aload_0
+      12: invokevirtual #836                // Method net/minecraft/client/multiplayer/ClientPacketListener.registryAccess:()Lnet/minecraft/core/RegistryAccess$Frozen;
+      15: aload_0
+      16: invokevirtual #840                // Method net/minecraft/client/multiplayer/ClientPacketListener.enabledFeatures:()Lnet/minecraft/world/flag/FeatureFlagSet;
+      19: invokestatic  #844                // Method net/neoforged/neoforge/common/DataMapHooks.populateFuelValues:(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/flag/FeatureFlagSet;)Lnet/minecraft/world/level/block/entity/FuelValues;
+      22: invokeinterface #850,  2          // InterfaceMethod java/util/function/Consumer.accept:(Ljava/lang/Object;)V
+      27: goto          57
+      30: new           #855                // class net/neoforged/neoforge/client/event/RecipesReceivedEvent
+      33: dup
+      34: invokestatic  #857                // InterfaceMethod java/util/Set.of:()Ljava/util/Set;
+      37: invokestatic  #862                // InterfaceMethod java/util/List.of:()Ljava/util/List;
+      40: invokestatic  #867                // Method net/minecraft/world/item/crafting/RecipeMap.create:(Ljava/lang/Iterable;)Lnet/minecraft/world/item/crafting/RecipeMap;
+      43: invokespecial #873                // Method net/neoforged/neoforge/client/event/RecipesReceivedEvent."<init>":(Ljava/util/Set;Lnet/minecraft/world/item/crafting/RecipeMap;)V
+      46: astore_2
+      47: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      50: aload_2
+      51: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      56: pop
+      57: return
+
+  public static net.minecraft.client.gui.Font getTooltipFont(net.minecraft.world.item.ItemStack, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: invokestatic  #111                // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientItemExtensions.of:(Lnet/minecraft/world/item/ItemStack;)Lnet/neoforged/neoforge/client/extensions/common/IClientItemExtensions;
+       4: aload_0
+       5: getstatic     #876                // Field net/neoforged/neoforge/client/extensions/common/IClientItemExtensions$FontContext.TOOLTIP:Lnet/neoforged/neoforge/client/extensions/common/IClientItemExtensions$FontContext;
+       8: invokeinterface #882,  3          // InterfaceMethod net/neoforged/neoforge/client/extensions/common/IClientItemExtensions.getFont:(Lnet/minecraft/world/item/ItemStack;Lnet/neoforged/neoforge/client/extensions/common/IClientItemExtensions$FontContext;)Lnet/minecraft/client/gui/Font;
+      13: astore_2
+      14: aload_2
+      15: ifnonnull     22
+      18: aload_1
+      19: goto          23
+      22: aload_2
+      23: areturn
+
+  public static net.neoforged.neoforge.client.event.RenderTooltipEvent$Pre onRenderTooltipPre(net.minecraft.world.item.ItemStack, net.minecraft.client.gui.GuiGraphics, int, int, int, int, java.util.List<net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent>, net.minecraft.client.gui.Font, net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner);
+    Code:
+       0: new           #886                // class net/neoforged/neoforge/client/event/RenderTooltipEvent$Pre
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: iload_2
+       7: iload_3
+       8: iload         4
+      10: iload         5
+      12: aload_0
+      13: aload         7
+      15: invokestatic  #888                // Method getTooltipFont:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/gui/Font;)Lnet/minecraft/client/gui/Font;
+      18: aload         6
+      20: aload         8
+      22: invokespecial #892                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$Pre."<init>":(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/gui/GuiGraphics;IIIILnet/minecraft/client/gui/Font;Ljava/util/List;Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;)V
+      25: astore        9
+      27: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      30: aload         9
+      32: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      37: pop
+      38: aload         9
+      40: areturn
+
+  public static net.neoforged.neoforge.client.event.RenderTooltipEvent$Texture onRenderTooltipTexture(net.minecraft.world.item.ItemStack, net.minecraft.client.gui.GuiGraphics, int, int, net.minecraft.client.gui.Font, java.util.List<net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent>, net.minecraft.resources.Identifier);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #895                // class net/neoforged/neoforge/client/event/RenderTooltipEvent$Texture
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: iload_2
+      10: iload_3
+      11: aload         4
+      13: aload         5
+      15: aload         6
+      17: invokespecial #897                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$Texture."<init>":(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/gui/GuiGraphics;IILnet/minecraft/client/gui/Font;Ljava/util/List;Lnet/minecraft/resources/Identifier;)V
+      20: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: checkcast     #895                // class net/neoforged/neoforge/client/event/RenderTooltipEvent$Texture
+      28: areturn
+
+  public static java.util.List<net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent> gatherTooltipComponents(net.minecraft.world.item.ItemStack, java.util.List<? extends net.minecraft.network.chat.FormattedText>, int, int, int, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #900                // Method java/util/Optional.empty:()Ljava/util/Optional;
+       5: iload_2
+       6: iload_3
+       7: iload         4
+       9: aload         5
+      11: invokestatic  #906                // Method gatherTooltipComponents:(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;Ljava/util/Optional;IIILnet/minecraft/client/gui/Font;)Ljava/util/List;
+      14: areturn
+
+  public static java.util.List<net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent> gatherTooltipComponents(net.minecraft.world.item.ItemStack, java.util.List<? extends net.minecraft.network.chat.FormattedText>, java.util.Optional<net.minecraft.world.inventory.tooltip.TooltipComponent>, int, int, int, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_1
+       1: invokeinterface #910,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+       6: invokedynamic #914,  0            // InvokeDynamic #7:apply:()Ljava/util/function/Function;
+      11: invokeinterface #915,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      16: invokedynamic #921,  0            // InvokeDynamic #8:get:()Ljava/util/function/Supplier;
+      21: invokestatic  #924                // Method java/util/stream/Collectors.toCollection:(Ljava/util/function/Supplier;)Ljava/util/stream/Collector;
+      24: invokeinterface #930,  2          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+      29: checkcast     #863                // class java/util/List
+      32: astore        7
+      34: aload_2
+      35: aload         7
+      37: invokedynamic #934,  0            // InvokeDynamic #9:accept:(Ljava/util/List;)Ljava/util/function/Consumer;
+      42: invokevirtual #937                // Method java/util/Optional.ifPresent:(Ljava/util/function/Consumer;)V
+      45: aload_0
+      46: aload         7
+      48: iload_3
+      49: iload         4
+      51: iload         5
+      53: aload         6
+      55: invokestatic  #940                // Method gatherTooltipComponentsFromElements:(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;IIILnet/minecraft/client/gui/Font;)Ljava/util/List;
+      58: areturn
+
+  public static java.util.List<net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent> gatherTooltipComponentsFromElements(net.minecraft.world.item.ItemStack, java.util.List<com.mojang.datafixers.util.Either<net.minecraft.network.chat.FormattedText, net.minecraft.world.inventory.tooltip.TooltipComponent>>, int, int, int, net.minecraft.client.gui.Font);
+    Code:
+       0: aload_0
+       1: aload         5
+       3: invokestatic  #888                // Method getTooltipFont:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/client/gui/Font;)Lnet/minecraft/client/gui/Font;
+       6: astore        6
+       8: new           #944                // class net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents
+      11: dup
+      12: aload_0
+      13: iload_3
+      14: iload         4
+      16: aload_1
+      17: iconst_m1
+      18: invokespecial #946                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents."<init>":(Lnet/minecraft/world/item/ItemStack;IILjava/util/List;I)V
+      21: astore        7
+      23: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      26: aload         7
+      28: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      33: pop
+      34: aload         7
+      36: invokevirtual #949                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents.isCanceled:()Z
+      39: ifeq          46
+      42: invokestatic  #862                // InterfaceMethod java/util/List.of:()Ljava/util/List;
+      45: areturn
+      46: aload         7
+      48: invokevirtual #950                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents.getTooltipElements:()Ljava/util/List;
+      51: invokeinterface #910,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+      56: aload         6
+      58: invokedynamic #953,  0            // InvokeDynamic #10:applyAsInt:(Lnet/minecraft/client/gui/Font;)Ljava/util/function/ToIntFunction;
+      63: invokeinterface #957,  2          // InterfaceMethod java/util/stream/Stream.mapToInt:(Ljava/util/function/ToIntFunction;)Ljava/util/stream/IntStream;
+      68: invokeinterface #961,  1          // InterfaceMethod java/util/stream/IntStream.max:()Ljava/util/OptionalInt;
+      73: iconst_0
+      74: invokevirtual #967                // Method java/util/OptionalInt.orElse:(I)I
+      77: istore        8
+      79: iconst_0
+      80: istore        9
+      82: iload_2
+      83: bipush        12
+      85: iadd
+      86: istore        10
+      88: iload         10
+      90: iload         8
+      92: iadd
+      93: iconst_4
+      94: iadd
+      95: iload_3
+      96: if_icmple     144
+      99: iload_2
+     100: bipush        16
+     102: isub
+     103: iload         8
+     105: isub
+     106: istore        10
+     108: iload         10
+     110: iconst_4
+     111: if_icmpge     144
+     114: iload_2
+     115: iload_3
+     116: iconst_2
+     117: idiv
+     118: if_icmple     133
+     121: iload_2
+     122: bipush        12
+     124: isub
+     125: bipush        8
+     127: isub
+     128: istore        8
+     130: goto          141
+     133: iload_3
+     134: bipush        16
+     136: isub
+     137: iload_2
+     138: isub
+     139: istore        8
+     141: iconst_1
+     142: istore        9
+     144: aload         7
+     146: invokevirtual #972                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents.getMaxWidth:()I
+     149: ifle          172
+     152: iload         8
+     154: aload         7
+     156: invokevirtual #972                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents.getMaxWidth:()I
+     159: if_icmple     172
+     162: aload         7
+     164: invokevirtual #972                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents.getMaxWidth:()I
+     167: istore        8
+     169: iconst_1
+     170: istore        9
+     172: iload         8
+     174: istore        11
+     176: iload         9
+     178: ifeq          211
+     181: aload         7
+     183: invokevirtual #950                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents.getTooltipElements:()Ljava/util/List;
+     186: invokeinterface #910,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+     191: aload         6
+     193: iload         11
+     195: invokedynamic #975,  0            // InvokeDynamic #11:apply:(Lnet/minecraft/client/gui/Font;I)Ljava/util/function/Function;
+     200: invokeinterface #978,  2          // InterfaceMethod java/util/stream/Stream.flatMap:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+     205: invokeinterface #981,  1          // InterfaceMethod java/util/stream/Stream.toList:()Ljava/util/List;
+     210: areturn
+     211: aload         7
+     213: invokevirtual #950                // Method net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents.getTooltipElements:()Ljava/util/List;
+     216: invokeinterface #910,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+     221: invokedynamic #984,  0            // InvokeDynamic #12:apply:()Ljava/util/function/Function;
+     226: invokeinterface #915,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+     231: invokeinterface #981,  1          // InterfaceMethod java/util/stream/Stream.toList:()Ljava/util/List;
+     236: areturn
+
+  public static net.neoforged.neoforge.client.event.ScreenEvent$RenderInventoryMobEffects onScreenPotionSize(net.minecraft.client.gui.screens.Screen, int, boolean, int);
+    Code:
+       0: new           #1003               // class net/neoforged/neoforge/client/event/ScreenEvent$RenderInventoryMobEffects
+       3: dup
+       4: aload_0
+       5: iload_1
+       6: iload_2
+       7: iload_3
+       8: invokespecial #1005               // Method net/neoforged/neoforge/client/event/ScreenEvent$RenderInventoryMobEffects."<init>":(Lnet/minecraft/client/gui/screens/Screen;IZI)V
+      11: astore        4
+      13: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      16: aload         4
+      18: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      23: pop
+      24: aload         4
+      26: areturn
+
+  public static boolean onToastAdd(net.minecraft.client.gui.components.toasts.Toast);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1008               // class net/neoforged/neoforge/client/event/ToastAddEvent
+       6: dup
+       7: aload_0
+       8: invokespecial #1010               // Method net/neoforged/neoforge/client/event/ToastAddEvent."<init>":(Lnet/minecraft/client/gui/components/toasts/Toast;)V
+      11: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: checkcast     #1008               // class net/neoforged/neoforge/client/event/ToastAddEvent
+      19: invokevirtual #1013               // Method net/neoforged/neoforge/client/event/ToastAddEvent.isCanceled:()Z
+      22: ireturn
+
+  public static boolean renderFireOverlay(net.minecraft.world.entity.player.Player, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.resources.model.MaterialSet, net.minecraft.client.renderer.MultiBufferSource);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #1014               // Field net/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent$OverlayType.FIRE:Lnet/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent$OverlayType;
+       5: getstatic     #1020               // Field net/minecraft/world/level/block/Blocks.FIRE:Lnet/minecraft/world/level/block/Block;
+       8: invokevirtual #1025               // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+      11: aload_0
+      12: invokevirtual #1031               // Method net/minecraft/world/entity/player/Player.blockPosition:()Lnet/minecraft/core/BlockPos;
+      15: aload_2
+      16: aload_3
+      17: invokestatic  #1034               // Method renderBlockOverlay:(Lnet/minecraft/world/entity/player/Player;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent$OverlayType;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/client/resources/model/MaterialSet;Lnet/minecraft/client/renderer/MultiBufferSource;)Z
+      20: ireturn
+
+  public static boolean renderWaterOverlay(net.minecraft.world.entity.player.Player, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.resources.model.MaterialSet, net.minecraft.client.renderer.MultiBufferSource);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #1038               // Field net/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent$OverlayType.WATER:Lnet/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent$OverlayType;
+       5: getstatic     #1041               // Field net/minecraft/world/level/block/Blocks.WATER:Lnet/minecraft/world/level/block/Block;
+       8: invokevirtual #1025               // Method net/minecraft/world/level/block/Block.defaultBlockState:()Lnet/minecraft/world/level/block/state/BlockState;
+      11: aload_0
+      12: invokevirtual #1031               // Method net/minecraft/world/entity/player/Player.blockPosition:()Lnet/minecraft/core/BlockPos;
+      15: aload_2
+      16: aload_3
+      17: invokestatic  #1034               // Method renderBlockOverlay:(Lnet/minecraft/world/entity/player/Player;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent$OverlayType;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/client/resources/model/MaterialSet;Lnet/minecraft/client/renderer/MultiBufferSource;)Z
+      20: ireturn
+
+  public static boolean renderBlockOverlay(net.minecraft.world.entity.player.Player, com.mojang.blaze3d.vertex.PoseStack, net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent$OverlayType, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.client.resources.model.MaterialSet, net.minecraft.client.renderer.MultiBufferSource);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1043               // class net/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: aload         4
+      13: aload         5
+      15: aload         6
+      17: invokespecial #1045               // Method net/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent."<init>":(Lnet/minecraft/world/entity/player/Player;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent$OverlayType;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/client/resources/model/MaterialSet;Lnet/minecraft/client/renderer/MultiBufferSource;)V
+      20: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      25: checkcast     #1043               // class net/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent
+      28: invokevirtual #1048               // Method net/neoforged/neoforge/client/event/RenderBlockScreenEffectEvent.isCanceled:()Z
+      31: ireturn
+
+  public static java.util.List<net.neoforged.neoforge.client.event.AddSectionGeometryEvent$AdditionalSectionRenderer> gatherAdditionalRenderers(net.minecraft.core.BlockPos, net.minecraft.world.level.Level);
+    Code:
+       0: new           #1049               // class net/neoforged/neoforge/client/event/AddSectionGeometryEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #1051               // Method net/neoforged/neoforge/client/event/AddSectionGeometryEvent."<init>":(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;)V
+       9: astore_2
+      10: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      13: aload_2
+      14: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      19: pop
+      20: aload_2
+      21: invokevirtual #1054               // Method net/neoforged/neoforge/client/event/AddSectionGeometryEvent.getAdditionalRenderers:()Ljava/util/List;
+      24: areturn
+
+  public static void addAdditionalGeometry(java.util.List<net.neoforged.neoforge.client.event.AddSectionGeometryEvent$AdditionalSectionRenderer>, java.util.function.Function<net.minecraft.client.renderer.chunk.ChunkSectionLayer, com.mojang.blaze3d.vertex.VertexConsumer>, net.minecraft.client.renderer.chunk.RenderSectionRegion, com.mojang.blaze3d.vertex.PoseStack);
+    Code:
+       0: aload_0
+       1: invokeinterface #1057,  1         // InterfaceMethod java/util/List.isEmpty:()Z
+       6: ifeq          10
+       9: return
+      10: new           #1058               // class net/neoforged/neoforge/client/event/AddSectionGeometryEvent$SectionRenderingContext
+      13: dup
+      14: aload_1
+      15: aload_2
+      16: aload_3
+      17: invokespecial #1060               // Method net/neoforged/neoforge/client/event/AddSectionGeometryEvent$SectionRenderingContext."<init>":(Ljava/util/function/Function;Lnet/minecraft/world/level/BlockAndTintGetter;Lcom/mojang/blaze3d/vertex/PoseStack;)V
+      20: astore        4
+      22: aload_0
+      23: invokeinterface #1063,  1         // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      28: astore        5
+      30: aload         5
+      32: invokeinterface #1067,  1         // InterfaceMethod java/util/Iterator.hasNext:()Z
+      37: ifeq          64
+      40: aload         5
+      42: invokeinterface #1072,  1         // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      47: checkcast     #1075               // class net/neoforged/neoforge/client/event/AddSectionGeometryEvent$AdditionalSectionRenderer
+      50: astore        6
+      52: aload         6
+      54: aload         4
+      56: invokeinterface #1077,  2         // InterfaceMethod net/neoforged/neoforge/client/event/AddSectionGeometryEvent$AdditionalSectionRenderer.render:(Lnet/neoforged/neoforge/client/event/AddSectionGeometryEvent$SectionRenderingContext;)V
+      61: goto          30
+      64: return
+
+  public static void initClientHooks(net.minecraft.client.Minecraft, net.minecraft.server.packs.resources.ReloadableResourceManager);
+    Code:
+       0: getstatic     #1081               // Field initializedClientHooks:Z
+       3: ifeq          17
+       6: new           #1084               // class java/lang/IllegalStateException
+       9: dup
+      10: ldc_w         #1086               // String Client hooks initialized more than once
+      13: invokespecial #1088               // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+      16: athrow
+      17: iconst_1
+      18: putstatic     #1081               // Field initializedClientHooks:Z
+      21: invokestatic  #1089               // Method net/neoforged/neoforge/client/extensions/common/ClientExtensionsManager.init:()V
+      24: invokestatic  #1093               // Method net/minecraft/client/gui/screens/MenuScreens.init:()V
+      27: invokestatic  #1096               // Method initClientRegistries:()V
+      30: new           #1099               // class net/neoforged/neoforge/client/event/AddClientReloadListenersEvent
+      33: dup
+      34: aload_1
+      35: invokespecial #1101               // Method net/neoforged/neoforge/client/event/AddClientReloadListenersEvent."<init>":(Lnet/minecraft/server/packs/resources/ReloadableResourceManager;)V
+      38: astore_2
+      39: aload_2
+      40: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      43: aload_1
+      44: aload_2
+      45: invokevirtual #1104               // Method net/minecraft/server/packs/resources/ReloadableResourceManager.updateListenersFrom:(Lnet/neoforged/neoforge/event/SortedReloadListenerEvent;)V
+      48: new           #1110               // class net/neoforged/neoforge/client/event/EntityRenderersEvent$RegisterLayerDefinitions
+      51: dup
+      52: invokespecial #1112               // Method net/neoforged/neoforge/client/event/EntityRenderersEvent$RegisterLayerDefinitions."<init>":()V
+      55: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      58: new           #1113               // class net/neoforged/neoforge/client/event/EntityRenderersEvent$CreateSkullModels
+      61: dup
+      62: getstatic     #741                // Field skullModelsByType:Ljava/util/Map;
+      65: getstatic     #1115               // Field net/minecraft/client/renderer/blockentity/SkullBlockRenderer.SKIN_BY_TYPE:Ljava/util/Map;
+      68: invokespecial #1120               // Method net/neoforged/neoforge/client/event/EntityRenderersEvent$CreateSkullModels."<init>":(Ljava/util/Map;Ljava/util/Map;)V
+      71: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      74: new           #1123               // class net/neoforged/neoforge/client/event/EntityRenderersEvent$RegisterRenderers
+      77: dup
+      78: invokespecial #1125               // Method net/neoforged/neoforge/client/event/EntityRenderersEvent$RegisterRenderers."<init>":()V
+      81: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      84: new           #1126               // class net/neoforged/neoforge/client/renderstate/RegisterRenderStateModifiersEvent
+      87: dup
+      88: invokespecial #1128               // Method net/neoforged/neoforge/client/renderstate/RegisterRenderStateModifiersEvent."<init>":()V
+      91: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      94: invokestatic  #1129               // Method net/neoforged/neoforge/client/gui/ClientTooltipComponentManager.init:()V
+      97: invokestatic  #1132               // Method net/neoforged/neoforge/client/EntitySpectatorShaderManager.init:()V
+     100: invokestatic  #1133               // Method net/neoforged/neoforge/client/RecipeBookManager.init:()V
+     103: aload_0
+     104: getfield      #1136               // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+     107: invokevirtual #1140               // Method net/minecraft/client/gui/Gui.initModdedOverlays:()V
+     110: invokestatic  #1145               // Method net/neoforged/neoforge/client/CustomEnvironmentEffectsRendererManager.init:()V
+     113: invokestatic  #1148               // Method net/neoforged/neoforge/client/NamedRenderTypeManager.init:()V
+     116: invokestatic  #1151               // Method net/neoforged/neoforge/client/ColorResolverManager.init:()V
+     119: invokestatic  #1154               // Method net/neoforged/neoforge/client/ItemDecoratorHandler.init:()V
+     122: invokestatic  #1157               // Method net/neoforged/neoforge/client/PresetEditorManager.init:()V
+     125: invokestatic  #1160               // Method net/neoforged/neoforge/client/gui/map/MapDecorationRendererManager.init:()V
+     128: invokestatic  #1163               // Method net/neoforged/neoforge/client/DimensionTransitionScreenManager.init:()V
+     131: invokestatic  #1166               // Method net/minecraft/client/renderer/RenderPipelines.registerCustomPipelines:()V
+     134: invokestatic  #1171               // Method net/neoforged/neoforge/client/pipeline/PipelineModifiers.init:()V
+     137: invokestatic  #1174               // Method net/neoforged/neoforge/client/gamerules/GameRuleEntryFactoryManager.register:()V
+     140: return
+
+  public static void initClientRegistries();
+    Code:
+       0: getstatic     #1179               // Field initializedClientRegistries:Z
+       3: ifeq          17
+       6: new           #1084               // class java/lang/IllegalStateException
+       9: dup
+      10: ldc_w         #1182               // String Client registries initialized more than once
+      13: invokespecial #1088               // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+      16: athrow
+      17: iconst_1
+      18: putstatic     #1179               // Field initializedClientRegistries:Z
+      21: invokestatic  #1184               // Method net/neoforged/neoforge/client/entity/animation/json/AnimationTypeManager.init:()V
+      24: invokestatic  #1187               // Method net/neoforged/neoforge/client/model/block/BlockStateModelHooks.init:()V
+      27: new           #1190               // class net/neoforged/neoforge/client/event/InitializeClientRegistriesEvent
+      30: dup
+      31: invokespecial #1192               // Method net/neoforged/neoforge/client/event/InitializeClientRegistriesEvent."<init>":()V
+      34: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      37: return
+
+  public static void fireRenderFramePre(net.minecraft.client.DeltaTracker);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1193               // class net/neoforged/neoforge/client/event/RenderFrameEvent$Pre
+       6: dup
+       7: aload_0
+       8: invokespecial #1195               // Method net/neoforged/neoforge/client/event/RenderFrameEvent$Pre."<init>":(Lnet/minecraft/client/DeltaTracker;)V
+      11: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static void fireRenderFramePost(net.minecraft.client.DeltaTracker);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1198               // class net/neoforged/neoforge/client/event/RenderFrameEvent$Post
+       6: dup
+       7: aload_0
+       8: invokespecial #1200               // Method net/neoforged/neoforge/client/event/RenderFrameEvent$Post."<init>":(Lnet/minecraft/client/DeltaTracker;)V
+      11: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: invokestatic  #1201               // Method com/mojang/blaze3d/systems/RenderSystem.ensurePipelineModifiersEmpty:()V
+      20: return
+
+  public static void fireResourceLoadFinishedEvent(boolean);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1206               // class net/neoforged/neoforge/client/event/ClientResourceLoadFinishedEvent
+       6: dup
+       7: iload_0
+       8: invokespecial #1208               // Method net/neoforged/neoforge/client/event/ClientResourceLoadFinishedEvent."<init>":(Z)V
+      11: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      16: pop
+      17: return
+
+  public static void fireClientTickPre();
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1209               // class net/neoforged/neoforge/client/event/ClientTickEvent$Pre
+       6: dup
+       7: invokespecial #1211               // Method net/neoforged/neoforge/client/event/ClientTickEvent$Pre."<init>":()V
+      10: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      15: pop
+      16: return
+
+  public static void fireClientTickPost();
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1212               // class net/neoforged/neoforge/client/event/ClientTickEvent$Post
+       6: dup
+       7: invokespecial #1214               // Method net/neoforged/neoforge/client/event/ClientTickEvent$Post."<init>":()V
+      10: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      15: pop
+      16: return
+
+  public static java.util.List<net.minecraft.network.chat.Component> getEffectTooltip(net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?>, net.minecraft.world.effect.MobEffectInstance, java.util.List<net.minecraft.network.chat.Component>);
+    Code:
+       0: new           #1215               // class net/neoforged/neoforge/client/event/GatherEffectScreenTooltipsEvent
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: aload_2
+       7: invokespecial #1217               // Method net/neoforged/neoforge/client/event/GatherEffectScreenTooltipsEvent."<init>":(Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;Lnet/minecraft/world/effect/MobEffectInstance;Ljava/util/List;)V
+      10: astore_3
+      11: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+      14: aload_3
+      15: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      20: pop
+      21: aload_3
+      22: invokevirtual #1220               // Method net/neoforged/neoforge/client/event/GatherEffectScreenTooltipsEvent.getTooltip:()Ljava/util/List;
+      25: areturn
+
+  public static boolean isInTranslucentBlockOutlinePass(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+    Code:
+       0: getstatic     #1223               // Field OUTLINE_PASS_RANDOM:Lnet/minecraft/util/RandomSource;
+       3: ldc2_w        #1227               // long 42l
+       6: invokeinterface #1229,  3         // InterfaceMethod net/minecraft/util/RandomSource.setSeed:(J)V
+      11: getstatic     #1235               // Field OUTLINE_PART_SCRATCH_LIST:Ljava/util/List;
+      14: invokeinterface #1239,  1         // InterfaceMethod java/util/List.clear:()V
+      19: invokestatic  #555                // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+      22: invokevirtual #1242               // Method net/minecraft/client/Minecraft.getBlockRenderer:()Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;
+      25: aload_2
+      26: invokevirtual #1246               // Method net/minecraft/client/renderer/block/BlockRenderDispatcher.getBlockModel:(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/client/renderer/block/model/BlockStateModel;
+      29: astore_3
+      30: aload_3
+      31: aload_0
+      32: aload_1
+      33: aload_2
+      34: getstatic     #1223               // Field OUTLINE_PASS_RANDOM:Lnet/minecraft/util/RandomSource;
+      37: getstatic     #1235               // Field OUTLINE_PART_SCRATCH_LIST:Ljava/util/List;
+      40: invokeinterface #1252,  6         // InterfaceMethod net/minecraft/client/renderer/block/model/BlockStateModel.collectParts:(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;Ljava/util/List;)V
+      45: getstatic     #1235               // Field OUTLINE_PART_SCRATCH_LIST:Ljava/util/List;
+      48: invokeinterface #1063,  1         // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      53: astore        4
+      55: aload         4
+      57: invokeinterface #1067,  1         // InterfaceMethod java/util/Iterator.hasNext:()Z
+      62: ifeq          108
+      65: aload         4
+      67: invokeinterface #1072,  1         // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      72: checkcast     #1258               // class net/minecraft/client/renderer/block/model/BlockModelPart
+      75: astore        5
+      77: aload         5
+      79: aload_2
+      80: invokeinterface #1260,  2         // InterfaceMethod net/minecraft/client/renderer/block/model/BlockModelPart.getRenderType:(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;
+      85: astore        6
+      87: aload         6
+      89: getstatic     #1264               // Field net/minecraft/client/renderer/chunk/ChunkSectionLayer.TRANSLUCENT:Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;
+      92: if_acmpeq     103
+      95: aload         6
+      97: getstatic     #1270               // Field net/minecraft/client/renderer/chunk/ChunkSectionLayer.TRIPWIRE:Lnet/minecraft/client/renderer/chunk/ChunkSectionLayer;
+     100: if_acmpne     105
+     103: iconst_1
+     104: ireturn
+     105: goto          55
+     108: iconst_0
+     109: ireturn
+
+  public static void reloadRenderer();
+    Code:
+       0: invokestatic  #555                // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+       3: getfield      #1273               // Field net/minecraft/client/Minecraft.levelRenderer:Lnet/minecraft/client/renderer/LevelRenderer;
+       6: invokevirtual #1277               // Method net/minecraft/client/renderer/LevelRenderer.allChanged:()V
+       9: return
+
+  public static java.util.List<net.minecraft.client.resources.model.AtlasManager$AtlasConfig> gatherTextureAtlases(java.util.List<net.minecraft.client.resources.model.AtlasManager$AtlasConfig>);
+    Code:
+       0: new           #1282               // class java/util/LinkedHashMap
+       3: dup
+       4: aload_0
+       5: invokeinterface #1284,  1         // InterfaceMethod java/util/List.size:()I
+      10: invokespecial #1287               // Method java/util/LinkedHashMap."<init>":(I)V
+      13: astore_1
+      14: aload_0
+      15: aload_1
+      16: invokedynamic #1290,  0           // InvokeDynamic #14:accept:(Ljava/util/SequencedMap;)Ljava/util/function/Consumer;
+      21: invokeinterface #1293,  2         // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      26: new           #1294               // class net/neoforged/neoforge/client/event/RegisterTextureAtlasesEvent
+      29: dup
+      30: aload_1
+      31: invokespecial #1296               // Method net/neoforged/neoforge/client/event/RegisterTextureAtlasesEvent."<init>":(Ljava/util/SequencedMap;)V
+      34: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      37: aload_1
+      38: invokeinterface #1299,  1         // InterfaceMethod java/util/SequencedMap.values:()Ljava/util/Collection;
+      43: invokestatic  #1305               // InterfaceMethod java/util/List.copyOf:(Ljava/util/Collection;)Ljava/util/List;
+      46: areturn
+
+  public static net.neoforged.neoforge.client.event.FrameGraphSetupEvent fireFrameGraphSetup(com.mojang.blaze3d.framegraph.FrameGraphBuilder, net.minecraft.client.renderer.LevelTargetBundle, com.mojang.blaze3d.resource.RenderTargetDescriptor, net.minecraft.client.renderer.culling.Frustum, net.minecraft.client.Camera, org.joml.Matrix4f, org.joml.Matrix4f, net.minecraft.client.DeltaTracker, net.minecraft.util.profiling.ProfilerFiller);
+    Code:
+       0: getstatic     #90                 // Field net/neoforged/neoforge/common/NeoForge.EVENT_BUS:Lnet/neoforged/bus/api/IEventBus;
+       3: new           #1309               // class net/neoforged/neoforge/client/event/FrameGraphSetupEvent
+       6: dup
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: aload         4
+      13: aload         5
+      15: aload         6
+      17: aload         7
+      19: aload         8
+      21: invokespecial #1311               // Method net/neoforged/neoforge/client/event/FrameGraphSetupEvent."<init>":(Lcom/mojang/blaze3d/framegraph/FrameGraphBuilder;Lnet/minecraft/client/renderer/LevelTargetBundle;Lcom/mojang/blaze3d/resource/RenderTargetDescriptor;Lnet/minecraft/client/renderer/culling/Frustum;Lnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lnet/minecraft/client/DeltaTracker;Lnet/minecraft/util/profiling/ProfilerFiller;)V
+      24: invokeinterface #101,  2          // InterfaceMethod net/neoforged/bus/api/IEventBus.post:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      29: checkcast     #1309               // class net/neoforged/neoforge/client/event/FrameGraphSetupEvent
+      32: areturn
+
+  public static com.mojang.blaze3d.pipeline.MainTarget instantiateMainTarget(int, int);
+    Code:
+       0: new           #1314               // class net/neoforged/neoforge/client/event/ConfigureMainRenderTargetEvent
+       3: dup
+       4: invokespecial #1316               // Method net/neoforged/neoforge/client/event/ConfigureMainRenderTargetEvent."<init>":()V
+       7: invokestatic  #1317               // Method net/neoforged/fml/ModLoader.postEventWithReturn:(Lnet/neoforged/bus/api/Event;)Lnet/neoforged/bus/api/Event;
+      10: checkcast     #1314               // class net/neoforged/neoforge/client/event/ConfigureMainRenderTargetEvent
+      13: astore_2
+      14: new           #1320               // class com/mojang/blaze3d/pipeline/MainTarget
+      17: dup
+      18: iload_0
+      19: iload_1
+      20: aload_2
+      21: invokevirtual #1322               // Method net/neoforged/neoforge/client/event/ConfigureMainRenderTargetEvent.isStencilEnabled:()Z
+      24: invokespecial #1325               // Method com/mojang/blaze3d/pipeline/MainTarget."<init>":(IIZ)V
+      27: areturn
+
+  public static com.mojang.blaze3d.textures.TextureFormat getStencilFormat();
+    Code:
+       0: getstatic     #1328               // Field net/neoforged/neoforge/client/config/NeoForgeClientConfig.INSTANCE:Lnet/neoforged/neoforge/client/config/NeoForgeClientConfig;
+       3: getfield      #1334               // Field net/neoforged/neoforge/client/config/NeoForgeClientConfig.reducedDepthStencilFormat:Lnet/neoforged/neoforge/common/ModConfigSpec$BooleanValue;
+       6: invokevirtual #1338               // Method net/neoforged/neoforge/common/ModConfigSpec$BooleanValue.getAsBoolean:()Z
+       9: istore_0
+      10: iload_0
+      11: ifeq          20
+      14: getstatic     #1343               // Field com/mojang/blaze3d/textures/TextureFormat.DEPTH24_STENCIL8:Lcom/mojang/blaze3d/textures/TextureFormat;
+      17: goto          23
+      20: getstatic     #1349               // Field com/mojang/blaze3d/textures/TextureFormat.DEPTH32_STENCIL8:Lcom/mojang/blaze3d/textures/TextureFormat;
+      23: areturn
+
+  public static net.minecraft.client.gui.screens.Overlay createLoadingOverlay(net.minecraft.client.Minecraft, net.minecraft.server.packs.resources.ReloadInstance, java.util.function.Consumer<java.util.Optional<java.lang.Throwable>>, boolean);
+    Code:
+       0: invokestatic  #1352               // InterfaceMethod net/neoforged/fml/loading/EarlyLoadingScreenController.current:()Lnet/neoforged/fml/loading/EarlyLoadingScreenController;
+       3: astore        5
+       5: aload         5
+       7: instanceof    #1358               // class net/neoforged/fml/earlydisplay/DisplayWindow
+      10: ifeq          33
+      13: aload         5
+      15: checkcast     #1358               // class net/neoforged/fml/earlydisplay/DisplayWindow
+      18: astore        4
+      20: new           #1360               // class net/neoforged/neoforge/client/loading/NeoForgeLoadingOverlay
+      23: dup
+      24: aload_0
+      25: aload_1
+      26: aload_2
+      27: aload         4
+      29: invokespecial #1362               // Method net/neoforged/neoforge/client/loading/NeoForgeLoadingOverlay."<init>":(Lnet/minecraft/client/Minecraft;Lnet/minecraft/server/packs/resources/ReloadInstance;Ljava/util/function/Consumer;Lnet/neoforged/fml/earlydisplay/DisplayWindow;)V
+      32: areturn
+      33: new           #1365               // class net/minecraft/client/gui/screens/LoadingOverlay
+      36: dup
+      37: aload_0
+      38: aload_1
+      39: aload_2
+      40: iload_3
+      41: invokespecial #1367               // Method net/minecraft/client/gui/screens/LoadingOverlay."<init>":(Lnet/minecraft/client/Minecraft;Lnet/minecraft/server/packs/resources/ReloadInstance;Ljava/util/function/Consumer;Z)V
+      44: areturn
+
+  public static java.util.Set<net.minecraft.server.packs.metadata.MetadataSectionType<?>> getSpriteDefaultMetadataSectionTypes(java.util.Set<net.minecraft.server.packs.metadata.MetadataSectionType<?>>);
+    Code:
+       0: getstatic     #1370               // Field DEFAULT_METADATA_SECTION_TYPES:Ljava/util/HashSet;
+       3: aload_0
+       4: invokevirtual #1374               // Method java/util/HashSet.addAll:(Ljava/util/Collection;)Z
+       7: pop
+       8: getstatic     #1370               // Field DEFAULT_METADATA_SECTION_TYPES:Ljava/util/HashSet;
+      11: invokestatic  #1380               // Method java/util/Collections.unmodifiableSet:(Ljava/util/Set;)Ljava/util/Set;
+      14: areturn
+
+  public static java.util.List<net.neoforged.neoforge.client.gui.PictureInPictureRendererRegistration<?>> gatherPictureInPictureRenderers(java.util.List<net.neoforged.neoforge.client.gui.PictureInPictureRendererRegistration<?>>);
+    Code:
+       0: new           #1386               // class java/util/ArrayList
+       3: dup
+       4: aload_0
+       5: invokespecial #1388               // Method java/util/ArrayList."<init>":(Ljava/util/Collection;)V
+       8: astore_0
+       9: new           #1391               // class net/neoforged/neoforge/client/event/RegisterPictureInPictureRenderersEvent
+      12: dup
+      13: aload_0
+      14: invokespecial #1393               // Method net/neoforged/neoforge/client/event/RegisterPictureInPictureRenderersEvent."<init>":(Ljava/util/List;)V
+      17: invokestatic  #149                // Method net/neoforged/fml/ModLoader.postEvent:(Lnet/neoforged/bus/api/Event;)V
+      20: aload_0
+      21: invokestatic  #1305               // InterfaceMethod java/util/List.copyOf:(Ljava/util/Collection;)Ljava/util/List;
+      24: areturn
+
+  public static com.mojang.blaze3d.systems.GpuDevice createGpuDevice(long, int, boolean, com.mojang.blaze3d.shaders.ShaderSource, boolean);
+    Code:
+       0: new           #1395               // class com/mojang/blaze3d/opengl/GlDevice
+       3: dup
+       4: lload_0
+       5: iload_2
+       6: iload_3
+       7: aload         4
+       9: iload         5
+      11: invokespecial #1397               // Method com/mojang/blaze3d/opengl/GlDevice."<init>":(JIZLcom/mojang/blaze3d/shaders/ShaderSource;Z)V
+      14: astore        6
+      16: getstatic     #1328               // Field net/neoforged/neoforge/client/config/NeoForgeClientConfig.INSTANCE:Lnet/neoforged/neoforge/client/config/NeoForgeClientConfig;
+      19: getfield      #1400               // Field net/neoforged/neoforge/client/config/NeoForgeClientConfig.enableB3DValidationLayer:Lnet/neoforged/neoforge/common/ModConfigSpec$BooleanValue;
+      22: invokevirtual #1338               // Method net/neoforged/neoforge/common/ModConfigSpec$BooleanValue.getAsBoolean:()Z
+      25: istore        7
+      27: goto          49
+      30: astore        8
+      32: getstatic     #1328               // Field net/neoforged/neoforge/client/config/NeoForgeClientConfig.INSTANCE:Lnet/neoforged/neoforge/client/config/NeoForgeClientConfig;
+      35: getfield      #1400               // Field net/neoforged/neoforge/client/config/NeoForgeClientConfig.enableB3DValidationLayer:Lnet/neoforged/neoforge/common/ModConfigSpec$BooleanValue;
+      38: invokevirtual #1405               // Method net/neoforged/neoforge/common/ModConfigSpec$BooleanValue.getDefault:()Ljava/lang/Object;
+      41: checkcast     #1408               // class java/lang/Boolean
+      44: invokevirtual #1410               // Method java/lang/Boolean.booleanValue:()Z
+      47: istore        7
+      49: iload         7
+      51: ifeq          65
+      54: new           #1413               // class net/neoforged/neoforge/client/blaze3d/validation/ValidationGpuDevice
+      57: dup
+      58: aload         6
+      60: iconst_1
+      61: invokespecial #1415               // Method net/neoforged/neoforge/client/blaze3d/validation/ValidationGpuDevice."<init>":(Lcom/mojang/blaze3d/systems/GpuDevice;Z)V
+      64: areturn
+      65: aload         6
+      67: areturn
+    Exception table:
+       from    to  target type
+          16    27    30   Class java/lang/NullPointerException
+          16    27    30   Class java/lang/IllegalStateException
+
+  public static joptsimple.ValueConverter<java.lang.String> convertUsername();
+    Code:
+       0: new           #1418               // class net/neoforged/neoforge/client/ClientHooks$1
+       3: dup
+       4: invokespecial #1420               // Method net/neoforged/neoforge/client/ClientHooks$1."<init>":()V
+       7: areturn
+
+  public static <T> joptsimple.ArgumentAcceptingOptionSpec<T> optionalInDev(joptsimple.ArgumentAcceptingOptionSpec<T>, T);
+    Code:
+       0: invokestatic  #1421               // Method net/neoforged/fml/loading/FMLEnvironment.isProduction:()Z
+       3: ifeq          11
+       6: aload_0
+       7: invokevirtual #1426               // Method joptsimple/ArgumentAcceptingOptionSpec.required:()Ljoptsimple/ArgumentAcceptingOptionSpec;
+      10: areturn
+      11: aload_0
+      12: aload_1
+      13: iconst_0
+      14: anewarray     #2                  // class java/lang/Object
+      17: invokevirtual #1432               // Method joptsimple/ArgumentAcceptingOptionSpec.defaultsTo:(Ljava/lang/Object;[Ljava/lang/Object;)Ljoptsimple/ArgumentAcceptingOptionSpec;
+      20: areturn
+
+  public static void updateDebugScreenEntriesForSearch(java.lang.String, java.util.function.Consumer<net.minecraft.client.gui.components.debug.DebugEntryCategory>, java.util.function.Consumer<net.minecraft.resources.Identifier>);
+    Code:
+       0: invokestatic  #1436               // Method com/google/common/collect/MultimapBuilder.hashKeys:()Lcom/google/common/collect/MultimapBuilder$MultimapBuilderWithKeys;
+       3: invokevirtual #1442               // Method com/google/common/collect/MultimapBuilder$MultimapBuilderWithKeys.arrayListValues:()Lcom/google/common/collect/MultimapBuilder$ListMultimapBuilder;
+       6: invokevirtual #1448               // Method com/google/common/collect/MultimapBuilder$ListMultimapBuilder.build:()Lcom/google/common/collect/ListMultimap;
+       9: astore_3
+      10: invokestatic  #1454               // Method net/minecraft/client/gui/components/debug/DebugScreenEntries.allEntries:()Ljava/util/Map;
+      13: aload_0
+      14: aload_3
+      15: invokedynamic #1460,  0           // InvokeDynamic #15:accept:(Ljava/lang/String;Lcom/google/common/collect/ListMultimap;)Ljava/util/function/BiConsumer;
+      20: invokeinterface #738,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+      25: aload_3
+      26: invokeinterface #1463,  1         // InterfaceMethod com/google/common/collect/ListMultimap.keySet:()Ljava/util/Set;
+      31: invokestatic  #1468               // Method com/google/common/collect/Lists.newArrayList:(Ljava/lang/Iterable;)Ljava/util/ArrayList;
+      34: astore        4
+      36: aload         4
+      38: invokedynamic #1474,  0           // InvokeDynamic #16:compare:()Ljava/util/Comparator;
+      43: invokevirtual #1478               // Method java/util/ArrayList.sort:(Ljava/util/Comparator;)V
+      46: aload         4
+      48: aload_1
+      49: aload_3
+      50: aload_2
+      51: invokedynamic #1482,  0           // InvokeDynamic #17:accept:(Ljava/util/function/Consumer;Lcom/google/common/collect/ListMultimap;Ljava/util/function/Consumer;)Ljava/util/function/Consumer;
+      56: invokevirtual #1485               // Method java/util/ArrayList.forEach:(Ljava/util/function/Consumer;)V
+      59: return
+
+  static {};
+    Code:
+       0: invokestatic  #1650               // Method org/apache/logging/log4j/LogManager.getLogger:()Lorg/apache/logging/log4j/Logger;
+       3: putstatic     #1624               // Field LOGGER:Lorg/apache/logging/log4j/Logger;
+       6: ldc_w         #1656               // String CLIENTHOOKS
+       9: invokestatic  #1658               // Method org/apache/logging/log4j/MarkerManager.getMarker:(Ljava/lang/String;)Lorg/apache/logging/log4j/Marker;
+      12: putstatic     #1664               // Field CLIENTHOOKS:Lorg/apache/logging/log4j/Marker;
+      15: new           #18                 // class java/util/Stack
+      18: dup
+      19: invokespecial #1667               // Method java/util/Stack."<init>":()V
+      22: putstatic     #7                  // Field guiLayers:Ljava/util/Stack;
+      25: iconst_0
+      26: putstatic     #539                // Field slotMainHand:I
+      29: new           #1668               // class java/util/HashMap
+      32: dup
+      33: invokespecial #1670               // Method java/util/HashMap."<init>":()V
+      36: putstatic     #725                // Field layerDefinitions:Ljava/util/Map;
+      39: new           #1668               // class java/util/HashMap
+      42: dup
+      43: invokespecial #1670               // Method java/util/HashMap."<init>":()V
+      46: putstatic     #741                // Field skullModelsByType:Ljava/util/Map;
+      49: ldc_w         #1671               // String neoforge
+      52: ldc_w         #1673               // String textures/gui/icons.png
+      55: invokestatic  #1675               // Method net/minecraft/resources/Identifier.fromNamespaceAndPath:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/Identifier;
+      58: putstatic     #1679               // Field ICON_SHEET:Lnet/minecraft/resources/Identifier;
+      61: iconst_0
+      62: putstatic     #1081               // Field initializedClientHooks:Z
+      65: iconst_0
+      66: putstatic     #1179               // Field initializedClientRegistries:Z
+      69: invokestatic  #1682               // InterfaceMethod net/minecraft/util/RandomSource.create:()Lnet/minecraft/util/RandomSource;
+      72: putstatic     #1223               // Field OUTLINE_PASS_RANDOM:Lnet/minecraft/util/RandomSource;
+      75: new           #1685               // class it/unimi/dsi/fastutil/objects/ObjectArrayList
+      78: dup
+      79: invokespecial #1687               // Method it/unimi/dsi/fastutil/objects/ObjectArrayList."<init>":()V
+      82: putstatic     #1235               // Field OUTLINE_PART_SCRATCH_LIST:Ljava/util/List;
+      85: new           #1375               // class java/util/HashSet
+      88: dup
+      89: invokespecial #1688               // Method java/util/HashSet."<init>":()V
+      92: putstatic     #1370               // Field DEFAULT_METADATA_SECTION_TYPES:Ljava/util/HashSet;
+      95: return
+}

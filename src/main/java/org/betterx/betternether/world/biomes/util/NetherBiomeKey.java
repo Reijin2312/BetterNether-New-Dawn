@@ -4,12 +4,12 @@ import org.betterx.betternether.world.NetherBiomeConfig;
 import org.betterx.wover.biome.api.BiomeKey;
 import org.betterx.wover.biome.api.builder.BiomeBootstrapContext;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import org.jetbrains.annotations.NotNull;
 
 public class NetherBiomeKey<C extends NetherBiomeConfig> extends BiomeKey<NetherBiomeBuilder> {
-    protected NetherBiomeKey(@NotNull ResourceLocation location) {
+    protected NetherBiomeKey(@NotNull Identifier location) {
         super(location);
     }
 

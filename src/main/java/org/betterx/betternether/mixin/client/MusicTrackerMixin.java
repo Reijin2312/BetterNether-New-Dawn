@@ -42,7 +42,7 @@ public abstract class MusicTrackerMixin {
 
     @Unique
     private boolean bn_shouldChangeMusic(Music toMusic) {
-        return currentMusic == null || !toMusic.getEvent().value().getLocation().equals(currentMusic.getLocation());
+        return currentMusic == null || !toMusic.sound().value().location().equals(currentMusic.getIdentifier());
     }
 
     /** Returns currentMusic.getVolume() or fallback if the sound is not yet initialized (avoids NPE). */
@@ -80,10 +80,10 @@ public abstract class MusicTrackerMixin {
             currentMusic = null;
             nextSongDelay = Math.min(
                     nextSongDelay,
-                    Mth.nextInt(random, targetMusic.getMinDelay(), targetMusic.getMaxDelay())
+                    Mth.nextInt(random, targetMusic.minDelay(), targetMusic.maxDelay())
             );
         }
-        nextSongDelay = Math.min(nextSongDelay, targetMusic.getMaxDelay());
+        nextSongDelay = Math.min(nextSongDelay, targetMusic.maxDelay());
 
         if (currentMusic == null) {
             if (nextSongDelay-- <= 0) {
@@ -91,10 +91,6 @@ public abstract class MusicTrackerMixin {
                 bn_thisObj.startPlaying(targetMusic);
                 if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
                     accessor.setVolume(0.0f);
-                    minecraft.getSoundManager().updateSourceVolume(
-                            currentMusic.getSource(),
-                            bn_getVolumeSafe(0.0f)
-                    );
                 }
             }
             info.cancel();
@@ -104,7 +100,7 @@ public abstract class MusicTrackerMixin {
         boolean volumeChanged = false;
         if (bn_waitChange || bn_shouldChangeMusic(targetMusic)) {
             if (!bn_waitChange) {
-                nextSongDelay = random.nextInt(0, Math.max(targetMusic.getMinDelay() / 2, 1));
+                nextSongDelay = random.nextInt(0, Math.max(targetMusic.minDelay() / 2, 1));
                 bn_waitChange = true;
             }
             if (bn_volume > 0.0f) {
@@ -125,10 +121,6 @@ public abstract class MusicTrackerMixin {
                 bn_thisObj.startPlaying(targetMusic);
                 if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
                     accessor.setVolume(0.0f);
-                    minecraft.getSoundManager().updateSourceVolume(
-                            currentMusic.getSource(),
-                            bn_getVolumeSafe(0.0f)
-                    );
                 }
             }
         } else if (bn_volume < 1.0f) {
@@ -141,7 +133,6 @@ public abstract class MusicTrackerMixin {
             bn_volume = Mth.clamp(bn_volume, 0.0f, 1.0f);
             if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
                 accessor.setVolume(bn_volume);
-                minecraft.getSoundManager().updateSourceVolume(currentMusic.getSource(), bn_getVolumeSafe(bn_volume));
             }
         }
 

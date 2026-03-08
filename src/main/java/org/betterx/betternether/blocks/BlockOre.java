@@ -8,7 +8,7 @@ import org.betterx.wover.block.api.CustomBlockItemProvider;
 import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -45,13 +45,13 @@ public class BlockOre extends BaseOreBlock implements BlockTagProvider, CustomBl
     }
 
     @Override
-    public BlockItem getCustomBlockItem(ResourceLocation blockID, Item.Properties settings) {
+    public BlockItem getCustomBlockItem(Identifier blockID, Item.Properties settings) {
         if (fireproof) settings = settings.fireResistant();
         return new BlockItem(this, settings);
     }
 
     @Override
-    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+    public void registerBlockTags(Identifier location, TagBootstrapContext<Block> context) {
         super.registerBlockTags(location, context);
         context.add(this, CommonBlockTags.NETHERRACK, CommonBlockTags.NETHER_ORES);
     }

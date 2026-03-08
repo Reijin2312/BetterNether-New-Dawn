@@ -23,8 +23,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockCincinnasiteForge extends AbstractFurnaceBlock implements BehaviourMetal {
     public static final MapCodec<BlockCincinnasiteForge> CODEC = simpleCodec(BlockCincinnasiteForge::new);
@@ -69,7 +67,6 @@ public class BlockCincinnasiteForge extends AbstractFurnaceBlock implements Beha
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (state.getValue(LIT)) {
             double d = (double) pos.getX() + 0.5D;
@@ -90,4 +87,3 @@ public class BlockCincinnasiteForge extends AbstractFurnaceBlock implements Beha
         }
     }
 }
-

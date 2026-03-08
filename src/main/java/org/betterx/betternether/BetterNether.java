@@ -1,7 +1,6 @@
 package org.betterx.betternether;
 
 import org.betterx.bclib.BCLib;
-import org.betterx.betternether.advancements.BNCriterion;
 import org.betterx.betternether.commands.CommandRegistry;
 import org.betterx.betternether.config.Config;
 import org.betterx.betternether.config.Configs;
@@ -13,7 +12,7 @@ import org.betterx.betternether.world.BNWorldGenerator;
 import org.betterx.datagen.betternether.BetterNetherDatagen;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.state.api.WorldConfig;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -25,8 +24,8 @@ public class BetterNether {
     public static final ModCore VANILLA_HAMMERS = ModCore.create("vanilla-hammers");
     public static final ModCore VANILLA_EXCAVATORS = ModCore.create("vanillaexcavators");
 
-    public static final ResourceLocation VANILLA_HAMMERS_PACK = C.addDatapack(VANILLA_HAMMERS);
-    public static final ResourceLocation VANILLA_EXCAVATORS_PACK = C.addDatapack(VANILLA_EXCAVATORS);
+    public static final Identifier VANILLA_HAMMERS_PACK = C.addDatapack(VANILLA_HAMMERS);
+    public static final Identifier VANILLA_EXCAVATORS_PACK = C.addDatapack(VANILLA_EXCAVATORS);
 
     private static boolean lavafallParticles = true;
     private static float fogStart = 0.05F;
@@ -49,14 +48,15 @@ public class BetterNether {
         modBus.addListener(RegisterEvent.class, NetherFeatures::onRegister);
         modBus.addListener(net.neoforged.neoforge.registries.RegisterEvent.class, BlockEntitiesRegistry::register);
         modBus.addListener(RegisterEvent.class, this::ensureBlocksLoaded);
-        modBus.addListener(RegisterEvent.class, this::ensureItemsLoaded);  
+        modBus.addListener(RegisterEvent.class, this::ensureItemsLoaded);
         modBus.addListener(RegisterEvent.class, org.betterx.betternether.advancements.BNCriterion::onRegister);
         modBus.addListener(RegisterEvent.class, BECreativeTabs::onRegister);
         org.betterx.wover.block.api.BlockRegistry.hook(modBus);
         org.betterx.wover.item.api.ItemRegistry.hook(modBus);
         if (ModCore.isDatagen()) {
             BetterNetherDatagen datagen = new BetterNetherDatagen();
-            modBus.addListener(datagen::onGatherData);
+            modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Client.class, datagen::onGatherData);
+            modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Server.class, datagen::onGatherData);
         }
         initialize();
     }

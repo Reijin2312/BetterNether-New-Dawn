@@ -11,7 +11,8 @@ import org.betterx.ui.ColorUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EntityType.EntityFactory;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -30,7 +31,7 @@ import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
 
-@EventBusSubscriber(modid = BetterNether.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = BetterNether.MOD_ID)
 public class NetherEntities {
     public enum KnownSpawnTypes {
         GHAST(50, 4, 4, EntityType.GHAST),
@@ -123,11 +124,12 @@ public class NetherEntities {
             int eggColor,
             int dotsColor
     ) {
-        ResourceLocation id = BetterNether.C.id(name);
+        Identifier id = BetterNether.C.id(name);
+        ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, id);
         EntityType<T> type = EntityType.Builder.of(entity, group)
                                                .sized(width, height)
                                                .fireImmune() //Nether Entities are by default immune to fire
-                                               .build(id.toString());
+                                               .build(key);
         ATTR_BUILDERS.put(type, attributes);
         NetherItems.makeEgg("spawn_egg_" + name, type, eggColor, dotsColor);
 
@@ -237,7 +239,7 @@ public class NetherEntities {
                     .of(EntityNagaProjectile::new, MobCategory.MISC)
                     .sized(1F, 1F)
                     .noSummon()
-                    .build(BetterNether.C.mk("naga_projectile").toString());
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, BetterNether.C.mk("naga_projectile")));
             helper.register(BetterNether.C.mk("naga_projectile"), NAGA_PROJECTILE);
             ATTR_BUILDERS.put(NAGA_PROJECTILE, Mob.createMobAttributes());
 

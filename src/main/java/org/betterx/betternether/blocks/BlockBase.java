@@ -81,5 +81,3 @@ public class BlockBase extends Block implements IRenderTypeable {
         );
     }
 }
-
-

@@ -5,13 +5,12 @@ import org.betterx.betternether.entity.EntityNaga;
 import org.betterx.betternether.entity.model.ModelNaga;
 import org.betterx.betternether.registry.EntityRenderRegistry;
 
-import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
-public class RenderNaga extends MobRenderer<EntityNaga, AgeableListModel<EntityNaga>> {
-    private static final ResourceLocation TEXTURE = BetterNether.C.mk(
+public class RenderNaga extends MobRenderer<EntityNaga, ModelNaga.NagaRenderState, ModelNaga> {
+    private static final Identifier TEXTURE = BetterNether.C.mk(
             "textures/entity/naga.png"
     );
 
@@ -20,7 +19,23 @@ public class RenderNaga extends MobRenderer<EntityNaga, AgeableListModel<EntityN
     }
 
     @Override
-    public ResourceLocation getTextureLocation(EntityNaga entity) {
+    public Identifier getTextureLocation(ModelNaga.NagaRenderState state) {
         return TEXTURE;
+    }
+
+    @Override
+    public ModelNaga.NagaRenderState createRenderState() {
+        return new ModelNaga.NagaRenderState();
+    }
+
+    @Override
+    public void extractRenderState(EntityNaga entity, ModelNaga.NagaRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.swimAmount = entity.getSwimAmount(partialTick);
+        state.rollTooBig = entity.getFallFlyingTicks() > 4;
+        state.visuallySwimming = entity.isVisuallySwimming();
+        state.movingOnGround = entity.onGround()
+                && (entity.getDeltaMovement().x != 0 || entity.getDeltaMovement().z != 0)
+                && !entity.isPassenger();
     }
 }

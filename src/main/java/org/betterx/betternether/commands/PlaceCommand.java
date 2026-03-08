@@ -26,7 +26,7 @@ public class PlaceCommand {
     public static LiteralArgumentBuilder<CommandSourceStack> register(LiteralArgumentBuilder<CommandSourceStack> bnContext) {
         return bnContext.then(Commands
                 .literal("place")
-                .requires(commandSourceStack -> commandSourceStack.hasPermission(2))
+                .requires(Commands.hasPermission(Commands.LEVEL_OWNERS))
                 .then(Commands
                         .literal("structure")
                         .then(Commands.argument(
@@ -57,7 +57,7 @@ public class PlaceCommand {
     ) throws CommandSyntaxException {
         Registry<Structure> registry = stack.getLevel()
                                             .registryAccess()
-                                            .registryOrThrow(Registries.STRUCTURE);
+                                            .lookupOrThrow(Registries.STRUCTURE);
         HolderSet<Structure> holderSet = LocateCommand.getHolders(result, registry)
                                                       .orElseThrow(() -> ERROR_STRUCTURE_INVALID.create(result.asPrintable()));
 

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bar_stool",
   "key": {
-    "#": {
-      "item": "minecraft:warped_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "minecraft:warped_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "##",

@@ -5,7 +5,7 @@ import org.betterx.bclib.complexmaterials.entry.MaterialSlot;
 import org.betterx.betternether.blocks.complex.NetherWoodenMaterial;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 
@@ -37,7 +37,7 @@ public class VanillaFallback<T extends NetherWoodenMaterial<T>> extends NetherWo
     }
 
     public static Block getVanillaBlock(String baseName, String key) {
-        var vanillaID = ResourceLocation.withDefaultNamespace(baseName + "_" + key);
-        return BuiltInRegistries.BLOCK.get(vanillaID);
+        var vanillaID = Identifier.withDefaultNamespace(baseName + "_" + key);
+        return BuiltInRegistries.BLOCK.getValue(vanillaID);
     }
 }

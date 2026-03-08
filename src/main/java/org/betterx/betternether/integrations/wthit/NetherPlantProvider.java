@@ -36,13 +36,11 @@ public enum NetherPlantProvider implements IBlockComponentProvider {
 
     @Override
     public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
-        if (config.getBoolean(WailaPlugin.Options.CROP_PROGRESS)) {
-            if (accessor.getBlock() instanceof BlockCommonPlant crop) {
-                addMaturityTooltip(
-                        tooltip,
-                        accessor.getBlockState().getValue(crop.getAgeProperty()) / (float) crop.getMaxAge()
-                );
-            }
+        if (accessor.getBlock() instanceof BlockCommonPlant crop) {
+            addMaturityTooltip(
+                    tooltip,
+                    accessor.getBlockState().getValue(crop.getAgeProperty()) / (float) crop.getMaxAge()
+            );
         }
     }
 

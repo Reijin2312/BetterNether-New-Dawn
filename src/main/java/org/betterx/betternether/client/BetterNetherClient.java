@@ -7,12 +7,10 @@ import org.betterx.betternether.registry.NetherParticles;
 
 import org.betterx.bclib.items.boat.BoatTypeOverride;
 
-import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
-import net.minecraft.client.model.ChestRaftModel;
-import net.minecraft.client.model.RaftModel;
+import net.minecraft.client.model.object.boat.BoatModel;
+import net.minecraft.client.model.object.boat.RaftModel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.core.registries.BuiltInRegistries;
 
@@ -25,7 +23,7 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
-@EventBusSubscriber(modid = BetterNether.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BetterNether.MOD_ID, value = Dist.CLIENT)
 public final class BetterNetherClient {
     private BetterNetherClient() {
     }
@@ -47,10 +45,10 @@ public final class BetterNetherClient {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        LayerDefinition boatModel = BoatModel.createBodyModel();
-        LayerDefinition chestBoatModel = ChestBoatModel.createBodyModel();
-        LayerDefinition raftModel = RaftModel.createBodyModel();
-        LayerDefinition chestRaftModel = ChestRaftModel.createBodyModel();
+        LayerDefinition boatModel = BoatModel.createBoatModel();
+        LayerDefinition chestBoatModel = BoatModel.createChestBoatModel();
+        LayerDefinition raftModel = RaftModel.createRaftModel();
+        LayerDefinition chestRaftModel = RaftModel.createChestRaftModel();
 
         BoatTypeOverride.values().forEach(type -> {
             if (type.boatModelName != null) {
@@ -64,15 +62,13 @@ public final class BetterNetherClient {
     }
 
     private static void registerRenderLayers() {
-        RenderType cutout = RenderType.cutout();
-        RenderType translucent = RenderType.translucent();
         BuiltInRegistries.BLOCK.forEach(block -> {
             if (block instanceof IRenderTypeable) {
                 BNRenderLayer layer = ((IRenderTypeable) block).getRenderLayer();
                 if (layer == BNRenderLayer.CUTOUT)
-                    ItemBlockRenderTypes.setRenderLayer(block, cutout);
+                    ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.CUTOUT);
                 else if (layer == BNRenderLayer.TRANSLUCENT)
-                    ItemBlockRenderTypes.setRenderLayer(block, translucent);
+                    ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.TRANSLUCENT);
             }
         });
     }

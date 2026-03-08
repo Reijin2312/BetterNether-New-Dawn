@@ -11,7 +11,7 @@ import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
@@ -30,8 +30,6 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.function.ToIntFunction;
 import org.jetbrains.annotations.NotNull;
@@ -69,24 +67,24 @@ public class BlockLumabusVine extends BaseVineBlock implements DeferedSeedBlock,
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public @NotNull ItemStack getCloneItemStack(
             @NotNull LevelReader level,
             @NotNull BlockPos pos,
-            @NotNull BlockState state
+            @NotNull BlockState state,
+            boolean includeData
     ) {
         return new ItemStack(seed);
     }
 
     @Override
     public @Nullable LootTable.Builder registerBlockLoot(
-            @NotNull ResourceLocation location,
+            @NotNull Identifier location,
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
         var fruityState = LootItemBlockStatePropertyCondition
                 .hasBlockStateProperties(this)
-                .setProperties(net.minecraft.advancements.critereon.StatePropertiesPredicate.Builder
+                .setProperties(net.minecraft.advancements.criterion.StatePropertiesPredicate.Builder
                         .properties()
                         .hasProperty(SHAPE, BlockProperties.TripleShape.BOTTOM));
 

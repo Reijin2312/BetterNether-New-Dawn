@@ -13,8 +13,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockNetherSakuraLeaves extends BNLeaves {
     private static final int COLOR = MHelper.color(251, 113, 143);
@@ -29,17 +27,15 @@ public class BlockNetherSakuraLeaves extends BNLeaves {
         );
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return super.getShadeBrightness(state, view, pos) * 0.5F + 0.5F;
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter view, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(10) == 0) {
             BlockPos blockPos = pos.below();
@@ -60,7 +56,6 @@ public class BlockNetherSakuraLeaves extends BNLeaves {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getColor(BlockState state, BlockGetter world, BlockPos pos) {
         return COLOR;
     }

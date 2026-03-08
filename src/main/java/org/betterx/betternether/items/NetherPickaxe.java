@@ -11,25 +11,28 @@ import org.betterx.wover.tag.api.event.context.ItemTagBootstrapContext;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class NetherPickaxe extends BasePickaxeItem implements ItemWithCustomStack, ItemTagProvider {
-    public NetherPickaxe(Tier material, Item.Properties settings) {
+    private final ToolMaterial toolMaterial;
+
+    public NetherPickaxe(ToolMaterial material, Item.Properties settings) {
         super(material, settings);
+        this.toolMaterial = material;
     }
 
     @Override
     public void setupItemStack(ItemStack stack, HolderLookup.Provider provider) {
         provider.lookup(Registries.ENCHANTMENT).ifPresent(lookup -> {
             int obsidianLevel = 0;
-            if (this.getTier() == BNToolMaterial.CINCINNASITE_DIAMOND) obsidianLevel = 2;
-            else if (this.getTier() == BNToolMaterial.NETHER_RUBY) {
+            if (toolMaterial == BNToolMaterial.CINCINNASITE_DIAMOND.toolMaterial()) obsidianLevel = 2;
+            else if (toolMaterial == BNToolMaterial.NETHER_RUBY.toolMaterial()) {
                 obsidianLevel = 1;
-            } else if (this.getTier() == BNToolMaterial.FLAMING_RUBY) {
+            } else if (toolMaterial == BNToolMaterial.FLAMING_RUBY.toolMaterial()) {
                 obsidianLevel = 3;
                 EnchantmentUtils.enchantInWorld(stack, NetherEnchantments.RUBY_FIRE.key(), 1, lookup);
                 EnchantmentUtils.enchantInWorld(stack, Enchantments.MENDING, 1, lookup);
@@ -43,7 +46,7 @@ public class NetherPickaxe extends BasePickaxeItem implements ItemWithCustomStac
     }
 
     @Override
-    public void registerItemTags(ResourceLocation location, ItemTagBootstrapContext context) {
+    public void registerItemTags(Identifier location, ItemTagBootstrapContext context) {
         context.add(NetherTags.NETHER_PICKAXES, this);
     }
 }

@@ -7,7 +7,6 @@ import org.betterx.betternether.registry.NetherStructurePieces;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
@@ -35,8 +34,8 @@ public class CavePiece extends CustomPiece {
 
     public CavePiece(StructurePieceSerializationContext context, CompoundTag tag) {
         super(NetherStructurePieces.CAVE_PIECE, tag);
-        this.center = NbtUtils.readBlockPos(tag, "center").orElse(BlockPos.ZERO);
-        this.radius = tag.getInt("radius");
+        this.center = tag.read("center", BlockPos.CODEC).orElse(BlockPos.ZERO);
+        this.radius = tag.getIntOr("radius", 0);
         this.radSqr = radius * radius;
     }
 
@@ -45,7 +44,7 @@ public class CavePiece extends CustomPiece {
             StructurePieceSerializationContext structurePieceSerializationContext,
             CompoundTag tag
     ) {
-        tag.put("center", NbtUtils.writeBlockPos(center));
+        tag.store("center", BlockPos.CODEC, center);
         tag.putInt("radius", radius);
     }
 

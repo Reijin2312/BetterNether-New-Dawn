@@ -71,7 +71,7 @@ public class NetherBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuil
     );
 
     private void addVanillaStructures() {
-        this.carver(GenerationStep.Carving.AIR, Carvers.NETHER_CAVE)
+        this.carver(Carvers.NETHER_CAVE)
             .structure(BiomeTags.HAS_RUINED_PORTAL_NETHER);
     }
 
@@ -144,5 +144,3 @@ public class NetherBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuil
         );
     }
 }
-
-

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "chair",
   "key": {
-    "#": {
-      "item": "minecraft:mangrove_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "minecraft:mangrove_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "I ",

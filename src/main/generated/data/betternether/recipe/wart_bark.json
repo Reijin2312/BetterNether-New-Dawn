@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "betternether:wart_log"
-    }
+    "#": "betternether:wart_log"
   },
   "pattern": [
     "##",

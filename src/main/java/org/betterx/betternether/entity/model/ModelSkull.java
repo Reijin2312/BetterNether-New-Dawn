@@ -1,8 +1,6 @@
 package org.betterx.betternether.entity.model;
 
-import org.betterx.betternether.entity.EntitySkull;
-
-import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,12 +8,10 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-import com.google.common.collect.ImmutableList;
-
-public class ModelSkull extends AgeableListModel<EntitySkull> {
+public class ModelSkull extends EntityModel<ModelSkull.SkullRenderState> {
     private final ModelPart head;
-    private float pitch;
 
     public static LayerDefinition getTexturedModelData() {
         MeshDefinition modelData = new MeshDefinition();
@@ -28,54 +24,30 @@ public class ModelSkull extends AgeableListModel<EntitySkull> {
                                .addBox(-4, -4, -4, 8, 8, 8),
                 PartPose.offset(0, 20, 0)
         );
-		/*head = ModelPart new (this, 0, 0);
-		head.setPivot(0, 20, 0);
-		head.addCuboid(-4, -4, -4, 8, 8, 8);*/
+        /*head = ModelPart new (this, 0, 0);
+        head.setPivot(0, 20, 0);
+        head.addCuboid(-4, -4, -4, 8, 8, 8);*/
 
-		/* textureHeight = 16;
-		textureWidth = 32; */
+        /* textureHeight = 16;
+        textureWidth = 32; */
         return LayerDefinition.create(modelData, 32, 16);
     }
 
     public ModelSkull(ModelPart root) {
+        super(root);
         this.head = root.getChild(PartNames.HEAD);
     }
 
     @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of(head);
-    }
-
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of();
-    }
-
-    @Override
-    public void prepareMobModel(EntitySkull livingEntity, float f, float g, float h) {
-        this.pitch = livingEntity.getSwimAmount(h);
-        super.prepareMobModel(livingEntity, f, g, h);
-    }
-
-    @Override
-    public void setupAnim(
-            EntitySkull entity,
-            float limbAngle,
-            float limbDistance,
-            float animationProgress,
-            float headYaw,
-            float headPitch
-    ) {
-        // head.pitch = (float) Math.toRadians(headPitch);
-
-        boolean rollTooBig = entity.getFallFlyingTicks() > 4;
-        this.head.yRot = headYaw * 0.017453292F;
-        if (rollTooBig) {
+    public void setupAnim(SkullRenderState state) {
+        super.setupAnim(state);
+        this.head.yRot = state.yRot * 0.017453292F;
+        if (state.rollTooBig) {
             this.head.xRot = -0.7853982F;
-        } else if (this.pitch > 0.0F) {
-            this.head.xRot = this.lerpAngle(this.head.xRot, headPitch * 0.017453292F, this.pitch);
+        } else if (state.swimAmount > 0.0F) {
+            this.head.xRot = this.lerpAngle(this.head.xRot, state.xRot * 0.017453292F, state.swimAmount);
         } else {
-            this.head.xRot = headPitch * 0.017453292F;
+            this.head.xRot = state.xRot * 0.017453292F;
         }
     }
 
@@ -91,5 +63,10 @@ public class ModelSkull extends AgeableListModel<EntitySkull> {
         }
 
         return from + position * angle;
+    }
+
+    public static class SkullRenderState extends LivingEntityRenderState {
+        public float swimAmount;
+        public boolean rollTooBig;
     }
 }

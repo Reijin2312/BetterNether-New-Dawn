@@ -44,7 +44,7 @@ public class NetherEnchantments {
     public static void register(RegisterEvent event) {
         event.register(Registries.ATTRIBUTE, helper -> {
             helper.register(
-                    OBSIDIAN_BLOCK_BREAK_SPEED_KEY.location(),
+                    OBSIDIAN_BLOCK_BREAK_SPEED_KEY.identifier(),
                     OBSIDIAN_BLOCK_BREAK_SPEED_ATTRIBUTE
             );
         });

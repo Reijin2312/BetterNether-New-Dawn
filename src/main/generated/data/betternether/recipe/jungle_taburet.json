@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "taburet",
   "key": {
-    "#": {
-      "item": "minecraft:jungle_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "minecraft:jungle_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "##",

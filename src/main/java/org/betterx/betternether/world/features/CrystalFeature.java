@@ -7,7 +7,7 @@ import org.betterx.betternether.BetterNether;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -17,15 +17,15 @@ import net.minecraft.world.level.dimension.DimensionDefaults;
 import net.minecraft.world.phys.Vec3;
 
 public class CrystalFeature extends NetherSurfaceFeature {
-    private static final ResourceLocation[] PALETTE_IDS = new ResourceLocation[]{
+    private static final Identifier[] PALETTE_IDS = new Identifier[]{
             BetterNether.C.id("obsidian_glass"),
             BuiltInRegistries.BLOCK.getKey(Blocks.OBSIDIAN),
             BetterNether.C.id("blue_obsidian_glass"),
             BetterNether.C.id("blue_obsidian")
     };
-    private static final ResourceLocation BLUE_WEEPING_OBSIDIAN_ID = BetterNether.C.id("blue_weeping_obsidian");
-    private static final ResourceLocation WEEPING_OBSIDIAN_ID = BetterNether.C.id("weeping_obsidian");
-    private static final ResourceLocation BLUE_CRYING_OBSIDIAN_ID = BetterNether.C.id("blue_crying_obsidian");
+    private static final Identifier BLUE_WEEPING_OBSIDIAN_ID = BetterNether.C.id("blue_weeping_obsidian");
+    private static final Identifier WEEPING_OBSIDIAN_ID = BetterNether.C.id("weeping_obsidian");
+    private static final Identifier BLUE_CRYING_OBSIDIAN_ID = BetterNether.C.id("blue_crying_obsidian");
     private static final double SQRT05 = Math.sqrt(0.5);
     private static final float MAX_ANGLE_X = (float) Math.toRadians(45);
     private static final float MAX_ANGLE_Y = (float) (Math.PI * 2);
@@ -128,16 +128,16 @@ public class CrystalFeature extends NetherSurfaceFeature {
     }
 
     private static BlockState paletteState(int index) {
-        ResourceLocation id = PALETTE_IDS[index];
-        Block block = BuiltInRegistries.BLOCK.get(id);
+        Identifier id = PALETTE_IDS[index];
+        Block block = BuiltInRegistries.BLOCK.getValue(id);
         if (block == Blocks.AIR) {
             block = Blocks.OBSIDIAN;
         }
         return block.defaultBlockState();
     }
 
-    private static Block blockFromId(ResourceLocation id, Block fallback) {
-        Block block = BuiltInRegistries.BLOCK.get(id);
+    private static Block blockFromId(Identifier id, Block fallback) {
+        Block block = BuiltInRegistries.BLOCK.getValue(id);
         return block == Blocks.AIR ? fallback : block;
     }
 }

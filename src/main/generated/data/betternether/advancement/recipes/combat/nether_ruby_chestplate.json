@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nether_ruby": {
+    "has_tag_betternether_repair/nether_ruby": {
       "conditions": {
         "items": [
           {
-            "items": "betternether:nether_ruby"
+            "items": "#betternether:repair/nether_ruby"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nether_ruby"
+      "has_tag_betternether_repair/nether_ruby"
     ]
   ],
   "rewards": {

@@ -67,5 +67,3 @@ public abstract class BNPillar extends RotatedPillarBlock implements DropSelfLoo
         }
     }
 }
-
-

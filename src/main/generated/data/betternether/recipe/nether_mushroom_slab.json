@@ -3,9 +3,7 @@
   "category": "building",
   "group": "slab",
   "key": {
-    "#": {
-      "item": "betternether:nether_mushroom_planks"
-    }
+    "#": "betternether:nether_mushroom_planks"
   },
   "pattern": [
     "###"

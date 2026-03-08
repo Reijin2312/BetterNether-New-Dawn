@@ -1,6 +1,7 @@
 {
   "parent": "bclib:block/chest_item",
   "textures": {
+    "particle": "betternether:block/chest/warped_chest",
     "texture": "betternether:block/chest/warped_chest"
   }
 }

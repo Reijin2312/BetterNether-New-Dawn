@@ -576,4 +576,3 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                 );
     }
 }
-

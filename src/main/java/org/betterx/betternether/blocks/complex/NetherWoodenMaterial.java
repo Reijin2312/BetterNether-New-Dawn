@@ -106,5 +106,3 @@ public class NetherWoodenMaterial<T extends NetherWoodenMaterial<T>> extends Woo
         return getBlock(WoodSlots.STRIPPED_BARK);
     }
 }
-
-

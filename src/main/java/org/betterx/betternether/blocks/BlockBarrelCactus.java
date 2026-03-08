@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,6 +25,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 
 public class BlockBarrelCactus extends BlockCommonPlant implements AddMineableShears, BehaviourPlant, SurvivesOnGravel {
     private static final VoxelShape EMPTY = Block.box(0, 0, 0, 0, 0, 0);
@@ -52,11 +54,13 @@ public class BlockBarrelCactus extends BlockCommonPlant implements AddMineableSh
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (canSurvive(state, world, pos))
             return state;
@@ -65,20 +69,20 @@ public class BlockBarrelCactus extends BlockCommonPlant implements AddMineableSh
     }
 
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier, boolean applyEffects) {
         if (state.getValue(BlockCommonPlant.AGE) > 1) entity.hurt(world.damageSources().cactus(), 1.0F);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
-        Vec3 vec3d = state.getOffset(view, pos);
+        Vec3 vec3d = state.getOffset(pos);
         return SHAPES[state.getValue(BlockCommonPlant.AGE)].move(vec3d.x, vec3d.y, vec3d.z);
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
         if (state.getValue(BlockCommonPlant.AGE) < 2) return EMPTY;
-        Vec3 vec3d = state.getOffset(view, pos);
+        Vec3 vec3d = state.getOffset(pos);
         return SHAPES[state.getValue(BlockCommonPlant.AGE)].move(vec3d.x, vec3d.y, vec3d.z);
     }
 

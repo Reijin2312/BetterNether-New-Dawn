@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:equipment",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stone_sword"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "betternether:equipment/pyramid_wither_skeleton"
+}

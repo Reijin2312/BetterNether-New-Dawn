@@ -4,7 +4,7 @@ import org.betterx.betternether.BN;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BrewingRegistry {
     private static final List<BrewingRecipe> RECIPES = new ArrayList<>();
-    private static final ResourceLocation BARREL_CACTUS_ID = BN.id("barrel_cactus");
-    private static final ResourceLocation HOOK_MUSHROOM_ID = BN.id("hook_mushroom");
+    private static final Identifier BARREL_CACTUS_ID = BN.id("barrel_cactus");
+    private static final Identifier HOOK_MUSHROOM_ID = BN.id("hook_mushroom");
     private static boolean initialized = false;
 
     /**
@@ -41,8 +41,8 @@ public class BrewingRegistry {
         register(stackFromId(HOOK_MUSHROOM_ID), makePotion(Potions.AWKWARD), makePotion(Potions.HEALING));
     }
 
-    private static ItemStack stackFromId(ResourceLocation id) {
-        Item item = BuiltInRegistries.ITEM.get(id);
+    private static ItemStack stackFromId(Identifier id) {
+        Item item = BuiltInRegistries.ITEM.getValue(id);
         return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
 

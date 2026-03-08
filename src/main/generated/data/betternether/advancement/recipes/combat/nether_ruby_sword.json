@@ -11,11 +11,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_nether_ruby": {
+    "has_tag_c_gems/nether_ruby": {
       "conditions": {
         "items": [
           {
-            "items": "betternether:nether_ruby"
+            "items": "#c:gems/nether_ruby"
           }
         ]
       },
@@ -31,7 +31,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nether_ruby",
+      "has_tag_c_gems/nether_ruby",
       "has_nether_reed_stem"
     ]
   ],

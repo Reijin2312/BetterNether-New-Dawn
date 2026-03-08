@@ -53,8 +53,8 @@ public class SoundsRegistry {
     }
 
     private static void register(RegisterEvent.RegisterHelper<SoundEvent> helper, ResourceKey<SoundEvent> key) {
-        helper.register(key.location(), SoundEvent.createVariableRangeEvent(key.location()));
-        assignHolder(key, BuiltInRegistries.SOUND_EVENT.getHolder(key).orElseThrow());
+        helper.register(key.identifier(), SoundEvent.createVariableRangeEvent(key.identifier()));
+        assignHolder(key, BuiltInRegistries.SOUND_EVENT.get(key).orElseThrow());
     }
 
     private static void assignHolder(ResourceKey<SoundEvent> key, Holder<SoundEvent> holder) {

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "sign",
   "key": {
-    "#": {
-      "item": "betternether:wart_stripped_log"
-    },
-    "I": {
-      "item": "minecraft:chain"
-    }
+    "#": "betternether:wart_stripped_log",
+    "I": "minecraft:iron_chain"
   },
   "pattern": [
     "I I",

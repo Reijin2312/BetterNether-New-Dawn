@@ -9,12 +9,15 @@ import org.betterx.wover.enchantment.api.EnchantmentUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class NetherAxe extends BaseAxeItem implements ItemWithCustomStack {
-    public NetherAxe(Tier material, Item.Properties settings) {
+    private final ToolMaterial toolMaterial;
+
+    public NetherAxe(ToolMaterial material, Item.Properties settings) {
         super(material, settings);
+        this.toolMaterial = material;
     }
 
     @Override
@@ -25,7 +28,7 @@ public class NetherAxe extends BaseAxeItem implements ItemWithCustomStack {
 
     @Override
     public void setupItemStack(ItemStack stack, HolderLookup.Provider provider) {
-        if (getTier() == BNToolMaterial.FLAMING_RUBY) {
+        if (toolMaterial == BNToolMaterial.FLAMING_RUBY.toolMaterial()) {
             EnchantmentUtils.enchantInWorld(stack, NetherEnchantments.RUBY_FIRE.key(), 1, provider);
         }
     }

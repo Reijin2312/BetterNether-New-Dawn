@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "C": {
-      "tag": "c:chests"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    }
+    "C": "#c:chests",
+    "I": "#c:ingots/iron"
   },
   "pattern": [
     "I I",

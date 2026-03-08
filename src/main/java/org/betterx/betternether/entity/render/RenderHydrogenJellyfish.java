@@ -6,14 +6,14 @@ import org.betterx.betternether.entity.model.ModelEntityHydrogenJellyfish;
 import org.betterx.betternether.registry.EntityRenderRegistry;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
-public class RenderHydrogenJellyfish extends MobRenderer<EntityHydrogenJellyfish, AgeableListModel<EntityHydrogenJellyfish>> {
-    private static final ResourceLocation TEXTURE =
+public class RenderHydrogenJellyfish extends MobRenderer<EntityHydrogenJellyfish, LivingEntityRenderState, ModelEntityHydrogenJellyfish> {
+    private static final Identifier TEXTURE =
             BetterNether.C.mk("textures/entity/jellyfish.png");
 
     public RenderHydrogenJellyfish(EntityRendererProvider.Context ctx) {
@@ -21,7 +21,7 @@ public class RenderHydrogenJellyfish extends MobRenderer<EntityHydrogenJellyfish
     }
 
     @Override
-    public ResourceLocation getTextureLocation(EntityHydrogenJellyfish entity) {
+    public Identifier getTextureLocation(LivingEntityRenderState state) {
         return TEXTURE;
     }
 
@@ -31,8 +31,13 @@ public class RenderHydrogenJellyfish extends MobRenderer<EntityHydrogenJellyfish
     }
 
     @Override
-    protected void scale(EntityHydrogenJellyfish entity, PoseStack matrixStack, float f) {
-        float scale = entity.getScale();
+    protected void scale(LivingEntityRenderState state, PoseStack matrixStack) {
+        float scale = state.scale;
         matrixStack.scale(scale, scale, scale);
+    }
+
+    @Override
+    public LivingEntityRenderState createRenderState() {
+        return new LivingEntityRenderState();
     }
 }

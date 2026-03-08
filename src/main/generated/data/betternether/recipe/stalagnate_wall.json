@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "wall",
   "key": {
-    "*": {
-      "item": "betternether:stalagnate_planks"
-    },
-    "|": {
-      "item": "betternether:stalagnate_fence"
-    }
+    "*": "betternether:stalagnate_planks",
+    "|": "betternether:stalagnate_fence"
   },
   "pattern": [
     "* *",

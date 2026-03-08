@@ -57,7 +57,7 @@ public class LegacyStructureAnchorTree implements IStructure {
         HEIGHT_64 = (int) (MAX_HEIGHT / 2.0 + MHelper.nextFloat(random, 10 * scale_factor));
         HEIGHT_45 = (int) (40 + MHelper.nextFloat(random, 7 * scale_factor));
         HEIGHT_90 = (int) (MAX_HEIGHT / 2.0 + MHelper.nextFloat(random, 15 * scale_factor));
-        
+
         if (up.getY() - down.getY() < 30) return;
         int pd = BlocksHelper.downRay(level, down, MAX_HEIGHT) + 1;
         for (int i = 0; i < 5; i++) {
@@ -85,7 +85,7 @@ public class LegacyStructureAnchorTree implements IStructure {
 
         BlockState state;
         int offset = random.nextInt(4);
-        final int minBuildHeight = level.getMinBuildHeight() + 1;
+        final int minBuildHeight = level.getMinY() + 1;
         final net.minecraft.world.level.levelgen.structure.BoundingBox blockBox = BlocksHelper.decorationBounds(
                 level,
                 up,

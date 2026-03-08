@@ -61,7 +61,7 @@ public class NetherEnchantmentProvider extends WoverEnchantmentProvider {
                                         LevelBasedValue.constant(7.0F),
                                         damageGetter.getOrThrow(DamageTypes.INDIRECT_MAGIC)
                                 ),
-                                new DamageItem(
+                                new ChangeItemDamage(
                                         LevelBasedValue.constant(1.0F)
                                 ),
                                 new Ignite(LevelBasedValue.constant(100.0F))
@@ -90,7 +90,7 @@ public class NetherEnchantmentProvider extends WoverEnchantmentProvider {
                 .withEffect(
                         EnchantmentEffectComponents.ATTRIBUTES,
                         new EnchantmentAttributeEffect(
-                                NetherEnchantments.OBSIDIAN_BLOCK_BREAK_SPEED_KEY.location(),
+                                NetherEnchantments.OBSIDIAN_BLOCK_BREAK_SPEED_KEY.identifier(),
                                 obsidianBlockBreakSpeed,
                                 new LevelBasedValue.Lookup(List.of(6f, 12f, 18f), new LevelBasedValue.LevelsSquared(9.0F)),
                                 AttributeModifier.Operation.ADD_VALUE

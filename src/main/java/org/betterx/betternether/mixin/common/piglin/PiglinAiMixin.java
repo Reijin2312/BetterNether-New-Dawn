@@ -1,13 +1,11 @@
 package org.betterx.betternether.mixin.common.piglin;
 
 import org.betterx.betternether.config.Configs;
-import org.betterx.betternether.items.materials.BNArmorTiers;
+import org.betterx.betternether.items.NetherArmor;
 
-import net.minecraft.core.Holder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = PiglinAi.class, remap = false)
 public class PiglinAiMixin {
-    @Inject(method = "isWearingGold", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "isWearingSafeArmor", at = @At("RETURN"), cancellable = true)
     private static void bn_isWearingGold(
             LivingEntity entity,
             CallbackInfoReturnable<Boolean> cir
@@ -25,15 +23,12 @@ public class PiglinAiMixin {
             return;
         }
 
-        for (ItemStack stack : entity.getArmorAndBodyArmorSlots()) {
-            if (stack.getItem() instanceof ArmorItem armorItem) {
-                Holder<ArmorMaterial> material = armorItem.getMaterial();
-                if (material.is(BNArmorTiers.CINCINNASITE.armorMaterial)
-                        || material.is(BNArmorTiers.NETHER_RUBY.armorMaterial)
-                        || material.is(BNArmorTiers.FLAMING_RUBY.armorMaterial)) {
-                    cir.setReturnValue(true);
-                    return;
-                }
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (!slot.isArmor()) continue;
+            ItemStack stack = entity.getItemBySlot(slot);
+            if (!stack.isEmpty() && stack.getItem() instanceof NetherArmor) {
+                cir.setReturnValue(true);
+                return;
             }
         }
     }

@@ -10,14 +10,14 @@ public class Materials {
     public static final BlockBehaviour.Properties NETHER_GRASS = BehaviourBuilders.createGrass(MapColor.GRASS);
     public static final BlockBehaviour.Properties NETHER_SAPLING = BehaviourBuilders.createPlant().randomTicks()
                                                                                     .sound(SoundType.CROP)
-                                                                                    .noCollission()
+                                                                                    .noCollision()
                                                                                     .noOcclusion();
 
     public static final BlockBehaviour.Properties NETHER_PLANT = BehaviourBuilders
             .createPlant()
             .sound(SoundType.CROP)
             .noOcclusion()
-            .noCollission();
+            .noCollision();
 
     public static BlockBehaviour.Properties makeNetherWood(MapColor color) {
         return BehaviourBuilders.createWood(color, false)

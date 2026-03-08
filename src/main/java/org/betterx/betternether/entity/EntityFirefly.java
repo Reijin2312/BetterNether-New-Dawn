@@ -12,7 +12,6 @@ import org.betterx.ui.ColorUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -25,7 +24,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -47,6 +46,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -112,7 +113,6 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
         };
         birdNavigation.setCanOpenDoors(false);
         birdNavigation.setCanFloat(false);
-        birdNavigation.setCanPassDoors(true);
         return birdNavigation;
     }
 
@@ -154,7 +154,7 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, @NotNull DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, @NotNull DamageSource damageSource) {
         return false;
     }
 
@@ -177,24 +177,21 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    protected void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
 
         tag.putInt("color", getColor());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    protected void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
 
-        int color = 0xFFFFFFFF;
-        if (tag.contains("color")) {
-            color = tag.getInt("color");
-        } else if (tag.contains("ColorRed") && tag.contains("ColorGreen") && tag.contains("ColorBlue")) {
-            float r = tag.getFloat("ColorRed");
-            float g = tag.getFloat("ColorGreen");
-            float b = tag.getFloat("ColorBlue");
-
+        int color = tag.getIntOr("color", -1);
+        if (color == -1) {
+            float r = tag.getFloatOr("ColorRed", 1.0F);
+            float g = tag.getFloatOr("ColorGreen", 1.0F);
+            float b = tag.getFloatOr("ColorBlue", 1.0F);
             color = ColorUtil.color((int) (r * 0xFF), (int) (g * 0xFF), (int) (g * 0xFF));
         }
 
@@ -203,7 +200,7 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
-        return NetherEntities.FIREFLY.type().create(world);
+        return NetherEntities.FIREFLY.type().create(world, EntitySpawnReason.BREEDING);
     }
 
     @Override
@@ -530,7 +527,7 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
     public static boolean canSpawn(
             EntityType<? extends EntityFirefly> type,
             LevelAccessor world,
-            MobSpawnType spawnReason,
+            EntitySpawnReason spawnReason,
             BlockPos pos,
             RandomSource random
     ) {

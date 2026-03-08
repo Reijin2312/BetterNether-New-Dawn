@@ -5,16 +5,16 @@ import org.betterx.betternether.entity.EntityFlyingPig;
 import org.betterx.betternether.entity.model.ModelEntityFlyingPig;
 import org.betterx.betternether.registry.EntityRenderRegistry;
 
-import net.minecraft.client.model.AgeableListModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.resources.Identifier;
 
-public class RenderFlyingPig extends MobRenderer<EntityFlyingPig, AgeableListModel<EntityFlyingPig>> {
-    private static final ResourceLocation TEXTURE = BetterNether.C.mk(
+public class RenderFlyingPig extends MobRenderer<EntityFlyingPig, RenderFlyingPig.FlyingPigRenderState, ModelEntityFlyingPig> {
+    private static final Identifier TEXTURE = BetterNether.C.mk(
             "textures/entity/flying_pig.png"
     );
-    private static final ResourceLocation TEXTURE_WARTED = BetterNether.C.mk(
+    private static final Identifier TEXTURE_WARTED = BetterNether.C.mk(
             "textures/entity/flying_pig_warted.png"
     );
 
@@ -23,7 +23,22 @@ public class RenderFlyingPig extends MobRenderer<EntityFlyingPig, AgeableListMod
     }
 
     @Override
-    public ResourceLocation getTextureLocation(EntityFlyingPig entity) {
-        return entity.isWarted() ? TEXTURE_WARTED : TEXTURE;
+    public Identifier getTextureLocation(FlyingPigRenderState state) {
+        return state.warted ? TEXTURE_WARTED : TEXTURE;
+    }
+
+    @Override
+    public FlyingPigRenderState createRenderState() {
+        return new FlyingPigRenderState();
+    }
+
+    @Override
+    public void extractRenderState(EntityFlyingPig entity, FlyingPigRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.warted = entity.isWarted();
+    }
+
+    public static class FlyingPigRenderState extends LivingEntityRenderState {
+        public boolean warted;
     }
 }

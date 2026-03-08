@@ -8,11 +8,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockSoulGrass extends BaseBlockNetherGrass.OnEverything implements BlockModelProvider {
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(4) == 0) {
             world.addParticle(
@@ -27,10 +24,8 @@ public class BlockSoulGrass extends BaseBlockNetherGrass.OnEverything implements
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void provideBlockModels(WoverBlockModelGenerators generators) {
         BNModels.provideGrassBlockModels(generators, this, "soul_grass", 2);
     }
 }
-

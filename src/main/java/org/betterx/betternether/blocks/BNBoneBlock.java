@@ -22,5 +22,3 @@ public class BNBoneBlock extends BlockBase implements BehaviourStone {
         return Collections.singletonList(new ItemStack(this.asItem()));
     }
 }
-
-

@@ -13,7 +13,7 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -72,7 +72,7 @@ public class BlockTerrain extends BlockBase implements BlockTagProvider, Bonemea
 
     @Override
     public @Nullable LootTable.Builder registerBlockLoot(
-            @NotNull ResourceLocation location,
+            @NotNull Identifier location,
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
@@ -80,9 +80,7 @@ public class BlockTerrain extends BlockBase implements BlockTagProvider, Bonemea
     }
 
     @Override
-    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+    public void registerBlockTags(Identifier location, TagBootstrapContext<Block> context) {
         context.add(this, CommonBlockTags.NETHERRACK, CommonBlockTags.NETHER_STONES, CommonBlockTags.NETHER_TERRAIN);
     }
 }
-
-

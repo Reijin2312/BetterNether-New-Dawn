@@ -3,9 +3,7 @@
   "category": "building",
   "group": "stairs",
   "key": {
-    "#": {
-      "item": "betternether:mushroom_fir_planks"
-    }
+    "#": "betternether:mushroom_fir_planks"
   },
   "pattern": [
     "#  ",

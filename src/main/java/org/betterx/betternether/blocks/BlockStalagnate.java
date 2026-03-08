@@ -17,8 +17,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockStalagnate extends BlockBaseNotFull implements BehaviourWood {
     private static final VoxelShape SELECT_SHAPE = box(4, 0, 4, 12, 16, 12);
@@ -48,9 +46,7 @@ public class BlockStalagnate extends BlockBaseNotFull implements BehaviourWood {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(NetherBlocks.MAT_STALAGNATE.getStem());
     }
 }
-

@@ -4,18 +4,10 @@
   "group": "planks",
   "ingredients": [
     [
-      {
-        "item": "betternether:rubeus_log"
-      },
-      {
-        "item": "betternether:rubeus_bark"
-      },
-      {
-        "item": "betternether:rubeus_stripped_log"
-      },
-      {
-        "item": "betternether:rubeus_stripped_bark"
-      }
+      "betternether:rubeus_log",
+      "betternether:rubeus_bark",
+      "betternether:rubeus_stripped_log",
+      "betternether:rubeus_stripped_bark"
     ]
   ],
   "result": {

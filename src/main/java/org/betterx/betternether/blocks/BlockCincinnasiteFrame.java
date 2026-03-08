@@ -8,8 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockCincinnasiteFrame extends BlockBaseNotFull implements BehaviourMetal {
     public BlockCincinnasiteFrame() {
@@ -17,19 +15,16 @@ public class BlockCincinnasiteFrame extends BlockBaseNotFull implements Behaviou
         this.setRenderLayer(BNRenderLayer.CUTOUT);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter view, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean skipRendering(BlockState state, BlockState neighbor, Direction facing) {
         return neighbor.getBlock() == this || super.skipRendering(state, neighbor, facing);
     }
 }
-

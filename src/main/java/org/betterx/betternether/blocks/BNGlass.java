@@ -5,12 +5,10 @@ import org.betterx.betternether.BetterNether;
 import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
 import org.betterx.wover.block.api.model.WoverBlockModelGeneratorsAccess;
-import net.minecraft.data.models.model.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.data.models.model.*;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.Optional;
 
@@ -20,16 +18,16 @@ public class BNGlass extends BaseGlassBlock {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generators) {
         var resource = TextureMapping.getBlockTexture(this);
+        Identifier blockModel;
         if (!resource.getPath().equals("block/quartz_glass") && !resource
                 .getPath()
                 .equals("block/quartz_glass_framed")) {
             final var model = TexturedModel.CUBE.get(this);
             final var mapping = WoverBlockModelGenerators.textureMappingOf(
                     TextureSlot.ALL,
-                    ResourceLocation.fromNamespaceAndPath(
+                    Identifier.fromNamespaceAndPath(
                             resource.getNamespace(),
                             resource
                                     .getPath()
@@ -39,6 +37,7 @@ public class BNGlass extends BaseGlassBlock {
 
             final var loc = model.getTemplate()
                                  .create(this, mapping, generators.modelOutput());
+            blockModel = loc;
 
             generators.acceptBlockState(
                     WoverBlockModelGeneratorsAccess.createSimpleBlock(
@@ -48,6 +47,7 @@ public class BNGlass extends BaseGlassBlock {
             );
         } else {
             generators.modelFor(TexturedModel.CUBE.get(this)).createFullBlock(this);
+            blockModel = ModelLocationUtils.getModelLocation(this);
         }
 
         if (resource.getPath().equals("block/quartz_glass")) {
@@ -55,6 +55,8 @@ public class BNGlass extends BaseGlassBlock {
             final var template = new ModelTemplate(Optional.of(ModelLocationUtils.getModelLocation(this)), Optional.empty(), TextureSlot.ALL);
 
             template.create(ModelLocationUtils.getModelLocation(this.asItem()), mapping, generators.modelOutput());
+        } else {
+            generators.delegateItemModel(this, blockModel);
         }
     }
 }

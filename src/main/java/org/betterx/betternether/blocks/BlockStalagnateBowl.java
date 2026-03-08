@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -22,6 +21,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockStalagnateBowl extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape SHAPE = box(5, 0, 5, 11, 3, 11);
@@ -57,11 +58,13 @@ public class BlockStalagnateBowl extends BlockBaseNotFull implements AddMineable
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (!canSurvive(state, world, pos))
             return Blocks.AIR.defaultBlockState();
@@ -69,5 +72,3 @@ public class BlockStalagnateBowl extends BlockBaseNotFull implements AddMineable
             return state;
     }
 }
-
-

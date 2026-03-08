@@ -3,9 +3,7 @@
   "category": "blocks",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "minecraft:quartz"
-  },
+  "ingredient": "minecraft:quartz",
   "result": {
     "count": 1,
     "id": "betternether:quartz_glass"

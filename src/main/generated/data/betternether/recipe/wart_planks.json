@@ -4,18 +4,10 @@
   "group": "planks",
   "ingredients": [
     [
-      {
-        "item": "betternether:wart_log"
-      },
-      {
-        "item": "betternether:wart_bark"
-      },
-      {
-        "item": "betternether:wart_stripped_log"
-      },
-      {
-        "item": "betternether:wart_stripped_bark"
-      }
+      "betternether:wart_log",
+      "betternether:wart_bark",
+      "betternether:wart_stripped_log",
+      "betternether:wart_stripped_bark"
     ]
   ],
   "result": {

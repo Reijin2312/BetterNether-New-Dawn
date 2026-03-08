@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "taburet",
   "key": {
-    "#": {
-      "item": "betternether:anchor_tree_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "betternether:anchor_tree_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "##",

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "taburet",
   "key": {
-    "#": {
-      "item": "minecraft:crimson_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "minecraft:crimson_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "##",

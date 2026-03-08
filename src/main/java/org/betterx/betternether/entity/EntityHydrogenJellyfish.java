@@ -5,7 +5,6 @@ import org.betterx.betternether.registry.SoundsRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,7 +19,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -30,6 +29,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -83,19 +84,17 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    protected void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
 
-        tag.putFloat("Scale", getScale());
+        tag.putFloat("Scale", getJellyfishScale());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    protected void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
 
-        if (tag.contains("Scale")) {
-            this.entityData.set(SCALE, tag.getFloat("Scale"));
-        }
+        this.entityData.set(SCALE, tag.getFloatOr("Scale", this.entityData.get(SCALE)));
 
         this.refreshDimensions();
     }
@@ -105,7 +104,7 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
         return false;
     }
 
-    public float getScale() {
+    public float getJellyfishScale() {
         return this.entityData.get(SCALE);
     }
 //TODO: 1.21 Check if size of entity is correct
@@ -135,7 +134,7 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
     }
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel serverLevel) {
         timer++;
         if (timer > timeOut) {
             prewYaw = this.getYRot();
@@ -187,8 +186,8 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
     @Override
     public void die(DamageSource source) {
         super.die(source);
-        if (level().isClientSide) {
-            float scale = getScale() * 3;
+        if (level().isClientSide()) {
+            float scale = getJellyfishScale() * 3;
             for (int i = 0; i < 20; i++)
                 this.level().addParticle(ParticleTypes.EXPLOSION,
                         getX() + random.nextGaussian() * scale,
@@ -198,7 +197,7 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
                 );
         } else {
             if (source != level().damageSources().fellOutOfWorld()) {
-                this.level().explode(this, getX(), getEyeY(), getZ(), 7 * getScale(), Level.ExplosionInteraction.MOB);
+                this.level().explode(this, getX(), getEyeY(), getZ(), 7 * getJellyfishScale(), Level.ExplosionInteraction.MOB);
             }
         }
     }
@@ -219,7 +218,7 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, DamageSource damageSource) {
         return false;
     }
 
@@ -233,9 +232,9 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
         if (source.is(DamageTypes.WITHER) || source.getDirectEntity() != null || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-            return super.hurt(source, amount);
+            return super.hurtServer(serverLevel, source, amount);
         }
         return false;
     }
@@ -243,7 +242,7 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
     public static boolean canSpawn(
             EntityType<? extends EntityHydrogenJellyfish> type,
             LevelAccessor world,
-            MobSpawnType spawnReason,
+            EntitySpawnReason spawnReason,
             BlockPos pos,
             RandomSource random
     ) {

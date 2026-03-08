@@ -8,12 +8,14 @@ import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.advancements.BNCriterion;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LightningRodBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.AABB;
 
 
@@ -42,14 +44,16 @@ class BNObsidianBase extends BaseBlock implements BehaviourObsidian {
             Level level,
             BlockPos blockPos,
             Block block,
-            BlockPos rodPos,
+            Orientation orientation,
             boolean bl
     ) {
         if (transformsTo != null) {
-            final BlockState updaterState = level.getBlockState(rodPos);
-            if (updaterState.is(Blocks.LIGHTNING_ROD)) {
-                if (updaterState.getValue(LightningRodBlock.POWERED)) {
+            for (Direction direction : Direction.values()) {
+                BlockPos rodPos = blockPos.relative(direction);
+                BlockState updaterState = level.getBlockState(rodPos);
+                if (updaterState.is(Blocks.LIGHTNING_ROD) && updaterState.getValue(LightningRodBlock.POWERED)) {
                     BNObsidian.onLightningUpdate(level, blockPos, transformsTo);
+                    break;
                 }
             }
         }
@@ -87,5 +91,3 @@ public class BNObsidian extends BNObsidianBase implements BehaviourObsidianPorta
         }
     }
 }
-
-

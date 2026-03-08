@@ -2,28 +2,31 @@ package org.betterx.betternether.entity;
 
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-public class EntityNagaProjectile extends FlyingMob {
+public class EntityNagaProjectile extends Mob {
     private static final int MAX_LIFE_TIME = 60; // 3 seconds * 20 ticks
     private int lifeTime = 0;
 
     public EntityNagaProjectile(EntityType<? extends EntityNagaProjectile> type, Level world) {
         super(type, world);
         this.xpReward = 0;
+    }
+
+    @Override
+    protected void registerGoals() {
     }
 
     public void setParams(LivingEntity owner, Entity target) {
@@ -40,7 +43,6 @@ public class EntityNagaProjectile extends FlyingMob {
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean shouldRenderAtSqrDistance(double distance) {
         return distance < 128;
     }
@@ -117,7 +119,7 @@ public class EntityNagaProjectile extends FlyingMob {
                     0.1, 0.1, 0.1
             );
         }
-        this.kill();
+        this.discard();
     }
 
     @Override
@@ -131,16 +133,14 @@ public class EntityNagaProjectile extends FlyingMob {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    protected void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("life", lifeTime);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    protected void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("life")) {
-            lifeTime = tag.getInt("life");
-        }
+        lifeTime = tag.getIntOr("life", lifeTime);
     }
 }

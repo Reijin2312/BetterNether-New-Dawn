@@ -1,7 +1,6 @@
 package org.betterx.betternether.blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-import de.ambertation.wunderlib.math.Float3;
 import org.betterx.bclib.behaviours.interfaces.BehaviourMetal;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.registry.NetherBlocks;
@@ -9,30 +8,30 @@ import org.betterx.betternether.registry.NetherBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 
 public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourMetal {
@@ -43,8 +42,8 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
             box(9, 0, 8, 13, 12, 122),
             box(5, 0, 6, 7, 6, 8)
     );
-    private static final DustParticleOptions EFFECT = new DustParticleOptions(Float3.X_AXIS.toVector3(), 1.0F);
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    private static final DustParticleOptions EFFECT = new DustParticleOptions(0xFF0000, 1.0F);
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty TOP = BooleanProperty.create("top");
     private final ItemStack requiredItem;
     private final Component requiredItemCountText;
@@ -56,11 +55,8 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
         this.registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(TOP, false));
         this.setDropItself(false);
 
-        Item item = BuiltInRegistries.ITEM.get(BuiltInRegistries.ITEM.getKey(Items.GLOWSTONE));
-        if (item == Items.AIR)
-            item = Items.GLOWSTONE;
         int count = 4;
-        requiredItem = new ItemStack(item, count);
+        requiredItem = new ItemStack(Items.GLOWSTONE, count);
         requiredItemCountText = Component.literal(Integer.toString(count));
         requiredItemNameText = requiredItem.getHoverName();
     }
@@ -81,7 +77,7 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
     }
 
     @Override
-    public VoxelShape getOcclusionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public VoxelShape getOcclusionShape(BlockState blockState) {
         return CULL_SHAPE;
     }
 
@@ -107,8 +103,11 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
                         pos.getZ() + world.random.nextFloat(), 0, 0, 0
                 );
             player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
-            if (!world.isClientSide) {
-                ((ServerPlayer) player).setRespawnPosition(world.dimension(), pos, player.getYHeadRot(), true, false);
+            if (!world.isClientSide()) {
+                ((ServerPlayer) player).setRespawnPosition(
+                        new ServerPlayer.RespawnConfig(LevelData.RespawnData.of(world.dimension(), pos, player.getYHeadRot(), 0.0F), false),
+                        false
+                );
             }
             player.playSound(SoundEvents.TOTEM_USE, 0.7F, 1.0F);
             return InteractionResult.SUCCESS;
@@ -138,11 +137,13 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (state.getValue(TOP)) {
             return world.getBlockState(pos.below()).getBlock() == this ? state : Blocks.AIR.defaultBlockState();
@@ -169,6 +170,3 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
         return super.playerWillDestroy(world, pos, state, player);
     }
 }
-
-
-

@@ -11,7 +11,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -20,12 +19,11 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import net.minecraft.world.level.ScheduledTickAccess;
 
 public class BlockMold extends BaseBlockMold implements SurvivesOnNetherMycelium {
     public BlockMold(MapColor color) {
@@ -58,7 +56,6 @@ class BaseBlockMold extends BlockBaseNotFull {
         this.setDropItself(false);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -66,11 +63,13 @@ class BaseBlockMold extends BlockBaseNotFull {
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (!canSurvive(state, world, pos))
             return Blocks.AIR.defaultBlockState();
@@ -119,4 +118,3 @@ class BaseBlockMold extends BlockBaseNotFull {
             return super.getDrops(state, builder);
     }
 }
-

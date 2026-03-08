@@ -5,15 +5,14 @@ import org.betterx.betternether.blocks.BlockChestOfDrawers;
 import org.betterx.betternether.registry.BlockEntitiesRegistry;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,6 +21,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.List;
 
@@ -61,19 +62,19 @@ public class BlockEntityChestOfDrawers extends RandomizableContainerBlockEntity 
 
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
+    protected void loadAdditional(ValueInput tag) {
+        super.loadAdditional(tag);
         this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
-            ContainerHelper.loadAllItems(tag, this.inventory, provider);
+            ContainerHelper.loadAllItems(tag, this.inventory);
         }
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
+    protected void saveAdditional(ValueOutput tag) {
+        super.saveAdditional(tag);
         if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.inventory, provider);
+            ContainerHelper.saveAllItems(tag, this.inventory);
         }
     }
 
@@ -92,8 +93,15 @@ public class BlockEntityChestOfDrawers extends RandomizableContainerBlockEntity 
     }
 
     @Override
-    public void stopOpen(Player player) {
-        if (!player.isSpectator()) {
+    public void startOpen(ContainerUser user) {
+        if (user instanceof Player player) {
+            this.onInvOpen(player);
+        }
+    }
+
+    @Override
+    public void stopOpen(ContainerUser user) {
+        if (!(user instanceof Player player) || !player.isSpectator()) {
             --this.watchers;
             this.onInvOpenOrClose();
         }
@@ -102,7 +110,7 @@ public class BlockEntityChestOfDrawers extends RandomizableContainerBlockEntity 
     protected void onInvOpenOrClose() {
         BlockState state = this.getBlockState();
         Block block = state.getBlock();
-        if (block instanceof BlockChestOfDrawers && !level.isClientSide) {
+        if (block instanceof BlockChestOfDrawers && !level.isClientSide()) {
             if (watchers > 0 && !state.getValue(BlockChestOfDrawers.OPEN)) {
                 BlocksHelper.setWithoutUpdate(
                         level,
@@ -120,7 +128,7 @@ public class BlockEntityChestOfDrawers extends RandomizableContainerBlockEntity 
     }
 
     private void playSound(BlockState blockState, SoundEvent soundEvent) {
-        Vec3i vec3i = blockState.getValue(BlockChestOfDrawers.FACING).getNormal();
+        Vec3i vec3i = blockState.getValue(BlockChestOfDrawers.FACING).getUnitVec3i();
         double d = (double) this.worldPosition.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
         double e = (double) this.worldPosition.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
         double f = (double) this.worldPosition.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
