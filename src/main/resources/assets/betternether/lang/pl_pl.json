@@ -271,5 +271,8 @@
   "block.betternether.wart_stripped_log": "Ociosany brodawczanowy pień",
   "block.betternether.stalagnate_stripped_bark": "Okorowane stalagnatowcowe drewno",
   "block.betternether.willow_stripped_bark": "Netherowe Okorowane wierzbowe drewno",
-  "block.betternether.wart_stripped_bark": "Ociosane brodawczane drewno"
+  "block.betternether.wart_stripped_bark": "Ociosane brodawczane drewno",
+  "betternether.jei.forge.category": "Kuźnia z cincinnasytu",
+  "betternether.jei.cooking.experience": "%s XP",
+  "config.jade.plugin_betternether.plant_growth": "Rośliny BetterNether"
 }

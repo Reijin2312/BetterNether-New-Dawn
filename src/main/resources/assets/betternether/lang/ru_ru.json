@@ -792,5 +792,8 @@
   "upgrade.betternether.bowl_upgrade": "Улучшение огненной чаши до незерита",
   "upgrade.betternether.cincinnasite_diamond_upgrade": "Алмазное улучшение цинцинназита",
   "upgrade.betternether.flaming_ruby_upgrade": "Улучшение огнерубина",
-  "vanilla-hammers_extension.title": "BetterNether для Vanilla Hammers"
+  "vanilla-hammers_extension.title": "BetterNether для Vanilla Hammers",
+  "config.jade.plugin_betternether.plant_growth": "Растения BetterNether",
+  "betternether.jei.forge.category": "Цинцинназитовая кузница",
+  "betternether.jei.cooking.experience": "%s опыта"
 }

@@ -791,5 +791,8 @@
   "book.betternether.category.intro": "Getting Started",
   "book.betternether.category.intro.desc": "Where to find resources and how to use this guide.",
   "book.betternether.entry.welcome": "First Steps",
-  "book.betternether.entry.welcome.text": "Better Nether adds new biomes, plants, gear, and structures. Gather new woods and ores, explore carefully, and check this book for block info and tips."
+  "book.betternether.entry.welcome.text": "Better Nether adds new biomes, plants, gear, and structures. Gather new woods and ores, explore carefully, and check this book for block info and tips.",
+  "betternether.jei.cooking.experience": "%s XP",
+  "betternether.jei.forge.category": "Cincinnasite Forge",
+  "config.jade.plugin_betternether.plant_growth": "Betternether Plants"
 }

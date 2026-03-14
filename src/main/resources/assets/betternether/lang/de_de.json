@@ -783,5 +783,8 @@
   "upgrade.betternether.bowl_upgrade": "Netherit Feuerschalen-Upgrade",
   "upgrade.betternether.cincinnasite_diamond_upgrade": "Cincinnasite Diamant Veredelung",
   "upgrade.betternether.flaming_ruby_upgrade": "Feuerrubin Veredelung",
-  "vanilla-hammers_extension.title": "BetterNether for Vanilla Hammers"
+  "vanilla-hammers_extension.title": "BetterNether for Vanilla Hammers",
+  "betternether.jei.forge.category": "Cincinnasit-Schmiede",
+  "betternether.jei.cooking.experience": "%s EP",
+  "config.jade.plugin_betternether.plant_growth": "BetterNether-Pflanzen"
 }

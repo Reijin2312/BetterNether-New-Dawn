@@ -613,5 +613,8 @@
   "advancements.betternether.ruby_gear.title": "炎に覆われている",
   "advancements.betternether.ruby_gear.description": "燃えるような赤いルビーの防具で身を包む",
   "advancements.betternether.ruby_tools.title": "レッドネザー",
-  "advancements.betternether.ruby_tools.description": "ネザールビーのツールを入手する"
+  "advancements.betternether.ruby_tools.description": "ネザールビーのツールを入手する",
+  "betternether.jei.forge.category": "シンシナサイトの鍛冶炉",
+  "betternether.jei.cooking.experience": "%s XP",
+  "config.jade.plugin_betternether.plant_growth": "BetterNetherの植物"
 }
