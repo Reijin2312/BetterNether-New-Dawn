@@ -101,7 +101,9 @@ public class BetterNether {
 
         Configs.saveConfigs();
         WorldConfig.registerMod(C);
-        Patcher.register();
+        if (BCLib.isClient()) {
+            Patcher.register();
+        }
 
         if (BCLib.isDatagen()) {
             onDatagen();

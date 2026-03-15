@@ -49,7 +49,7 @@ public class RedstoneOreBlock extends RedStoneOreBlock implements RuntimeBlockMo
     }
 
     @Override
-    public BlockModel getItemModel(Identifier resourceLocation) {
+    public Object getItemModel(Identifier resourceLocation) {
         return getBlockModel(resourceLocation, defaultBlockState());
     }
 

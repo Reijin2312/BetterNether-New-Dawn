@@ -617,5 +617,7 @@
   "advancements.betternether.ruby_tools.description": "使用从下界深处获取的红宝石工具",
   "advancements.betternether.city.title": "曾经的光辉",
   "advancements.betternether.city.description": "找到一座被遗弃已久的下界城",
-  "biome.betternether.upside_down_forest_cleared": "被清除的反转森林"
+  "biome.betternether.upside_down_forest_cleared": "被清除的反转森林",
+  "betternether.jei.cooking.experience": "%s 经验",
+  "betternether.jei.forge.category": "辛辛纳石锻炉"
 }

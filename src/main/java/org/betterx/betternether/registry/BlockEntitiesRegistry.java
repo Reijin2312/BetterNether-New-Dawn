@@ -28,27 +28,46 @@ public class BlockEntitiesRegistry {
     public static void register(net.neoforged.neoforge.registries.RegisterEvent event) {
         if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.BLOCK_ENTITY_TYPE)) {
             event.register(net.minecraft.core.registries.Registries.BLOCK_ENTITY_TYPE, helper -> {
-                CINCINNASITE_FORGE = new BlockEntityType<>(
-                        BlockEntityForge::new,
-                        NetherBlocks.CINCINNASITE_FORGE
-                );
-                NETHERRACK_FURNACE = new BlockEntityType<>(
-                        BlockEntityFurnace::new,
-                        getFurnaces()
-                );
-                CHEST_OF_DRAWERS = new BlockEntityType<>(
-                        BlockEntityChestOfDrawers::new,
-                        NetherBlocks.CHEST_OF_DRAWERS
-                );
-                NETHER_BREWING_STAND = new BlockEntityType<>(
-                        BNBrewingStandBlockEntity::new,
-                        NetherBlocks.NETHER_BREWING_STAND
-                );
+                if (NetherBlocks.CINCINNASITE_FORGE != null) {
+                    CINCINNASITE_FORGE = new BlockEntityType<>(
+                            BlockEntityForge::new,
+                            NetherBlocks.CINCINNASITE_FORGE
+                    );
+                    helper.register(BetterNether.C.mk("forge"), CINCINNASITE_FORGE);
+                } else {
+                    BetterNether.C.log.warn("Skipping BlockEntityType registration for cincinnasite_forge: block is null");
+                }
 
-                helper.register(BetterNether.C.mk("forge"), CINCINNASITE_FORGE);
-                helper.register(BetterNether.C.mk("furnace"), NETHERRACK_FURNACE);
-                helper.register(BetterNether.C.mk("chest_of_drawers"), CHEST_OF_DRAWERS);
-                helper.register(BetterNether.C.mk("nether_brewing_stand"), NETHER_BREWING_STAND);
+                final Block[] furnaces = getFurnaces();
+                if (furnaces.length > 0) {
+                    NETHERRACK_FURNACE = new BlockEntityType<>(
+                            BlockEntityFurnace::new,
+                            furnaces
+                    );
+                    helper.register(BetterNether.C.mk("furnace"), NETHERRACK_FURNACE);
+                } else {
+                    BetterNether.C.log.warn("Skipping BlockEntityType registration for furnace: no furnace blocks found");
+                }
+
+                if (NetherBlocks.CHEST_OF_DRAWERS != null) {
+                    CHEST_OF_DRAWERS = new BlockEntityType<>(
+                            BlockEntityChestOfDrawers::new,
+                            NetherBlocks.CHEST_OF_DRAWERS
+                    );
+                    helper.register(BetterNether.C.mk("chest_of_drawers"), CHEST_OF_DRAWERS);
+                } else {
+                    BetterNether.C.log.warn("Skipping BlockEntityType registration for chest_of_drawers: block is null");
+                }
+
+                if (NetherBlocks.NETHER_BREWING_STAND != null) {
+                    NETHER_BREWING_STAND = new BlockEntityType<>(
+                            BNBrewingStandBlockEntity::new,
+                            NetherBlocks.NETHER_BREWING_STAND
+                    );
+                    helper.register(BetterNether.C.mk("nether_brewing_stand"), NETHER_BREWING_STAND);
+                } else {
+                    BetterNether.C.log.warn("Skipping BlockEntityType registration for nether_brewing_stand: block is null");
+                }
             });
         }
     }

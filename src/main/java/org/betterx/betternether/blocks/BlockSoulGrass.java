@@ -8,6 +8,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockSoulGrass extends BaseBlockNetherGrass.OnEverything implements BlockModelProvider {
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
@@ -25,7 +27,9 @@ public class BlockSoulGrass extends BaseBlockNetherGrass.OnEverything implements
     }
 
     @Override
-    public void provideBlockModels(WoverBlockModelGenerators generators) {
+    @OnlyIn(Dist.CLIENT)
+    public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
         BNModels.provideGrassBlockModels(generators, this, "soul_grass", 2);
     }
 }

@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.Block;
 
 
 import java.util.Optional;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class BNGlass extends BaseGlassBlock {
     public BNGlass(Block block) {
@@ -18,7 +20,9 @@ public class BNGlass extends BaseGlassBlock {
     }
 
     @Override
-    public void provideBlockModels(WoverBlockModelGenerators generators) {
+    @OnlyIn(Dist.CLIENT)
+    public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
         var resource = TextureMapping.getBlockTexture(this);
         Identifier blockModel;
         if (!resource.getPath().equals("block/quartz_glass") && !resource

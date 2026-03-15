@@ -590,5 +590,7 @@
   "block.betternether.whispering_gourd_vine": "Semente de Cabaça Sussurrante",
   "block.betternether.whispering_gourd": "Cabaça Sussurrante",
   "block.betternether.whispering_gourd_lantern": "Lanterna de Cabaça Sussurrante",
-  "block.betternether.willow_torch": "Tocha de Salgueiro do Nether"
+  "block.betternether.willow_torch": "Tocha de Salgueiro do Nether",
+  "betternether.jei.cooking.experience": "%s XP",
+  "betternether.jei.forge.category": "Forja de Cincinnasita"
 }

@@ -37,6 +37,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.util.RandomSource;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements SurvivesOnNetherrackNyliumAndSculk {
 
@@ -52,7 +54,9 @@ public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements S
 
     public static class JunglePlant extends BlockNetherGrass implements BlockModelProvider {
         @Override
-        public void provideBlockModels(WoverBlockModelGenerators generators) {
+        @OnlyIn(Dist.CLIENT)
+        public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
             var JP1 = BetterNether.C.mk("block/jungle_plant_1");
             var JP2 = BetterNether.C.mk("block/jungle_plant_2");
             var JP3 = BetterNether.C.mk("block/jungle_plant_3");
@@ -98,28 +102,36 @@ public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements S
 
     public static class SwampGrass extends BlockNetherGrass implements BlockModelProvider {
         @Override
-        public void provideBlockModels(WoverBlockModelGenerators generators) {
+        @OnlyIn(Dist.CLIENT)
+        public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
             BNModels.provideGrassBlockModels(generators, this, "swamp_grass", 3);
         }
     }
 
     public static class BoneGrass extends BaseBlockNetherGrass.OnEverything implements BlockModelProvider {
         @Override
-        public void provideBlockModels(WoverBlockModelGenerators generators) {
+        @OnlyIn(Dist.CLIENT)
+        public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
             BNModels.provideGrassBlockModels(generators, this, "bone_grass", 3);
         }
     }
 
     public static class SepiaBoneGrass extends BaseBlockNetherGrass.OnEverything implements BlockModelProvider {
         @Override
-        public void provideBlockModels(WoverBlockModelGenerators generators) {
+        @OnlyIn(Dist.CLIENT)
+        public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
             BNModels.provideGrassBlockModels(generators, this, "sepia_bone_grass", 3);
         }
     }
 
     public static class NetherGrass extends BlockNetherGrass implements BlockModelProvider {
         @Override
-        public void provideBlockModels(WoverBlockModelGenerators generators) {
+        @OnlyIn(Dist.CLIENT)
+        public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
             final var T1 = BetterNether.C.mk("block/ngrass_1");
             final var T2 = BetterNether.C.mk("block/ngrass_2");
             final var T3 = BetterNether.C.mk("block/ngrass_3");

@@ -618,5 +618,7 @@
   "advancements.betternether.ruby_tools.description": "네더의 깊은 곳에서 가져온 루비 도구를 사용합니다.",
   "advancements.betternether.city.title": "영광스러운 과거",
   "advancements.betternether.city.description": "버려진 네더 도시 찾기",
-  "biome.betternether.upside_down_forest_cleared": "죽은 역림"
+  "biome.betternether.upside_down_forest_cleared": "죽은 역림",
+  "betternether.jei.cooking.experience": "%s XP",
+  "betternether.jei.forge.category": "신시나사이트 대장간"
 }

@@ -10,6 +10,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class BlueWeepingObsidianBlock extends BNObsidianBase {
@@ -48,7 +50,9 @@ public class BlueWeepingObsidianBlock extends BNObsidianBase {
     }
 
     @Override
-    public void provideBlockModels(WoverBlockModelGenerators generators) {
+    @OnlyIn(Dist.CLIENT)
+    public void provideBlockModels(Object modelGenerator) {
+        WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
         generators.createObsidianVariants(generators, this);
     }
 }
