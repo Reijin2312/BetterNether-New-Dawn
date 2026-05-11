@@ -516,11 +516,11 @@ public class CityPalette {
 
     public BlockState getPlant(BlockState input) {
         String seed = BuiltInRegistries.BLOCK.getKey(input.getBlock()).getPath();
-        RANDOM.setSeed(seed.hashCode());
+        LegacyRandomSource random = new LegacyRandomSource(seed.hashCode());
         return NetherBlocks.POTTED_PLANT.defaultBlockState()
                                         .setValue(
                                                 BlockPottedPlant.PLANT,
-                                                BNBlockProperties.PottedPlantShape.values()[RANDOM.nextInt(
+                                                BNBlockProperties.PottedPlantShape.values()[random.nextInt(
                                                         BNBlockProperties.PottedPlantShape.values().length)]
                                         );
     }
