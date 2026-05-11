@@ -17,14 +17,20 @@ public abstract class ContextFeature<FC extends FeatureConfiguration> extends Fe
 
     @Override
     public final boolean place(FeaturePlaceContext<FC> ctx) {
-        return place(
-                ctx.level(),
-                ctx.origin(),
-                ctx.random(),
-                ctx.config(),
-                ctx.chunkGenerator().getGenDepth(),
-                NetherThreadDataStorage.generatorForThread().context
-        );
+        StructureGeneratorThreadContext context = NetherThreadDataStorage.generatorForThread().context;
+        context.clear();
+        try {
+            return place(
+                    ctx.level(),
+                    ctx.origin(),
+                    ctx.random(),
+                    ctx.config(),
+                    ctx.chunkGenerator().getGenDepth(),
+                    context
+            );
+        } finally {
+            context.clear();
+        }
     }
 
     protected abstract boolean place(

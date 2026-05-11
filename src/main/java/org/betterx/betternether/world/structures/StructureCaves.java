@@ -11,7 +11,6 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 
 public class StructureCaves implements IStructure {
 
-    private int offset = 12;
     private final OpenSimplexNoise heightNoise;
     private final OpenSimplexNoise rigidNoise;
     private final OpenSimplexNoise distortX;
@@ -34,7 +33,7 @@ public class StructureCaves implements IStructure {
             StructureGeneratorThreadContext context
     ) {
         boolean isVoid = true;
-        offset = (int) (getHeight(pos.getX() + 8, pos.getZ() + 8) - 12);
+        context.CAVE_OFFSET = (int) (getHeight(pos.getX() + 8, pos.getZ() + 8) - 12);
 
         for (int x = 0; x < 16; x++) {
             int wx = pos.getX() + x;
@@ -45,7 +44,7 @@ public class StructureCaves implements IStructure {
                 double rigid = getRigid(wx, wz);
 
                 for (int y = 0; y < 24; y++) {
-                    int wy = offset + y;
+                    int wy = context.CAVE_OFFSET + y;
 
                     double hRigid = Math.abs(wy - height);
                     double sdf = -opSmoothUnion(-hRigid / 30, -rigid, 0.15);
@@ -67,7 +66,7 @@ public class StructureCaves implements IStructure {
             for (int z = 0; z < 16; z++) {
                 int wz = pos.getZ() + z;
                 for (int y = 23; y >= 0; y--) {
-                    int wy = offset + y;
+                    int wy = context.CAVE_OFFSET + y;
                     context.POS.set(wx, wy, wz);
                     if (context.MASK[x][y][z] && BlocksHelper.isTerrain(world.getBlockState(
                             context.POS))) {
@@ -108,8 +107,8 @@ public class StructureCaves implements IStructure {
     }
 
     public boolean isInCave(int x, int y, int z, StructureGeneratorThreadContext context) {
-        int y2 = y - offset;
-        if (y2 >= 0 && y < 24)
+        int y2 = y - context.CAVE_OFFSET;
+        if (y2 >= 0 && y2 < 24)
             return context.MASK[x][y2][z];
         else
             return false;

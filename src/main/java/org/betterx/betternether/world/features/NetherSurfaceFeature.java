@@ -23,13 +23,19 @@ public abstract class NetherSurfaceFeature extends Feature<NoneFeatureConfigurat
     }
 
     protected void generate(BlockPos centerPos, FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-        generate(
-                ctx.level(),
-                centerPos,
-                ctx.random(),
-                ctx.chunkGenerator().getGenDepth(),
-                NetherThreadDataStorage.generatorForThread().context
-        );
+        StructureGeneratorThreadContext context = NetherThreadDataStorage.generatorForThread().context;
+        context.clear();
+        try {
+            generate(
+                    ctx.level(),
+                    centerPos,
+                    ctx.random(),
+                    ctx.chunkGenerator().getGenDepth(),
+                    context
+            );
+        } finally {
+            context.clear();
+        }
     }
 
     protected abstract void generate(

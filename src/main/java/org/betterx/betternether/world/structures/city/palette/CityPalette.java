@@ -7,7 +7,6 @@ import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CityPalette {
-    private static final RandomSource RANDOM = new LegacyRandomSource(130520220057l);
     private final String name;
 
     private final List<Block> foundationBlocks = new ArrayList<Block>();
@@ -194,8 +192,7 @@ public class CityPalette {
             return list.get(0);
 
         String seed = BuiltInRegistries.BLOCK.getKey(state.getBlock()).getPath();
-        RANDOM.setSeed(seed.hashCode());
-        return list.get(RANDOM.nextInt(list.size()));
+        return list.get(new LegacyRandomSource(seed.hashCode()).nextInt(list.size()));
     }
 
     private BlockState getFullState(BlockState input, List<Block> list) {

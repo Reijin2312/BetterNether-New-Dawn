@@ -2,6 +2,7 @@ package org.betterx.betternether.world.structures;
 
 import net.minecraft.core.BlockPos;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class StructureGeneratorThreadContext {
     public final Map<BlockPos, Byte> LOGS_DIST = new HashMap<>(1024);
     public final Set<BlockPos> BLOCKS = new HashSet<BlockPos>(2048);
     public final boolean[][][] MASK = new boolean[16][24][16];
+    public int CAVE_OFFSET;
 
     public void clear() {
         POINTS.clear();
@@ -24,5 +26,11 @@ public class StructureGeneratorThreadContext {
         TOP.clear();
         BLOCKS.clear();
         LOGS_DIST.clear();
+        CAVE_OFFSET = 0;
+        for (boolean[][] slice : MASK) {
+            for (boolean[] column : slice) {
+                Arrays.fill(column, false);
+            }
+        }
     }
 }

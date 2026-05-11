@@ -1,7 +1,6 @@
 package org.betterx.betternether.world.biomes.providers;
 
 
-import org.betterx.betternether.MHelper;
 import org.betterx.wover.surface.api.conditions.SurfaceRulesContext;
 import org.betterx.wover.surface.api.noise.NumericProvider;
 
@@ -15,7 +14,20 @@ public class NetherMushroomForestEdgeNumericProvider implements NumericProvider 
 
     @Override
     public int getNumber(SurfaceRulesContext ctx) {
-        return MHelper.RANDOM.nextInt(4) > 0 ? 0 : (MHelper.RANDOM.nextBoolean() ? 1 : 2);
+        return randomInt(ctx, 0, 4) > 0 ? 0 : (randomInt(ctx, 1, 2) == 0 ? 1 : 2);
+    }
+
+    private static int randomInt(SurfaceRulesContext ctx, int salt, int bound) {
+        int hash = ctx.getBlockX();
+        hash = 31 * hash + ctx.getBlockY();
+        hash = 31 * hash + ctx.getBlockZ();
+        hash = 31 * hash + salt;
+        hash ^= hash >>> 16;
+        hash *= 0x7feb352d;
+        hash ^= hash >>> 15;
+        hash *= 0x846ca68b;
+        hash ^= hash >>> 16;
+        return Math.floorMod(hash, bound);
     }
 
     @Override

@@ -28,6 +28,24 @@ public class BlockFixFeature extends DefaultFeature {
 
     private static void fixBlocks(WorldGenLevel world, int x1, int y1, int z1, int x2, int y2, int z2) {
         final StructureGeneratorThreadContext ctx = NetherThreadDataStorage.generatorForThread().context;
+        ctx.clear();
+        try {
+            fixBlocks(world, x1, y1, z1, x2, y2, z2, ctx);
+        } finally {
+            ctx.clear();
+        }
+    }
+
+    private static void fixBlocks(
+            WorldGenLevel world,
+            int x1,
+            int y1,
+            int z1,
+            int x2,
+            int y2,
+            int z2,
+            StructureGeneratorThreadContext ctx
+    ) {
         final MutableBlockPos popPos = ctx.POS;
         final MutableBlockPos abovePos = ctx.POS2;
         final MutableBlockPos belowPos = ctx.POS3;

@@ -2,6 +2,7 @@ package org.betterx.betternether.world.features;
 
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.betternether.world.structures.StructurePath;
+import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -17,15 +18,21 @@ public class PathsFeature extends DefaultFeature {
         final WorldGenLevel level = featurePlaceContext.level();
         final int sx = (worldPos.getX() >> 4) << 4;
         final int sz = (worldPos.getZ() >> 4) << 4;
+        final StructureGeneratorThreadContext context = NetherThreadDataStorage.generatorForThread().context;
 
-        paths.generate(
-                level,
-                new BlockPos(sx, 0, sz),
-                random,
-                featurePlaceContext.chunkGenerator().getGenDepth(),
-                NetherThreadDataStorage.generatorForThread().context
-        );
-        return true;
+        context.clear();
+        try {
+            paths.generate(
+                    level,
+                    new BlockPos(sx, 0, sz),
+                    random,
+                    featurePlaceContext.chunkGenerator().getGenDepth(),
+                    context
+            );
+            return true;
+        } finally {
+            context.clear();
+        }
     }
 
     private static StructurePath paths;
