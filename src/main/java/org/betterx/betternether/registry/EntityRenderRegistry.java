@@ -1,5 +1,6 @@
 package org.betterx.betternether.registry;
 
+import org.betterx.bclib.furniture.renderer.RenderChair;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.entity.model.*;
 import org.betterx.betternether.entity.render.*;
@@ -30,6 +31,9 @@ public class EntityRenderRegistry {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        if (NetherEntities.LEGACY_CHAIR != null) {
+            event.registerEntityRenderer(NetherEntities.LEGACY_CHAIR, RenderChair::new);
+        }
         event.registerEntityRenderer(NetherEntities.FIREFLY.type(), RenderFirefly::new);
         event.registerEntityRenderer(NetherEntities.HYDROGEN_JELLYFISH.type(), RenderHydrogenJellyfish::new);
         event.registerEntityRenderer(NetherEntities.NAGA.type(), RenderNaga::new);

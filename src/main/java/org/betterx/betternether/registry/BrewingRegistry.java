@@ -26,7 +26,7 @@ public class BrewingRegistry {
         * регистры блоков/предметов после их заморозки.
         */
     public static void register() {
-        ensureRecipes();
+        // Recipes are initialized lazily because ItemStack components are not bound during mod construction on 26.x.
     }
 
     private static void ensureRecipes() {

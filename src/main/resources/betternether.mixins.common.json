@@ -20,6 +20,7 @@
     "PlayerEntityMixin",
     "PortalShapeMixin",
     "RecipeManagerMixin",
+    "StructureMixin",
     "obsidian_breaker.PlayerMixin",
     "piglin.PiglinAiMixin",
     "piglin.PiglinBruteMixin",

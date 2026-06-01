@@ -87,7 +87,7 @@ public class BlockSoulVein extends BlockBaseNotFull implements BonemealableBlock
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getParameter(LootContextParams.TOOL);
+        var tool = builder.getParameter(LootContextParams.TOOL);
         if (LootUtil.isCorrectTool(this, state, tool))
             return Collections.singletonList(new ItemStack(this.asItem()));
         else

@@ -8,7 +8,8 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
@@ -57,6 +58,15 @@ public class BNModels {
     }
 
     public static void createComplex(WoverBlockModelGenerators generators, Block bl, List<ModelSource> sources) {
+        createComplex(generators, bl, sources, false);
+    }
+
+    public static void createComplex(
+            WoverBlockModelGenerators generators,
+            Block bl,
+            List<ModelSource> sources,
+            boolean useBlockItemModel
+    ) {
         List<Pair<ModelSource, Identifier>> models = sources.stream().map(s -> {
             Optional<Identifier> parent = s.parent() == null ? Optional.empty() : Optional.of(s.parent());
             Optional<String> suffix = (s.suffix() == null || s.suffix().trim().isEmpty())
@@ -65,7 +75,7 @@ public class BNModels {
             TextureSlot[] slots = s.textures().stream().map(TextureSource::slot).toArray(TextureSlot[]::new);
 
             final var mapping = new TextureMapping();
-            s.textures.forEach(t -> mapping.put(t.slot(), t.texture()));
+            s.textures.forEach(t -> mapping.put(t.slot(), new Material(t.texture())));
 
             ModelTemplate template = new ModelTemplate(parent, suffix, slots);
             return new Pair<>(s, template.create(bl, mapping, generators.modelOutput()));
@@ -81,7 +91,15 @@ public class BNModels {
         generators.acceptBlockState(MultiVariantGenerator.dispatch(bl, multiVariant));
 
         Item item = bl.asItem();
-        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(sources.get(0).textures.get(0).texture), generators.modelOutput());
+        if (useBlockItemModel) {
+            generators.delegateItemModel(bl, models.get(0).second);
+        } else {
+            ModelTemplates.FLAT_ITEM.create(
+                    ModelLocationUtils.getModelLocation(item),
+                    TextureMapping.layer0(new Material(sources.get(0).textures.get(0).texture)),
+                    generators.modelOutput()
+            );
+        }
     }
 
     public static ModelTemplate getCropBlockModelTemplate(String suffix) {
@@ -151,6 +169,6 @@ public class BNModels {
             );
         }
 
-        BNModels.createComplex(generators, bl, variants);
+        BNModels.createComplex(generators, bl, variants, true);
     }
 }

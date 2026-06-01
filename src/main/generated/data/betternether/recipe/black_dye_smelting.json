@@ -5,7 +5,6 @@
   "experience": 0.0,
   "ingredient": "betternether:ink_bush_seed",
   "result": {
-    "count": 1,
     "id": "minecraft:black_dye"
   }
 }

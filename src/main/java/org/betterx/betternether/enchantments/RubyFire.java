@@ -72,10 +72,7 @@ public class RubyFire {
                     BlastingRecipe result = resultHolder != null ? resultHolder.value() : null;
                     if (result != null) {
                         didConvert = true;
-                        final ItemStack resultStack = result.assemble(
-                                new SingleRecipeInput(stack),
-                                level.registryAccess()
-                        );
+                        final ItemStack resultStack = result.assemble(new SingleRecipeInput(stack));
                         xpDrop += result.experience();
                         convertedDrops.get()
                                       .add(new ItemStack(

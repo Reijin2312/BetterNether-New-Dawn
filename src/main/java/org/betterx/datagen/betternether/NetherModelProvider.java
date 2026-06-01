@@ -45,7 +45,7 @@ public class NetherModelProvider extends WoverModelProvider {
     @Override
     protected void bootstrapBlockStateModels(WoverBlockModelGenerators generator) {
         final Block reedPlanks = NetherBlocks.MAT_REED.getBlock(WoodSlots.PLANKS);
-        final Identifier NETHER_REED_PLANKS = TextureMapping.getBlockTexture(reedPlanks);
+        final Identifier NETHER_REED_PLANKS = TextureMapping.getBlockTexture(reedPlanks).sprite();
         final Identifier NETHER_REED_PLANKS_TOP = BetterNether.C.mk("block/nether_reed_planks_top");
 
         final Identifier SOUL_SANDSTONE_BOTTOM = BetterNether.C.mk("block/soul_sandstone_bottom");

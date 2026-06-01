@@ -1,11 +1,10 @@
 {
   "type": "minecraft:smelting",
-  "category": "food",
+  "category": "misc",
   "cookingtime": 200,
   "experience": 0.1,
   "ingredient": "betternether:hook_mushroom",
   "result": {
-    "count": 1,
     "id": "betternether:hook_mushroom_cooked"
   }
 }

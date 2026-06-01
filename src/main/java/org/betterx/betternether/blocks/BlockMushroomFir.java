@@ -106,9 +106,8 @@ public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood 
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-        final var _shape = state.getValues().get(SHAPE);
-        if (_shape == null) return false;
-        final MushroomFirShape shape = SHAPE.getValueClass().cast(_shape);
+        if (!state.hasProperty(SHAPE)) return false;
+        final MushroomFirShape shape = state.getValue(SHAPE);
 
         if (shape == MushroomFirShape.SIDE_BIG_N || shape == MushroomFirShape.SIDE_SMALL_N)
             return world.getBlockState(pos.north()).getBlock() == this;

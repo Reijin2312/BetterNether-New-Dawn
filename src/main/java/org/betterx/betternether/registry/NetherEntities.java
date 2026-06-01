@@ -2,6 +2,7 @@ package org.betterx.betternether.registry;
 
 import org.betterx.bclib.api.v2.spawning.SpawnRuleBuilder;
 import org.betterx.bclib.entity.BCLEntityWrapper;
+import org.betterx.bclib.furniture.entity.EntityChair;
 import org.betterx.bclib.interfaces.SpawnRule;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.entity.*;
@@ -99,6 +100,7 @@ public class NetherEntities {
 
 
     public static EntityType<EntityNagaProjectile> NAGA_PROJECTILE;
+    public static EntityType<EntityChair> LEGACY_CHAIR;
 
     public static BCLEntityWrapper<EntityFirefly> FIREFLY;
 
@@ -235,6 +237,15 @@ public class NetherEntities {
         if (!event.getRegistryKey().equals(Registries.ENTITY_TYPE)) return;
 
         event.register(Registries.ENTITY_TYPE, helper -> {
+            // Legacy compatibility: old worlds may still contain this entity id.
+            LEGACY_CHAIR = EntityType.Builder
+                    .of(EntityChair::new, MobCategory.MISC)
+                    .sized(0.5F, 0.8F)
+                    .fireImmune()
+                    .noSummon()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, BetterNether.C.mk("chair")));
+            helper.register(BetterNether.C.mk("chair"), LEGACY_CHAIR);
+
             NAGA_PROJECTILE = EntityType.Builder
                     .of(EntityNagaProjectile::new, MobCategory.MISC)
                     .sized(1F, 1F)

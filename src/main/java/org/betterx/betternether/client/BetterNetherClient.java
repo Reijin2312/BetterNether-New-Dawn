@@ -1,7 +1,6 @@
 package org.betterx.betternether.client;
 
 import org.betterx.betternether.BetterNether;
-import org.betterx.betternether.blocks.BNRenderLayer;
 import org.betterx.betternether.config.screen.ConfigScreen;
 import org.betterx.betternether.registry.NetherParticles;
 
@@ -9,10 +8,7 @@ import org.betterx.bclib.items.boat.BoatTypeOverride;
 
 import net.minecraft.client.model.object.boat.BoatModel;
 import net.minecraft.client.model.object.boat.RaftModel;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.core.registries.BuiltInRegistries;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -62,14 +58,6 @@ public final class BetterNetherClient {
     }
 
     private static void registerRenderLayers() {
-        BuiltInRegistries.BLOCK.forEach(block -> {
-            if (block instanceof IRenderTypeable) {
-                BNRenderLayer layer = ((IRenderTypeable) block).getRenderLayer();
-                if (layer == BNRenderLayer.CUTOUT)
-                    ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.CUTOUT);
-                else if (layer == BNRenderLayer.TRANSLUCENT)
-                    ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.TRANSLUCENT);
-            }
-        });
+        // Block render layers are now resolved by the 26.x render pipeline.
     }
 }

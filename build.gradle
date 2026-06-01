@@ -20,7 +20,14 @@ spotless {
     }
 }
 
-archivesBaseName = project.archives_base_name
+tasks.matching { it.name == "spotlessJavaCheck" || it.name == "spotlessCheck" }.configureEach {
+    dependsOn(tasks.named("spotlessApply"))
+}
+
+ext.archivesBaseName = project.archives_base_name
+base {
+    archivesName = project.archives_base_name
+}
 version = project.mod_version
 group = project.maven_group
 
@@ -59,7 +66,7 @@ def enableJadeRuntime = (project.findProperty("enable_jade_runtime")?.toString()
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
     withSourcesJar()
 }
@@ -126,9 +133,9 @@ dependencies {
     // Keep compileOnly for integration sources, but skip loading EMI in dev runs.
     // runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 
-    compileOnly "mezz.jei:jei-1.21.11-neoforge-api:${project.jei_version}"
+    compileOnly "mezz.jei:jei-26.1-neoforge-api:${project.jei_version}"
     if (enableJeiRuntime) {
-        runtimeOnly "mezz.jei:jei-1.21.11-neoforge:${project.jei_version}"
+        runtimeOnly "mezz.jei:jei-26.1-neoforge:${project.jei_version}"
     } else {
         println "JEI runtime disabled (set -Penable_jei_runtime=true to re-enable)"
     }
@@ -234,6 +241,8 @@ processResources {
             "version": project.mod_version,
             "minecraft_version": project.minecraft_version,
             "neoforge_version": project.neoforge_version,
+            "minecraft_version_range": project.minecraft_version_range,
+            "neoforge_version_range": project.neoforge_version_range,
             "bclib_version": project.bclib_version,
             "wover_version": project.wover_version,
             "wunderlib_version": project.wunderlib_version
@@ -246,6 +255,8 @@ processResources {
                 "version": project.mod_version,
                 "minecraft_version": project.minecraft_version,
                 "neoforge_version": project.neoforge_version,
+                "minecraft_version_range": project.minecraft_version_range,
+                "neoforge_version_range": project.neoforge_version_range,
                 "bclib_version": project.bclib_version,
                 "wover_version": project.wover_version,
                 "wunderlib_version": project.wunderlib_version
@@ -267,7 +278,7 @@ tasks.named("sourcesJar") {
 tasks.withType(JavaCompile).configureEach {
     def refmapOutput = layout.buildDirectory.file("resources/main/${refmapName}").get().asFile
     options.encoding = "UTF-8"
-    options.release = 21
+    options.release = 25
     options.compilerArgs += [
             "-AoutRefMapFile=${refmapOutput}",
             "-AoutTsrgFile=${mixinOutMappingsFile.get().asFile}",
@@ -414,10 +425,10 @@ tasks.register("generateMixinMappings") {
 
 tasks.register("fixMixinRefmap") {
     def refmapFile = layout.buildDirectory.file("resources/main/${refmapName}")
-    inputs.file(refmapFile).optional(true)
+    inputs.files(refmapFile).optional()
     outputs.file(refmapFile)
-    dependsOn(tasks.named("processResources"))
     dependsOn(tasks.named("compileJava"))
+    mustRunAfter(tasks.named("processResources"))
     doLast {
         def file = refmapFile.get().asFile
         if (!file.exists()) {
@@ -498,7 +509,14 @@ jar {
 
 // Collect built jars for BetterNether and its local BetterX libraries into one folder
 def distDir = new File(rootProject.projectDir.parentFile, "betterx-dist")
-def modrinthModsDir = new File("C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/1.21.11/mods")
+def modrinthModsDir = new File("C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/26.1/mods")
+def test2ModsDir = file((project.findProperty("test2_mods_dir") ?: "C:/Users/Redmi/Desktop/test2/mods").toString())
+def betterNetherModrinthJarPatterns = [
+        "BetterNether-*.jar",
+        "bclib-*.jar",
+        "worldweaver-*.jar",
+        "wunderlib-*.jar"
+]
 tasks.register("copyDistJars", Copy) {
     dependsOn(
             tasks.named("jar"),
@@ -520,6 +538,12 @@ tasks.register("copyModrinthJars", Copy) {
             project(":WorldWeaver").tasks.named("jar"),
             project(":wunderlib").tasks.named("jar")
     )
+    doFirst {
+        modrinthModsDir.mkdirs()
+        delete fileTree(modrinthModsDir) {
+            include betterNetherModrinthJarPatterns
+        }
+    }
     from(tasks.named("jar"))
     from(project(":BCLib").tasks.named("jar"))
     from(project(":WorldWeaver").tasks.named("jar"))
@@ -527,8 +551,22 @@ tasks.register("copyModrinthJars", Copy) {
     into(modrinthModsDir)
 }
 
+tasks.register("copyTest2Jars", Copy) {
+    dependsOn(
+            tasks.named("jar"),
+            project(":BCLib").tasks.named("jar"),
+            project(":WorldWeaver").tasks.named("jar"),
+            project(":wunderlib").tasks.named("jar")
+    )
+    from(tasks.named("jar"))
+    from(project(":BCLib").tasks.named("jar"))
+    from(project(":WorldWeaver").tasks.named("jar"))
+    from(project(":wunderlib").tasks.named("jar"))
+    into(test2ModsDir)
+}
+
 tasks.named("build") {
-    finalizedBy("copyDistJars", "copyModrinthJars")
+    finalizedBy("copyDistJars", "copyModrinthJars", "copyTest2Jars")
 }
 
 apply from: "helper.gradle"

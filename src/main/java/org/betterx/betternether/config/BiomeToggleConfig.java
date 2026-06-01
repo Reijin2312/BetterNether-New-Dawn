@@ -1,0 +1,38 @@
+package org.betterx.betternether.config;
+
+import de.ambertation.wunderlib.configs.ConfigFile;
+import org.betterx.betternether.BetterNether;
+
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class BiomeToggleConfig extends ConfigFile {
+    public static final Group BIOMES = new Group(BetterNether.C.namespace, "biomes", 2600);
+    private final Map<ResourceKey<Biome>, BooleanValue> biomes = new LinkedHashMap<>();
+
+    public BiomeToggleConfig() {
+        super(BetterNether.C, "biomes_toggle");
+    }
+
+    @SafeVarargs
+    public final void registerBiomes(ResourceKey<Biome>... biomeKeys) {
+        for (ResourceKey<Biome> biomeKey : biomeKeys) {
+            registerBiome(biomeKey);
+        }
+    }
+
+    public BooleanValue registerBiome(ResourceKey<Biome> biomeKey) {
+        return biomes.computeIfAbsent(
+                biomeKey,
+                key -> new BooleanValue("biomes", key.identifier().getPath(), true).setGroup(BIOMES)
+        );
+    }
+
+    public boolean isEnabled(ResourceKey<Biome> biomeKey) {
+        BooleanValue value = biomes.get(biomeKey);
+        return value == null || value.get();
+    }
+}

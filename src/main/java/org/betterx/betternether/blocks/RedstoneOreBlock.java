@@ -9,7 +9,6 @@ import org.betterx.wover.loot.api.LootLookupProvider;
 import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
