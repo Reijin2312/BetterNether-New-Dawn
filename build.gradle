@@ -39,6 +39,8 @@ def resolveNeoformMappingFile = {
 }
 def mixinMappingsFile = layout.buildDirectory.file("mappings/${modId}-mixin-reobf.tsrg")
 def mixinOutMappingsFile = layout.buildDirectory.file("mappings/${modId}-mixin-out.tsrg")
+def rawRefmapFile = layout.buildDirectory.file("generated/mixin-refmaps/${refmapName}")
+def fixedRefmapFile = layout.buildDirectory.file("resources/main/${refmapName}")
 def local_bclib = findProject(':BCLib') != null
 def local_wunderlib = findProject(':wunderlib') != null
 def local_wover = findProject(':WorldWeaver') != null
@@ -224,7 +226,7 @@ tasks.named("sourcesJar") {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    def refmapOutput = layout.buildDirectory.file("resources/main/${refmapName}").get().asFile
+    def refmapOutput = rawRefmapFile.get().asFile
     options.encoding = "UTF-8"
     options.release = 21
     options.compilerArgs += [
@@ -236,6 +238,7 @@ tasks.withType(JavaCompile).configureEach {
     ]
     dependsOn(tasks.named("generateMixinMappings"))
     doFirst {
+        refmapOutput.parentFile.mkdirs()
         def args = options.compilerArgs
         args.removeAll { it.startsWith("-AreobfTsrgFile=") }
         def mappingFile = resolveNeoformMappingFile()
@@ -372,18 +375,18 @@ tasks.register("generateMixinMappings") {
 }
 
 tasks.register("fixMixinRefmap") {
-    def refmapFile = layout.buildDirectory.file("resources/main/${refmapName}")
-    inputs.file(refmapFile).optional(true)
-    outputs.file(refmapFile)
+    inputs.files(rawRefmapFile)
+    outputs.file(fixedRefmapFile)
     dependsOn(tasks.named("processResources"))
     dependsOn(tasks.named("compileJava"))
     doLast {
-        def file = refmapFile.get().asFile
-        if (!file.exists()) {
-            logger.warn("Refmap not found at ${file}")
+        def inputFile = rawRefmapFile.get().asFile
+        def outputFile = fixedRefmapFile.get().asFile
+        if (!inputFile.exists()) {
+            logger.warn("Refmap not found at ${inputFile}")
             return
         }
-        def json = new groovy.json.JsonSlurper().parse(file)
+        def json = new groovy.json.JsonSlurper().parse(inputFile)
         def stripOwnerIfNeeded = { String key, String value ->
             if (value == null) {
                 return value
@@ -426,7 +429,8 @@ tasks.register("fixMixinRefmap") {
             }
         }
 
-        file.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(json))
+        outputFile.parentFile.mkdirs()
+        outputFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(json))
     }
 }
 

@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "betternether:block/basalt_bricks"
-  }
+  "parent": "betternether:block/basalt_bricks"
 }

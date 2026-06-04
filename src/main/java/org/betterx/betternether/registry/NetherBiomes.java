@@ -1,6 +1,7 @@
 package org.betterx.betternether.registry;
 
 import org.betterx.betternether.BetterNether;
+import org.betterx.betternether.config.Configs;
 import org.betterx.betternether.world.NetherBiome;
 import org.betterx.betternether.world.biomes.*;
 import org.betterx.betternether.world.biomes.providers.NetherGrasslandsNumericProvider;
@@ -80,7 +81,35 @@ public class NetherBiomes {
 
     public static void register() {
         BiomeCodecRegistry.register(BetterNether.C.id("biome"), NetherBiome.KEY_CODEC);
+        registerBiomeToggles();
         registerNumericProviders();
+    }
+
+    private static void registerBiomeToggles() {
+        Configs.BIOMES_TOGGLE.registerBiomes(
+                BONE_REEF.key,
+                CRIMSON_GLOWING_WOODS.key,
+                CRIMSON_PINEWOOD.key,
+                FLOODED_DELTAS.key,
+                GRAVEL_DESERT.key,
+                MAGMA_LAND.key,
+                NETHER_GRASSLANDS.key,
+                NETHER_JUNGLE.key,
+                NETHER_MUSHROOM_FORREST.key,
+                NETHER_MUSHROOM_FORREST_EDGE.key,
+                NETHER_SWAMPLAND.key,
+                NETHER_SWAMPLAND_TERRACES.key,
+                OLD_FUNGIWOODS.key,
+                OLD_SWAMPLAND.key,
+                OLD_WARPED_WOODS.key,
+                POOR_NETHER_GRASSLANDS.key,
+                SOUL_PLAIN.key,
+                SULFURIC_BONE_REEF.key,
+                UPSIDE_DOWN_FOREST.key,
+                UPSIDE_DOWN_FOREST_CLEARED.key,
+                WART_FOREST.key,
+                WART_FOREST_EDGE.key
+        );
     }
 
     private static void registerNumericProviders() {

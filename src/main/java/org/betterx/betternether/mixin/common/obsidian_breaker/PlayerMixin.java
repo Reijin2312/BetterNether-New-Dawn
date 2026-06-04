@@ -1,9 +1,8 @@
 package org.betterx.betternether.mixin.common.obsidian_breaker;
 
 import org.betterx.betternether.enchantments.ObsidianBreaker;
-import org.betterx.betternether.registry.NetherEnchantments;
+
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,11 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = Player.class, remap = false)
 public class PlayerMixin {
-    @WrapOperation(method = "createAttributes", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;createLivingAttributes()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;"))
-    private static AttributeSupplier.Builder wover_test_createAttributes(Operation<AttributeSupplier.Builder> original) {
-        return original.call().add(NetherEnchantments.OBSIDIAN_BLOCK_BREAK_SPEED);
-    }
-
     @WrapOperation(method = "getDigSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;getDestroySpeed(Lnet/minecraft/world/level/block/state/BlockState;)F"))
     float wover_test_getDestroySpeed(Inventory instance, BlockState blockState, Operation<Float> original) {
         final LivingEntity entity = (LivingEntity) (Object) this;

@@ -42,7 +42,6 @@ public class BetterNether {
         NetherBlocks.getBlockRegistry();
         NetherItems.getItemRegistry();
         modBus.addListener(SoundsRegistry::register);
-        modBus.addListener(NetherEnchantments::register);
         modBus.addListener(RegisterEvent.class, NetherEntities::onRegister);
         modBus.addListener(RegisterEvent.class, NetherParticles::onRegister);
         modBus.addListener(RegisterEvent.class, NetherPoiTypes::onRegister);

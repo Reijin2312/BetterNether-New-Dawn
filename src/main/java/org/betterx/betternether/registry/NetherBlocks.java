@@ -989,6 +989,7 @@ public class NetherBlocks {
             NETHER_MYCELIUM = registerBlock(
             "nether_mycelium",
             new BlockNetherMycelium(),
+            BlockTags.NYLIUM,
             CommonBlockTags.MYCELIUM,
             CommonBlockTags.NETHER_MYCELIUM,
             BCLBlockTags.BONEMEAL_SOURCE_NETHERRACK,
