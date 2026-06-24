@@ -14,6 +14,8 @@ import org.betterx.datagen.betternether.worldgen.NetherBiomeModificationProvider
 import org.betterx.datagen.betternether.worldgen.NetherBiomesProvider;
 import org.betterx.datagen.betternether.worldgen.StructureDataProvider;
 import org.betterx.datagen.betternether.worldgen.features.*;
+import org.betterx.datagen.bclib.worldgen.BCLAutoBlockTagProvider;
+import org.betterx.datagen.bclib.worldgen.BCLAutoItemTagProvider;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.PackBuilder;
 import org.betterx.wover.datagen.api.WoverDataGenEntryPoint;
@@ -47,6 +49,8 @@ public class BetterNetherDatagen extends WoverDataGenEntryPoint {
         globalPack.addProvider(modCore -> new BlockTagProvider(LibWoverTag.C));
         globalPack.addProvider(modCore -> new ItemTagProvider(LibWoverTag.C));
         globalPack.addProvider(modCore -> new BiomeTagProvider(LibWoverTag.C));
+        globalPack.addProvider(BCLAutoBlockTagProvider::new);
+        globalPack.addProvider(BCLAutoItemTagProvider::new);
         globalPack.addProvider(NetherBlockTagDataProvider::new);
         globalPack.addProvider(NetherItemTagDataProvider::new);
         globalPack.addProvider(NetherEnchantmentTagProvider::new);

@@ -13,5 +13,7 @@ public class JadePlugin implements IWailaPlugin {
     public void registerClient(IWailaClientRegistration registration) {
         BetterNether.C.log.info("Registering Jade Integration for BetterNether.");
         registration.registerBlockComponent(NetherPlantProvider.INSTANCE, BlockCommonPlant.class);
+        registration.addItemModNameCallback(10000, NetherBoatProvider::itemModName);
+        registration.addTooltipCollectedCallback(10000, NetherBoatProvider::replaceEntityModName);
     }
 }

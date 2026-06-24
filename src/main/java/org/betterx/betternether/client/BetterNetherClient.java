@@ -4,6 +4,7 @@ import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.config.screen.ConfigScreen;
 import org.betterx.betternether.registry.NetherParticles;
 
+import org.betterx.bclib.client.render.BoatModelManager;
 import org.betterx.bclib.items.boat.BoatTypeOverride;
 
 import net.minecraft.client.model.object.boat.BoatModel;
@@ -47,13 +48,11 @@ public final class BetterNetherClient {
         LayerDefinition chestRaftModel = RaftModel.createChestRaftModel();
 
         BoatTypeOverride.values().forEach(type -> {
-            if (type.boatModelName != null) {
-                event.registerLayerDefinition(type.boatModelName, () -> type.isRaft ? raftModel : boatModel);
-                event.registerLayerDefinition(
-                        type.chestBoatModelName,
-                        () -> type.isRaft ? chestRaftModel : chestBoatModel
-                );
-            }
+            event.registerLayerDefinition(BoatModelManager.boatLayer(type), () -> type.isRaft ? raftModel : boatModel);
+            event.registerLayerDefinition(
+                    BoatModelManager.chestBoatLayer(type),
+                    () -> type.isRaft ? chestRaftModel : chestBoatModel
+            );
         });
     }
 

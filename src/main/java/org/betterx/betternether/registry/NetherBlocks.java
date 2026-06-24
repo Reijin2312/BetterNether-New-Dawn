@@ -992,6 +992,7 @@ public class NetherBlocks {
             () -> new BlockNetherMycelium(),
             CommonBlockTags.MYCELIUM,
             CommonBlockTags.NETHER_MYCELIUM,
+            BlockTags.NYLIUM,
             BCLBlockTags.BONEMEAL_SOURCE_NETHERRACK,
             org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHER_MYCELIUM
     );
