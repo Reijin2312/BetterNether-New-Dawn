@@ -9,6 +9,7 @@ public final class RenderPhaseAccessor {
     }
 
     public static RenderType getFirefly(Identifier texture) {
-        return RenderTypes.eyes(texture);
+        // Eyes shader is fully emissive and overblows firefly layers in 1.21.11.
+        return RenderTypes.entityTranslucent(texture);
     }
 }

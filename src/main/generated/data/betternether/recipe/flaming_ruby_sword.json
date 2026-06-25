@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": "#c:ingots/netherite",
+  "addition": "#betternether:repair/flaming_ruby",
   "base": "betternether:nether_ruby_sword",
   "result": {
     "id": "betternether:flaming_ruby_sword"

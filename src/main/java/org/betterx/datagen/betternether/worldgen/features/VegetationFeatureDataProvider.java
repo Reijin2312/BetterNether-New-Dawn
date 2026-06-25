@@ -350,7 +350,6 @@ public class VegetationFeatureDataProvider extends WoverFeatureProvider {
                 .add(NetherBlocks.SEPIA_BONE_GRASS, 30)
                 .add(NetherBlocks.BONE_GRASS, 30)
                 .add(NetherBlocks.JUNGLE_PLANT, 30)
-                .isEmptyAndOn(BlockPredicates.ONLY_MYCELIUM)
                 .register();
         NetherVegetation.BONEMEAL_JUNGLE_GRASS
                 .bootstrap(ctx)

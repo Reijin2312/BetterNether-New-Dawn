@@ -1,147 +1,130 @@
 {
-  "type": "minecraft:random_patch",
+  "type": "minecraft:nether_forest_vegetation",
   "config": {
-    "feature": {
-      "feature": {
-        "type": "minecraft:simple_block",
-        "config": {
-          "to_place": {
-            "type": "minecraft:weighted_state_provider",
-            "entries": [
-              {
-                "data": {
-                  "Name": "betternether:egg_plant",
-                  "Properties": {
-                    "age": "0",
-                    "destructed": "false"
-                  }
-                },
-                "weight": 20
-              },
-              {
-                "data": {
-                  "Name": "betternether:egg_plant",
-                  "Properties": {
-                    "age": "1",
-                    "destructed": "false"
-                  }
-                },
-                "weight": 20
-              },
-              {
-                "data": {
-                  "Name": "betternether:egg_plant",
-                  "Properties": {
-                    "age": "2",
-                    "destructed": "false"
-                  }
-                },
-                "weight": 20
-              },
-              {
-                "data": {
-                  "Name": "betternether:egg_plant",
-                  "Properties": {
-                    "age": "3",
-                    "destructed": "false"
-                  }
-                },
-                "weight": 20
-              },
-              {
-                "data": {
-                  "Name": "betternether:jungle_plant"
-                },
-                "weight": 80
-              },
-              {
-                "data": {
-                  "Name": "betternether:magma_flower",
-                  "Properties": {
-                    "age": "0"
-                  }
-                },
-                "weight": 7
-              },
-              {
-                "data": {
-                  "Name": "betternether:magma_flower",
-                  "Properties": {
-                    "age": "1"
-                  }
-                },
-                "weight": 7
-              },
-              {
-                "data": {
-                  "Name": "betternether:magma_flower",
-                  "Properties": {
-                    "age": "2"
-                  }
-                },
-                "weight": 7
-              },
-              {
-                "data": {
-                  "Name": "betternether:magma_flower",
-                  "Properties": {
-                    "age": "3"
-                  }
-                },
-                "weight": 7
-              },
-              {
-                "data": {
-                  "Name": "betternether:feather_fern",
-                  "Properties": {
-                    "age": "0"
-                  }
-                },
-                "weight": 5
-              },
-              {
-                "data": {
-                  "Name": "betternether:feather_fern",
-                  "Properties": {
-                    "age": "1"
-                  }
-                },
-                "weight": 5
-              },
-              {
-                "data": {
-                  "Name": "betternether:feather_fern",
-                  "Properties": {
-                    "age": "2"
-                  }
-                },
-                "weight": 5
-              },
-              {
-                "data": {
-                  "Name": "betternether:feather_fern",
-                  "Properties": {
-                    "age": "3"
-                  }
-                },
-                "weight": 5
-              }
-            ]
-          }
-        }
-      },
-      "placement": [
+    "spread_height": 1,
+    "spread_width": 3,
+    "state_provider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
         {
-          "type": "minecraft:block_predicate_filter",
-          "predicate": {
-            "type": "minecraft:matching_blocks",
-            "blocks": "minecraft:air"
-          }
+          "data": {
+            "Name": "betternether:egg_plant",
+            "Properties": {
+              "age": "0",
+              "destructed": "false"
+            }
+          },
+          "weight": 20
+        },
+        {
+          "data": {
+            "Name": "betternether:egg_plant",
+            "Properties": {
+              "age": "1",
+              "destructed": "false"
+            }
+          },
+          "weight": 20
+        },
+        {
+          "data": {
+            "Name": "betternether:egg_plant",
+            "Properties": {
+              "age": "2",
+              "destructed": "false"
+            }
+          },
+          "weight": 20
+        },
+        {
+          "data": {
+            "Name": "betternether:egg_plant",
+            "Properties": {
+              "age": "3",
+              "destructed": "false"
+            }
+          },
+          "weight": 20
+        },
+        {
+          "data": {
+            "Name": "betternether:jungle_plant"
+          },
+          "weight": 80
+        },
+        {
+          "data": {
+            "Name": "betternether:magma_flower",
+            "Properties": {
+              "age": "0"
+            }
+          },
+          "weight": 7
+        },
+        {
+          "data": {
+            "Name": "betternether:magma_flower",
+            "Properties": {
+              "age": "1"
+            }
+          },
+          "weight": 7
+        },
+        {
+          "data": {
+            "Name": "betternether:magma_flower",
+            "Properties": {
+              "age": "2"
+            }
+          },
+          "weight": 7
+        },
+        {
+          "data": {
+            "Name": "betternether:magma_flower",
+            "Properties": {
+              "age": "3"
+            }
+          },
+          "weight": 7
+        },
+        {
+          "data": {
+            "Name": "betternether:feather_fern",
+            "Properties": {
+              "age": "0"
+            }
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "betternether:feather_fern",
+            "Properties": {
+              "age": "1"
+            }
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "betternether:feather_fern",
+            "Properties": {
+              "age": "2"
+            }
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "betternether:feather_fern",
+            "Properties": {
+              "age": "3"
+            }
+          },
+          "weight": 5
         }
       ]
-    },
-    "tries": 9,
-    "xz_spread": 3,
-    "y_spread": 1
+    }
   }
 }

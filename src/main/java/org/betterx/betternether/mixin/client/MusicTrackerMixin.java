@@ -3,7 +3,10 @@ package org.betterx.betternether.mixin.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.MusicManager;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.Music;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
@@ -16,10 +19,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.lang.reflect.Method;
+
 @Mixin(MusicManager.class)
 public abstract class MusicTrackerMixin {
     @Unique private static final float FADE_SPEED = 0.2f; // Units per second (0.2f -> Fade across 5 seconds)
     @Unique private static final float TICK_DELTA = 0.05f;
+    @Unique private static final Method BN_UPDATE_SOURCE_VOLUME = bn_findUpdateSourceVolume();
     // Note: Assume game is at a constant 20 tps since MC doesn't have getTPS()
     // The use of currentTimeMillis() is ditched since it is overly complex for this system
     // The difference from this constant will only be noticeable if the game's TPS is extremely low
@@ -42,7 +48,39 @@ public abstract class MusicTrackerMixin {
 
     @Unique
     private boolean bn_shouldChangeMusic(Music toMusic) {
-        return currentMusic == null || !toMusic.sound().value().location().equals(currentMusic.getIdentifier());
+        Identifier currentId = bn_getCurrentMusicIdSafe();
+        Identifier targetId = bn_getTargetMusicIdSafe(toMusic);
+        return currentId == null || targetId == null || !targetId.equals(currentId);
+    }
+
+    @Unique
+    private static Method bn_findUpdateSourceVolume() {
+        try {
+            return SoundManager.class.getMethod("updateSourceVolume", SoundSource.class, float.class);
+        } catch (ReflectiveOperationException ignored) {
+            return null;
+        }
+    }
+
+    @Unique
+    private Identifier bn_getCurrentMusicIdSafe() {
+        if (currentMusic == null) {
+            return null;
+        }
+        try {
+            return currentMusic.getIdentifier();
+        } catch (NullPointerException ignored) {
+            return null;
+        }
+    }
+
+    @Unique
+    private Identifier bn_getTargetMusicIdSafe(Music toMusic) {
+        try {
+            return toMusic.sound().value().location();
+        } catch (NullPointerException ignored) {
+            return null;
+        }
     }
 
     /** Returns currentMusic.getVolume() or fallback if the sound is not yet initialized (avoids NPE). */
@@ -53,6 +91,21 @@ public abstract class MusicTrackerMixin {
             return currentMusic.getVolume();
         } catch (NullPointerException e) {
             return fallback;
+        }
+    }
+
+    @Unique
+    private void bn_updateSourceVolumeIfSupported(float fallback) {
+        if (BN_UPDATE_SOURCE_VOLUME == null || currentMusic == null) {
+            return;
+        }
+        try {
+            BN_UPDATE_SOURCE_VOLUME.invoke(
+                    minecraft.getSoundManager(),
+                    currentMusic.getSource(),
+                    bn_getVolumeSafe(fallback)
+            );
+        } catch (ReflectiveOperationException ignored) {
         }
     }
 
@@ -91,6 +144,7 @@ public abstract class MusicTrackerMixin {
                 bn_thisObj.startPlaying(targetMusic);
                 if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
                     accessor.setVolume(0.0f);
+                    bn_updateSourceVolumeIfSupported(0.0f);
                 }
             }
             info.cancel();
@@ -121,6 +175,7 @@ public abstract class MusicTrackerMixin {
                 bn_thisObj.startPlaying(targetMusic);
                 if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
                     accessor.setVolume(0.0f);
+                    bn_updateSourceVolumeIfSupported(0.0f);
                 }
             }
         } else if (bn_volume < 1.0f) {
@@ -133,6 +188,7 @@ public abstract class MusicTrackerMixin {
             bn_volume = Mth.clamp(bn_volume, 0.0f, 1.0f);
             if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
                 accessor.setVolume(bn_volume);
+                bn_updateSourceVolumeIfSupported(bn_volume);
             }
         }
 

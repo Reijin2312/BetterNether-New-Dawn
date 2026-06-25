@@ -37,16 +37,16 @@ public class NetherVegetation {
 
     public static final ConfiguredFeatureKey<WeightedBlockPatch> BONEMEAL_NETHERRACK_MOSS =
             ConfiguredFeatureManager.bonemeal(C.id("bonemeal_netherrack_moss"));
-    public static final ConfiguredFeatureKey<WeightedBlockPatch> BONEMEAL_NETHER_MYCELIUM =
-            ConfiguredFeatureManager.bonemeal(C.id("bonemeal_nether_mycelium"));
-    public static final ConfiguredFeatureKey<WeightedBlockPatch> BONEMEAL_JUNGLE_GRASS =
-            ConfiguredFeatureManager.bonemeal(C.id("bonemeal_jungle_grass"));
+    public static final ConfiguredFeatureKey<NetherForrestVegetation> BONEMEAL_NETHER_MYCELIUM =
+            ConfiguredFeatureManager.bonemealNetherForrest(C.id("bonemeal_nether_mycelium"));
+    public static final ConfiguredFeatureKey<NetherForrestVegetation> BONEMEAL_JUNGLE_GRASS =
+            ConfiguredFeatureManager.bonemealNetherForrest(C.id("bonemeal_jungle_grass"));
     public static final ConfiguredFeatureKey<NetherForrestVegetation> BONEMEAL_MUSHROOM_GRASS =
             ConfiguredFeatureManager.bonemealNetherForrest(C.id("bonemeal_mushroom_grass"));
     public static final ConfiguredFeatureKey<NetherForrestVegetation> BONEMEAL_SEPIA_MUSHROOM_GRASS =
             ConfiguredFeatureManager.bonemealNetherForrest(C.id("bonemeal_sepia_mushroom_grass"));
-    public static final ConfiguredFeatureKey<WeightedBlockPatch> BONEMEAL_SWAMPLAND_GRASS =
-            ConfiguredFeatureManager.bonemeal(C.id("bonemeal_swampland_grass"));
+    public static final ConfiguredFeatureKey<NetherForrestVegetation> BONEMEAL_SWAMPLAND_GRASS =
+            ConfiguredFeatureManager.bonemealNetherForrest(C.id("bonemeal_swampland_grass"));
     public static final ConfiguredFeatureKey<WeightedBlockPatch> BONEMEAL_CEILING_MUSHROOMS =
             ConfiguredFeatureManager.bonemeal(C.id("bonemeal_ceiling_mushrooms"));
     public static final ConfiguredFeatureKey<AsMultiPlaceRandomSelect> VEGETATION_MUSHROOM_FORREST =
