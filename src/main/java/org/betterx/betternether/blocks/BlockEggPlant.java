@@ -5,6 +5,7 @@ import org.betterx.bclib.util.LootUtil;
 import org.betterx.betternether.config.Configs;
 import org.betterx.betternether.interfaces.SurvivesOnNetherGround;
 import org.betterx.betternether.registry.NetherEntities;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ColorParticleOption;
@@ -31,8 +32,10 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -67,7 +70,7 @@ public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherG
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (!state.getValue(DESTRUCTED))
             world.addParticle(

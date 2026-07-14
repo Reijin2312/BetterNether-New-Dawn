@@ -160,7 +160,6 @@ public class AnchorTreeBranchFeature extends ContextFeature<NoneFeatureConfigura
 
 
         for (BlockPos bpos : context.POINTS) {
-
             state = NetherBlocks.MAT_ANCHOR_TREE.getBark().defaultBlockState();
 
             BlocksHelper.setWithUpdate(world, bpos, state);

@@ -30,16 +30,12 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
     }
 
     protected static final OpenSimplexNoise NOISE = new OpenSimplexNoise(2145);
-    private static final java.util.function.Supplier<Block[]> WALL_PLANTS = () -> new Block[]{
+    public static final Block[] wallPlants = {
             NetherBlocks.JUNGLE_MOSS,
             NetherBlocks.JUNGLE_MOSS,
             NetherBlocks.WALL_MUSHROOM_BROWN,
             NetherBlocks.WALL_MUSHROOM_RED
     };
-
-    public static Block[] wallPlants() {
-        return WALL_PLANTS.get();
-    }
     final private LegacyStructureAnchorTree legacyStructure;
 
     private static int toMiddle(int val) {
@@ -152,9 +148,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
             if (!blockBox.isInside(bpos)) continue;
             if (!BlocksHelper.isNetherGround(state = level.getBlockState(bpos)) && !state.canBeReplaced())
                 continue;
-
             boolean blockUp = context.BLOCKS.contains(bpos.above());
-
             BlocksHelper.setWithoutUpdate(level, bpos, NetherBlocks.MAT_ANCHOR_TREE.getBark().defaultBlockState());
 
             if (bpos.getY() > HEIGHT_45 && bpos.getY() < HEIGHT_90 && (bpos.getY() & 3) == offset && NOISE.eval(
@@ -178,7 +172,6 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
                 }
 
                 if (NOISE.eval(bpos.getX() * 0.05, bpos.getY() * 0.05, bpos.getZ() * 0.05) > 0) {
-                    Block[] wallPlants = wallPlants();
                     state = wallPlants[random.nextInt(wallPlants.length)].defaultBlockState();
                     BlockPos _pos = bpos.north();
                     if (random.nextInt(8) == 0 && !context.BLOCKS.contains(_pos) && level.isEmptyBlock(_pos) && _pos.getZ() >= blockBox.minZ())

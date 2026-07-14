@@ -1,102 +1,131 @@
 {
-  "type": "minecraft:nether_forest_vegetation",
+  "type": "minecraft:random_patch",
   "config": {
-    "spread_height": 1,
-    "spread_width": 3,
-    "state_provider": {
-      "type": "minecraft:weighted_state_provider",
-      "entries": [
+    "feature": {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "config": {
+          "to_place": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "data": {
+                  "Name": "betternether:gray_mold"
+                },
+                "weight": 200
+              },
+              {
+                "data": {
+                  "Name": "betternether:red_mold"
+                },
+                "weight": 180
+              },
+              {
+                "data": {
+                  "Name": "betternether:orange_mushroom",
+                  "Properties": {
+                    "age": "0"
+                  }
+                },
+                "weight": 10
+              },
+              {
+                "data": {
+                  "Name": "betternether:orange_mushroom",
+                  "Properties": {
+                    "age": "1"
+                  }
+                },
+                "weight": 10
+              },
+              {
+                "data": {
+                  "Name": "betternether:orange_mushroom",
+                  "Properties": {
+                    "age": "2"
+                  }
+                },
+                "weight": 10
+              },
+              {
+                "data": {
+                  "Name": "betternether:orange_mushroom",
+                  "Properties": {
+                    "age": "3"
+                  }
+                },
+                "weight": 10
+              },
+              {
+                "data": {
+                  "Name": "minecraft:red_mushroom"
+                },
+                "weight": 60
+              },
+              {
+                "data": {
+                  "Name": "minecraft:brown_mushroom"
+                },
+                "weight": 60
+              },
+              {
+                "data": {
+                  "Name": "minecraft:crimson_fungus"
+                },
+                "weight": 80
+              },
+              {
+                "data": {
+                  "Name": "minecraft:warped_fungus"
+                },
+                "weight": 80
+              },
+              {
+                "data": {
+                  "Name": "betternether:sepia_bone_grass"
+                },
+                "weight": 30
+              },
+              {
+                "data": {
+                  "Name": "betternether:bone_grass"
+                },
+                "weight": 30
+              },
+              {
+                "data": {
+                  "Name": "betternether:jungle_plant"
+                },
+                "weight": 30
+              }
+            ]
+          }
+        }
+      },
+      "placement": [
         {
-          "data": {
-            "Name": "betternether:gray_mold"
-          },
-          "weight": 200
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
         },
         {
-          "data": {
-            "Name": "betternether:red_mold"
-          },
-          "weight": 180
-        },
-        {
-          "data": {
-            "Name": "betternether:orange_mushroom",
-            "Properties": {
-              "age": "0"
-            }
-          },
-          "weight": 10
-        },
-        {
-          "data": {
-            "Name": "betternether:orange_mushroom",
-            "Properties": {
-              "age": "1"
-            }
-          },
-          "weight": 10
-        },
-        {
-          "data": {
-            "Name": "betternether:orange_mushroom",
-            "Properties": {
-              "age": "2"
-            }
-          },
-          "weight": 10
-        },
-        {
-          "data": {
-            "Name": "betternether:orange_mushroom",
-            "Properties": {
-              "age": "3"
-            }
-          },
-          "weight": 10
-        },
-        {
-          "data": {
-            "Name": "minecraft:red_mushroom"
-          },
-          "weight": 60
-        },
-        {
-          "data": {
-            "Name": "minecraft:brown_mushroom"
-          },
-          "weight": 60
-        },
-        {
-          "data": {
-            "Name": "minecraft:crimson_fungus"
-          },
-          "weight": 80
-        },
-        {
-          "data": {
-            "Name": "minecraft:warped_fungus"
-          },
-          "weight": 80
-        },
-        {
-          "data": {
-            "Name": "betternether:sepia_bone_grass"
-          },
-          "weight": 30
-        },
-        {
-          "data": {
-            "Name": "betternether:bone_grass"
-          },
-          "weight": 30
-        },
-        {
-          "data": {
-            "Name": "betternether:jungle_plant"
-          },
-          "weight": 30
+          "type": "wover:is",
+          "offset": [
+            0,
+            -1,
+            0
+          ],
+          "predicate": {
+            "type": "minecraft:matching_block_tag",
+            "tag": "wover:surfaces/mycelium"
+          }
         }
       ]
-    }
+    },
+    "tries": 9,
+    "xz_spread": 3,
+    "y_spread": 1
   }
 }

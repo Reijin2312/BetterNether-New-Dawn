@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockNetherReed extends BlockBase implements AddMineableSword, AddMineableHoe {
     public static final BooleanProperty TOP = BlockProperties.TOP;
@@ -39,7 +39,7 @@ public class BlockNetherReed extends BlockBase implements AddMineableSword, AddM
         stateManager.add(TOP);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -110,4 +110,3 @@ public class BlockNetherReed extends BlockBase implements AddMineableSword, AddM
         }
     }
 }
-

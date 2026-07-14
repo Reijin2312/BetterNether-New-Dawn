@@ -45,9 +45,7 @@ public class BlockGiantLucis extends HugeMushroomBlock implements AddMineableAxe
         return LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                           .setRolls(ConstantValue.exactly(1.0F))
-                                          // Silk touch: drop the block itself once
                                           .add(LootItem.lootTableItem(this).when(silkTouch)))
-                        // Without silk touch: always drop spores and glowstone pile
                         .withPool(LootPool.lootPool()
                                           .setRolls(ConstantValue.exactly(1.0F))
                                           .when(notSilk)

@@ -31,8 +31,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +51,7 @@ public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements S
     }
 
     public static class JunglePlant extends BlockNetherGrass implements BlockModelProvider {
-        @OnlyIn(Dist.CLIENT)
+        @Environment(EnvType.CLIENT)
         @Override
         public void provideBlockModels(WoverBlockModelGenerators generators) {
             var JP1 = BetterNether.C.mk("block/jungle_plant_1");
@@ -119,7 +119,7 @@ public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements S
 
 
     public static class SwampGrass extends BlockNetherGrass implements BlockModelProvider {
-        @OnlyIn(Dist.CLIENT)
+        @Environment(EnvType.CLIENT)
         @Override
         public void provideBlockModels(WoverBlockModelGenerators generators) {
             BNModels.provideGrassBlockModels(generators, this, "swamp_grass", 3);
@@ -127,7 +127,7 @@ public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements S
     }
 
     public static class BoneGrass extends BaseBlockNetherGrass.OnEverything implements BlockModelProvider {
-        @OnlyIn(Dist.CLIENT)
+        @Environment(EnvType.CLIENT)
         @Override
         public void provideBlockModels(WoverBlockModelGenerators generators) {
             BNModels.provideGrassBlockModels(generators, this, "bone_grass", 3);
@@ -135,7 +135,7 @@ public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements S
     }
 
     public static class SepiaBoneGrass extends BaseBlockNetherGrass.OnEverything implements BlockModelProvider {
-        @OnlyIn(Dist.CLIENT)
+        @Environment(EnvType.CLIENT)
         @Override
         public void provideBlockModels(WoverBlockModelGenerators generators) {
             BNModels.provideGrassBlockModels(generators, this, "sepia_bone_grass", 3);
@@ -143,7 +143,7 @@ public abstract class BlockNetherGrass extends BaseBlockNetherGrass implements S
     }
 
     public static class NetherGrass extends BlockNetherGrass implements BlockModelProvider {
-        @OnlyIn(Dist.CLIENT)
+        @Environment(EnvType.CLIENT)
         @Override
         public void provideBlockModels(WoverBlockModelGenerators generators) {
             final var T1 = BetterNether.C.mk("block/ngrass_1");
@@ -185,7 +185,7 @@ abstract class BaseBlockNetherGrass extends BasePlantBlock implements BehaviourP
         super(Materials.makeNetherGrass(MapColor.TERRACOTTA_GRAY).offsetType(Block.OffsetType.XZ));
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -236,4 +236,3 @@ abstract class BaseBlockNetherGrass extends BasePlantBlock implements BehaviourP
         }
     }
 }
-

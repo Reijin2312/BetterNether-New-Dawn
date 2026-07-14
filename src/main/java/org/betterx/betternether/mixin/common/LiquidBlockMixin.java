@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = LiquidBlock.class, remap = false)
+@Mixin(LiquidBlock.class)
 public abstract class LiquidBlockMixin {
     // A: Original Redirect Code
     // *******************************************
@@ -46,19 +46,10 @@ public abstract class LiquidBlockMixin {
 
     // B: Inject with local capture and replicated code for fizz
     // *******************************************
-    @Shadow(remap = false)
+    @Shadow
     protected abstract void fizz(LevelAccessor levelAccessor, BlockPos blockPos);
 
-    @Inject(
-            method = "shouldSpreadLiquid",
-            remap = false,
-            cancellable = true,
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z",
-                    ordinal = 0
-            )
-    )
+    @Inject(method = "shouldSpreadLiquid", cancellable = true, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0))
     void bn_shouldSpreadLiquid(
             Level level,
             BlockPos blockPos,

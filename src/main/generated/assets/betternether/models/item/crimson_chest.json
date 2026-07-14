@@ -1,6 +1,6 @@
 {
   "parent": "bclib:block/chest_item",
   "textures": {
-    "texture": "betternether:block/chest/crimson_chest"
+    "texture": "betternether:entity/chest/crimson_chest"
   }
 }

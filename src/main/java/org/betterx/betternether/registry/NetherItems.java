@@ -14,7 +14,6 @@ import org.betterx.betternether.items.materials.BNArmorTiers;
 import org.betterx.betternether.items.materials.BNToolMaterial;
 import org.betterx.betternether.items.materials.BNToolTiers;
 import org.betterx.betternether.loot.BNLoot;
-import org.betterx.betternether.registry.NetherTemplates;
 import org.betterx.wover.complex.api.equipment.ArmorSlot;
 import org.betterx.wover.complex.api.equipment.ToolSlot;
 import org.betterx.wover.item.api.ItemRegistry;
@@ -43,57 +42,128 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
-import java.util.List;
 import java.util.stream.Stream;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public class NetherItems {
-    public static Item BLACK_APPLE;
+    public static final Item BLACK_APPLE = registerItem("black_apple", new ItemBlackApple());
 
-    public static Item STALAGNATE_BOWL;
-    public static Item STALAGNATE_BOWL_WART;
-    public static Item STALAGNATE_BOWL_MUSHROOM;
-    public static Item STALAGNATE_BOWL_APPLE;
-    public static Item HOOK_MUSHROOM_COOKED;
+    public static final Item STALAGNATE_BOWL = registerItem("stalagnate_bowl", new ItemBowlFood(null, FoodShape.NONE));
+    public static final Item STALAGNATE_BOWL_WART = registerItem(
+            "stalagnate_bowl_wart",
+            new ItemBowlFood(
+                    Foods.COOKED_CHICKEN,
+                    FoodShape.WART
+            )
+    );
+    public static final Item STALAGNATE_BOWL_MUSHROOM = registerItem(
+            "stalagnate_bowl_mushroom",
+            new ItemBowlFood(
+                    Foods.MUSHROOM_STEW,
+                    FoodShape.MUSHROOM
+            )
+    );
+    public static final Item STALAGNATE_BOWL_APPLE = registerItem(
+            "stalagnate_bowl_apple",
+            new ItemBowlFood(Foods.APPLE, FoodShape.APPLE)
+    );
+    public static final Item HOOK_MUSHROOM_COOKED = registerFood("hook_mushroom_cooked", 4, 0.4F);
 
-    public static Item CINCINNASITE;
-    public static Item CINCINNASITE_INGOT;
-    public static Item NETHER_RUBY;
+    public static final Item CINCINNASITE = registerItem("cincinnasite", new Item(defaultSettings()));
+    public static final Item CINCINNASITE_INGOT = registerItem("cincinnasite_ingot", new Item(defaultSettings()));
+    public static final Item NETHER_RUBY = registerItem("nether_ruby", new Item(defaultSettings()));
 
-    public static NetherSet CINCINNASITE_SET;
+    public static final NetherSet CINCINNASITE_SET = new NetherSet(
+            "cincinnasite",
+            BNToolTiers.CINCINNASITE,
+            BNArmorTiers.CINCINNASITE,
+            true
+    );
 
-    public static NetherSet NETHER_RUBY_SET;
 
-    public static DiamondSet CINCINNASITE_DIAMOND_SET;
+    public static final NetherSet NETHER_RUBY_SET = new NetherSet(
+            "nether_ruby",
+            BNToolTiers.NETHER_RUBY,
+            BNArmorTiers.NETHER_RUBY,
+            false
+    );
 
-    public static NetherSet FLAMING_RUBY_SET;
-    public static Item CINCINNASITE_HAMMER;
-    public static Item CINCINNASITE_HAMMER_DIAMOND;
-    public static Item NETHER_RUBY_HAMMER;
+    public static final DiamondSet CINCINNASITE_DIAMOND_SET = new DiamondSet(CINCINNASITE_SET);
 
-    public static Item CINCINNASITE_EXCAVATOR;
-    public static Item CINCINNASITE_EXCAVATOR_DIAMOND;
-    public static Item NETHER_RUBY_EXCAVATOR;
+    public static final NetherSet FLAMING_RUBY_SET = new NetherSet(
+            "flaming_ruby",
+            BNToolTiers.FLAMING_RUBY,
+            BNArmorTiers.FLAMING_RUBY,
+            false,
+            NETHER_RUBY_SET
+    );
+    public static final Item CINCINNASITE_HAMMER = registerItem(
+            "cincinnasite_hammer",
+            VanillaHammersIntegration.makeHammer(
+                    BNToolMaterial.CINCINNASITE,
+                    4,
+                    -2.0F
+            )
+    );
+    public static final Item CINCINNASITE_HAMMER_DIAMOND = registerItem(
+            "cincinnasite_hammer_diamond",
+            VanillaHammersIntegration.makeHammer(
+                    BNToolMaterial.CINCINNASITE_DIAMOND,
+                    5,
+                    -2.0F
+            )
+    );
+    public static final Item NETHER_RUBY_HAMMER = registerItem(
+            "nether_ruby_hammer",
+            VanillaHammersIntegration.makeHammer(
+                    BNToolMaterial.NETHER_RUBY,
+                    5,
+                    -2.0F
+            )
+    );
 
-    public static Item GLOWSTONE_PILE;
-    public static Item LAPIS_PILE;
+    public static final Item CINCINNASITE_EXCAVATOR = registerItem(
+            "cincinnasite_excavator",
+            VanillaExcavatorsIntegration.makeExcavator(
+                    BNToolMaterial.CINCINNASITE,
+                    4,
+                    -1.6F
+            )
+    );
+    public static final Item CINCINNASITE_EXCAVATOR_DIAMOND = registerItem(
+            "cincinnasite_excavator_diamond",
+            VanillaExcavatorsIntegration.makeExcavator(
+                    BNToolMaterial.CINCINNASITE_DIAMOND,
+                    5,
+                    -2.0F
+            )
+    );
+    public static final Item NETHER_RUBY_EXCAVATOR = registerItem(
+            "nether_ruby_excavator",
+            VanillaExcavatorsIntegration.makeExcavator(
+                    BNToolMaterial.NETHER_RUBY,
+                    5,
+                    -2.0F
+            )
+    );
 
-    public static Item AGAVE_LEAF;
-    public static Item AGAVE_MEDICINE;
-    public static Item HERBAL_MEDICINE;
+    public static final Item GLOWSTONE_PILE = registerItem("glowstone_pile", new Item(defaultSettings()));
+    public static final Item LAPIS_PILE = registerItem("lapis_pile", new Item(defaultSettings()));
+
+    public static final Item AGAVE_LEAF = registerItem("agave_leaf", new Item(defaultSettings()));
+    public static final Item AGAVE_MEDICINE = registerMedicine("agave_medicine", 40, 2, true);
+    public static final Item HERBAL_MEDICINE = registerMedicine("herbal_medicine", 10, 5, true);
 
     private NetherItems() {
     }
 
     private static ItemRegistry ITEMS_REGISTRY;
-    private static boolean itemsRegistered;
 
     @NotNull
     public static ItemRegistry getItemRegistry() {
         if (ITEMS_REGISTRY == null) {
             ITEMS_REGISTRY = ItemRegistry.forMod(BetterNether.C);
-            ITEMS_REGISTRY.setInitializer(NetherItems::registerItems);
         }
         return ITEMS_REGISTRY;
     }
@@ -200,26 +270,6 @@ public class NetherItems {
                 .attributes(SwordItem.createAttributes(material, (int) attackDamage, attackSpeed));
     }
 
-    private static void registerSmithingTemplates() {
-        NetherTemplates.NETHER_BOWL_SMITHING_TEMPLATE = getItemRegistry().registerSmithingTemplateItem(
-                "bowl_upgrade",
-                List.of(NetherTemplates.EMPTY_SLOT_BOWL),
-                List.of(org.betterx.wover.item.api.smithing.SmithingTemplates.EMPTY_SLOT_INGOT)
-        );
-
-        NetherTemplates.FLAMING_RUBY_TEMPLATE = getItemRegistry().registerSmithingTemplateItem(
-                "flaming_ruby_upgrade",
-                org.betterx.wover.item.api.smithing.SmithingTemplates.ARMOR_AND_TOOLS,
-                List.of(NetherTemplates.EMPTY_SLOT_BLOCK)
-        );
-
-        NetherTemplates.CINCINNASITE_DIAMOND_TEMPLATE = getItemRegistry().registerSmithingTemplateItem(
-                "cincinnasite_diamond_upgrade",
-                List.of(org.betterx.wover.item.api.smithing.SmithingTemplates.EMPTY_SLOT_DIAMOND),
-                List.of(org.betterx.wover.item.api.smithing.SmithingTemplates.EMPTY_SLOT_INGOT)
-        );
-    }
-
     public static Item makeEgg(String name, EntityType<? extends Mob> type, int background, int dots) {
         SpawnEggItem egg = new SpawnEggItem(type, background, dots, defaultSettings());
         return getItemRegistry().registerEgg(name, egg);
@@ -230,8 +280,35 @@ public class NetherItems {
     }
 
     static {
-        // Ensure registry holder is created before RegisterEvent dispatch
-        getItemRegistry();
+        if (BCLib.isDevEnvironment()) {
+            BetterNether.C.log.warn("Generating Debug Helpers");
+
+            registerNetherItem(
+                    "debug/city_loot",
+                    DebugDataItem.forLootTable(BNLoot.CITY_LOOT, Items.IRON_INGOT)
+            );
+            registerNetherItem(
+                    "debug/city_loot_common",
+                    DebugDataItem.forLootTable(BNLoot.CITY_LOOT_COMMON, Items.GOLD_INGOT)
+            );
+            registerNetherItem(
+                    "debug/city_loot_surprise",
+                    DebugDataItem.forLootTable(BNLoot.CITY_LOOT_SURPRISE, Items.DIAMOND)
+            );
+            registerNetherItem(
+                    "debug/wither_tower_loot",
+                    DebugDataItem.forLootTable(BNLoot.WITHER_TOWER_LOOT, NetherItems.CINCINNASITE_INGOT)
+            );
+            registerNetherItem(
+                    "debug/wither_tower_bonus_loot",
+                    DebugDataItem.forLootTable(BNLoot.WITHER_TOWER_BONUS_LOOT, NetherItems.NETHER_RUBY)
+            );
+
+            registerNetherItem(
+                    "debug/city_spawner",
+                    DebugDataItem.forSpawner(NetherItems::buildCitySpawnerData, Items.SPECTRAL_ARROW)
+            );
+        }
     }
 
     private static CompoundTag buildItem(int count, Item item, ResourceKey<Enchantment>... enchantments) {
@@ -334,152 +411,6 @@ public class NetherItems {
 
     @ApiStatus.Internal
     public static void register() {
-        //NO-OP; registration happens through ItemRegistry initializer
-        getItemRegistry();
-    }
-
-    private static void registerItems() {
-        if (itemsRegistered) return;
-        itemsRegistered = true;
-
-        // Templates must be initialized before tiers/sets so smithing recipes are generated.
-        registerSmithingTemplates();
-
-        BLACK_APPLE = registerItem("black_apple", new ItemBlackApple());
-
-        STALAGNATE_BOWL = registerItem("stalagnate_bowl", new ItemBowlFood(null, FoodShape.NONE));
-        STALAGNATE_BOWL_WART = registerItem(
-                "stalagnate_bowl_wart",
-                new ItemBowlFood(
-                        Foods.COOKED_CHICKEN,
-                        FoodShape.WART
-                )
-        );
-        STALAGNATE_BOWL_MUSHROOM = registerItem(
-                "stalagnate_bowl_mushroom",
-                new ItemBowlFood(
-                        Foods.MUSHROOM_STEW,
-                        FoodShape.MUSHROOM
-                )
-        );
-        STALAGNATE_BOWL_APPLE = registerItem(
-                "stalagnate_bowl_apple",
-                new ItemBowlFood(Foods.APPLE, FoodShape.APPLE)
-        );
-        HOOK_MUSHROOM_COOKED = registerFood("hook_mushroom_cooked", 4, 0.4F);
-
-        CINCINNASITE = registerItem("cincinnasite", new Item(defaultSettings()));
-        CINCINNASITE_INGOT = registerItem("cincinnasite_ingot", new Item(defaultSettings()));
-        NETHER_RUBY = registerItem("nether_ruby", new Item(defaultSettings()));
-
-        CINCINNASITE_SET = new NetherSet(
-                "cincinnasite",
-                BNToolTiers.CINCINNASITE,
-                BNArmorTiers.CINCINNASITE,
-                true
-        );
-
-        NETHER_RUBY_SET = new NetherSet(
-                "nether_ruby",
-                BNToolTiers.NETHER_RUBY,
-                BNArmorTiers.NETHER_RUBY,
-                false
-        );
-
-        CINCINNASITE_DIAMOND_SET = new DiamondSet(CINCINNASITE_SET);
-
-        FLAMING_RUBY_SET = new NetherSet(
-                "flaming_ruby",
-                BNToolTiers.FLAMING_RUBY,
-                BNArmorTiers.FLAMING_RUBY,
-                false,
-                NETHER_RUBY_SET
-        );
-        CINCINNASITE_HAMMER = registerItem(
-                "cincinnasite_hammer",
-                VanillaHammersIntegration.makeHammer(
-                        BNToolMaterial.CINCINNASITE,
-                        4,
-                        -2.0F
-                )
-        );
-        CINCINNASITE_HAMMER_DIAMOND = registerItem(
-                "cincinnasite_hammer_diamond",
-                VanillaHammersIntegration.makeHammer(
-                        BNToolMaterial.CINCINNASITE_DIAMOND,
-                        5,
-                        -2.0F
-                )
-        );
-        NETHER_RUBY_HAMMER = registerItem(
-                "nether_ruby_hammer",
-                VanillaHammersIntegration.makeHammer(
-                        BNToolMaterial.NETHER_RUBY,
-                        5,
-                        -2.0F
-                )
-        );
-
-        CINCINNASITE_EXCAVATOR = registerItem(
-                "cincinnasite_excavator",
-                VanillaExcavatorsIntegration.makeExcavator(
-                        BNToolMaterial.CINCINNASITE,
-                        4,
-                        -1.6F
-                )
-        );
-        CINCINNASITE_EXCAVATOR_DIAMOND = registerItem(
-                "cincinnasite_excavator_diamond",
-                VanillaExcavatorsIntegration.makeExcavator(
-                        BNToolMaterial.CINCINNASITE_DIAMOND,
-                        5,
-                        -2.0F
-                )
-        );
-        NETHER_RUBY_EXCAVATOR = registerItem(
-                "nether_ruby_excavator",
-                VanillaExcavatorsIntegration.makeExcavator(
-                        BNToolMaterial.NETHER_RUBY,
-                        5,
-                        -2.0F
-                )
-        );
-
-        GLOWSTONE_PILE = registerItem("glowstone_pile", new Item(defaultSettings()));
-        LAPIS_PILE = registerItem("lapis_pile", new Item(defaultSettings()));
-
-        AGAVE_LEAF = registerItem("agave_leaf", new Item(defaultSettings()));
-        AGAVE_MEDICINE = registerMedicine("agave_medicine", 40, 2, true);
-        HERBAL_MEDICINE = registerMedicine("herbal_medicine", 10, 5, true);
-
-        if (BCLib.isDevEnvironment()) {
-            BetterNether.C.log.warn("Generating Debug Helpers");
-
-            registerNetherItem(
-                    "debug/city_loot",
-                    DebugDataItem.forLootTable(BNLoot.CITY_LOOT, Items.IRON_INGOT)
-            );
-            registerNetherItem(
-                    "debug/city_loot_common",
-                    DebugDataItem.forLootTable(BNLoot.CITY_LOOT_COMMON, Items.GOLD_INGOT)
-            );
-            registerNetherItem(
-                    "debug/city_loot_surprise",
-                    DebugDataItem.forLootTable(BNLoot.CITY_LOOT_SURPRISE, Items.DIAMOND)
-            );
-            registerNetherItem(
-                    "debug/wither_tower_loot",
-                    DebugDataItem.forLootTable(BNLoot.WITHER_TOWER_LOOT, NetherItems.CINCINNASITE_INGOT)
-            );
-            registerNetherItem(
-                    "debug/wither_tower_bonus_loot",
-                    DebugDataItem.forLootTable(BNLoot.WITHER_TOWER_BONUS_LOOT, NetherItems.NETHER_RUBY)
-            );
-
-            registerNetherItem(
-                    "debug/city_spawner",
-                    DebugDataItem.forSpawner(NetherItems::buildCitySpawnerData, Items.SPECTRAL_ARROW)
-            );
-        }
+        //NO-OP
     }
 }

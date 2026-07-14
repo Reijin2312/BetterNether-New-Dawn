@@ -15,8 +15,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockInkBush extends BlockCommonPlant implements SurvivesOnNetherGround, BehaviourPlant {
     public BlockInkBush() {
@@ -37,7 +37,7 @@ public class BlockInkBush extends BlockCommonPlant implements SurvivesOnNetherGr
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.INK_BUSH_SEED);
     }
@@ -48,4 +48,3 @@ public class BlockInkBush extends BlockCommonPlant implements SurvivesOnNetherGr
         return canSurviveOnTop(world, pos);
     }
 }
-

@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = MapItem.class, remap = false)
+@Mixin(MapItem.class)
 public abstract class MapMixin extends ComplexItem {
     public MapMixin(Properties settings) {
         super(settings);

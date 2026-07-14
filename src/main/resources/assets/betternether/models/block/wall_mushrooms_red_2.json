@@ -1,8 +1,8 @@
 {
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
 	"textures": {
-		"particle": "block/red_mushroom_block",
-		"texture": "block/red_mushroom_block",
+		"particle": "blocks/mushroom_red_new",
+		"texture": "blocks/mushroom_red_new",
 		"inside": "block/mushroom_block_inside"
 	},
 	"elements": [ 	 

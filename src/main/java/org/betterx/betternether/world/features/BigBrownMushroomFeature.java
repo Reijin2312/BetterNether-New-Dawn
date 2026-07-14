@@ -1,6 +1,9 @@
 package org.betterx.betternether.world.features;
 
 import org.betterx.betternether.BlocksHelper;
+import org.betterx.betternether.blocks.BNBlockProperties;
+import org.betterx.betternether.blocks.BlockBrownLargeMushroom;
+import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
 
 import net.minecraft.core.BlockPos;
@@ -10,20 +13,40 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 public class BigBrownMushroomFeature extends ContextFeature<NoneFeatureConfiguration> {
-    private static final Map<org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape, BlockState> STATE_CACHE = new EnumMap<>(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.class);
-
-    private static BlockState state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape shape) {
-        return STATE_CACHE.computeIfAbsent(
-                shape,
-                s -> org.betterx.betternether.registry.NetherBlocks.BROWN_LARGE_MUSHROOM
-                        .defaultBlockState()
-                        .setValue(org.betterx.betternether.blocks.BlockBrownLargeMushroom.SHAPE, s)
-        );
-    }
+    private static final BlockState MIDDLE = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.MIDDLE);
+    private static final BlockState BOTTOM = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.BOTTOM);
+    private static final BlockState TOP = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.TOP);
+    private static final BlockState SIDE_N = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.SIDE_N);
+    private static final BlockState SIDE_S = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.SIDE_S);
+    private static final BlockState SIDE_E = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.SIDE_E);
+    private static final BlockState SIDE_W = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.SIDE_W);
+    private static final BlockState CORNER_N = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.CORNER_N);
+    private static final BlockState CORNER_W = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.CORNER_W);
+    private static final BlockState CORNER_E = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.CORNER_E);
+    private static final BlockState CORNER_S = NetherBlocks.BROWN_LARGE_MUSHROOM
+            .defaultBlockState()
+            .setValue(BlockBrownLargeMushroom.SHAPE, BNBlockProperties.BrownMushroomShape.CORNER_S);
 
     public BigBrownMushroomFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -53,19 +76,19 @@ public class BigBrownMushroomFeature extends ContextFeature<NoneFeatureConfigura
                 hasAir = hasAir && level.isEmptyBlock(pos.above(size).offset(x, 0, z));
 
         if (hasAir) {
-            BlocksHelper.setWithoutUpdate(level, pos, state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.BOTTOM));
+            BlocksHelper.setWithoutUpdate(level, pos, BOTTOM);
             for (int y = 1; y < size; y++)
-                BlocksHelper.setWithoutUpdate(level, pos.above(y), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.MIDDLE));
+                BlocksHelper.setWithoutUpdate(level, pos.above(y), MIDDLE);
             pos = pos.above(size);
-            BlocksHelper.setWithUpdate(level, pos, state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.TOP));
-            BlocksHelper.setWithoutUpdate(level, pos.north(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.SIDE_N));
-            BlocksHelper.setWithoutUpdate(level, pos.south(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.SIDE_S));
-            BlocksHelper.setWithoutUpdate(level, pos.east(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.SIDE_E));
-            BlocksHelper.setWithoutUpdate(level, pos.west(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.SIDE_W));
-            BlocksHelper.setWithoutUpdate(level, pos.north().east(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.CORNER_N));
-            BlocksHelper.setWithoutUpdate(level, pos.north().west(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.CORNER_W));
-            BlocksHelper.setWithoutUpdate(level, pos.south().east(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.CORNER_E));
-            BlocksHelper.setWithoutUpdate(level, pos.south().west(), state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.CORNER_S));
+            BlocksHelper.setWithUpdate(level, pos, TOP);
+            BlocksHelper.setWithoutUpdate(level, pos.north(), SIDE_N);
+            BlocksHelper.setWithoutUpdate(level, pos.south(), SIDE_S);
+            BlocksHelper.setWithoutUpdate(level, pos.east(), SIDE_E);
+            BlocksHelper.setWithoutUpdate(level, pos.west(), SIDE_W);
+            BlocksHelper.setWithoutUpdate(level, pos.north().east(), CORNER_N);
+            BlocksHelper.setWithoutUpdate(level, pos.north().west(), CORNER_W);
+            BlocksHelper.setWithoutUpdate(level, pos.south().east(), CORNER_E);
+            BlocksHelper.setWithoutUpdate(level, pos.south().west(), CORNER_S);
 
             return true;
         }

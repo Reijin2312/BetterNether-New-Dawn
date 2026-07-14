@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 import org.jetbrains.annotations.Nullable;
 
-@Mixin(value = ServerPlayer.class, remap = false)
+@Mixin(ServerPlayer.class)
 public abstract class PlayerEntityMixin {
 
     @Shadow

@@ -1,9 +1,10 @@
 package org.betterx.betternether.integrations.blockus;
 
-import net.neoforged.fml.ModList;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class BlockusUtils {
     public static boolean hasBlockus() {
-        return ModList.get().isLoaded("blockus");
+        return FabricLoader.getInstance()
+                           .getModContainer("blockus").isPresent();
     }
 }

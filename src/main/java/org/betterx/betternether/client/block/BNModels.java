@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.*;
 
@@ -56,15 +56,6 @@ public class BNModels {
     }
 
     public static void createComplex(WoverBlockModelGenerators generators, Block bl, List<ModelSource> sources) {
-        createComplex(generators, bl, sources, false);
-    }
-
-    public static void createComplex(
-            WoverBlockModelGenerators generators,
-            Block bl,
-            List<ModelSource> sources,
-            boolean useBlockItemModel
-    ) {
         List<Pair<ModelSource, ResourceLocation>> models = sources.stream().map(s -> {
             Optional<ResourceLocation> parent = s.parent() == null ? Optional.empty() : Optional.of(s.parent());
             Optional<String> suffix = (s.suffix() == null || s.suffix().trim().isEmpty())
@@ -76,7 +67,7 @@ public class BNModels {
             s.textures.forEach(t -> mapping.put(t.slot(), t.texture()));
 
             ModelTemplate template = new ModelTemplate(parent, suffix, slots);
-            return new Pair<>(s, template.create(bl, mapping, generators.modelOutput()));
+            return new Pair<>(s, template.create(bl, mapping, generators.vanillaGenerator.modelOutput));
         }).toList();
 
         List<ResourceLocation> allModels = models.stream().map(p -> p.second).toList();
@@ -88,11 +79,7 @@ public class BNModels {
         generators.acceptBlockState(MultiVariantGenerator.multiVariant(bl, variants));
 
         Item item = bl.asItem();
-        if (useBlockItemModel) {
-            generators.delegateItemModel(bl, models.get(0).second);
-        } else {
-            ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(sources.get(0).textures.get(0).texture), generators.modelOutput());
-        }
+        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(sources.get(0).textures.get(0).texture), generators.vanillaGenerator.modelOutput);
     }
 
     public static ModelTemplate getCropBlockModelTemplate(String suffix) {
@@ -111,7 +98,7 @@ public class BNModels {
         ));
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static void provideGrassBlockModels(
             WoverBlockModelGenerators generators,
             Block bl,
@@ -143,7 +130,7 @@ public class BNModels {
         BNModels.createComplex(generators, bl, variants);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static void provideSimpleMultiStateBlock(
             WoverBlockModelGenerators generators,
             Block bl,
@@ -164,7 +151,6 @@ public class BNModels {
             );
         }
 
-        BNModels.createComplex(generators, bl, variants, true);
+        BNModels.createComplex(generators, bl, variants);
     }
 }
-

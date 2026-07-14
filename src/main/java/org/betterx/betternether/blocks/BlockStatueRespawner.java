@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import de.ambertation.wunderlib.math.Float3;
 import org.betterx.bclib.behaviours.interfaces.BehaviourMetal;
@@ -34,6 +33,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourMetal {
     private static final VoxelShape SHAPE = box(1, 0, 1, 15, 16, 15);
@@ -47,11 +47,9 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty TOP = BooleanProperty.create("top");
     private final ItemStack requiredItem;
-    private final Component requiredItemCountText;
-    private final Component requiredItemNameText;
 
     public BlockStatueRespawner() {
-        super(BlockBehaviour.Properties.ofFullCopy(NetherBlocks.CINCINNASITE_BLOCK).lightLevel(state -> 15).noOcclusion());
+        super(FabricBlockSettings.copyOf(NetherBlocks.CINCINNASITE_BLOCK).luminance(15).noOcclusion());
         this.setRenderLayer(BNRenderLayer.CUTOUT);
         this.registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(TOP, false));
         this.setDropItself(false);
@@ -61,8 +59,6 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
             item = Items.GLOWSTONE;
         int count = 4;
         requiredItem = new ItemStack(item, count);
-        requiredItemCountText = Component.literal(Integer.toString(count));
-        requiredItemNameText = requiredItem.getHoverName();
     }
 
     @Override
@@ -108,15 +104,12 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
                 );
             player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
             if (!world.isClientSide) {
-                ((ServerPlayer) player).setRespawnPosition(world.dimension(), pos, player.getYHeadRot(), true, false);
+                ((ServerPlayer) player).setRespawnPosition(world.dimension(), pos, player.getYHeadRot(), false, true);
             }
             player.playSound(SoundEvents.TOTEM_USE, 0.7F, 1.0F);
             return InteractionResult.SUCCESS;
         } else {
-            player.displayClientMessage(
-                    Component.translatable("message.spawn_help", requiredItemCountText, requiredItemNameText),
-                    true
-            );
+            player.displayClientMessage(Component.translatable("message.spawn_help", requiredItem), true);
         }
         return InteractionResult.SUCCESS;
     }
@@ -169,6 +162,3 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
         return super.playerWillDestroy(world, pos, state, player);
     }
 }
-
-
-

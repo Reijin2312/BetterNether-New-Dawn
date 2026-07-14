@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.betternether.blockentities.BNBrewingStandBlockEntity;
@@ -22,12 +21,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BNBrewingStand extends BrewingStandBlock implements IRenderTypeable, BehaviourStone {
     public BNBrewingStand() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS)
+        super(FabricBlockSettings.copyOf(Blocks.NETHER_BRICKS)
                                  .strength(0.5F, 0.5F)
-                                 .lightLevel(state -> 1)
+                                 .luminance(1)
                                  .noOcclusion());
     }
 
@@ -87,6 +87,3 @@ public class BNBrewingStand extends BrewingStandBlock implements IRenderTypeable
         return BNRenderLayer.CUTOUT;
     }
 }
-
-
-

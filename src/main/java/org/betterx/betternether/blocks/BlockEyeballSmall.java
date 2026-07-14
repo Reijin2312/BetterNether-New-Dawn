@@ -26,8 +26,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,7 +47,7 @@ public class BlockEyeballSmall extends BlockEyeBase implements BlockLootProvider
         return SHAPE;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(5) == 0) {
             double x = pos.getX() + random.nextDouble() * 0.5 + 0.25;
@@ -83,4 +83,3 @@ public class BlockEyeballSmall extends BlockEyeBase implements BlockLootProvider
                                                        .when(ExplosionCondition.survivesExplosion())));
     }
 }
-

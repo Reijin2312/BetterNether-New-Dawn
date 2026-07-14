@@ -8,17 +8,9 @@ import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherItems;
 import org.betterx.wover.complex.api.equipment.ToolSlot;
 import org.betterx.wover.tabs.api.CreativeTabs;
-import net.minecraft.core.registries.Registries;
-import net.neoforged.neoforge.registries.RegisterEvent;
 
 public class BECreativeTabs {
-    private static boolean registered;
-
-    public static void onRegister(RegisterEvent event) {
-        if (!event.getRegistryKey().equals(Registries.CREATIVE_MODE_TAB)) return;
-        if (registered) return;
-        registered = true;
-
+    public static void register() {
         CreativeTabs
                 .start(BetterNether.C)
                 .createTab("nature")

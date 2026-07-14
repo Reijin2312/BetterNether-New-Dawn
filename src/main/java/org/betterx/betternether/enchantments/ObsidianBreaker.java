@@ -1,6 +1,5 @@
 package org.betterx.betternether.enchantments;
 
-import org.betterx.betternether.registry.NetherEnchantments;
 import org.betterx.betternether.registry.NetherTags;
 
 import net.minecraft.core.Holder;
@@ -18,14 +17,13 @@ public class ObsidianBreaker {
     }
 
     private static float getSpeedMultiplier(LivingEntity entity) {
-        Holder<Enchantment> enchantment = NetherEnchantments.OBSIDIAN_BREAKER.getHolder(entity.level().registryAccess());
+        Holder<Enchantment> enchantment = org.betterx.betternether.registry.NetherEnchantments.OBSIDIAN_BREAKER.getHolder(entity.level().registryAccess());
         if (enchantment != null) {
             int level = EnchantmentHelper.getItemEnchantmentLevel(enchantment, entity.getMainHandItem());
             if (level > 0) {
                 return 1.0F + bonusForLevel(level);
             }
         }
-
         return 1.0F;
     }
 

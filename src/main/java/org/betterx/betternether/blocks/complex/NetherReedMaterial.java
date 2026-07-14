@@ -45,7 +45,6 @@ public class NetherReedMaterial extends RoofMaterial<NetherReedMaterial> {
                     .remove(WoodSlots.BARK)
                     .remove(WoodSlots.STRIPPED_LOG)
                     .remove(WoodSlots.STRIPPED_BARK)
-                    // Disable boat + chest boat for nether reed until assets are provided
 
                     .replace(new Planks() {
                         @Override
@@ -94,7 +93,6 @@ public class NetherReedMaterial extends RoofMaterial<NetherReedMaterial> {
 
     @Override
     public BoatTypeOverride supplyBoatType() {
-        // Nether reed uses the raft model layout.
         return BoatTypeOverride.create(
                 C,
                 getBaseName(),

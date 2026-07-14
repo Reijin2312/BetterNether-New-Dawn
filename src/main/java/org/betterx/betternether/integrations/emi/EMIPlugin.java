@@ -13,45 +13,26 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 
 public class EMIPlugin implements EmiPlugin {
-    private static EmiIngredient blackstoneFurnaceWorkstation() {
-        return EmiStack.of(NetherBlocks.BLACKSTONE_FURNACE);
-    }
+    public static final EmiIngredient BLACKSTONE_FURNACE_WORKSTATION = EmiStack.of(NetherBlocks.BLACKSTONE_FURNACE);
+    public static final EmiIngredient NETHERRACK_FURNACE_WORKSTATION = EmiStack.of(NetherBlocks.NETHERRACK_FURNACE);
+    public static final EmiIngredient BASALT_FURNACE_WORKSTATION = EmiStack.of(NetherBlocks.BASALT_FURNACE);
+    public static final EmiIngredient CINCINNASITE_FORGE_WORKSTATION = EmiStack.of(NetherBlocks.CINCINNASITE_FORGE);
 
-    private static EmiIngredient netherrackFurnaceWorkstation() {
-        return EmiStack.of(NetherBlocks.NETHERRACK_FURNACE);
-    }
-
-    private static EmiIngredient basaltFurnaceWorkstation() {
-        return EmiStack.of(NetherBlocks.BASALT_FURNACE);
-    }
-
-    private static EmiIngredient cincinnasiteForgeWorkstation() {
-        return EmiStack.of(NetherBlocks.CINCINNASITE_FORGE);
-    }
-
-    private static EmiRecipeCategory FORGE;
-
-    public static EmiRecipeCategory getForgeCategory() {
-        if (FORGE == null) {
-            FORGE = new EmiRecipeCategory(
-                    BetterNether.C.id("forge"),
-                    cincinnasiteForgeWorkstation(),
-                    org.betterx.bclib.integration.emi.EMIPlugin.getSprite(16, 16)
-            );
-        }
-        return FORGE;
-    }
+    public static final EmiRecipeCategory FORGE = new EmiRecipeCategory(
+            BetterNether.C.id("forge"),
+            CINCINNASITE_FORGE_WORKSTATION,
+            org.betterx.bclib.integration.emi.EMIPlugin.getSprite(16, 16)
+    );
 
     @Override
     public void register(EmiRegistry emiRegistry) {
         final RecipeManager manager = emiRegistry.getRecipeManager();
 
-        EmiRecipeCategory forgeCategory = getForgeCategory();
-        emiRegistry.addCategory(forgeCategory);
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, blackstoneFurnaceWorkstation());
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, netherrackFurnaceWorkstation());
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, basaltFurnaceWorkstation());
-        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, cincinnasiteForgeWorkstation());
+        emiRegistry.addCategory(FORGE);
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, BLACKSTONE_FURNACE_WORKSTATION);
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, NETHERRACK_FURNACE_WORKSTATION);
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, BASALT_FURNACE_WORKSTATION);
+        emiRegistry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, CINCINNASITE_FORGE_WORKSTATION);
 
         EMIForgeRecipe.addAllRecipes(emiRegistry, manager);
     }

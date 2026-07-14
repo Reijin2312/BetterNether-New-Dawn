@@ -17,8 +17,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,14 +49,6 @@ public class RubyFire {
         if (rubyFire == null) return false;
         final int fireLevel = EnchantmentHelper.getItemEnchantmentLevel(rubyFire, breakingItem);
         if (fireLevel > 0) {
-            // Respect Silk Touch: if present, skip auto-smelting entirely
-            var silk = player.registryAccess()
-                             .lookupOrThrow(Registries.ENCHANTMENT)
-                             .getOrThrow(Enchantments.SILK_TOUCH);
-            if (EnchantmentHelper.getItemEnchantmentLevel(silk, breakingItem) > 0) {
-                return false;
-            }
-
             if (FIRE_CONVERSIONS.isEmpty()) buildConversionTable(level);
 
             boolean didConvert = false;

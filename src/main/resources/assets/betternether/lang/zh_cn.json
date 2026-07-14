@@ -24,7 +24,7 @@
   "item.betternether.stalagnate_bowl_mushroom": "蘑菇煲",
   "item.betternether.stalagnate_bowl_wart": "下界疣煲",
   "itemGroup.betternether.items": "更好的下界",
-  "message.spawn_help": "§c§l你必须拿着§r %1$s %2$s §c§l才能在此设置出生点",
+  "message.spawn_help": "§c§l你必须拿着§r %s §c§l才能在此设置出生点",
   "message.spawn_set": "§2§l你的出生点已设置",
   "block.betternether.agave": "龙舌兰",
   "item.betternether.agave_leaf": "龙舌兰蕨",
@@ -617,8 +617,5 @@
   "advancements.betternether.ruby_tools.description": "使用从下界深处获取的红宝石工具",
   "advancements.betternether.city.title": "曾经的光辉",
   "advancements.betternether.city.description": "找到一座被遗弃已久的下界城",
-  "biome.betternether.upside_down_forest_cleared": "被清除的反转森林",
-  "betternether.jei.forge.category": "辛辛纳石锻炉",
-  "betternether.jei.cooking.experience": "%s 经验",
-  "config.jade.plugin_betternether.plant_growth": "BetterNether 植物"
+  "biome.betternether.upside_down_forest_cleared": "被清除的反转森林"
 }

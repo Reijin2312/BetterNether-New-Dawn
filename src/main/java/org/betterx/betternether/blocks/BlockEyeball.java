@@ -26,8 +26,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +42,7 @@ public class BlockEyeball extends BlockEyeBase implements BlockLootProvider {
         );
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (random.nextInt(5) == 0) {
             double x = pos.getX() + random.nextDouble();
@@ -86,4 +86,3 @@ public class BlockEyeball extends BlockEyeBase implements BlockLootProvider {
                                                        .when(ExplosionCondition.survivesExplosion())));
     }
 }
-

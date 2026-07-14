@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.wover.block.api.BlockTagProvider;
@@ -17,12 +16,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockSoulSandstone extends BlockBase implements BlockTagProvider, BehaviourStone {
     public static final BooleanProperty UP = BooleanProperty.create("up");
 
     public BlockSoulSandstone() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.SANDSTONE));
+        super(FabricBlockSettings.copyOf(Blocks.SANDSTONE));
     }
 
     @Override
@@ -53,4 +53,3 @@ public class BlockSoulSandstone extends BlockBase implements BlockTagProvider, B
         context.add(this, CommonBlockTags.NETHER_TERRAIN);
     }
 }
-

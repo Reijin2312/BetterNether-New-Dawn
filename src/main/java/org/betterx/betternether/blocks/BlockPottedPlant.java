@@ -56,9 +56,8 @@ public class BlockPottedPlant extends BlockBaseNotFull implements AddMineableHoe
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
         Block block = state.getValue(PLANT).getBlock();
-        BlockState plantState = block.defaultBlockState();
-        Vec3 vec3d = plantState.getOffset(view, pos);
-        return plantState.getShape(view, pos, ePos).move(-vec3d.x, -0.5 - vec3d.y, -vec3d.z);
+        Vec3 vec3d = block.defaultBlockState().getOffset(view, pos);
+        return block.getShape(block.defaultBlockState(), view, pos, ePos).move(-vec3d.x, -0.5 - vec3d.y, -vec3d.z);
     }
 
     @Override

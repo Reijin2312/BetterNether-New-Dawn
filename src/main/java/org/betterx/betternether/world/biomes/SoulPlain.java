@@ -29,11 +29,8 @@ import java.util.List;
 public class SoulPlain extends NetherBiomeConfig {
     private static final SurfaceRules.RuleSource SOUL_SAND = SurfaceRules.state(Blocks.SOUL_SAND.defaultBlockState());
     private static final SurfaceRules.RuleSource SOUL_SOIL = SurfaceRules.state(Blocks.SOUL_SOIL.defaultBlockState());
+    private static final SurfaceRules.RuleSource SOUL_SANDSTONE = SurfaceRules.state(NetherBlocks.SOUL_SANDSTONE.defaultBlockState());
     private static final SurfaceRules.RuleSource LAVA = SurfaceRules.state(Blocks.MAGMA_BLOCK.defaultBlockState());
-
-    private static SurfaceRules.RuleSource soulSandstoneRule() {
-        return SurfaceRules.state(NetherBlocks.SOUL_SANDSTONE.defaultBlockState());
-    }
 
     @Override
     public void addCustomBuildData(NetherBiomeBuilder builder) {
@@ -67,7 +64,7 @@ public class SoulPlain extends NetherBiomeConfig {
                 List.of(
                         SOUL_SOIL,
                         SOUL_SAND,
-                        soulSandstoneRule(),
+                        SOUL_SANDSTONE,
                         LAVA,
                         LAVA,
                         SOUL_SAND
@@ -77,7 +74,7 @@ public class SoulPlain extends NetherBiomeConfig {
         RuleSource soilStoneDist
                 = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(Conditions.NETHER_VOLUME_NOISE, SOUL_SOIL),
-                soulSandstoneRule()
+                SOUL_SANDSTONE
         );
 
         builder.rule(

@@ -5,6 +5,7 @@ import org.betterx.betternether.blocks.BNBlockProperties.FoodShape;
 import org.betterx.betternether.blocks.BlockStalagnateBowl;
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherItems;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -36,8 +37,9 @@ public class ItemBowlFood extends Item {
         if (context.getPlayer().isShiftKeyDown() &&
                 world.isEmptyBlock(pos) &&
                 NetherBlocks.MAT_STALAGNATE.getBowl()
-                                           .defaultBlockState()
-                                           .canSurvive(world, pos)) {
+                                           .canSurvive(
+                                                   world.getBlockState(pos), world, pos
+                                           )) {
             if (!world.isClientSide()) {
                 BlockState state = NetherBlocks.MAT_STALAGNATE.getBowl()
                                                               .defaultBlockState()

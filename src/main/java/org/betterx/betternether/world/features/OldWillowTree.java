@@ -23,7 +23,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguration> implements GrowableFeature<NaturalTreeConfiguration> {
     private static final float[] CURVE_X = new float[]{9F, 7F, 1.5F, 0.5F, 3F, 7F};
     private static final float[] CURVE_Y = new float[]{20F, 17F, 12F, 4F, 0F, -2F};
-    private static final java.util.function.Supplier<Block[]> WALL_PLANTS = () -> new Block[]{
+    private static final Block[] wallPlants = {
             NetherBlocks.WALL_MOSS,
             NetherBlocks.WALL_MOSS,
             NetherBlocks.WALL_MUSHROOM_BROWN,
@@ -124,12 +124,10 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
                 BlocksHelper.setWithUpdate(
                         world,
                         bpos,
-                        NetherBlocks.MAT_WILLOW.getBlock(WoodSlots.BARK)
-                                .defaultBlockState()
+                        NetherBlocks.MAT_WILLOW.getBlock(WoodSlots.BARK).defaultBlockState()
                 );
 
                 if (random.nextInt(8) == 0) {
-                    Block[] wallPlants = WALL_PLANTS.get();
                     state = wallPlants[random.nextInt(wallPlants.length)].defaultBlockState();
                     if (random.nextInt(8) == 0 && !context.BLOCKS.contains(bpos.north()) && world.isEmptyBlock(bpos.north()))
                         BlocksHelper.setWithUpdate(

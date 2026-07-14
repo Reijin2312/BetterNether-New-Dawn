@@ -52,8 +52,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.synth.PerlinSimplexNoise;
 import net.minecraft.world.phys.Vec3;
 
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
@@ -79,11 +78,7 @@ public class CommandRegistry {
     private static final int SAMPLE_RESOLUTION_VERTICAL = 64;
 
     public static void register() {
-        NeoForge.EVENT_BUS.addListener(CommandRegistry::onRegisterCommands);
-    }
-
-    private static void onRegisterCommands(RegisterCommandsEvent event) {
-        register(event.getDispatcher(), event.getBuildContext(), event.getCommandSelection());
+        CommandRegistrationCallback.EVENT.register(CommandRegistry::register);
     }
 
     private static void register(

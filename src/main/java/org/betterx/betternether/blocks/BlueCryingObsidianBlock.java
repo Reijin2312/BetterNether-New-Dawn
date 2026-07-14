@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherParticles;
@@ -12,12 +11,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlueCryingObsidianBlock extends BNObsidianBase {
     public BlueCryingObsidianBlock() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN), NetherBlocks.BLUE_WEEPING_OBSIDIAN);
+        super(FabricBlockSettings.copyOf(Blocks.CRYING_OBSIDIAN), NetherBlocks.BLUE_WEEPING_OBSIDIAN);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource random) {
@@ -51,11 +51,8 @@ public class BlueCryingObsidianBlock extends BNObsidianBase {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generators) {
         generators.createObsidianVariants(generators, this);
     }
 }
-
-
-

@@ -18,15 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MusicManager.class)
 public abstract class MusicTrackerMixin {
-    @Unique private static final float FADE_SPEED = 0.2f; // Units per second (0.2f -> Fade across 5 seconds)
+    @Unique private static final float FADE_SPEED = 0.2f;
     @Unique private static final float TICK_DELTA = 0.05f;
-    // Note: Assume game is at a constant 20 tps since MC doesn't have getTPS()
-    // The use of currentTimeMillis() is ditched since it is overly complex for this system
-    // The difference from this constant will only be noticeable if the game's TPS is extremely low
-    // If the game is lagging to that extent, smooth music blending is the least of the player's worries
-
-    @Unique private final MusicManager bn_thisObj = (MusicManager)(Object)this;
-    @Unique private boolean bn_waitChange = false;
+    @Unique private final MusicManager bn_thisObj = (MusicManager) (Object) this;
+    @Unique private boolean bn_waitChange;
     @Unique private float bn_volume = 1.0f;
 
     @Shadow @Final private Minecraft minecraft;
@@ -36,8 +31,7 @@ public abstract class MusicTrackerMixin {
 
     @Unique
     private boolean bn_isInNether() {
-        return minecraft.player != null && minecraft.level != null
-                && minecraft.level.dimension() == Level.NETHER;
+        return minecraft.player != null && minecraft.level != null && minecraft.level.dimension() == Level.NETHER;
     }
 
     @Unique
@@ -45,24 +39,23 @@ public abstract class MusicTrackerMixin {
         return currentMusic == null || !toMusic.getEvent().value().getLocation().equals(currentMusic.getLocation());
     }
 
-    /** Returns currentMusic.getVolume() or fallback if the sound is not yet initialized (avoids NPE). */
     @Unique
     private float bn_getVolumeSafe(float fallback) {
         if (currentMusic == null) return fallback;
         try {
             return currentMusic.getVolume();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
             return fallback;
         }
     }
 
     @Inject(method = "startPlaying", at = @At("TAIL"))
-    public void bn_startPlaying(Music music, CallbackInfo ci) {
-        bn_volume = 0.0f; // Mostly to fix issues when the blending system becomes desynced due to other dims
+    private void bn_startPlaying(Music music, CallbackInfo info) {
+        bn_volume = 0.0f;
     }
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-    public void bn_onTick(CallbackInfo info) {
+    private void bn_onTick(CallbackInfo info) {
         if (!bn_isInNether()) {
             bn_waitChange = false;
             bn_volume = 1.0f;
@@ -73,15 +66,12 @@ public abstract class MusicTrackerMixin {
         if (targetMusic == null || !targetMusic.replaceCurrentMusic()) {
             bn_waitChange = false;
             bn_volume = 1.0f;
-            return; // If the target music cannot replace the current, let vanilla handle it
+            return;
         }
 
         if (currentMusic != null && !minecraft.getSoundManager().isActive(currentMusic)) {
             currentMusic = null;
-            nextSongDelay = Math.min(
-                    nextSongDelay,
-                    Mth.nextInt(random, targetMusic.getMinDelay(), targetMusic.getMaxDelay())
-            );
+            nextSongDelay = Math.min(nextSongDelay, Mth.nextInt(random, targetMusic.getMinDelay(), targetMusic.getMaxDelay()));
         }
         nextSongDelay = Math.min(nextSongDelay, targetMusic.getMaxDelay());
 
@@ -89,13 +79,7 @@ public abstract class MusicTrackerMixin {
             if (nextSongDelay-- <= 0) {
                 bn_waitChange = false;
                 bn_thisObj.startPlaying(targetMusic);
-                if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
-                    accessor.setVolume(0.0f);
-                    minecraft.getSoundManager().updateSourceVolume(
-                            currentMusic.getSource(),
-                            bn_getVolumeSafe(0.0f)
-                    );
-                }
+                bn_setCurrentMusicVolume(0.0f);
             }
             info.cancel();
             return;
@@ -108,7 +92,6 @@ public abstract class MusicTrackerMixin {
                 bn_waitChange = true;
             }
             if (bn_volume > 0.0f) {
-                // Fade out current music
                 volumeChanged = true;
                 bn_volume -= FADE_SPEED * TICK_DELTA;
                 if (bn_volume <= 0.0f) {
@@ -117,37 +100,30 @@ public abstract class MusicTrackerMixin {
                     currentMusic = null;
                 }
             } else if (nextSongDelay > 0) {
-                // In-between music delay
-                nextSongDelay -= 1;
+                nextSongDelay--;
             } else {
-                // Start new music
                 bn_waitChange = false;
                 bn_thisObj.startPlaying(targetMusic);
-                if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
-                    accessor.setVolume(0.0f);
-                    minecraft.getSoundManager().updateSourceVolume(
-                            currentMusic.getSource(),
-                            bn_getVolumeSafe(0.0f)
-                    );
-                }
+                bn_setCurrentMusicVolume(0.0f);
             }
         } else if (bn_volume < 1.0f) {
-            // Fade in new music
             volumeChanged = true;
             bn_volume += FADE_SPEED * TICK_DELTA;
         }
 
         if (volumeChanged) {
             bn_volume = Mth.clamp(bn_volume, 0.0f, 1.0f);
-            if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
-                accessor.setVolume(bn_volume);
-                minecraft.getSoundManager().updateSourceVolume(currentMusic.getSource(), bn_getVolumeSafe(bn_volume));
-            }
+            bn_setCurrentMusicVolume(bn_volume);
         }
 
         info.cancel();
     }
 
-    @Shadow
-    public abstract void startPlaying(Music type);
+    @Unique
+    private void bn_setCurrentMusicVolume(float volume) {
+        if (currentMusic instanceof AbstractSoundInstanceAccessor accessor) {
+            accessor.setVolume(volume);
+            minecraft.getSoundManager().updateSourceVolume(currentMusic.getSource(), bn_getVolumeSafe(volume));
+        }
+    }
 }

@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.interfaces.tools.AddMineableAxe;
 import org.betterx.betternether.blocks.BNBlockProperties.FoodShape;
@@ -19,6 +18,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +28,7 @@ public class BlockStalagnateBowl extends BlockBaseNotFull implements AddMineable
     public static final EnumProperty<FoodShape> FOOD = BNBlockProperties.FOOD;
 
     public BlockStalagnateBowl(Block source) {
-        super(BlockBehaviour.Properties.ofFullCopy(source).noOcclusion());
+        super(FabricBlockSettings.copyOf(source).noOcclusion());
         this.setRenderLayer(BNRenderLayer.CUTOUT);
         this.registerDefaultState(getStateDefinition().any().setValue(FOOD, FoodShape.NONE));
     }
@@ -69,5 +69,3 @@ public class BlockStalagnateBowl extends BlockBaseNotFull implements AddMineable
             return state;
     }
 }
-
-

@@ -23,8 +23,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourClimableVine {
     protected static final VoxelShape SHAPE_SELECTION = Block.box(4, 0, 4, 12, 16, 12);
@@ -58,7 +58,7 @@ public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourCl
         return SHAPE_SELECTION.move(vec3d.x, vec3d.y, vec3d.z);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -85,7 +85,7 @@ public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourCl
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.ANCHOR_TREE_LEAVES);
     }

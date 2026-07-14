@@ -56,7 +56,7 @@ public class BlockNeonEquisetum extends BaseVineBlock.Growing implements Survive
 //        return SHAPE_SELECTION.move(vec3d.x, vec3d.y, vec3d.z);
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    @Environment(EnvType.CLIENT)
 //    public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
 //        return 1.0F;
 //    }
@@ -163,4 +163,3 @@ public class BlockNeonEquisetum extends BaseVineBlock.Growing implements Survive
 //        return provider.dropWithSilkTouchOrHoeOrShears(this);
 //    }
 //}
-

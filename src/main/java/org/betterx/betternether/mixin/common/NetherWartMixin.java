@@ -18,25 +18,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(value = NetherWartBlock.class, remap = false)
+@Mixin(NetherWartBlock.class)
 public abstract class NetherWartMixin extends BushBlock {
     protected NetherWartMixin(Properties settings) {
         super(settings);
     }
 
-    @Inject(
-            method = "mayPlaceOn",
-            at = @At(value = "RETURN"),
-            locals = LocalCapture.CAPTURE_FAILHARD,
-            cancellable = true,
-            remap = false
-    )
+    @Inject(method = "mayPlaceOn", at = @At(value = "RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void canStay(BlockState floor, BlockGetter view, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
         if (floor.getBlock() == NetherBlocks.FARMLAND)
             info.setReturnValue(true);
     }
 
-    @Inject(method = "randomTick", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    @Inject(method = "randomTick", at = @At(value = "HEAD"), cancellable = true)
     private void bn_randomTick(
             BlockState state,
             ServerLevel world,

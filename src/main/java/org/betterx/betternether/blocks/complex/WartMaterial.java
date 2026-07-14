@@ -3,7 +3,6 @@ package org.betterx.betternether.blocks.complex;
 import org.betterx.bclib.complexmaterials.WoodenComplexMaterial;
 import org.betterx.bclib.complexmaterials.entry.SimpleBlockOnlyMaterialSlot;
 import org.betterx.bclib.complexmaterials.entry.SlotMap;
-import org.betterx.bclib.complexmaterials.set.wood.WoodSlots;
 import org.betterx.betternether.blocks.BlockWartRoots;
 import org.betterx.betternether.blocks.BlockWartSeed;
 import org.betterx.betternether.blocks.complex.slots.AbstractSeed;
@@ -23,7 +22,6 @@ public class WartMaterial extends RoofMaterial<WartMaterial> {
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super
                 .createMaterialSlots()
-                // лодки отключены: нет ассетов
                 .add(AbstractSeed.create(BlockWartSeed::new))
                 .add(SimpleBlockOnlyMaterialSlot.createBlockOnly(NetherSlots.ROOTS, BlockWartRoots::new));
     }
@@ -35,10 +33,5 @@ public class WartMaterial extends RoofMaterial<WartMaterial> {
 
     public Block getSeed() {
         return getBlock(NetherSlots.SEED);
-    }
-
-    @Override
-    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
-        return super.supplyBoatType();
     }
 }

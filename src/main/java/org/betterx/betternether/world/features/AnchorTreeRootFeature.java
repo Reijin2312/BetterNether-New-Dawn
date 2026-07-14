@@ -13,7 +13,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -65,10 +64,8 @@ public class AnchorTreeRootFeature extends ContextFeature<NoneFeatureConfigurati
             //if (!blockBox.contains(bpos)) continue;
             if (bpos.getY() < minBuildHeight || bpos.getY() > MAX_HEIGHT - 2) continue;
             if (!BlocksHelper.isNetherGround(state = world.getBlockState(bpos)) && !canReplace(state)) continue;
-
             boolean blockUp = context.BLOCKS.contains(bpos.above());
             boolean blockDown = context.BLOCKS.contains(bpos.below());
-
             BlocksHelper.setWithoutUpdate(world, bpos, NetherBlocks.MAT_ANCHOR_TREE.getBark().defaultBlockState());
 
             if (!blockUp && world.getBlockState(bpos.above()).canBeReplaced()) {
@@ -102,8 +99,7 @@ public class AnchorTreeRootFeature extends ContextFeature<NoneFeatureConfigurati
                         LUCIS.grow(world, bpos, random, false);
             }
 
-            Block[] wallPlants = AnchorTreeFeature.wallPlants();
-            state = wallPlants[random.nextInt(wallPlants.length)].defaultBlockState();
+            state = AnchorTreeFeature.wallPlants[random.nextInt(AnchorTreeFeature.wallPlants.length)].defaultBlockState();
             BlockPos _pos = bpos.north();
             if (random.nextInt(8) == 0 && !context.BLOCKS.contains(_pos) && world.isEmptyBlock(_pos))
                 BlocksHelper.setWithUpdate(world, _pos, state.setValue(BlockPlantWall.FACING, Direction.NORTH));

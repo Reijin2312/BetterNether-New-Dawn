@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = Piglin.class, remap = false)
+@Mixin(Piglin.class)
 public abstract class PiglinMixin {
     @Shadow
     protected abstract void maybeWearArmor(

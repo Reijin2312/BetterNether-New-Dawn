@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = LavaFluid.class, remap = false)
+@Mixin(LavaFluid.class)
 public class LavaFluidMixin {
     @Inject(method = "animateTick", at = @At(value = "HEAD"))
     private void displayTick(

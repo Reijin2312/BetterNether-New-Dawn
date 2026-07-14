@@ -4,37 +4,30 @@ import org.betterx.betternether.config.Configs;
 import org.betterx.betternether.items.materials.BNArmorTiers;
 
 import net.minecraft.core.Holder;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
+
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = PiglinAi.class, remap = false)
+@Mixin(PiglinAi.class)
 public class PiglinAiMixin {
-    @Inject(method = "isWearingGold", at = @At("RETURN"), cancellable = true)
-    private static void bn_isWearingGold(
-            LivingEntity entity,
-            CallbackInfoReturnable<Boolean> cir
+    @WrapOperation(
+            method = "isWearingGold",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/core/Holder;is(Lnet/minecraft/core/Holder;)Z"
+            )
+    )
+    private static boolean bn_isWearingGold(
+            Holder<ArmorMaterial> instance,
+            Holder<ArmorMaterial> tHolder,
+            Operation<Boolean> original
     ) {
-        if (cir.getReturnValue() || !Configs.GAME_RULES.piglinIgnoreNetherArmor.get()) {
-            return;
-        }
-
-        for (ItemStack stack : entity.getArmorAndBodyArmorSlots()) {
-            if (stack.getItem() instanceof ArmorItem armorItem) {
-                Holder<ArmorMaterial> material = armorItem.getMaterial();
-                if (material.is(BNArmorTiers.CINCINNASITE.armorMaterial)
-                        || material.is(BNArmorTiers.NETHER_RUBY.armorMaterial)
-                        || material.is(BNArmorTiers.FLAMING_RUBY.armorMaterial)) {
-                    cir.setReturnValue(true);
-                    return;
-                }
-            }
-        }
+        //Piglins will now also consider BetterNether armor materials as gold armor
+        return original.call(instance, tHolder) ||
+                (Configs.GAME_RULES.piglinIgnoreNetherArmor.get() && (instance.is(BNArmorTiers.CINCINNASITE.armorMaterial) || instance.is(BNArmorTiers.NETHER_RUBY.armorMaterial) || instance.is(BNArmorTiers.FLAMING_RUBY.armorMaterial)));
     }
 }

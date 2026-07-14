@@ -37,7 +37,6 @@ public class BlockHookMushroom extends BaseBlockMold implements SurvivesOnNether
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
-        // Simple plant drop
         return provider.drop(this);
     }
 }

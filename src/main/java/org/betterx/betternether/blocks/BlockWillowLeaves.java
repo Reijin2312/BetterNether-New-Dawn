@@ -20,8 +20,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockWillowLeaves extends BNLeaves {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -77,7 +77,7 @@ public class BlockWillowLeaves extends BNLeaves {
             return state;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -92,4 +92,3 @@ public class BlockWillowLeaves extends BNLeaves {
         return Shapes.empty();
     }
 }
-

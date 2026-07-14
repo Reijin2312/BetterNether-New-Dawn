@@ -33,7 +33,6 @@ public class RubeusMaterial extends NetherWoodenMaterial<RubeusMaterial> {
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
-                    // лодки отключены: нет ассетов
                     .add(AbstractSaplingSlot.create(BlockRubeusSapling::new))
                     .add(new SimpleMaterialSlot<>(NetherSlots.CONE) {
                         @Override
@@ -78,10 +77,5 @@ public class RubeusMaterial extends NetherWoodenMaterial<RubeusMaterial> {
 
     public Block getSapling() {
         return getBlock(WoodSlots.SAPLING);
-    }
-
-    @Override
-    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
-        return super.supplyBoatType();
     }
 }

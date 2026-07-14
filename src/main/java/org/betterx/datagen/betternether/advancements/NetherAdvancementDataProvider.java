@@ -17,7 +17,6 @@ import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -25,13 +24,15 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class NetherAdvancementDataProvider extends AdvancementDataProvider {
     public NetherAdvancementDataProvider(
-            PackOutput output,
+            FabricDataOutput output,
             CompletableFuture<HolderLookup.Provider> registryLookup
     ) {
         super(List.of(BetterNether.C.modId), output, registryLookup);
@@ -122,13 +123,12 @@ public class NetherAdvancementDataProvider extends AdvancementDataProvider {
                 .rewardXP(500)
                 .build();
 
-        Holder<Structure> cityHolder = structureLookup.getOrThrow(NetherStructures.CITY_STRUCTURE.key());
         ResourceLocation city = AdvancementManager.Builder
                 .create(BetterNether.C.id("city"))
                 .parent(enterNether)
                 .startDisplay(NetherBlocks.CINCINNASITE_CARVED)
                 .endDisplay()
-                .addAtStructureCriterion("ncity", cityHolder)
+                .addAtStructureCriterion("ncity", structureLookup.getOrThrow(NetherStructures.CITY_STRUCTURE.key()))
                 .requireOne()
                 .build();
 

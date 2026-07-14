@@ -6,7 +6,8 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.critereon.PlayerTrigger;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Optional;
@@ -25,24 +26,19 @@ public class BNCriterion {
 
     public static Criterion<PlayerTrigger.TriggerInstance> BREW_BLUE_CRITERION;
     public static Criterion<PlayerTrigger.TriggerInstance> USED_FORGE_ANY_CRITERION;
-    private static boolean initialized = false;
 
-    public static void onRegister(net.neoforged.neoforge.registries.RegisterEvent event) {
-        if (!event.getRegistryKey().equals(Registries.TRIGGER_TYPE)) return;
-        event.register(Registries.TRIGGER_TYPE, BNCriterion::register);
+    public static <T extends TriggerWithID<?>> T register(T trigger) {
+        return register(trigger.getId(), trigger);
     }
 
-    public static void register(
-            net.neoforged.neoforge.registries.RegisterEvent.RegisterHelper<CriterionTrigger<?>> helper
-    ) {
-        if (initialized) return;
-        initialized = true;
-        BREW_BLUE = new PlayerTrigger();
-        helper.register(BREW_BLUE_ID, BREW_BLUE);
-        USED_FORGE = new PlayerTrigger();
-        helper.register(USED_FORGE_ID, USED_FORGE);
-        CONVERT_BY_LIGHTNING = new ConvertByLightningTrigger();
-        helper.register(CONVERT_BY_LIGHTNING.getId(), CONVERT_BY_LIGHTNING);
+    public static <T extends CriterionTrigger<?>> T register(ResourceLocation id, T trigger) {
+        return Registry.register(BuiltInRegistries.TRIGGER_TYPES, id, trigger);
+    }
+
+    public static void register() {
+        BREW_BLUE = register(BREW_BLUE_ID, new PlayerTrigger());
+        USED_FORGE = register(USED_FORGE_ID, new PlayerTrigger());
+        CONVERT_BY_LIGHTNING = register(new ConvertByLightningTrigger());
 
         BREW_BLUE_CRITERION = BNCriterion.BREW_BLUE.createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()));
         USED_FORGE_ANY_CRITERION = BNCriterion.USED_FORGE.createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()));

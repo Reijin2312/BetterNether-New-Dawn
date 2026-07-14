@@ -1,19 +1,20 @@
 package org.betterx.betternether.registry;
 
+import org.betterx.bclib.registry.BaseBlockEntityRenders;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.entity.model.*;
 import org.betterx.betternether.entity.render.*;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.world.entity.EntityType;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
-@OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(modid = BetterNether.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class EntityRenderRegistry {
     private static final String DEFAULT_LAYER = "main";
     public static final ModelLayerLocation FIREFLY_MODEL = registerMain("firefly");
@@ -30,25 +31,37 @@ public class EntityRenderRegistry {
         //return EntityModelLayersMixin.callRegisterMain(key);
     }
 
-    @SubscribeEvent
-    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(NetherEntities.FIREFLY.type(), RenderFirefly::new);
-        event.registerEntityRenderer(NetherEntities.HYDROGEN_JELLYFISH.type(), RenderHydrogenJellyfish::new);
-        event.registerEntityRenderer(NetherEntities.NAGA.type(), RenderNaga::new);
-        event.registerEntityRenderer(NetherEntities.NAGA_PROJECTILE, RenderNagaProjectile::new);
-        event.registerEntityRenderer(NetherEntities.FLYING_PIG.type(), RenderFlyingPig::new);
-        event.registerEntityRenderer(NetherEntities.JUNGLE_SKELETON.type(), RenderJungleSkeleton::new);
-        event.registerEntityRenderer(NetherEntities.SKULL.type(), RenderSkull::new);
+    public static void register() {
+        registerRenderMob(NetherEntities.FIREFLY.type(), RenderFirefly.class);
+        registerRenderMob(NetherEntities.HYDROGEN_JELLYFISH.type(), RenderHydrogenJellyfish.class);
+        registerRenderMob(NetherEntities.NAGA.type(), RenderNaga.class);
+        BaseBlockEntityRenders.registerRender(NetherEntities.NAGA_PROJECTILE, RenderNagaProjectile.class);
+        registerRenderMob(NetherEntities.FLYING_PIG.type(), RenderFlyingPig.class);
+        registerRenderMob(NetherEntities.JUNGLE_SKELETON.type(), RenderJungleSkeleton.class);
+        registerRenderMob(NetherEntities.SKULL.type(), RenderSkull.class);
+
+
+        EntityModelLayerRegistry.registerModelLayer(FIREFLY_MODEL, ModelEntityFirefly::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(NAGA_MODEL, ModelNaga::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(JUNGLE_SKELETON_MODEL, ModelJungleSkeleton::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(FLYING_PIG_MODEL, ModelEntityFlyingPig::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(
+                HYDROGEN_JELLYFISH_MODEL,
+                ModelEntityHydrogenJellyfish::getTexturedModelData
+        );
+        EntityModelLayerRegistry.registerModelLayer(SKULL_MODEL, ModelSkull::getTexturedModelData);
     }
 
-    @SubscribeEvent
-    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(FIREFLY_MODEL, ModelEntityFirefly::getTexturedModelData);
-        event.registerLayerDefinition(NAGA_MODEL, ModelNaga::getTexturedModelData);
-        event.registerLayerDefinition(JUNGLE_SKELETON_MODEL, ModelJungleSkeleton::createBodyLayer);
-        event.registerLayerDefinition(FLYING_PIG_MODEL, ModelEntityFlyingPig::getTexturedModelData);
-        event.registerLayerDefinition(HYDROGEN_JELLYFISH_MODEL, ModelEntityHydrogenJellyfish::getTexturedModelData);
-        event.registerLayerDefinition(SKULL_MODEL, ModelSkull::getTexturedModelData);
+    private static void registerRenderMob(EntityType<?> entity, Class<? extends MobRenderer<?, ?>> renderer) {
+        EntityRendererRegistry.register(entity, (context) -> {
+            MobRenderer render = null;
+            try {
+                render = renderer.getConstructor(context.getClass())
+                                 .newInstance(context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return render;
+        });
     }
 }
-

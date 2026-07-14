@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks.complex;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.complexmaterials.BCLWoodTypeWrapper;
 import org.betterx.bclib.complexmaterials.WoodenComplexMaterial;
@@ -14,7 +13,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MapColor;
 
-import org.betterx.bclib.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 
 public class NetherWoodenMaterial<T extends NetherWoodenMaterial<T>> extends WoodenComplexMaterial {
     public NetherWoodenMaterial(String name, MapColor woodColor, MapColor planksColor) {
@@ -39,8 +39,8 @@ public class NetherWoodenMaterial<T extends NetherWoodenMaterial<T>> extends Woo
     }
 
     @Override
-    protected BlockBehaviour.Properties getBlockSettings() {
-        return BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_PLANKS)
+    protected FabricBlockSettings getBlockSettings() {
+        return FabricBlockSettings.copyOf(Blocks.WARPED_PLANKS)
                                   .mapColor(planksColor);
     }
 
@@ -106,5 +106,3 @@ public class NetherWoodenMaterial<T extends NetherWoodenMaterial<T>> extends Woo
         return getBlock(WoodSlots.STRIPPED_BARK);
     }
 }
-
-

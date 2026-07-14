@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
@@ -21,14 +20,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockGeyser extends BlockBaseNotFull implements BehaviourStone {
     private static final VoxelShape SHAPE = box(1, 0, 1, 15, 4, 15);
 
     public BlockGeyser() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERRACK).lightLevel(state -> 10).noOcclusion());
+        super(FabricBlockSettings.copyOf(Blocks.NETHERRACK).luminance(10).noOcclusion());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BlockGeyser extends BlockBaseNotFull implements BehaviourStone {
         return SHAPE;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         for (int i = 0; i < 5; i++) {
             world.addParticle(
@@ -139,7 +139,3 @@ public class BlockGeyser extends BlockBaseNotFull implements BehaviourStone {
             return state;
     }
 }
-
-
-
-

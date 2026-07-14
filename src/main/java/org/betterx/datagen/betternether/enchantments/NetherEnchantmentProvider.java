@@ -21,6 +21,7 @@ import net.minecraft.world.item.enchantment.effects.*;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider;
 
+
 public class NetherEnchantmentProvider extends WoverEnchantmentProvider {
     public NetherEnchantmentProvider(ModCore modCore) {
         super(modCore, "Nether Enchantments");

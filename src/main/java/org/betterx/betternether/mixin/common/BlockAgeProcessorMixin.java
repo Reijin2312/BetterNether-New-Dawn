@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 //make some ruined portals blue
-@Mixin(value = BlockAgeProcessor.class, remap = false)
+@Mixin(BlockAgeProcessor.class)
 public class BlockAgeProcessorMixin {
     @Inject(method = "processBlock", at = @At(value = "HEAD"), cancellable = true)
     void bn_processBlock(

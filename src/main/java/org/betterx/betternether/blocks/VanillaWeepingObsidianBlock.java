@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.betternether.registry.NetherParticles;
 import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
@@ -11,12 +10,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class VanillaWeepingObsidianBlock extends BNObsidianBase {
     public VanillaWeepingObsidianBlock() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.CRYING_OBSIDIAN).lightLevel(state -> 14), null);
+        super(FabricBlockSettings.copyOf(Blocks.CRYING_OBSIDIAN).luminance(14), null);
     }
 
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource random) {
@@ -36,7 +36,7 @@ public class VanillaWeepingObsidianBlock extends BNObsidianBase {
                             ? random.nextDouble()
                             : 0.5D + (double) direction.getStepZ() * 0.6D;
                     level.addParticle(
-                            NetherParticles.getDrippingObsidianWeep(),
+                            NetherParticles.DRIPPING_OBSIDIAN_WEEP,
                             (double) blockPos.getX() + d,
                             (double) blockPos.getY() + e,
                             (double) blockPos.getZ() + f,
@@ -50,7 +50,7 @@ public class VanillaWeepingObsidianBlock extends BNObsidianBase {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generators) {
         generators.createObsidianVariants(generators, this);
     }

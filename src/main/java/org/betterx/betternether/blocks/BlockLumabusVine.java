@@ -30,8 +30,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.function.ToIntFunction;
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +69,7 @@ public class BlockLumabusVine extends BaseVineBlock implements DeferedSeedBlock,
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public @NotNull ItemStack getCloneItemStack(
             @NotNull LevelReader level,
             @NotNull BlockPos pos,

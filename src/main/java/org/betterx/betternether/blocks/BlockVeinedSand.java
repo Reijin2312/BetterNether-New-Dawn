@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockVeinedSand extends BlockBase implements BlockTagProvider, BehaviourSand {
     public BlockVeinedSand() {
@@ -49,7 +49,7 @@ public class BlockVeinedSand extends BlockBase implements BlockTagProvider, Beha
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(Blocks.SOUL_SAND);
     }
@@ -59,4 +59,3 @@ public class BlockVeinedSand extends BlockBase implements BlockTagProvider, Beha
         context.add(this, CommonBlockTags.SOUL_GROUND);
     }
 }
-

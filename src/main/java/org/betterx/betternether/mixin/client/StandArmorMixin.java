@@ -11,16 +11,16 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@OnlyIn(Dist.CLIENT)
-@Mixin(value = ArmorStandRenderer.class, remap = false)
+@Environment(EnvType.CLIENT)
+@Mixin(ArmorStandRenderer.class)
 public abstract class StandArmorMixin extends LivingEntityRenderer<ArmorStand, ArmorStandArmorModel> {
     public StandArmorMixin(EntityRendererProvider.Context context, ArmorStandArmorModel entityModel, float f) {
         super(context, entityModel, f);

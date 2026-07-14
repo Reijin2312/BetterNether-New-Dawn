@@ -123,8 +123,7 @@ public class LegacyStructureAnchorTree implements IStructure {
                 }
 
                 if (NOISE.eval(bpos.getX() * 0.05, bpos.getY() * 0.05, bpos.getZ() * 0.05) > 0) {
-                    Block[] wallPlants = AnchorTreeFeature.wallPlants();
-                    state = wallPlants[random.nextInt(wallPlants.length)].defaultBlockState();
+                    state = AnchorTreeFeature.wallPlants[random.nextInt(AnchorTreeFeature.wallPlants.length)].defaultBlockState();
                     BlockPos _pos = bpos.north();
                     if (random.nextInt(8) == 0 && !context.BLOCKS.contains(_pos) && level.isEmptyBlock(_pos) && _pos.getZ() >= blockBox.minZ())
                         BlocksHelper.setWithUpdate(level, _pos, state.setValue(BlockPlantWall.FACING, Direction.NORTH));

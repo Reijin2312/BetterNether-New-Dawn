@@ -5,8 +5,10 @@
   "client": [
     "AbstractSoundInstanceAccessor",
     "LavaFluidMixin",
+    "MinecraftClientMixin",
     "MusicTrackerMixin",
     "PlayerArmorMixin",
+    "RenderLayerMixin",
     "StandArmorMixin",
     "TexturedModelDataMixin"
   ],

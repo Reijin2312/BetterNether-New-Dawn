@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourObsidian;
 import org.betterx.bclib.behaviours.interfaces.BehaviourObsidianPortalFrame;
@@ -16,6 +15,7 @@ import net.minecraft.world.level.block.LightningRodBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Iterator;
 
@@ -27,7 +27,7 @@ class BNObsidianBase extends BaseBlock implements BehaviourObsidian {
     }
 
     public BNObsidianBase(Block transformsTo) {
-        this(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN), transformsTo);
+        this(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), transformsTo);
     }
 
     protected BNObsidianBase(Properties settings, Block transformsTo) {
@@ -87,5 +87,3 @@ public class BNObsidian extends BNObsidianBase implements BehaviourObsidianPorta
         }
     }
 }
-
-

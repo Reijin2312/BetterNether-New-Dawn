@@ -25,8 +25,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import javax.annotation.Nullable;
 
@@ -76,7 +76,7 @@ public class BlockNetherFurnace extends AbstractFurnaceBlock implements Behaviou
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (state.getValue(LIT)) {
             double d = (double) pos.getX() + 0.5D;
@@ -96,4 +96,3 @@ public class BlockNetherFurnace extends AbstractFurnaceBlock implements Behaviou
         }
     }
 }
-

@@ -7,32 +7,17 @@ import org.betterx.betternether.registry.NetherFeatures;
 import org.betterx.betternether.world.features.NetherSakuraBushFeature;
 import org.betterx.betternether.world.features.WillowBushFeature;
 import org.betterx.wover.core.api.ModCore;
-import org.betterx.wover.events.api.WorldLifecycle;
 import org.betterx.wover.feature.api.configured.ConfiguredFeatureKey;
 import org.betterx.wover.feature.api.configured.ConfiguredFeatureManager;
 import org.betterx.wover.feature.api.configured.configurators.*;
 import org.betterx.wover.state.api.WorldState;
-import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class NetherVegetation {
     private static final ModCore C = BetterNether.C;
-
-    // Ensure features are registered before any configured feature keys capture them
-    static {
-        NetherFeatures.register();
-    }
-
     public static final ConfiguredFeatureKey<WeightedBlockPatch> BONEMEAL_NETHERRACK_MOSS =
             ConfiguredFeatureManager.bonemeal(C.id("bonemeal_netherrack_moss"));
     public static final ConfiguredFeatureKey<NetherForrestVegetation> BONEMEAL_NETHER_MYCELIUM =
@@ -110,30 +95,7 @@ public class NetherVegetation {
     public static final ConfiguredFeatureKey<ForSimpleBlock> MOSS_COVER =
             ConfiguredFeatureManager.simple(C.id("patch_moss_cover"));
 
-    private static final TagKey<Block> TERRAIN_TAG = TagKey.create(
-            Registries.BLOCK,
-            ResourceLocation.fromNamespaceAndPath("wover", "surfaces/nether/terrain")
-    );
-    private static final TagKey<Block> NETHERRACK_TAG = TagKey.create(
-            Registries.BLOCK,
-            ResourceLocation.fromNamespaceAndPath("wover", "surfaces/nether/netherrack")
-    );
-    private static boolean bonemealSetupDone = false;
-    private static boolean terrainTagLogged = false;
-
-    /**
-     * Defers bonemeal hookup until the world lifecycle is ready to avoid touching registries during freeze.
-     */
-    public static void registerLifecycleHook() {
-        WorldLifecycle.SERVER_LEVEL_READY.subscribe((level, key, stem, seed) -> {
-            setupBonemealFeatures();
-            logSurfaceTags(level);
-        });
-    }
-
     public static void setupBonemealFeatures() {
-        if (bonemealSetupDone) return;
-        bonemealSetupDone = true;
         NetherBlocks.NETHERRACK_MOSS.setVegetationFeature(() -> BONEMEAL_NETHERRACK_MOSS.getHolder(WorldState.registryAccess()));
         NetherBlocks.NETHER_MYCELIUM.setVegetationFeature(() -> BONEMEAL_NETHER_MYCELIUM.getHolder(WorldState.registryAccess()));
         NetherBlocks.JUNGLE_GRASS.setVegetationFeature(() -> BONEMEAL_JUNGLE_GRASS.getHolder(WorldState.registryAccess()));
@@ -144,33 +106,5 @@ public class NetherVegetation {
 
         BonemealAPI.INSTANCE.addSpreadableFeatures(Blocks.SOUL_SOIL, () -> BONEMEAL_SOUL_SOIL.getHolder(WorldState.registryAccess()));
         BonemealAPI.INSTANCE.addSpreadableFeatures(Blocks.SOUL_SAND, () -> BONEMEAL_SOUL_SOIL.getHolder(WorldState.registryAccess()));
-    }
-
-    private static void logSurfaceTags(ServerLevel level) {
-        if (terrainTagLogged) {
-            return;
-        }
-        terrainTagLogged = true;
-        Registry<Block> registry = level.registryAccess().registryOrThrow(Registries.BLOCK);
-        logSurfaceTag(registry, TERRAIN_TAG, "wover:surfaces/nether/terrain");
-        logSurfaceTag(registry, NETHERRACK_TAG, "wover:surfaces/nether/netherrack");
-        logSurfaceTag(registry, CommonBlockTags.NETHER_STONES, "wover:surfaces/nether/stones");
-        logSurfaceTag(registry, BlockTags.NYLIUM, "minecraft:nylium");
-    }
-
-    private static void logSurfaceTag(Registry<Block> registry, TagKey<Block> tagKey, String label) {
-        var tag = registry.getTag(tagKey);
-        if (tag.isEmpty()) {
-            BetterNether.C.LOG.warn("Missing block tag {} for vegetation placement checks.", label);
-            return;
-        }
-        var entries = tag.get();
-        boolean hasJungleGrass = entries.stream().anyMatch(holder -> holder.value() == NetherBlocks.JUNGLE_GRASS);
-        BetterNether.C.LOG.info(
-                "Block tag {} size={}, has betternether:jungle_grass={}",
-                label,
-                entries.size(),
-                hasJungleGrass
-        );
     }
 }

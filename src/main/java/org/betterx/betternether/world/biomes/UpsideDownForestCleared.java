@@ -60,27 +60,27 @@ public class UpsideDownForestCleared extends NetherBiomeConfig {
                        SurfaceRules.ifTrue(
                                SurfaceRules.ON_FLOOR,
                                SurfaceRules.sequence(
-                                        SurfaceRules.ifTrue(
-                                                Conditions.roughNoise(Noises.NETHERRACK, 0.221),
-                                                UpsideDownForest.netherrackMossRule()
-                                        ),
-                                        SurfaceRules.state(
-                                                NetherBlocks.MUSHROOM_GRASS.defaultBlockState())
-                                )
-                        ),
+                                       SurfaceRules.ifTrue(
+                                               Conditions.roughNoise(Noises.NETHERRACK, 0.221),
+                                               UpsideDownForest.NETHERRACK_MOSS
+                                       ),
+                                       SurfaceRules.state(
+                                               NetherBlocks.MUSHROOM_GRASS.defaultBlockState())
+                               )
+                       ),
                        BaseSurfaceRuleBuilder.FLOOR_PRIORITY
                )
                .rule(
                        SurfaceRules.ifTrue(
                                SurfaceRules.ON_CEILING,
                                SurfaceRules.sequence(
-                                        SurfaceRules.ifTrue(
-                                                UpsideDownForest.NOISE_CEIL_LAYER,
-                                                UpsideDownForest.ceilingMossRule()
-                                        ),
-                                        NETHERRACK
-                                )
-                        ),
+                                       SurfaceRules.ifTrue(
+                                               UpsideDownForest.NOISE_CEIL_LAYER,
+                                               UpsideDownForest.CEILEING_MOSS
+                                       ),
+                                       NETHERRACK
+                               )
+                       ),
                        BaseSurfaceRuleBuilder.FLOOR_PRIORITY - 1
                );
     }

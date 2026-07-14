@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.api.v3.bonemeal.BonemealAPI;
 import org.betterx.bclib.api.v3.bonemeal.BonemealNyliumLike;
@@ -25,8 +24,9 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,7 +36,7 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
     private BonemealAPI.FeatureProvider vegetationFeature;
 
     public BlockNetherMycelium() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERRACK).mapColor(MapColor.COLOR_GRAY).requiresCorrectToolForDrops());
+        super(FabricBlockSettings.copyOf(Blocks.NETHERRACK).mapColor(MapColor.COLOR_GRAY).requiresTool());
         this.registerDefaultState(getStateDefinition().any().setValue(IS_BLUE, false));
         this.setDropItself(false);
     }
@@ -50,7 +50,7 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
         stateManager.add(IS_BLUE);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         super.animateTick(state, world, pos, random);
         world.addParticle(ParticleTypes.MYCELIUM,
@@ -93,6 +93,3 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
         return provider.dropWithSilkTouch(this, Blocks.NETHERRACK, ConstantValue.exactly(1));
     }
 }
-
-
-

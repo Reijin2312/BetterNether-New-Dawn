@@ -10,18 +10,15 @@ import org.betterx.betternether.registry.*;
 import org.betterx.betternether.registry.features.configured.NetherVegetation;
 import org.betterx.betternether.tab.BECreativeTabs;
 import org.betterx.betternether.world.BNWorldGenerator;
-import org.betterx.datagen.betternether.BetterNetherDatagen;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.state.api.WorldConfig;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.registries.RegisterEvent;
 
-@Mod(BetterNether.MOD_ID)
-public class BetterNether {
-    public static final String MOD_ID = "betternether";
-    public static final ModCore C = ModCore.create(MOD_ID);
+import net.minecraft.resources.ResourceLocation;
+
+import net.fabricmc.api.ModInitializer;
+
+public class BetterNether implements ModInitializer {
+    public static final ModCore C = ModCore.create("betternether");
     public static final ModCore VANILLA_HAMMERS = ModCore.create("vanilla-hammers");
     public static final ModCore VANILLA_EXCAVATORS = ModCore.create("vanillaexcavators");
 
@@ -36,58 +33,22 @@ public class BetterNether {
     private void onDatagen() {
     }
 
-    public BetterNether(IEventBus modBus) {
-        C.registerDatapackListener(modBus);
-        // Ensure registries are initialized before RegisterEvent listeners run.
-        NetherBlocks.getBlockRegistry();
-        NetherItems.getItemRegistry();
-        modBus.addListener(SoundsRegistry::register);
-        modBus.addListener(RegisterEvent.class, NetherEntities::onRegister);
-        modBus.addListener(RegisterEvent.class, NetherParticles::onRegister);
-        modBus.addListener(RegisterEvent.class, NetherPoiTypes::onRegister);
-        modBus.addListener(RegisterEvent.class, NetherFeatures::onRegister);
-        modBus.addListener(net.neoforged.neoforge.registries.RegisterEvent.class, BlockEntitiesRegistry::register);
-        modBus.addListener(RegisterEvent.class, this::ensureBlocksLoaded);
-        modBus.addListener(RegisterEvent.class, this::ensureItemsLoaded);  
-        modBus.addListener(RegisterEvent.class, org.betterx.betternether.advancements.BNCriterion::onRegister);
-        modBus.addListener(RegisterEvent.class, BECreativeTabs::onRegister);
-        org.betterx.wover.block.api.BlockRegistry.hook(modBus);
-        org.betterx.wover.item.api.ItemRegistry.hook(modBus);
-        if (ModCore.isDatagen()) {
-            BetterNetherDatagen datagen = new BetterNetherDatagen();
-            modBus.addListener(datagen::onGatherData);
-        }
-        initialize();
-    }
-
-    private void ensureBlocksLoaded(RegisterEvent event) {
-        if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.BLOCK)) {
-            try {
-                Class.forName("org.betterx.betternether.registry.NetherBlocks");
-            } catch (ClassNotFoundException ignored) {
-            }
-        }
-    }
-
-    private void ensureItemsLoaded(RegisterEvent event) {
-        if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.ITEM)) {
-            try {
-                Class.forName("org.betterx.betternether.registry.NetherItems");
-            } catch (ClassNotFoundException ignored) {
-            }
-        }
-    }
-
-    private void initialize() {
-        C.log.info("=^..^=    BetterNether Neoforged for 1.21    =^..^=");
+    @Override
+    public void onInitialize() {
+        C.log.info("=^..^=    BetterNether for 1.21    =^..^=");
         //MigrationProfile.fixCustomFolder(new File("/Users/frank/Entwicklung/BetterNether/src/main/resources/data/betternether/structures/lava"));
 
         initOptions();
         SoundsRegistry.ensureStaticallyLoaded();
         NetherEnchantments.ensureStaticallyLoaded();
+        NetherBlocks.register();
         BlockEntitiesRegistry.register();
+        NetherItems.register();
+        NetherTemplates.ensureStaticallyLoaded();
         NetherEntities.register();
         BNWorldGenerator.onModInit();
+        NetherPoiTypes.register();
+        NetherFeatures.register();
         NetherStructures.register();
         NetherBiomes.register();
         BrewingRegistry.register();
@@ -96,11 +57,13 @@ public class BetterNether {
 
         NetherTags.register();
         BNLoot.register();
-        NetherVegetation.registerLifecycleHook();
+        BNCriterion.register();
+        NetherVegetation.setupBonemealFeatures();
 
         Configs.saveConfigs();
         WorldConfig.registerMod(C);
         Patcher.register();
+        BECreativeTabs.register();
 
         if (BCLib.isDatagen()) {
             onDatagen();
@@ -131,3 +94,4 @@ public class BetterNether {
     }
 
 }
+

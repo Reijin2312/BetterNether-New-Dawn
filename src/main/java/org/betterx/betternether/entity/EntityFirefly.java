@@ -534,8 +534,7 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
             BlockPos pos,
             RandomSource random
     ) {
-        // allow anywhere above the dimension floor; block only invalid below-minY positions
-        if (pos.getY() < world.dimensionType().minY()) return false;
+        if (pos.getY() >= world.dimensionType().minY()) return false;
         int h = BlocksHelper.downRay(world, pos, 10);
         if (h > 8)
             return false;

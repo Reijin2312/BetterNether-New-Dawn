@@ -30,7 +30,6 @@ public class NetherMushroomMaterial extends NetherWoodenMaterial<NetherMushroomM
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
-                    // лодки отключены: нет ассетов
                     .remove(WoodSlots.LOG)
                     .remove(WoodSlots.BARK)
                     .remove(WoodSlots.STRIPPED_LOG)
@@ -69,10 +68,5 @@ public class NetherMushroomMaterial extends NetherWoodenMaterial<NetherMushroomM
 
     public Block getStem() {
         return getBlock(NetherSlots.STEM);
-    }
-
-    @Override
-    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
-        return super.supplyBoatType();
     }
 }

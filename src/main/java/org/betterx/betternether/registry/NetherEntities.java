@@ -10,7 +10,8 @@ import org.betterx.betternether.world.biomes.util.NetherBiomeBuilder;
 import org.betterx.ui.ColorUtil;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EntityType.EntityFactory;
@@ -19,10 +20,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.registries.RegisterEvent;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -30,7 +29,6 @@ import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
 
-@EventBusSubscriber(modid = BetterNether.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class NetherEntities {
     public enum KnownSpawnTypes {
         GHAST(50, 4, 4, EntityType.GHAST),
@@ -51,8 +49,8 @@ public class NetherEntities {
         public final int weight;
         public final int minGroupSize;
         public final int maxGroupSize;
-        public EntityType type;
-        public BCLEntityWrapper wrapper;
+        public final EntityType type;
+        public final BCLEntityWrapper wrapper;
 
         public boolean isVanilla() {
             return wrapper == null;
@@ -81,35 +79,105 @@ public class NetherEntities {
             weight = w;
             minGroupSize = min;
             maxGroupSize = max;
-            this.type = type == null ? null : type.type();
+            this.type = type.type();
             this.wrapper = type;
-        }
-
-        void setWrapper(BCLEntityWrapper wrapper) {
-            this.wrapper = wrapper;
-            if (wrapper != null) {
-                this.type = wrapper.type();
-            }
         }
     }
 
-    public static final Map<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> ATTR_BUILDERS = Maps.newHashMap();
+    public static final Map<EntityType<? extends Entity>, AttributeSupplier> ATTRIBUTES = Maps.newHashMap();
     private static final List<BCLEntityWrapper<?>> NETHER_ENTITIES = Lists.newArrayList();
 
 
-    public static EntityType<EntityNagaProjectile> NAGA_PROJECTILE;
+    public static final EntityType<EntityNagaProjectile> NAGA_PROJECTILE = FabricEntityTypeBuilder
+            .create(
+                    MobCategory.MISC,
+                    EntityNagaProjectile::new
+            )
+            .dimensions(
+                    EntityDimensions.fixed(
+                            1F,
+                            1F
+                    ))
+            .disableSummon()
+            .build();
 
-    public static BCLEntityWrapper<EntityFirefly> FIREFLY;
+    public static final BCLEntityWrapper<EntityFirefly> FIREFLY =
+            register(
+                    "firefly",
+                    MobCategory.AMBIENT,
+                    0.5f,
+                    0.5f,
+                    EntityFirefly::new,
+                    EntityFirefly.createMobAttributes(),
+                    true,
+                    ColorUtil.color(255, 223, 168),
+                    ColorUtil.color(233, 182, 95)
+            );
 
-    public static BCLEntityWrapper<EntityHydrogenJellyfish> HYDROGEN_JELLYFISH;
+    public static final BCLEntityWrapper<EntityHydrogenJellyfish> HYDROGEN_JELLYFISH =
+            register(
+                    "hydrogen_jellyfish",
+                    MobCategory.AMBIENT,
+                    2.0f,
+                    5.0f,
+                    EntityHydrogenJellyfish::new,
+                    EntityHydrogenJellyfish.createMobAttributes(),
+                    false,
+                    ColorUtil.color(253, 164, 24),
+                    ColorUtil.color(88, 21, 4)
+            );
 
-    public static BCLEntityWrapper<EntityNaga> NAGA;
+    public static final BCLEntityWrapper<EntityNaga> NAGA =
+            register(
+                    "naga",
+                    MobCategory.MONSTER,
+                    0.625f,
+                    2.75f,
+                    EntityNaga::new,
+                    EntityNaga.createMobAttributes(),
+                    true,
+                    ColorUtil.color(12, 12, 12),
+                    ColorUtil.color(210, 90, 26)
+            );
 
-    public static BCLEntityWrapper<EntityFlyingPig> FLYING_PIG;
+    public static final BCLEntityWrapper<EntityFlyingPig> FLYING_PIG =
+            register(
+                    "flying_pig",
+                    MobCategory.AMBIENT,
+                    1.0f,
+                    1.25f,
+                    EntityFlyingPig::new,
+                    EntityFlyingPig.createMobAttributes(),
+                    true,
+                    ColorUtil.color(241, 140, 93),
+                    ColorUtil.color(176, 58, 47)
+            );
 
-    public static BCLEntityWrapper<EntityJungleSkeleton> JUNGLE_SKELETON;
+    public static final BCLEntityWrapper<EntityJungleSkeleton> JUNGLE_SKELETON =
+            register(
+                    "jungle_skeleton",
+                    MobCategory.MONSTER,
+                    0.6F,
+                    1.99F,
+                    EntityJungleSkeleton::new,
+                    EntityJungleSkeleton.createMonsterAttributes(),
+                    true,
+                    ColorUtil.color(134, 162, 149),
+                    ColorUtil.color(6, 111, 79)
+            );
 
-    public static BCLEntityWrapper<EntitySkull> SKULL;
+    public static final BCLEntityWrapper<EntitySkull> SKULL =
+            register(
+                    "skull",
+                    MobCategory.MONSTER,
+                    0.625F,
+                    0.625F,
+                    EntitySkull::new,
+                    EntitySkull.createMobAttributes(),
+                    true,
+                    ColorUtil.color(24, 19, 19),
+                    ColorUtil.color(255, 28, 18)
+            );
 
 
     private static <T extends Mob> BCLEntityWrapper<T> register(
@@ -124,11 +192,15 @@ public class NetherEntities {
             int dotsColor
     ) {
         ResourceLocation id = BetterNether.C.id(name);
-        EntityType<T> type = EntityType.Builder.of(entity, group)
-                                               .sized(width, height)
-                                               .fireImmune() //Nether Entities are by default immune to fire
-                                               .build(id.toString());
-        ATTR_BUILDERS.put(type, attributes);
+        EntityType<T> type = FabricEntityTypeBuilder.create(group, entity)
+                                                    .dimensions(fixedSize
+                                                            ? EntityDimensions.fixed(width, height)
+                                                            : EntityDimensions.scalable(width, height))
+                                                    .fireImmune() //Nether Entities are by default immune to fire
+                                                    .build();
+
+        type = Registry.register(BuiltInRegistries.ENTITY_TYPE, id, type);
+        FabricDefaultAttributeRegistry.register(type, attributes);
         NetherItems.makeEgg("spawn_egg_" + name, type, eggColor, dotsColor);
 
 
@@ -160,34 +232,7 @@ public class NetherEntities {
 
 
     public static void register() {
-        setupSpawnRules();
-    }
-
-    public static void registerEntity(String name, EntityType<? extends LivingEntity> entity) {
-        registerEntity(name, entity, Mob.createMobAttributes());
-    }
-
-    public static void registerEntity(
-            String name,
-            EntityType<? extends LivingEntity> entity,
-            AttributeSupplier.Builder builder
-    ) {
-        ATTR_BUILDERS.put(entity, builder);
-    }
-
-    public static boolean isNetherEntity(Entity entity) {
-        return NETHER_ENTITIES.contains(entity.getType());
-    }
-
-    @SubscribeEvent
-    public static void onRegisterAttributes(EntityAttributeCreationEvent event) {
-        ATTR_BUILDERS.forEach((type, builder) -> event.put(type, builder.build()));
-    }
-
-    private static void setupSpawnRules() {
-        if (FIREFLY == null || HYDROGEN_JELLYFISH == null || NAGA == null || FLYING_PIG == null || JUNGLE_SKELETON == null || SKULL == null) {
-            return;
-        }
+        registerEntity("naga_projectile", NAGA_PROJECTILE);
 
         SpawnRuleBuilder
                 .start(FIREFLY)
@@ -229,105 +274,16 @@ public class NetherEntities {
                 .buildNoRestrictions(Types.MOTION_BLOCKING);
     }
 
-    public static void onRegister(RegisterEvent event) {
-        if (!event.getRegistryKey().equals(Registries.ENTITY_TYPE)) return;
+    public static void registerEntity(String name, EntityType<? extends LivingEntity> entity) {
+        registerEntity(name, entity, Mob.createMobAttributes().build());
+    }
 
-        event.register(Registries.ENTITY_TYPE, helper -> {
-            NAGA_PROJECTILE = EntityType.Builder
-                    .of(EntityNagaProjectile::new, MobCategory.MISC)
-                    .sized(1F, 1F)
-                    .noSummon()
-                    .build(BetterNether.C.mk("naga_projectile").toString());
-            helper.register(BetterNether.C.mk("naga_projectile"), NAGA_PROJECTILE);
-            ATTR_BUILDERS.put(NAGA_PROJECTILE, Mob.createMobAttributes());
+    public static void registerEntity(String name, EntityType<? extends Entity> entity, AttributeSupplier container) {
+        Registry.register(BuiltInRegistries.ENTITY_TYPE, BetterNether.C.mk(name), entity);
+        ATTRIBUTES.put(entity, container);
+    }
 
-            FIREFLY = register(
-                    "firefly",
-                    MobCategory.AMBIENT,
-                    0.5f,
-                    0.5f,
-                    EntityFirefly::new,
-                    EntityFirefly.createMobAttributes(),
-                    true,
-                    ColorUtil.color(255, 223, 168),
-                    ColorUtil.color(233, 182, 95)
-            );
-            helper.register(BetterNether.C.mk("firefly"), FIREFLY.type());
-
-            HYDROGEN_JELLYFISH = register(
-                    "hydrogen_jellyfish",
-                    MobCategory.AMBIENT,
-                    2.0f,
-                    5.0f,
-                    EntityHydrogenJellyfish::new,
-                    EntityHydrogenJellyfish.createMobAttributes(),
-                    false,
-                    ColorUtil.color(253, 164, 24),
-                    ColorUtil.color(88, 21, 4)
-            );
-            helper.register(BetterNether.C.mk("hydrogen_jellyfish"), HYDROGEN_JELLYFISH.type());
-
-            NAGA = register(
-                    "naga",
-                    MobCategory.MONSTER,
-                    0.625f,
-                    2.75f,
-                    EntityNaga::new,
-                    EntityNaga.createMobAttributes(),
-                    true,
-                    ColorUtil.color(12, 12, 12),
-                    ColorUtil.color(210, 90, 26)
-            );
-            helper.register(BetterNether.C.mk("naga"), NAGA.type());
-
-            FLYING_PIG = register(
-                    "flying_pig",
-                    MobCategory.AMBIENT,
-                    1.0f,
-                    1.25f,
-                    EntityFlyingPig::new,
-                    EntityFlyingPig.createMobAttributes(),
-                    true,
-                    ColorUtil.color(241, 140, 93),
-                    ColorUtil.color(176, 58, 47)
-            );
-            helper.register(BetterNether.C.mk("flying_pig"), FLYING_PIG.type());
-
-            JUNGLE_SKELETON = register(
-                    "jungle_skeleton",
-                    MobCategory.MONSTER,
-                    0.6F,
-                    1.99F,
-                    EntityJungleSkeleton::new,
-                    EntityJungleSkeleton.createMonsterAttributes(),
-                    true,
-                    ColorUtil.color(134, 162, 149),
-                    ColorUtil.color(6, 111, 79)
-            );
-            helper.register(BetterNether.C.mk("jungle_skeleton"), JUNGLE_SKELETON.type());
-
-            SKULL = register(
-                    "skull",
-                    MobCategory.MONSTER,
-                    0.625F,
-                    0.625F,
-                    EntitySkull::new,
-                    EntitySkull.createMobAttributes(),
-                    true,
-                    ColorUtil.color(24, 19, 19),
-                    ColorUtil.color(255, 28, 18)
-            );
-            helper.register(BetterNether.C.mk("skull"), SKULL.type());
-
-            // Update spawn type references now that wrappers exist
-            KnownSpawnTypes.SKULL.setWrapper(SKULL);
-            KnownSpawnTypes.FIREFLY.setWrapper(FIREFLY);
-            KnownSpawnTypes.HYDROGEN_JELLYFISH.setWrapper(HYDROGEN_JELLYFISH);
-            KnownSpawnTypes.NAGA.setWrapper(NAGA);
-            KnownSpawnTypes.FLYING_PIG.setWrapper(FLYING_PIG);
-            KnownSpawnTypes.JUNGLE_SKELETON.setWrapper(JUNGLE_SKELETON);
-
-            setupSpawnRules();
-        });
+    public static boolean isNetherEntity(Entity entity) {
+        return NETHER_ENTITIES.contains(entity.getType());
     }
 }

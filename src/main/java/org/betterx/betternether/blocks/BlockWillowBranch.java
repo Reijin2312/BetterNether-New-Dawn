@@ -21,8 +21,8 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import com.google.common.collect.Lists;
 
@@ -46,7 +46,7 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
         return state.getOptionalValue(SHAPE).map(s -> s == WillowBranchShape.END ? 15 : 0).orElse(0);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -77,7 +77,7 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(state.getValue(SHAPE) == WillowBranchShape.END
                 ? NetherBlocks.MAT_WILLOW.getTorch()
@@ -93,4 +93,3 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
         }
     }
 }
-

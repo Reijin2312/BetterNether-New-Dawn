@@ -34,7 +34,6 @@ public class WillowMaterial extends RoofMaterial<WillowMaterial> {
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
-                    // лодки отключены: нет ассетов
                     .add(TrunkSlot.create(BlockWillowTrunk::new))
                     .add(AbstractSaplingSlot.create(BlockWillowSapling::new))
                     .add(SimpleBlockOnlyMaterialSlot.createBlockOnly(NetherSlots.BRANCH, BlockWillowBranch::new))
@@ -55,10 +54,5 @@ public class WillowMaterial extends RoofMaterial<WillowMaterial> {
 
     public Block getTorch() {
         return getBlock(BLOCK_TORCH);
-    }
-
-    @Override
-    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
-        return super.supplyBoatType();
     }
 }

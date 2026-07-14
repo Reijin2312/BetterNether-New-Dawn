@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = PiglinBrute.class, remap = false)
+@Mixin(PiglinBrute.class)
 public class PiglinBruteMixin {
     @Inject(
             method = "populateDefaultEquipmentSlots",

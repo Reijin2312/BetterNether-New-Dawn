@@ -5,7 +5,7 @@
 		"particle": "betternether:block/red_nether_mushroom_stem",
 		"texture": "betternether:block/red_nether_mushroom_stem",
 		"skin": "betternether:block/red_head",
-		"inside": "minecraft:block/mushroom_block_inside"
+		"inside": "block/mushroom_block_inside"
 	},
 	"elements": [ 	 
 		{

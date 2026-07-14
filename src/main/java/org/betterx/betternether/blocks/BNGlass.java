@@ -4,13 +4,13 @@ import org.betterx.bclib.blocks.BaseGlassBlock;
 import org.betterx.betternether.BetterNether;
 import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 
-import org.betterx.wover.block.api.model.WoverBlockModelGeneratorsAccess;
+import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.model.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ public class BNGlass extends BaseGlassBlock {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void provideBlockModels(WoverBlockModelGenerators generators) {
         var resource = TextureMapping.getBlockTexture(this);
         if (!resource.getPath().equals("block/quartz_glass") && !resource
@@ -38,10 +38,10 @@ public class BNGlass extends BaseGlassBlock {
             );
 
             final var loc = model.getTemplate()
-                                 .create(this, mapping, generators.modelOutput());
+                                 .create(this, mapping, generators.vanillaGenerator.modelOutput);
 
             generators.acceptBlockState(
-                    WoverBlockModelGeneratorsAccess.createSimpleBlock(
+                    BlockModelGenerators.createSimpleBlock(
                             this,
                             loc
                     )
@@ -54,7 +54,7 @@ public class BNGlass extends BaseGlassBlock {
             final var mapping = WoverBlockModelGenerators.textureMappingOf(TextureSlot.ALL, BetterNether.C.mk("item/quartz_glass"));
             final var template = new ModelTemplate(Optional.of(ModelLocationUtils.getModelLocation(this)), Optional.empty(), TextureSlot.ALL);
 
-            template.create(ModelLocationUtils.getModelLocation(this.asItem()), mapping, generators.modelOutput());
+            template.create(ModelLocationUtils.getModelLocation(this.asItem()), mapping, generators.vanillaGenerator.modelOutput);
         }
     }
 }

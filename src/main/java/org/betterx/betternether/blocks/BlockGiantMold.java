@@ -21,8 +21,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class BlockGiantMold extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape TOP_SHAPE = box(2, 2, 2, 14, 14, 14);
@@ -46,7 +46,7 @@ public class BlockGiantMold extends BlockBaseNotFull implements AddMineableAxe {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         TripleShape shape = state.getValue(SHAPE);
         return shape == TripleShape.TOP
@@ -73,4 +73,3 @@ public class BlockGiantMold extends BlockBaseNotFull implements AddMineableAxe {
         }
     }
 }
-

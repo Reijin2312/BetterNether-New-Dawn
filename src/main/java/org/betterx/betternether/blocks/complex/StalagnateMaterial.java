@@ -5,8 +5,6 @@ import org.betterx.bclib.complexmaterials.WoodenComplexMaterial;
 import org.betterx.bclib.complexmaterials.entry.SimpleBlockOnlyMaterialSlot;
 import org.betterx.bclib.complexmaterials.entry.SlotMap;
 import org.betterx.bclib.complexmaterials.set.wood.Log;
-import org.betterx.bclib.complexmaterials.set.wood.WoodSlots;
-import org.betterx.bclib.items.boat.BoatTypeOverride;
 import org.betterx.betternether.blocks.BlockStalagnate;
 import org.betterx.betternether.blocks.BlockStalagnateBowl;
 import org.betterx.betternether.blocks.BlockStalagnateSeed;
@@ -35,7 +33,6 @@ public class StalagnateMaterial extends RoofMaterial<StalagnateMaterial> {
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
-                    // лодка без ассетов: снимаем регистрацию
                     .add(NetherSlots.STEM)
                     .add(TrunkSlot.createClimbable(BlockStalagnate::new))
                     .add(AbstractSeed.create(BlockStalagnateSeed::new))
@@ -74,10 +71,5 @@ public class StalagnateMaterial extends RoofMaterial<StalagnateMaterial> {
 
     public Block getSeed() {
         return getBlock(NetherSlots.SEED);
-    }
-
-    @Override
-    public BoatTypeOverride supplyBoatType() {
-        return super.supplyBoatType();
     }
 }

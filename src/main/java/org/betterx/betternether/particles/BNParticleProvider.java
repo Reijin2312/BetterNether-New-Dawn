@@ -1,6 +1,7 @@
 package org.betterx.betternether.particles;
 
 import org.betterx.betternether.registry.NetherParticles;
+
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.DripParticle;
 import net.minecraft.client.particle.Particle;
@@ -10,12 +11,11 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-class BNDripHangParticle extends DripParticle {
-    private final ParticleOptions fallingParticle;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
+class BNDripHangParticle extends DripParticle.DripHangParticle {
     public BNDripHangParticle(
             ClientLevel clientLevel,
             double d,
@@ -24,10 +24,7 @@ class BNDripHangParticle extends DripParticle {
             Fluid fluid,
             ParticleOptions particleOptions
     ) {
-        super(clientLevel, d, e, f, fluid);
-        this.fallingParticle = particleOptions;
-        this.gravity *= 0.02F;
-        this.lifetime = 40;
+        super(clientLevel, d, e, f, fluid, particleOptions);
     }
 
     public void setup(boolean isGlowing, float gravityFactor, int lifetime) {
@@ -35,26 +32,9 @@ class BNDripHangParticle extends DripParticle {
         this.gravity *= gravityFactor;
         this.lifetime = lifetime;
     }
-
-    @Override
-    protected void preMoveUpdate() {
-        if (this.lifetime-- <= 0) {
-            this.remove();
-            this.level.addParticle(this.fallingParticle, this.x, this.y, this.z, this.xd, this.yd, this.zd);
-        }
-    }
-
-    @Override
-    protected void postMoveUpdate() {
-        this.xd *= 0.02;
-        this.yd *= 0.02;
-        this.zd *= 0.02;
-    }
 }
 
-class BNFallAndLandParticle extends DripParticle {
-    private final ParticleOptions landParticle;
-
+class BNFallAndLandParticle extends DripParticle.FallAndLandParticle {
     public BNFallAndLandParticle(
             ClientLevel clientLevel,
             double d,
@@ -63,29 +43,18 @@ class BNFallAndLandParticle extends DripParticle {
             Fluid fluid,
             ParticleOptions particleOptions
     ) {
-        super(clientLevel, d, e, f, fluid);
-        this.landParticle = particleOptions;
-        this.lifetime = (int) (64.0 / (Math.random() * 0.8 + 0.2));
+        super(clientLevel, d, e, f, fluid, particleOptions);
     }
 
     public void setup(boolean isGlowing, float gravity) {
         this.isGlowing = isGlowing;
         this.gravity = gravity;
     }
-
-    @Override
-    protected void postMoveUpdate() {
-        if (this.onGround) {
-            this.remove();
-            this.level.addParticle(this.landParticle, this.x, this.y, this.z, 0.0, 0.0, 0.0);
-        }
-    }
 }
 
-class BNDripLandParticle extends DripParticle {
+class BNDripLandParticle extends DripParticle.DripLandParticle {
     public BNDripLandParticle(ClientLevel clientLevel, double d, double e, double f, Fluid fluid) {
         super(clientLevel, d, e, f, fluid);
-        this.lifetime = (int) (16.0 / (Math.random() * 0.8 + 0.2));
     }
 
     public void setup(boolean isGlowing, int lifetime) {
@@ -100,7 +69,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     private static final float BLUE_DRIP_B = 0xf9 / 255.0f;
 
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianTearLandProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -127,7 +96,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     }
 
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianTearFallProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -160,7 +129,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianTearHangProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -194,7 +163,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     }
 
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianWeepLandProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -220,7 +189,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianWeepFallProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -253,7 +222,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianWeepHangProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -290,7 +259,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
     private static final float DRIP_G = 0.03125F;
     private static final float DRIP_B = 0.890625F;
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianVanillaWeepLandProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -316,7 +285,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianVanillaWeepFallProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -349,7 +318,7 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static class ObsidianVanillaWeepHangProvider implements net.minecraft.client.particle.ParticleProvider<SimpleParticleType> {
         protected final SpriteSet sprite;
 
@@ -384,4 +353,3 @@ public class BNParticleProvider<S extends ParticleType<SimpleParticleType>> {
 
 
 }
-

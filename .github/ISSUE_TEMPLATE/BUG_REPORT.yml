@@ -1,145 +1,86 @@
 name: Report a Bug
-description: File a bug report for the NeoForge port
+description: File a bug report
 title: "[Bug] "
-labels: ["bug"]
+labels: [ "bug" ]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report a bug in BetterNether (NeoForge)!
-
+        Thanks for taking the time to report a Bug in BetterNether!
   - type: textarea
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us what you expected to happen.
+      description: Also tell us, what did you expect to happen?
       placeholder: Tell us what you see!
       value: "A bug happened!"
     validations:
       required: true
-
   - type: markdown
     attributes:
       value: |
         ## Versions
-
   - type: input
     id: bn_version
     attributes:
-      label: BetterNether (NeoForge)
+      label: BetterNether
       description: What version of BetterNether are you running?
-      placeholder: 21.x.x
+      placeholder: 9.30.x
     validations:
       required: true
-
   - type: input
     id: bclib_version
     attributes:
-      label: BCLib (NeoForge)
-      description: What version of BCLib are you running?
-      placeholder: 21.x.x
+      label: BCLib
+      description: What version of BCLib are you running? Older Versions of BetterNether did not require BCLib.
+      placeholder: 3.30.x
     validations:
       required: true
-
   - type: input
-    id: wover_version
+    id: fabric_api_version
     attributes:
-      label: WorldWeaver (NeoForge)
-      description: What version of WorldWeaver are you running?
-      placeholder: 21.x.x
-    validations:
-      required: true
-
-  - type: input
-    id: neoforge_version
-    attributes:
-      label: NeoForge
-      description: What version of NeoForge are you using?
-      placeholder: 21.x.x
-    validations:
-      required: true
-
-  - type: input
-    id: java_version
-    attributes:
-      label: Java
-      description: What Java version are you running? (from the log or `java -version`)
-      placeholder: "21.0.x"
+      label: Fabric API
+      description: What version of Fabric API is installed
+      placeholder: 0.9x.x
     validations:
       required: false
-
+  - type: input
+    id: fabric_loader_version
+    attributes:
+      label: Fabric Loader
+      description: What version of Fabric Loader do you use
+      placeholder: 0.15.x
+    validations:
+      required: false
   - type: dropdown
     id: mc_version
     attributes:
       label: Minecraft
-      description: What Minecraft version is installed?
+      description: What version of Minecraft is installed?
       options:
-        - 1.21
-        - 1.21.1
-        - 1.21.11
+        - 1.20.4
+        - 1.20.3
+        - 1.20.1
+        - 1.20.0
+        - 1.19.4
+        - 1.19.3 [unsupported]
+        - 1.19.2
+        - Older
     validations:
       required: true
-
-  - type: markdown
-    attributes:
-      value: |
-        ## Environment
-
-  - type: dropdown
-    id: environment
-    attributes:
-      label: Where does it happen?
-      description: Select where the issue occurs.
-      options:
-        - Singleplayer
-        - Dedicated Server
-        - Both
-    validations:
-      required: true
-
-  - type: input
-    id: os
-    attributes:
-      label: Operating System
-      description: Windows / Linux / macOS + version
-      placeholder: "Windows 11 / Ubuntu 24.04 / macOS 14"
-    validations:
-      required: false
-
   - type: markdown
     attributes:
       value: |
         ## Additional Information
-
   - type: textarea
     id: logs
     attributes:
       label: Relevant log output
-      description: |
-        Please include `latest.log` and, if present, the crash report file.
-        Paste the relevant part here (or link to a paste site).
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
       render: shell
-    validations:
-      required: false
-
   - type: textarea
     id: other_mods
     attributes:
       label: Other Mods
-      description: If possible, supply a list of installed mods (besides BetterNether and BCLib).
+      description: If you can, please supply a list of installed Mods (besides BetterNether and BCLib). This information may already be included in the log above.
       render: shell
-    validations:
-      required: false
-
-  - type: textarea
-    id: repro
-    attributes:
-      label: Steps to reproduce
-      description: Minimal steps to reproduce the issue.
-      placeholder: |
-        1. Install ...
-        2. Launch ...
-        3. Click ...
-        4. Crash ...
-    validations:
-      required: false

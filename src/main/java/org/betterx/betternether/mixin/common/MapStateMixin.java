@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Map;
 
-@Mixin(value = MapItemSavedData.class, remap = false)
+@Mixin(MapItemSavedData.class)
 public abstract class MapStateMixin extends SavedData {
     public MapStateMixin(int i, int j, byte b, boolean bl, boolean bl2, boolean bl3, ResourceKey<Level> registryKey) {
         super();

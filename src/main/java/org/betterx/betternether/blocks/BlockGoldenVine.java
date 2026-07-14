@@ -31,7 +31,6 @@ public class BlockGoldenVine extends BaseSimpleVineBlock implements BlockLootPro
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
-        // Behave like other vines: only shears/silk keep the block
         return provider.dropWithSilkTouchOrShears(this);
     }
 }

@@ -1,5 +1,6 @@
 package org.betterx.betternether.entity.render;
 
+import org.betterx.betternether.mixin.client.RenderLayerMixin;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -53,7 +54,7 @@ public abstract class RenderPhaseAccessor extends RenderStateShard { //extends S
                                                                                   .setTransparencyState(
                                                                                           ALPHA_ADD_TRANSPARENCY)
                                                                                   .createCompositeState(false);
-        return RenderType.create(
+        return RenderLayerMixin.callCreate(
                 "firefly",
                 DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,

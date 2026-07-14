@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.BehaviourHelper;
 import org.betterx.bclib.behaviours.interfaces.BehaviourMetal;
@@ -27,14 +26,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public abstract class BlockFireBowl extends BlockBaseNotFull {
     private static final VoxelShape SHAPE = box(0, 0, 0, 16, 12, 16);
@@ -46,22 +45,21 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
             box(12, 0, 1, 15, 2, 4),
             box(12, 0, 12, 15, 2, 15)
     );
-    // Use vanilla-compatible property name for lit state
-    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+    public static final BooleanProperty FIRE = BNBlockProperties.FIRE;
 
     protected BlockFireBowl(Block source) {
-        super(BlockBehaviour.Properties.ofFullCopy(source).noOcclusion().lightLevel(BlockFireBowl::getLuminance));
-        this.registerDefaultState(getStateDefinition().any().setValue(LIT, false));
+        super(FabricBlockSettings.copyOf(source).noOcclusion().lightLevel(BlockFireBowl::getLuminance));
+        this.registerDefaultState(getStateDefinition().any().setValue(FIRE, false));
         this.setRenderLayer(BNRenderLayer.CUTOUT);
     }
 
     protected static int getLuminance(BlockState state) {
-        return state.getOptionalValue(LIT).orElse(false) ? 15 : 0;
+        return state.getOptionalValue(FIRE).orElse(false) ? 15 : 0;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateManager) {
-        stateManager.add(LIT);
+        stateManager.add(FIRE);
     }
 
     @Override
@@ -85,8 +83,8 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
             BlockHitResult hit
     ) {
         if (hit.getDirection() == Direction.UP) {
-            if (player.getMainHandItem().getItem() == Items.FLINT_AND_STEEL && !state.getValue(LIT)) {
-                world.setBlockAndUpdate(pos, state.setValue(LIT, true));
+            if (player.getMainHandItem().getItem() == Items.FLINT_AND_STEEL && !state.getValue(FIRE)) {
+                world.setBlockAndUpdate(pos, state.setValue(FIRE, true));
                 if (!player.isCreative() && world instanceof ServerLevel serverLevel)
                     player.getMainHandItem().hurtAndBreak(1, serverLevel, (ServerPlayer) player, item -> {
                     });
@@ -99,8 +97,8 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
                         world.random.nextFloat() * 0.4F + 0.8F
                 );
                 return ItemInteractionResult.SUCCESS;
-            } else if (player.getMainHandItem().isEmpty() && state.getValue(LIT)) {
-                world.setBlockAndUpdate(pos, state.setValue(LIT, false));
+            } else if (player.getMainHandItem().isEmpty() && state.getValue(FIRE)) {
+                world.setBlockAndUpdate(pos, state.setValue(FIRE, false));
                 world.playSound(
                         player,
                         pos,
@@ -117,14 +115,14 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (!entity.fireImmune() && entity instanceof LivingEntity && level.getBlockState(pos).getValue(LIT)) {
+        if (!entity.fireImmune() && entity instanceof LivingEntity && level.getBlockState(pos).getValue(FIRE)) {
             entity.hurt(level.damageSources().hotFloor(), 1.0F);
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
-        if (state.getValue(LIT)) {
+        if (state.getValue(FIRE)) {
             if (random.nextInt(24) == 0)
                 world.playLocalSound(
                         pos.getX() + 0.5,
@@ -174,5 +172,3 @@ public abstract class BlockFireBowl extends BlockBaseNotFull {
         );
     }
 }
-
-

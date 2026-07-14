@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = DeltaFeature.class, remap = false)
+@Mixin(DeltaFeature.class)
 public class DeltaFeatureMixin {
     @Inject(method = "isClear", at = @At("HEAD"), cancellable = true)
     private static void checkBlock(

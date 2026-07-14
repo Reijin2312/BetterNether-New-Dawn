@@ -17,9 +17,10 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +36,7 @@ public class BlockEyeVine extends BaseVineBlock implements BlockLootProvider {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.EYE_SEED);
     }
@@ -48,9 +49,8 @@ public class BlockEyeVine extends BaseVineBlock implements BlockLootProvider {
     ) {
         return LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                          .setRolls(net.minecraft.world.level.storage.loot.providers.number.ConstantValue.exactly(1.0F))
+                                          .setRolls(ConstantValue.exactly(1.0F))
                                           .add(LootItem.lootTableItem(NetherBlocks.EYE_SEED)
                                                        .when(ExplosionCondition.survivesExplosion())));
     }
 }
-

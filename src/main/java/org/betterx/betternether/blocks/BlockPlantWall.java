@@ -18,8 +18,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -40,7 +40,7 @@ public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
         this.setRenderLayer(BNRenderLayer.CUTOUT);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -107,4 +107,3 @@ public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
         return null;
     }
 }
-

@@ -47,7 +47,7 @@ public class EMIForgeRecipe implements EmiRecipe {
     }
 
     public EmiRecipeCategory getCategory() {
-        return EMIPlugin.getForgeCategory();
+        return EMIPlugin.FORGE;
     }
 
     public ResourceLocation getId() {

@@ -16,13 +16,8 @@ import net.minecraft.world.level.levelgen.SurfaceRules;
 ;
 
 public class UpsideDownForest extends NetherBiomeConfig {
-    public static SurfaceRules.RuleSource ceilingMossRule() {
-        return SurfaceRules.state(NetherBlocks.CEILING_MUSHROOMS.defaultBlockState());
-    }
-
-    public static SurfaceRules.RuleSource netherrackMossRule() {
-        return SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
-    }
+    static final SurfaceRules.RuleSource CEILEING_MOSS = SurfaceRules.state(NetherBlocks.CEILING_MUSHROOMS.defaultBlockState());
+    static final SurfaceRules.RuleSource NETHERRACK_MOSS = SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
     static final SurfaceRules.ConditionSource NOISE_CEIL_LAYER = SurfaceRules.noiseCondition(
             Noises.NETHER_STATE_SELECTOR,
             0.0
@@ -75,7 +70,7 @@ public class UpsideDownForest extends NetherBiomeConfig {
                         SurfaceRules.ON_CEILING,
                         SurfaceRules.sequence(SurfaceRules.ifTrue(
                                 Conditions.FORREST_FLOOR_SURFACE_NOISE_A,
-                                ceilingMossRule()
+                                CEILEING_MOSS
                         ), NETHERRACK)
                 ),
                 BaseSurfaceRuleBuilder.CEILING_PRIORITY
@@ -85,7 +80,7 @@ public class UpsideDownForest extends NetherBiomeConfig {
                         SurfaceRules.ON_FLOOR,
                         SurfaceRules.sequence(SurfaceRules.ifTrue(
                                 Conditions.roughNoise(Noises.NETHERRACK, 0.021),
-                                netherrackMossRule()
+                                NETHERRACK_MOSS
                         ), SurfaceRules.state(
                                 NetherBlocks.MUSHROOM_GRASS.defaultBlockState()))
                 ),

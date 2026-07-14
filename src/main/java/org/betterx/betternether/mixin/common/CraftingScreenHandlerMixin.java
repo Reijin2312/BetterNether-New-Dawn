@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = CraftingMenu.class, remap = false)
+@Mixin(CraftingMenu.class)
 public abstract class CraftingScreenHandlerMixin {
     @Shadow
     @Final

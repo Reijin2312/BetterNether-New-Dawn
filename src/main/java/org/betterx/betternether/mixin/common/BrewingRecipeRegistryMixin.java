@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = PotionBrewing.class, remap = false)
+@Mixin(PotionBrewing.class)
 public class BrewingRecipeRegistryMixin {
     @Inject(method = "isIngredient", at = @At("HEAD"), cancellable = true)
     private void bn_isIngredient(ItemStack stack, CallbackInfoReturnable<Boolean> info) {

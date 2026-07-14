@@ -21,7 +21,6 @@ public class AnchorTreeMaterial extends NetherWoodenMaterial<AnchorTreeMaterial>
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
-                    // лодки отключены: нет ассетов
                     .add(AbstractSaplingSlot.create(BlockAnchorTreeSapling::new));
     }
 
@@ -31,10 +30,5 @@ public class AnchorTreeMaterial extends NetherWoodenMaterial<AnchorTreeMaterial>
 
     public boolean isTreeLog(Block block) {
         return block == getLog() || block == getBark();
-    }
-
-    @Override
-    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
-        return super.supplyBoatType();
     }
 }

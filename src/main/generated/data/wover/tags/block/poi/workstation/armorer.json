@@ -2,7 +2,6 @@
   "values": [
     "betternether:basalt_furnace",
     "betternether:blackstone_furnace",
-    "minecraft:blast_furnace",
     "betternether:netherrack_furnace"
   ]
 }

@@ -6,8 +6,6 @@ public class Configs {
     public static final ClientConfig CLIENT = org.betterx.wover.config.api.Configs.register(ClientConfig::new);
     public static final DefaultWorldConfig GAME_RULES = org.betterx.wover.config.api.Configs.register(DefaultWorldConfig::new);
     public static final WorldConfig WORLD = org.betterx.wover.config.api.Configs.register(WorldConfig::new);
-    public static final BiomeToggleConfig BIOMES_TOGGLE = org.betterx.wover.config.api.Configs.register(BiomeToggleConfig::new);
-    public static final StructureToggleConfig STRUCTURES_TOGGLE = org.betterx.wover.config.api.Configs.register(StructureToggleConfig::new);
 
     public static void saveConfigs() {
         //MAIN.saveChanges();

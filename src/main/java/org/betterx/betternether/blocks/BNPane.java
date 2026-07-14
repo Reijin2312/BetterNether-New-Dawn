@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.BehaviourHelper;
 import org.betterx.bclib.behaviours.interfaces.*;
@@ -12,8 +11,9 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +22,7 @@ public abstract class BNPane extends IronBarsBlock implements IRenderTypeable {
     private final boolean dropSelf;
 
     protected BNPane(Block block, boolean dropSelf) {
-        super(BlockBehaviour.Properties.ofFullCopy(block).strength(0.3F, 0.3F).noOcclusion());
+        super(FabricBlockSettings.copyOf(block).strength(0.3F, 0.3F).noOcclusion());
         this.dropSelf = dropSelf;
     }
 
@@ -39,7 +39,7 @@ public abstract class BNPane extends IronBarsBlock implements IRenderTypeable {
         return BNRenderLayer.TRANSLUCENT;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public boolean skipRendering(BlockState state, BlockState neighbor, Direction facing) {
         if (neighbor.getBlock() == this) {
             if (!facing.getAxis().isHorizontal()) {
@@ -95,6 +95,3 @@ public abstract class BNPane extends IronBarsBlock implements IRenderTypeable {
         );
     }
 }
-
-
-

@@ -1,7 +1,7 @@
 [![](https://jitpack.io/v/quiqueck/BetterNether.svg)](https://jitpack.io/#quiqueck/BetterNether)
 
-# BetterNether (Neoforge)
-BetterNether Mod for Neoforge, MC 1.21.1
+# BetterNether
+BetterNether Mod for Fabric, MC 1.20.3
 
 Building:
 * Clone repo
