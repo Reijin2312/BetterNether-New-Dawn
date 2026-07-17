@@ -85,10 +85,10 @@ class FireflyGlowFeatureRenderer extends RenderLayer<EntityFirefly, AgeableListM
     ) {
         matrices.pushPose();
 
-			/* //Original transform
-			matrixStack.translate(0, 0.125, 0);
-			matrixStack.multiply(this.dispatcher.getRotation());
-			matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));*/
+            /* //Original transform
+            matrixStack.translate(0, 0.125, 0);
+            matrixStack.multiply(this.dispatcher.getRotation());
+            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));*/
 
         matrices.translate(0, 1.25, 0);
 

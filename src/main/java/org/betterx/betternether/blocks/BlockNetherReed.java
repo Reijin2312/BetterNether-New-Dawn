@@ -86,7 +86,7 @@ public class BlockNetherReed extends BlockBase implements AddMineableSword, AddM
         } else
             return down.getBlock() == this;
     }
-    
+
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         if (!canSurvive(state, world, pos)) {

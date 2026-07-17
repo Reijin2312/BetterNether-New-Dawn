@@ -16,4 +16,3 @@ public interface SurvivesOnSoulGroundAndSculk extends SurvivesOnTags {
         return TAGS;
     }
 }
-

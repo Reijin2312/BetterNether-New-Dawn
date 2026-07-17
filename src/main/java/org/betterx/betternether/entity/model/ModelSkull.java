@@ -28,12 +28,12 @@ public class ModelSkull extends AgeableListModel<EntitySkull> {
                                .addBox(-4, -4, -4, 8, 8, 8),
                 PartPose.offset(0, 20, 0)
         );
-		/*head = ModelPart new (this, 0, 0);
-		head.setPivot(0, 20, 0);
-		head.addCuboid(-4, -4, -4, 8, 8, 8);*/
+        /*head = ModelPart new (this, 0, 0);
+        head.setPivot(0, 20, 0);
+        head.addCuboid(-4, -4, -4, 8, 8, 8);*/
 
-		/* textureHeight = 16;
-		textureWidth = 32; */
+        /* textureHeight = 16;
+        textureWidth = 32; */
         return LayerDefinition.create(modelData, 32, 16);
     }
 

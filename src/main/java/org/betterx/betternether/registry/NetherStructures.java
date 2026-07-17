@@ -1,6 +1,7 @@
 package org.betterx.betternether.registry;
 
 import org.betterx.betternether.BetterNether;
+import org.betterx.betternether.config.Configs;
 import org.betterx.betternether.world.structures.city.CityStructure;
 import org.betterx.betternether.world.structures.templates.*;
 import org.betterx.wover.structure.api.StructureKey;
@@ -58,6 +59,10 @@ public class NetherStructures {
 
 
     public static void register() {
+        Configs.STRUCTURES_TOGGLE.registerStructures(
+                CITY_STRUCTURE, PYRAMIDS, GHAST_HIVE, SPAWN_ALTAR_LADDER, RESPAWN_POINTS,
+                PILLARS, GARDENS, PORTALS, ALTARS, JUNGLE_TEMPLES
+        );
         NetherStructurePieces.ensureStaticLoad();
     }
 }

@@ -18,6 +18,13 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 public class NetherVegetation {
     private static final ModCore C = BetterNether.C;
+
+    // TerraBlender can trigger configured-feature class loading before the regular Fabric initializer reaches this
+    // class. Ensure the referenced custom Feature instances exist before these keys capture them.
+    static {
+        NetherFeatures.register();
+    }
+
     public static final ConfiguredFeatureKey<WeightedBlockPatch> BONEMEAL_NETHERRACK_MOSS =
             ConfiguredFeatureManager.bonemeal(C.id("bonemeal_netherrack_moss"));
     public static final ConfiguredFeatureKey<NetherForrestVegetation> BONEMEAL_NETHER_MYCELIUM =

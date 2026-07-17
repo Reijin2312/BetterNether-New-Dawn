@@ -47,6 +47,8 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty TOP = BooleanProperty.create("top");
     private final ItemStack requiredItem;
+    private final Component requiredItemCountText;
+    private final Component requiredItemNameText;
 
     public BlockStatueRespawner() {
         super(FabricBlockSettings.copyOf(NetherBlocks.CINCINNASITE_BLOCK).luminance(15).noOcclusion());
@@ -59,6 +61,8 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
             item = Items.GLOWSTONE;
         int count = 4;
         requiredItem = new ItemStack(item, count);
+        requiredItemCountText = Component.literal(Integer.toString(count));
+        requiredItemNameText = requiredItem.getHoverName();
     }
 
     @Override
@@ -104,12 +108,15 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
                 );
             player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
             if (!world.isClientSide) {
-                ((ServerPlayer) player).setRespawnPosition(world.dimension(), pos, player.getYHeadRot(), false, true);
+                ((ServerPlayer) player).setRespawnPosition(world.dimension(), pos, player.getYHeadRot(), true, false);
             }
             player.playSound(SoundEvents.TOTEM_USE, 0.7F, 1.0F);
             return InteractionResult.SUCCESS;
         } else {
-            player.displayClientMessage(Component.translatable("message.spawn_help", requiredItem), true);
+            player.displayClientMessage(
+                    Component.translatable("message.spawn_help", requiredItemCountText, requiredItemNameText),
+                    true
+            );
         }
         return InteractionResult.SUCCESS;
     }

@@ -1,6 +1,8 @@
 {
   "values": [
     "betternether:farmland",
+    "minecraft:soul_sand",
+    "minecraft:soul_soil",
     "betternether:veined_sand"
   ]
 }

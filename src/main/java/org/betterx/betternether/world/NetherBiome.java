@@ -1,5 +1,6 @@
 package org.betterx.betternether.world;
 
+import org.betterx.betternether.config.Configs;
 import org.betterx.wover.biome.api.data.BiomeGenerationDataContainer;
 import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
 
@@ -35,5 +36,15 @@ public class NetherBiome extends WoverBiomeData {
     @Override
     public KeyDispatchDataCodec<? extends WoverBiomeData> codec() {
         return KEY_CODEC;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return Configs.BIOMES_TOGGLE.isEnabled(biomeKey);
+    }
+
+    @Override
+    public boolean isPickable() {
+        return isEnabled() && super.isPickable();
     }
 }

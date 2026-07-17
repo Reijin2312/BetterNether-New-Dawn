@@ -24,7 +24,7 @@
   "item.betternether.stalagnate_bowl_mushroom": "蘑菇煲",
   "item.betternether.stalagnate_bowl_wart": "下界疣煲",
   "itemGroup.betternether.items": "更好的下界",
-  "message.spawn_help": "§c§l你必须拿着§r %s §c§l才能在此设置出生点",
+  "message.spawn_help": "§c§l你必须拿着§r %1$s %2$s §c§l才能在此设置出生点",
   "message.spawn_set": "§2§l你的出生点已设置",
   "block.betternether.agave": "龙舌兰",
   "item.betternether.agave_leaf": "龙舌兰蕨",

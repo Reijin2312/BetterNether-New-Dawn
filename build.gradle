@@ -1,8 +1,24 @@
 plugins {
     id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
+    id "com.diffplug.spotless" version "6.25.0"
     id "com.modrinth.minotaur" version "2.+"
     id "com.matthewprenger.cursegradle" version "1.4.0"
+}
+
+spotless {
+    java {
+        target 'src/*/java/**/*.java'
+        targetExclude 'src/main/generated/**'
+        trimTrailingWhitespace()
+        endWithNewline()
+        removeUnusedImports()
+        indentWithSpaces(4)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    dependsOn(tasks.named("spotlessApply"))
 }
 
 sourceCompatibility = JavaVersion.VERSION_21
@@ -45,6 +61,27 @@ sourceSets {
             ]
         }
     }
+}
+
+tasks.register("generateBetterNetherResources") {
+    group = "fabric"
+    description = "Runs BetterNether datagen before packaging the mod."
+    dependsOn(tasks.named("runDatagenClient"))
+}
+
+def generatedResourcesDir = file("src/main/generated")
+tasks.register("syncGeneratedResources", Copy) {
+    group = "fabric"
+    description = "Syncs generated datagen resources into build outputs."
+    dependsOn(tasks.named("generateBetterNetherResources"))
+    dependsOn(tasks.named("processResources"))
+    from(generatedResourcesDir)
+    into(layout.buildDirectory.dir("resources/main"))
+}
+
+tasks.named("jar") {
+    dependsOn(tasks.named("generateBetterNetherResources"))
+    dependsOn(tasks.named("syncGeneratedResources"))
 }
 
 subprojects { subproject ->
@@ -127,6 +164,7 @@ repositories {
 processResources {
     println "Version: ${project.version}"
     inputs.property "version", project.version
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
@@ -145,6 +183,7 @@ tasks.withType(JavaCompile) {
 // If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
     archiveClassifier = "sources"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from sourceSets.main.allSource
 }
 
@@ -156,6 +195,7 @@ java {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from "LICENSE"
     from "LICENSE.ASSETS"
 }

@@ -1,12 +1,13 @@
 {
     "schemaVersion": 1,
     "id": "betternether",
-    "version": "21.0.12",
+    "version": "21.0.13",
     "name": "Better Nether",
     "description": "Mod that improves Nether",
     "authors": [
         "quiqueck",
-        "paulevs (original author)"
+        "paulevs (original author)",
+        "Raijin"
     ],
     "contributors": [
         "edos_ (builder, design help)"

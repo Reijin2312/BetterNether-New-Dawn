@@ -18,4 +18,3 @@ public interface SurvivesOnNetherrackNyliumAndSculk extends SurvivesOnTags {
         return TAGS;
     }
 }
-

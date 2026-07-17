@@ -18,7 +18,6 @@ import org.betterx.wover.complex.api.equipment.ArmorSlot;
 import org.betterx.wover.complex.api.equipment.ToolSlot;
 import org.betterx.wover.item.api.ItemRegistry;
 import org.betterx.wover.state.api.WorldState;
-import org.betterx.wover.tag.api.predefined.CommonItemTags;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

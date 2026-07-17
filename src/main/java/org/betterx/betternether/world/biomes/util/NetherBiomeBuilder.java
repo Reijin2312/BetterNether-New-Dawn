@@ -146,5 +146,3 @@ public class NetherBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuil
         );
     }
 }
-
-

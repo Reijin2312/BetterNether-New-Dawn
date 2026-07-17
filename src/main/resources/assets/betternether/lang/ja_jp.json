@@ -23,11 +23,11 @@
 	"item.betternether.stalagnate_bowl": "スタラグネートボウル",
 	"item.betternether.stalagnate_bowl_apple": "ボウル入りブラックアップル",
 	"item.betternether.stalagnate_bowl_mushroom": "きのこシチュー",
-	"item.betternether.stalagnate_bowl_wart": "ウォートスープ",,
+	"item.betternether.stalagnate_bowl_wart": "ウォートスープ",
 
 	"itemGroup.betternether.items": "Better Nether",
 
-	"message.spawn_help": "§c§lあなたは保持する必要があります§r %s §c§lここでスポーンポイントを設定します",
+	"message.spawn_help": "§c§lあなたは保持する必要があります§r %1$s %2$s §c§lここでスポーンポイントを設定します",
 	"message.spawn_set": "§2§lスポーンポイントはここに設定されました",
 
 	"block.betternether.agave": "リュウゼツランの種",
@@ -319,7 +319,7 @@
 	
 	"block.betternether.nether_reed_taburet": "リードのスツール",
 	"block.betternether.stalagnate_taburet": "スタラグネートのスツール",
-	"block.betternether.willow_taburet": ネザー柳のスツール",
+	"block.betternether.willow_taburet": "ネザー柳のスツール",
 	"block.betternether.wart_taburet": "ネザーウォートのスツール",
 	"block.betternether.taburet_cincinnasite": "シンシナサイトのスツール",
 	
@@ -457,7 +457,7 @@
 	"block.betternether.rubeus_fence": "ルベウスのフェンス",
 	"block.betternether.rubeus_gate": "ルベウスのフェンスゲート",
 	"block.betternether.rubeus_button": "ルベウスのボタン",
-	"block.betternether.rubeus_plate": ルベウスの感圧板",
+	"block.betternether.rubeus_plate": "ルベウスの感圧板",
 	"block.betternether.rubeus_trapdoor": "ルベウスのトラップドア",
 	"block.betternether.rubeus_door": "ルベウスのドア",
 	"block.betternether.rubeus_taburet": "ルベウスのスツール",
@@ -489,7 +489,7 @@
 	"item.betternether.nether_ruby_helmet": "ネザールビーのヘルメット",
 	"item.betternether.nether_ruby_chestplate": "ネザールビーのチェストプレート",
 	"item.betternether.nether_ruby_leggings": "ネザールビーのレギンス",
-	"item.betternether.nether_ruby_boots": "ネザールビーのブーツ"
+	"item.betternether.nether_ruby_boots": "ネザールビーのブーツ",
 	
 	"block.betternether.soul_sandstone": "ソウルサンドストーン",
 	"block.betternether.soul_sandstone_cut": "研がれたソウルサンドストーン",

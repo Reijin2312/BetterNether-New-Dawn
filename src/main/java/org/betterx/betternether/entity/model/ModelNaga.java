@@ -47,9 +47,9 @@ public class ModelNaga extends AgeableListModel<EntityNaga> {
                 PartPose.offset(0.0F, -9.0F, 0.0F)
         );
 
-		/* head = new ModelPart(this, 0, 0);
-		head.addCuboid(-5.0F, -10.0F, -5.0F - 2F, 10.0F, 10.0F, 10.0F);
-		head.setPivot(0.0F, -9.0F, 0.0F);*/
+        /* head = new ModelPart(this, 0, 0);
+        head.addCuboid(-5.0F, -10.0F, -5.0F - 2F, 10.0F, 10.0F, 10.0F);
+        head.setPivot(0.0F, -9.0F, 0.0F);*/
 
         PartDefinition modelPartData_BODY = modelPartData.addOrReplaceChild(
                 PartNames.BODY,
@@ -80,11 +80,11 @@ public class ModelNaga extends AgeableListModel<EntityNaga> {
                                ),
                 PartPose.offset(0.0F, -10F, 0.0F)
         );
-		/*body = new ModelPart(this, 40, 0);
-		body.addCuboid(-2.0F, 0.0F, -1.0F, 4.0F, 20.0F, 2.0F);
-		body.setTextureOffset(0, 20);
-		body.addCuboid(-5.0F, 3.0F, -6.0F, 10.0F, 16.0F, 6.0F);
-		body.setPivot(0.0F, -10F, 0.0F*/
+        /*body = new ModelPart(this, 40, 0);
+        body.addCuboid(-2.0F, 0.0F, -1.0F, 4.0F, 20.0F, 2.0F);
+        body.setTextureOffset(0, 20);
+        body.addCuboid(-5.0F, 3.0F, -6.0F, 10.0F, 16.0F, 6.0F);
+        body.setPivot(0.0F, -10F, 0.0F*/
 
         modelPartData_BODY.addOrReplaceChild(
                 "spike_0",
@@ -102,11 +102,11 @@ public class ModelNaga extends AgeableListModel<EntityNaga> {
         );
         //spikes = new ModelPart[8];
 
-		/*spikes[0] = new ModelPart(this, 33, 25);
-		spikes[0].addCuboid(0, 0, 0, 10, 18.0F, 0);
-		spikes[0].setPivot(0.0F, 0.0F, 0.0F);
-		spikes[0].yaw = (float) Math.toRadians(-40);
-		body.addChild(spikes[0]);*/
+        /*spikes[0] = new ModelPart(this, 33, 25);
+        spikes[0].addCuboid(0, 0, 0, 10, 18.0F, 0);
+        spikes[0].setPivot(0.0F, 0.0F, 0.0F);
+        spikes[0].yaw = (float) Math.toRadians(-40);
+        body.addChild(spikes[0]);*/
 
         modelPartData_BODY.addOrReplaceChild(
                 "spike_1",
@@ -122,11 +122,11 @@ public class ModelNaga extends AgeableListModel<EntityNaga> {
                         0
                 )
         );
-		/*spikes[1] = new ModelPart(this, 33, 25);
-		spikes[1].addCuboid(0, 0, 0, 10, 18.0F, 0);
-		spikes[1].setPivot(0.0F, 0, 0.0F);
-		spikes[1].yaw = (float) Math.toRadians(-140);
-		body.addChild(spikes[1]);*/
+        /*spikes[1] = new ModelPart(this, 33, 25);
+        spikes[1].addCuboid(0, 0, 0, 10, 18.0F, 0);
+        spikes[1].setPivot(0.0F, 0, 0.0F);
+        spikes[1].yaw = (float) Math.toRadians(-140);
+        body.addChild(spikes[1]);*/
 
         //ModelPart[] tail = new ModelPart[4];
         float[] tailPitch = {(float) Math.toRadians(45.0f), (float) Math.toRadians(45.0f), 0, 0};
@@ -164,9 +164,9 @@ public class ModelNaga extends AgeableListModel<EntityNaga> {
             );
             tailParent = modelPartData_TAIL;
 
-			/*tail[i] = new ModelPart(this, 40, 0);
-			tail[i].addCuboid(-height * 0.5F, 0.0F, -width * 0.5F, height, 20.0F, width);
-			tail[i].setPivot(0.0F, 19.0F, 0.0F);*/
+            /*tail[i] = new ModelPart(this, 40, 0);
+            tail[i].addCuboid(-height * 0.5F, 0.0F, -width * 0.5F, height, 20.0F, width);
+            tail[i].setPivot(0.0F, 19.0F, 0.0F);*/
 
             if (i < TAIL_COUNT - 1) {
                 int px = 32 + (12 - height * 3);
@@ -195,11 +195,11 @@ public class ModelNaga extends AgeableListModel<EntityNaga> {
                                 0
                         )
                 );
-				/*spikes[index] = new ModelPart(this, px, 22);
-				spikes[index].addCuboid(0, 0, 0, height * 3, 20.0F, 0);
-				spikes[index].setPivot(0.0F, 0, 0.0F);
-				spikes[index].yaw = (float) Math.toRadians(-60);
-				tail[i].addChild(spikes[index]);*/
+                /*spikes[index] = new ModelPart(this, px, 22);
+                spikes[index].addCuboid(0, 0, 0, height * 3, 20.0F, 0);
+                spikes[index].setPivot(0.0F, 0, 0.0F);
+                spikes[index].yaw = (float) Math.toRadians(-60);
+                tail[i].addChild(spikes[index]);*/
 
                 index++;
                 modelPartData_TAIL.addOrReplaceChild(
@@ -223,25 +223,25 @@ public class ModelNaga extends AgeableListModel<EntityNaga> {
                                 0
                         )
                 );
-				/*spikes[index] = new ModelPart(this, px, 22);
-				spikes[index].addCuboid(0, 0, 0, height * 3, 20.0F, 0);
-				spikes[index].setPivot(0.0F, 0, 0.0F);
-				spikes[index].yaw = (float) Math.toRadians(-120);
-				tail[i].addChild(spikes[index]);*/
+                /*spikes[index] = new ModelPart(this, px, 22);
+                spikes[index].addCuboid(0, 0, 0, height * 3, 20.0F, 0);
+                spikes[index].setPivot(0.0F, 0, 0.0F);
+                spikes[index].yaw = (float) Math.toRadians(-120);
+                tail[i].addChild(spikes[index]);*/
             }
 
-			/*if (i == 0) {
-				body.addChild(tail[i]);
-			}
-			else {
-				tail[i - 1].addChild(tail[i]);
-			}*/
+            /*if (i == 0) {
+                body.addChild(tail[i]);
+            }
+            else {
+                tail[i - 1].addChild(tail[i]);
+            }*/
         }
 
-		/*tail[0].pitch = (float) Math.toRadians(45);
-		tail[1].pitch = (float) Math.toRadians(45);*/
-		/*textureHeight = 64;
-		textureWidth = 64;*/
+        /*tail[0].pitch = (float) Math.toRadians(45);
+        tail[1].pitch = (float) Math.toRadians(45);*/
+        /*textureHeight = 64;
+        textureWidth = 64;*/
         return LayerDefinition.create(modelData, 64, 64);
     }
 

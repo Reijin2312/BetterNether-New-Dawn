@@ -32,4 +32,3 @@ public class VanillaWood extends VanillaFallback<VanillaWood> {
                 .init();
     }
 }
-

@@ -34,7 +34,7 @@ public class NetherBlockRecipesProvider extends WoverRecipeProvider {
                      .outputCount(1)
                      .category(RecipeCategory.MISC)
                      .build(context);
-        
+
         RecipeBuilder.crafting(
                              BetterNether.C.id("mushroom_fir_trimmed_chest"),
                              NetherBlocks.TRIMMED_MUSHROOM_FIR_CHEST

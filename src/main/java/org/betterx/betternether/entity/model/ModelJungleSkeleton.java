@@ -56,12 +56,12 @@ public class ModelJungleSkeleton extends SkeletonModel<EntityJungleSkeleton> {
                             0
                     )
             );
-			/*ModelPart leaf = new ModelPart(this, 24, 0);
-			leaf.setPivot((float) -Math.sin(angle), -8, (float) -Math.cos(angle));
-			leaf.addCuboid(-3.0F, -8.0F, 0.0F, 6.0F, 8.0F, 0.0F);
-			leaf.pitch = MHelper.randRange(BOUND_MIN, BOUND_MAX, RANDOM);
-			leaf.yaw = angle;
-			this.head.addChild(leaf);*/
+            /*ModelPart leaf = new ModelPart(this, 24, 0);
+            leaf.setPivot((float) -Math.sin(angle), -8, (float) -Math.cos(angle));
+            leaf.addCuboid(-3.0F, -8.0F, 0.0F, 6.0F, 8.0F, 0.0F);
+            leaf.pitch = MHelper.randRange(BOUND_MIN, BOUND_MAX, RANDOM);
+            leaf.yaw = angle;
+            this.head.addChild(leaf);*/
         }
         return texturedModelData;
     }

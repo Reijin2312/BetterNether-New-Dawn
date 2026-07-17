@@ -87,8 +87,17 @@ public class BlocksHelper {
     }
 
     public static boolean isNetherGround(BlockState state) {
-        return state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHER_STONES) || isSoulSand(state) || isNetherMycelium(
-                state) || isNylium(state);
+        boolean terrain = state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHER_TERRAIN);
+        boolean netherrack = state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHERRACK);
+        boolean stones = state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHER_STONES);
+        boolean soul = isSoulSand(state);
+        boolean mycelium = isNetherMycelium(state);
+        boolean nylium = isNylium(state);
+        boolean classMatch = state.getBlock() instanceof org.betterx.betternether.blocks.BlockTerrain;
+
+        boolean result = terrain || netherrack || stones || soul || mycelium || nylium || classMatch;
+
+        return result;
     }
 
     public static boolean isNetherGroundMagma(BlockState state) {

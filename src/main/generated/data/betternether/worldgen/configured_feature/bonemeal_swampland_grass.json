@@ -1,50 +1,33 @@
 {
-  "type": "minecraft:random_patch",
+  "type": "minecraft:nether_forest_vegetation",
   "config": {
-    "feature": {
-      "feature": {
-        "type": "minecraft:simple_block",
-        "config": {
-          "to_place": {
-            "type": "minecraft:weighted_state_provider",
-            "entries": [
-              {
-                "data": {
-                  "Name": "betternether:soul_vein"
-                },
-                "weight": 80
-              },
-              {
-                "data": {
-                  "Name": "betternether:swamp_grass"
-                },
-                "weight": 200
-              },
-              {
-                "data": {
-                  "Name": "betternether:feather_fern",
-                  "Properties": {
-                    "age": "0"
-                  }
-                },
-                "weight": 80
-              }
-            ]
-          }
-        }
-      },
-      "placement": [
+    "spread_height": 1,
+    "spread_width": 3,
+    "state_provider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
         {
-          "type": "minecraft:block_predicate_filter",
-          "predicate": {
-            "type": "minecraft:matching_blocks",
-            "blocks": "minecraft:air"
-          }
+          "data": {
+            "Name": "betternether:soul_vein"
+          },
+          "weight": 80
+        },
+        {
+          "data": {
+            "Name": "betternether:swamp_grass"
+          },
+          "weight": 200
+        },
+        {
+          "data": {
+            "Name": "betternether:feather_fern",
+            "Properties": {
+              "age": "0"
+            }
+          },
+          "weight": 80
         }
       ]
-    },
-    "tries": 9,
-    "xz_spread": 3,
-    "y_spread": 1
+    }
   }
 }
