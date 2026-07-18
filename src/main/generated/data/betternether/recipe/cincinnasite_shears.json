@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "cincinnasite_shears",
   "key": {
-    "#": {
-      "item": "betternether:cincinnasite_ingot"
-    }
+    "#": "#c:ingots/cincinnasite"
   },
   "pattern": [
     " #",

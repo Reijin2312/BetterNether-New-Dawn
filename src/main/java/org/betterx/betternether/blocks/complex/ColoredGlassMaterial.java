@@ -90,10 +90,8 @@ public class ColoredGlassMaterial {
             boolean paneDropItself,
             RecipeCategory category
     ) {
-        Block block = isFullBlock ? new BNGlass(base) : BNPane.from(base, paneDropItself);
         String name = group + "_" + ((DyeItem) dye).getDyeColor().getSerializedName();
-
-        NetherBlocks.registerBlockDirectly(name, block);
+        Block block = NetherBlocks.registerBlock(name, () -> isFullBlock ? new BNGlass(base) : BNPane.from(base, paneDropItself));
         if (ModCore.isDatagen())
             RecipesHelper.makeColoringRecipe(base, block, dye, group, category);
 

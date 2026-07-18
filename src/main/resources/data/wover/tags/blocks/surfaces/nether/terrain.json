@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:blackstone",
+    "minecraft:bone_block",
+    "betternether:ceiling_mushrooms",
+    "minecraft:glowstone",
+    "minecraft:gravel",
+    "betternether:jungle_grass",
+    "minecraft:magma_block",
+    "betternether:mushroom_grass",
+    "betternether:netherrack_moss",
+    "#minecraft:nylium",
+    {
+      "id": "#wover:ores/nether",
+      "required": false
+    },
+    "minecraft:red_sand",
+    "betternether:sepia_mushroom_grass",
+    "betternether:soul_sandstone",
+    "betternether:soul_sandstone_cut",
+    {
+      "id": "#wover:surfaces/nether/mycelium",
+      "required": false
+    },
+    {
+      "id": "#wover:surfaces/nether/netherrack",
+      "required": false
+    },
+    {
+      "id": "#wover:surfaces/soul_ground",
+      "required": false
+    },
+    "betternether:swampland_grass"
+  ]
+}

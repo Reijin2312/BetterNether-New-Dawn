@@ -4,7 +4,6 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public class BlockusUtils {
     public static boolean hasBlockus() {
-        return FabricLoader.getInstance()
-                           .getModContainer("blockus").isPresent();
+        return FabricLoader.getInstance().isModLoaded("blockus");
     }
 }

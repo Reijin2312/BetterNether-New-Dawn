@@ -496,11 +496,6 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 5)))
                 )
                 .add(LootItem
-                        .lootTableItem(Blocks.SCULK_CATALYST)
-                        .setWeight(5)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 6)))
-                )
-                .add(LootItem
                         .lootTableItem(Blocks.NETHERITE_BLOCK)
                         .setWeight(4)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))

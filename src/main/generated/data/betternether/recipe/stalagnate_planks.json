@@ -4,18 +4,10 @@
   "group": "planks",
   "ingredients": [
     [
-      {
-        "item": "betternether:stalagnate_log"
-      },
-      {
-        "item": "betternether:stalagnate_bark"
-      },
-      {
-        "item": "betternether:stalagnate_stripped_log"
-      },
-      {
-        "item": "betternether:stalagnate_stripped_bark"
-      }
+      "betternether:stalagnate_log",
+      "betternether:stalagnate_bark",
+      "betternether:stalagnate_stripped_log",
+      "betternether:stalagnate_stripped_bark"
     ]
   ],
   "result": {

@@ -27,6 +27,8 @@ public class VegetationFeatureDataProvider extends WoverFeatureProvider {
 
     @Override
     protected void bootstrapConfigured(BootstrapContext<ConfiguredFeature<?, ?>> ctx) {
+        // Ensure all features are registered before creating configurations
+        NetherFeatures.register();
         final int GRAY_MOLD_ID = 42;
         final int MUSHROOM_ID = 23;
 

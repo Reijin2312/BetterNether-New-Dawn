@@ -9,7 +9,10 @@
     "minecraft:magma_block",
     "betternether:mushroom_grass",
     "betternether:netherrack_moss",
-    "#minecraft:nylium",
+    {
+      "id": "#minecraft:nylium",
+      "required": false
+    },
     {
       "id": "#wover:ores/nether",
       "required": false

@@ -1,4 +1,5 @@
 package org.betterx.betternether.blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.interfaces.tools.AddMineableAxe;
 import org.betterx.betternether.blocks.BNBlockProperties.FoodShape;
@@ -7,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -18,17 +18,18 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockStalagnateBowl extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape SHAPE = box(5, 0, 5, 11, 3, 11);
     public static final EnumProperty<FoodShape> FOOD = BNBlockProperties.FOOD;
 
     public BlockStalagnateBowl(Block source) {
-        super(FabricBlockSettings.copyOf(source).noOcclusion());
+        super(BlockBehaviour.Properties.ofFullCopy(source).noOcclusion());
         this.setRenderLayer(BNRenderLayer.CUTOUT);
         this.registerDefaultState(getStateDefinition().any().setValue(FOOD, FoodShape.NONE));
     }
@@ -57,11 +58,13 @@ public class BlockStalagnateBowl extends BlockBaseNotFull implements AddMineable
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (!canSurvive(state, world, pos))
             return Blocks.AIR.defaultBlockState();

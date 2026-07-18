@@ -1,4 +1,5 @@
 package org.betterx.betternether.blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.betternether.blockentities.BNBrewingStandBlockEntity;
@@ -9,10 +10,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BrewingStandBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,13 +23,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BNBrewingStand extends BrewingStandBlock implements IRenderTypeable, BehaviourStone {
     public BNBrewingStand() {
-        super(FabricBlockSettings.copyOf(Blocks.NETHER_BRICKS)
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_BRICKS)
                                  .strength(0.5F, 0.5F)
-                                 .luminance(1)
+                                 .lightLevel(state -> 1)
                                  .noOcclusion());
     }
 
@@ -37,7 +38,7 @@ public class BNBrewingStand extends BrewingStandBlock implements IRenderTypeable
             BlockState state,
             BlockEntityType<T> type
     ) {
-        return world.isClientSide
+        return world.isClientSide()
                 ? null
                 : createTickerHelper(type, BlockEntitiesRegistry.NETHER_BREWING_STAND, BNBrewingStandBlockEntity::tick);
     }
@@ -48,7 +49,7 @@ public class BNBrewingStand extends BrewingStandBlock implements IRenderTypeable
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
+    protected InteractionResult useItemOn(
             ItemStack itemStack,
             BlockState state,
             Level world,
@@ -57,8 +58,8 @@ public class BNBrewingStand extends BrewingStandBlock implements IRenderTypeable
             InteractionHand hand,
             BlockHitResult hit
     ) {
-        if (world.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof BNBrewingStandBlockEntity) {
@@ -66,20 +67,17 @@ public class BNBrewingStand extends BrewingStandBlock implements IRenderTypeable
                 player.awardStat(Stats.INTERACT_WITH_BREWINGSTAND);
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean notify) {
-        if (!state.is(newState.getBlock())) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof BNBrewingStandBlockEntity bn) {
-                Containers.dropContents(world, pos, bn);
-            }
-
-            super.onRemove(state, world, pos, newState, notify);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean movedByPiston) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof BNBrewingStandBlockEntity bn) {
+            Containers.dropContents(world, pos, bn);
         }
+        super.affectNeighborsAfterRemoval(state, world, pos, movedByPiston);
     }
 
     @Override

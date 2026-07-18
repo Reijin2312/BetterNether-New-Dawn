@@ -2,6 +2,7 @@ package org.betterx.datagen.betternether;
 
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.registry.NetherBlocks;
+import org.betterx.betternether.registry.NetherFeatures;
 import org.betterx.betternether.registry.NetherItems;
 import org.betterx.datagen.betternether.advancements.NetherAdvancementDataProvider;
 import org.betterx.datagen.betternether.enchantments.NetherEnchantmentProvider;
@@ -16,6 +17,10 @@ import org.betterx.datagen.betternether.worldgen.features.*;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.PackBuilder;
 import org.betterx.wover.datagen.api.WoverDataGenEntryPoint;
+import org.betterx.wover.entrypoint.LibWoverTag;
+import org.betterx.wover.tag.datagen.BiomeTagProvider;
+import org.betterx.wover.tag.datagen.BlockTagProvider;
+import org.betterx.wover.tag.datagen.ItemTagProvider;
 
 import net.minecraft.core.RegistrySetBuilder;
 
@@ -24,6 +29,7 @@ public class BetterNetherDatagen extends WoverDataGenEntryPoint {
     protected void onInitializeProviders(PackBuilder globalPack) {
         NetherItems.register();
         NetherBlocks.register();
+        NetherFeatures.register();
 
         globalPack.addMultiProvider(NetherBiomesProvider::new);
         globalPack.addMultiProvider(ObjectFeatureDataProvider::new);
@@ -38,6 +44,9 @@ public class BetterNetherDatagen extends WoverDataGenEntryPoint {
         globalPack.addProvider(NetherChestLootTableProvider::new);
         globalPack.addProvider(NetherEntityLootTableProvider::new);
         globalPack.addProvider(NetherEnchantmentProvider::new);
+        globalPack.addProvider(modCore -> new BlockTagProvider(LibWoverTag.C));
+        globalPack.addProvider(modCore -> new ItemTagProvider(LibWoverTag.C));
+        globalPack.addProvider(modCore -> new BiomeTagProvider(LibWoverTag.C));
         globalPack.addProvider(NetherBlockTagDataProvider::new);
         globalPack.addProvider(NetherItemTagDataProvider::new);
         globalPack.addProvider(NetherEnchantmentTagProvider::new);
@@ -46,14 +55,9 @@ public class BetterNetherDatagen extends WoverDataGenEntryPoint {
         globalPack.addProvider(NetherBlockRecipesProvider::new);
         globalPack.addProvider(NetherItemRecipeProvider::new);
         globalPack.addProvider(NetherCraftingRecipes::new);
-
-
-        globalPack.callOnInitializeDatapack((generator, pack, location) -> {
-            if (location == null) {
-                pack.addProvider(NetherAdvancementDataProvider::new);
-                pack.addProvider(NetherBlockLootTableProvider::new);
-            }
-        });
+        globalPack.addProvider(NetherBlockLootTableProvider::new);
+        globalPack.addProvider(modCore -> (output, registries) ->
+                new NetherAdvancementDataProvider(output, registries));
 
         //Add providers for the vanilla hammers extension
         addDatapack(BetterNether.VANILLA_HAMMERS_PACK)

@@ -49,7 +49,7 @@ public class WartForestEdge extends NetherBiomeConfig {
                                         List.of(
                                                 NetherGrasslands.SOUL_SOIL,
                                                 NetherGrasslands.SOUL_SAND,
-                                                NetherGrasslands.MOSS,
+                                                NetherGrasslands.mossRule(),
                                                 NETHERRACK
                                         )
                                 )

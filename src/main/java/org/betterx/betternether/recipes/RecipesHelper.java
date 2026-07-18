@@ -72,6 +72,10 @@ public class RecipesHelper {
     }
 
     public static void makeFireBowlRecipe(Block material, Block inside, Item leg, Block result) {
+        // guard against missing items/blocks in ported registry
+        if (material == null || inside == null || leg == null || result == null) {
+            return;
+        }
         RECIPES.add((t -> t.makeFireBowlRecipe(material, inside, leg, result)));
     }
 }

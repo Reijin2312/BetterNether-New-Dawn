@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(LightningRodBlock.class)
+@Mixin(value = LightningRodBlock.class, remap = false)
 public class LightningRodBlockMixin {
     @Unique
     private final static Direction[] bn_update_directions = {
@@ -29,7 +29,7 @@ public class LightningRodBlockMixin {
             Direction.SOUTH
     };
 
-    @Inject(method = "onLightningStrike", at = @At("TAIL"))
+    @Inject(method = "onLightningStrike", at = @At("TAIL"), remap = false)
     void bn_onLightningStrike(BlockState blockState, Level level, BlockPos blockPos, CallbackInfo ci) {
         MutableBlockPos mutableBlockPos = new MutableBlockPos();
         for (Direction dir : bn_update_directions) {

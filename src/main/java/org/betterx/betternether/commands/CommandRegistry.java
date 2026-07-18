@@ -16,7 +16,6 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -58,7 +57,6 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import org.joml.Vector3d;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -87,29 +85,29 @@ public class CommandRegistry {
             Commands.CommandSelection commandSelection
     ) {
         LiteralArgumentBuilder<CommandSourceStack> bnContext = Commands.literal("bn")
-                                                                       .requires(source -> source.hasPermission(Commands.LEVEL_OWNERS));
+                                                                       .requires(Commands.hasPermission(Commands.LEVEL_OWNERS));
 
         bnContext = PlaceCommand.register(bnContext);
         dispatcher.register(
                 bnContext
                         .then(Commands.literal("test_place")
-                                      .requires(source -> source.hasPermission(Commands.LEVEL_OWNERS))
+                                      .requires(Commands.hasPermission(Commands.LEVEL_OWNERS))
                                       .executes(ctx -> testPlace(ctx))
                         )
                         .then(Commands.literal("find_surface")
-                                      .requires(source -> source.hasPermission(Commands.LEVEL_OWNERS))
+                                      .requires(Commands.hasPermission(Commands.LEVEL_OWNERS))
                                       .executes(ctx -> findSurface(ctx))
                         )
                         .then(Commands.literal("tpnext")
-                                      .requires(source -> source.hasPermission(Commands.LEVEL_OWNERS))
+                                      .requires(Commands.hasPermission(Commands.LEVEL_OWNERS))
                                       .executes(ctx -> teleportToNextBiome(ctx))
                         )
                         .then(Commands.literal("place_all")
-                                      .requires(source -> source.hasPermission(Commands.LEVEL_OWNERS))
+                                      .requires(Commands.hasPermission(Commands.LEVEL_OWNERS))
                                       .executes(ctx -> placeAllBlocks(ctx))
                         )
                         .then(Commands.literal("place_matching")
-                                      .requires(source -> source.hasPermission(Commands.LEVEL_OWNERS))
+                                      .requires(Commands.hasPermission(Commands.LEVEL_OWNERS))
                                       .then(Commands.argument("type", StringArgumentType.string())
                                                     .executes(ctx -> placeMatchingBlocks(
                                                             ctx,
@@ -157,8 +155,8 @@ public class CommandRegistry {
                                                      b -> b
                                                              .unwrapKey()
                                                              .orElseThrow()
-                                                             .location()
-                                                             .equals(biome.location()),
+                                                             .identifier()
+                                                             .equals(biome.identifier()),
                                                      currentPosition,
                                                      MAX_SEARCH_RADIUS,
                                                      SAMPLE_RESOLUTION_HORIZONTAL,
@@ -179,23 +177,15 @@ public class CommandRegistry {
                 target = new BlockPos(biomePosition.getX(), (int) yPos, biomePosition.getZ());
                 state = player.level().getBlockState(target);
                 yPos--;
-                if (yPos <= player.level().getMinBuildHeight() + 1) {
+                if (yPos <= player.level().getMinY() + 1) {
                     if (didWrap) break;
                     yPos = 127;
                     didWrap = true;
                 }
-            } while (!state.isAir() && yPos > player.level().getMinBuildHeight() && yPos < player.level()
-                                                                                                 .getMaxBuildHeight());
+            } while (!state.isAir() && yPos > player.level().getMinY() && yPos < player.level().getMaxY());
             Vector3d targetPlayerPos = new Vector3d(target.getX() + 0.5, target.getY() - 1, target.getZ() + 0.5);
 
-            player.connection.teleport(
-                    targetPlayerPos.x,
-                    targetPlayerPos.y,
-                    targetPlayerPos.z,
-                    0,
-                    0,
-                    Collections.EMPTY_SET
-            );
+            player.teleportTo(targetPlayerPos.x, targetPlayerPos.y, targetPlayerPos.z);
             ResourceOrTagKeyArgument.Result result = new ResourceOrTagKeyArgument.Result() {
                 @Override
                 public Either<ResourceKey, TagKey> unwrap() {
@@ -219,10 +209,10 @@ public class CommandRegistry {
             };
             ResourceKey<Biome> a = biome;
             if (WorldState.allStageRegistryAccess() != null) {
-                Stopwatch stopwatch = Stopwatch.createStarted(Util.TICKER);
+                Stopwatch stopwatch = Stopwatch.createStarted();
                 Holder<Biome> h = WorldState.allStageRegistryAccess()
-                                            .registryOrThrow(Registries.BIOME)
-                                            .getHolder(a)
+                                            .lookupOrThrow(Registries.BIOME)
+                                            .get(a)
                                             .orElseThrow();
                 stopwatch.stop();
                 return LocateCommand.showLocateResult(

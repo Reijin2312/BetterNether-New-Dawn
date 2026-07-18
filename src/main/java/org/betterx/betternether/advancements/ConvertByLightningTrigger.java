@@ -5,11 +5,12 @@ import org.betterx.betternether.BetterNether;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.CriterionValidator;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.CriterionValidator;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -19,10 +20,10 @@ import java.util.Optional;
 public class ConvertByLightningTrigger
         extends SimpleCriterionTrigger<ConvertByLightningTrigger.TriggerInstance>
         implements BNCriterion.TriggerWithID<ConvertByLightningTrigger.TriggerInstance> {
-    public static final ResourceLocation ID = BetterNether.C.id("convert_by_lightning");
+    public static final Identifier ID = BetterNether.C.id("convert_by_lightning");
 
     @Override
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return ID;
     }
 
@@ -34,7 +35,7 @@ public class ConvertByLightningTrigger
         return BNCriterion
                 .CONVERT_BY_LIGHTNING
                 .createCriterion(
-                        new TriggerInstance(ItemPredicate.Builder.item().of(item).build())
+                        new TriggerInstance(ItemPredicate.Builder.item().of(BuiltInRegistries.ITEM, item).build())
                 );
     }
 

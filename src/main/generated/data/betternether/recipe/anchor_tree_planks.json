@@ -4,18 +4,10 @@
   "group": "planks",
   "ingredients": [
     [
-      {
-        "item": "betternether:anchor_tree_log"
-      },
-      {
-        "item": "betternether:anchor_tree_bark"
-      },
-      {
-        "item": "betternether:anchor_tree_stripped_log"
-      },
-      {
-        "item": "betternether:anchor_tree_stripped_bark"
-      }
+      "betternether:anchor_tree_log",
+      "betternether:anchor_tree_bark",
+      "betternether:anchor_tree_stripped_log",
+      "betternether:anchor_tree_stripped_bark"
     ]
   ],
   "result": {

@@ -12,10 +12,14 @@ import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.WoverModelProvider;
 
-import net.minecraft.data.models.ItemModelGenerators;
-import net.minecraft.data.models.model.ModelLocationUtils;
-import net.minecraft.data.models.model.TextureMapping;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 import com.google.gson.JsonArray;
@@ -27,19 +31,27 @@ public class NetherModelProvider extends WoverModelProvider {
 
     @Override
     protected void bootstrapItemModels(ItemModelGenerators itemModelGenerator) {
+        // Debug items are runtime-only helpers and don't have dedicated model files.
+        for (Item item : BuiltInRegistries.ITEM) {
+            Identifier id = BuiltInRegistries.ITEM.getKey(item);
+            if (id == null || !id.getNamespace().equals(BetterNether.MOD_ID) || !id.getPath().startsWith("debug/")) {
+                continue;
+            }
 
+            itemModelGenerator.generateFlatItem(item, Items.BARRIER, ModelTemplates.FLAT_ITEM);
+        }
     }
 
     @Override
     protected void bootstrapBlockStateModels(WoverBlockModelGenerators generator) {
         final Block reedPlanks = NetherBlocks.MAT_REED.getBlock(WoodSlots.PLANKS);
-        final ResourceLocation NETHER_REED_PLANKS = TextureMapping.getBlockTexture(reedPlanks);
-        final ResourceLocation NETHER_REED_PLANKS_TOP = BetterNether.C.mk("block/nether_reed_planks_top");
+        final Identifier NETHER_REED_PLANKS = TextureMapping.getBlockTexture(reedPlanks);
+        final Identifier NETHER_REED_PLANKS_TOP = BetterNether.C.mk("block/nether_reed_planks_top");
 
-        final ResourceLocation SOUL_SANDSTONE_BOTTOM = BetterNether.C.mk("block/soul_sandstone_bottom");
-        final ResourceLocation SOUL_SANDSTONE_TOP = BetterNether.C.mk("block/soul_sandstone_top");
-        final ResourceLocation SOUL_SANDSTONE_SLABS = BetterNether.C.mk("block/soul_sandstone_slabs");
-        final ResourceLocation SOUL_SANDSTONE_CUT_SLABS = BetterNether.C.mk("block/soul_sandstone_cut_slabs");
+        final Identifier SOUL_SANDSTONE_BOTTOM = BetterNether.C.mk("block/soul_sandstone_bottom");
+        final Identifier SOUL_SANDSTONE_TOP = BetterNether.C.mk("block/soul_sandstone_top");
+        final Identifier SOUL_SANDSTONE_SLABS = BetterNether.C.mk("block/soul_sandstone_slabs");
+        final Identifier SOUL_SANDSTONE_CUT_SLABS = BetterNether.C.mk("block/soul_sandstone_cut_slabs");
 
         final ModelOverides overrides = ModelOverides
                 .create()

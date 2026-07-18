@@ -28,7 +28,7 @@ public class StructureToggleConfig extends ConfigFile {
     public BooleanValue registerStructure(ResourceKey<Structure> structureKey) {
         return structures.computeIfAbsent(
                 structureKey,
-                key -> new BooleanValue("structures", key.location().getPath(), true).setGroup(STRUCTURES)
+                key -> new BooleanValue("structures", key.identifier().getPath(), true).setGroup(STRUCTURES)
         );
     }
 

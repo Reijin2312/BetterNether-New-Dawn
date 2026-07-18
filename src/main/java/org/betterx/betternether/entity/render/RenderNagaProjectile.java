@@ -5,75 +5,83 @@ import org.betterx.betternether.entity.EntityNagaProjectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
 
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
-
-public class RenderNagaProjectile extends EntityRenderer<EntityNagaProjectile> {
-    private static final ResourceLocation TEXTURE = BetterNether.C.mk(
-            "textures/entity/naga_projectile.png"
-    );
-    private static final RenderType LAYER = RenderType.entityCutoutNoCull(TEXTURE);
+public class RenderNagaProjectile extends EntityRenderer<EntityNagaProjectile, RenderNagaProjectile.NagaProjectileRenderState> {
+    private static final Identifier TEXTURE = BetterNether.C.mk("textures/entity/naga_projectile.png");
+    private static final RenderType LAYER = RenderTypes.entityCutoutNoCull(TEXTURE);
 
     public RenderNagaProjectile(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(EntityNagaProjectile entity) {
-        return TEXTURE;
+    protected int getBlockLightLevel(EntityNagaProjectile entity, BlockPos pos) {
+        return 15;
     }
 
     @Override
-    public void render(
-            EntityNagaProjectile dragonFireballEntity,
-            float f,
-            float g,
-            PoseStack matrixStack,
-            MultiBufferSource vertexConsumerProvider,
-            int i
+    public void submit(
+            NagaProjectileRenderState state,
+            PoseStack poseStack,
+            SubmitNodeCollector submitNodeCollector,
+            CameraRenderState cameraRenderState
     ) {
-        int frame = (int) (System.currentTimeMillis() / 150) & 3;
-        float start = frame * 0.25F;
+        float start = state.frame * 0.25F;
         float end = start + 0.25F;
-        matrixStack.pushPose();
-        matrixStack.scale(2.0F, 2.0F, 2.0F);
-        matrixStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        PoseStack.Pose entry = matrixStack.last();
-        Matrix4f matrix4f = entry.pose();
-        Matrix3f matrix3f = entry.normal();
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
-        vertex(vertexConsumer, matrix4f, entry, i, 0.0F, 0, 0, end);
-        vertex(vertexConsumer, matrix4f, entry, i, 1.0F, 0, 1, end);
-        vertex(vertexConsumer, matrix4f, entry, i, 1.0F, 1, 1, start);
-        vertex(vertexConsumer, matrix4f, entry, i, 0.0F, 1, 0, start);
-        matrixStack.popPose();
-        super.render(dragonFireballEntity, f, g, matrixStack, vertexConsumerProvider, i);
+
+        poseStack.pushPose();
+        poseStack.scale(2.0F, 2.0F, 2.0F);
+        poseStack.mulPose(cameraRenderState.orientation);
+        submitNodeCollector.submitCustomGeometry(poseStack, LAYER, (pose, consumer) -> {
+            vertex(consumer, pose, state.lightCoords, 0.0F, 0, 0, end);
+            vertex(consumer, pose, state.lightCoords, 1.0F, 0, 1, end);
+            vertex(consumer, pose, state.lightCoords, 1.0F, 1, 1, start);
+            vertex(consumer, pose, state.lightCoords, 0.0F, 1, 0, start);
+        });
+        poseStack.popPose();
+
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
+    }
+
+    @Override
+    public NagaProjectileRenderState createRenderState() {
+        return new NagaProjectileRenderState();
+    }
+
+    @Override
+    public void extractRenderState(EntityNagaProjectile entity, NagaProjectileRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.frame = ((int) (state.ageInTicks / 3.0F)) & 3;
     }
 
     private static void vertex(
             VertexConsumer vertexConsumer,
-            Matrix4f matrix4f,
             PoseStack.Pose pose,
-            int i,
-            float f,
-            int j,
+            int light,
+            float posX,
+            int posY,
             float u,
             float v
     ) {
-        vertexConsumer.addVertex(matrix4f, f - 0.5F, (float) j - 0.25F, 0.0F)
-                      .setColor(255, 255, 255, 255)
+        vertexConsumer.addVertex(pose, posX - 0.5F, posY - 0.25F, 0.0F)
+                      .setColor(-1)
                       .setUv(u, v)
                       .setOverlay(OverlayTexture.NO_OVERLAY)
-                      .setLight(i)
+                      .setLight(light)
                       .setNormal(pose, 0.0F, 1.0F, 0.0F);
+    }
+
+    public static class NagaProjectileRenderState extends EntityRenderState {
+        public int frame;
     }
 }

@@ -1,6 +1,9 @@
 {
-	"name": "BOOK NAME",
-	"landing_text": "LANDING TEXT",
-	"version": 1,
-	"creative_tab": "betternether"
+  "name": "book.betternether.name",
+  "subtitle": "book.betternether.subtitle",
+  "landing_text": "book.betternether.landing",
+  "book_texture": "patchouli:textures/gui/book_red.png",
+  "model": "patchouli:book_red",
+  "creative_tab": "minecraft:tools_and_utilities",
+  "version": 1
 }

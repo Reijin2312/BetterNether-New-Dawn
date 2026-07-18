@@ -14,7 +14,7 @@ import org.betterx.wover.recipe.api.RecipeBuilder;
 
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MapColor;
@@ -30,6 +30,7 @@ public class NetherMushroomMaterial extends NetherWoodenMaterial<NetherMushroomM
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
+                    // лодки отключены: нет ассетов
                     .remove(WoodSlots.LOG)
                     .remove(WoodSlots.BARK)
                     .remove(WoodSlots.STRIPPED_LOG)
@@ -37,14 +38,14 @@ public class NetherMushroomMaterial extends NetherWoodenMaterial<NetherMushroomM
                     .add(new Stem() {
                         @Override
                         protected @Nullable void makeRecipe(
-                                RecipeOutput context, ComplexMaterial material, ResourceLocation id
+                                RecipeOutput context, ComplexMaterial material, Identifier id
                         ) {
                         }
                     })
                     .replace(new Planks() {
                         @Override
                         protected @Nullable void makeRecipe(
-                                RecipeOutput context, ComplexMaterial material, ResourceLocation id
+                                RecipeOutput context, ComplexMaterial material, Identifier id
                         ) {
                             CraftingRecipeBuilder craftingRecipeBuilder1 = RecipeBuilder.crafting(id, material.getBlock(WoodSlots.PLANKS));
                             CraftingRecipeBuilder craftingRecipeBuilder = craftingRecipeBuilder1
@@ -68,5 +69,10 @@ public class NetherMushroomMaterial extends NetherWoodenMaterial<NetherMushroomM
 
     public Block getStem() {
         return getBlock(NetherSlots.STEM);
+    }
+
+    @Override
+    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
+        return super.supplyBoatType();
     }
 }

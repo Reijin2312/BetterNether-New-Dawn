@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "chest",
   "ingredients": [
-    {
-      "item": "betternether:mushroom_fir_chest"
-    },
-    {
-      "item": "betternether:mushroom_fir_stripped_log"
-    }
+    "betternether:mushroom_fir_chest",
+    "betternether:mushroom_fir_stripped_log"
   ],
   "result": {
     "count": 1,

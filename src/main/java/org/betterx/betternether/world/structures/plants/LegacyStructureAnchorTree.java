@@ -85,7 +85,7 @@ public class LegacyStructureAnchorTree implements IStructure {
 
         BlockState state;
         int offset = random.nextInt(4);
-        final int minBuildHeight = level.getMinBuildHeight() + 1;
+        final int minBuildHeight = level.getMinY() + 1;
         final net.minecraft.world.level.levelgen.structure.BoundingBox blockBox = BlocksHelper.decorationBounds(
                 level,
                 up,
@@ -123,7 +123,8 @@ public class LegacyStructureAnchorTree implements IStructure {
                 }
 
                 if (NOISE.eval(bpos.getX() * 0.05, bpos.getY() * 0.05, bpos.getZ() * 0.05) > 0) {
-                    state = AnchorTreeFeature.wallPlants[random.nextInt(AnchorTreeFeature.wallPlants.length)].defaultBlockState();
+                    Block[] wallPlants = AnchorTreeFeature.wallPlants();
+                    state = wallPlants[random.nextInt(wallPlants.length)].defaultBlockState();
                     BlockPos _pos = bpos.north();
                     if (random.nextInt(8) == 0 && !context.BLOCKS.contains(_pos) && level.isEmptyBlock(_pos) && _pos.getZ() >= blockBox.minZ())
                         BlocksHelper.setWithUpdate(level, _pos, state.setValue(BlockPlantWall.FACING, Direction.NORTH));

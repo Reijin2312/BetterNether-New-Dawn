@@ -1,0 +1,133 @@
+{
+  "type": "minecraft:equipment",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "betternether:cincinnasite_sword_diamond"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:shield"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "betternether:cincinnasite_boots",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:equippable": {
+                  "slot": "feet",
+                  "asset_id": "betternether:cincinnasite"
+                }
+              }
+            },
+            {
+              "function": "minecraft:set_enchantments",
+              "add": false,
+              "enchantments": {
+                "minecraft:protection": 4.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "betternether:cincinnasite_leggings",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:equippable": {
+                  "slot": "legs",
+                  "asset_id": "betternether:cincinnasite"
+                }
+              }
+            },
+            {
+              "function": "minecraft:set_enchantments",
+              "add": false,
+              "enchantments": {
+                "minecraft:protection": 4.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "betternether:cincinnasite_chestplate",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:equippable": {
+                  "slot": "chest",
+                  "asset_id": "betternether:cincinnasite"
+                }
+              }
+            },
+            {
+              "function": "minecraft:set_enchantments",
+              "add": false,
+              "enchantments": {
+                "minecraft:protection": 4.0,
+                "minecraft:thorns": 3.0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "betternether:cincinnasite_helmet",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:equippable": {
+                  "slot": "head",
+                  "asset_id": "betternether:cincinnasite"
+                }
+              }
+            },
+            {
+              "function": "minecraft:set_enchantments",
+              "add": false,
+              "enchantments": {
+                "minecraft:protection": 4.0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "betternether:equipment/city_wither_skeleton"
+}

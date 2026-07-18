@@ -15,24 +15,13 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import java.util.function.Supplier;
 
 public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> implements GrowableFeature<NoneFeatureConfiguration> {
 
-    private static final BlockState CENTER = NetherBlocks.LUCIS_MUSHROOM.defaultBlockState()
-                                                                        .setValue(
-                                                                                BlockLucisMushroom.SHAPE,
-                                                                                BNBlockProperties.EnumLucisShape.CENTER
-                                                                        );
-    private static final BlockState SIDE = NetherBlocks.LUCIS_MUSHROOM.defaultBlockState()
-                                                                      .setValue(
-                                                                              BlockLucisMushroom.SHAPE,
-                                                                              BNBlockProperties.EnumLucisShape.SIDE
-                                                                      );
-    private static final BlockState CORNER = NetherBlocks.LUCIS_MUSHROOM.defaultBlockState()
-                                                                        .setValue(
-                                                                                BlockLucisMushroom.SHAPE,
-                                                                                BNBlockProperties.EnumLucisShape.CORNER
-                                                                        );
+    private static final Supplier<BlockState> CENTER = () -> baseState(BNBlockProperties.EnumLucisShape.CENTER);
+    private static final Supplier<BlockState> SIDE = () -> baseState(BNBlockProperties.EnumLucisShape.SIDE);
+    private static final Supplier<BlockState> CORNER = () -> baseState(BNBlockProperties.EnumLucisShape.CORNER);
 
     public LucisFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -60,55 +49,55 @@ public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> imple
 
             if (random.nextInt(3) == 0) {
                 if (canReplace(world.getBlockState(pos)))
-                    BlocksHelper.setWithUpdate(world, pos, CENTER);
+                    BlocksHelper.setWithUpdate(world, pos, CENTER.get());
                 if (canReplace(world.getBlockState(pos.north())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.north(),
-                            SIDE.setValue(BlockLucisMushroom.FACING, Direction.NORTH)
+                            SIDE.get().setValue(BlockLucisMushroom.FACING, Direction.NORTH)
                     );
                 if (canReplace(world.getBlockState(pos.south())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.south(),
-                            SIDE.setValue(BlockLucisMushroom.FACING, Direction.SOUTH)
+                            SIDE.get().setValue(BlockLucisMushroom.FACING, Direction.SOUTH)
                     );
                 if (canReplace(world.getBlockState(pos.east())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.east(),
-                            SIDE.setValue(BlockLucisMushroom.FACING, Direction.EAST)
+                            SIDE.get().setValue(BlockLucisMushroom.FACING, Direction.EAST)
                     );
                 if (canReplace(world.getBlockState(pos.west())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.west(),
-                            SIDE.setValue(BlockLucisMushroom.FACING, Direction.WEST)
+                            SIDE.get().setValue(BlockLucisMushroom.FACING, Direction.WEST)
                     );
 
                 if (canReplace(world.getBlockState(pos.north().east())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.north().east(),
-                            CORNER.setValue(BlockLucisMushroom.FACING, Direction.SOUTH)
+                            CORNER.get().setValue(BlockLucisMushroom.FACING, Direction.SOUTH)
                     );
                 if (canReplace(world.getBlockState(pos.north().west())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.north().west(),
-                            CORNER.setValue(BlockLucisMushroom.FACING, Direction.EAST)
+                            CORNER.get().setValue(BlockLucisMushroom.FACING, Direction.EAST)
                     );
                 if (canReplace(world.getBlockState(pos.south().east())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.south().east(),
-                            CORNER.setValue(BlockLucisMushroom.FACING, Direction.WEST)
+                            CORNER.get().setValue(BlockLucisMushroom.FACING, Direction.WEST)
                     );
                 if (canReplace(world.getBlockState(pos.south().west())))
                     BlocksHelper.setWithUpdate(
                             world,
                             pos.south().west(),
-                            CORNER.setValue(BlockLucisMushroom.FACING, Direction.NORTH)
+                            CORNER.get().setValue(BlockLucisMushroom.FACING, Direction.NORTH)
                     );
             } else {
                 BlockState state = world.getBlockState(pos);
@@ -124,11 +113,11 @@ public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> imple
                 }
 
                 if (canReplace(world.getBlockState(pos)))
-                    BlocksHelper.setWithUpdate(world, pos, CORNER.setValue(BlockLucisMushroom.FACING, Direction.SOUTH));
+                    BlocksHelper.setWithUpdate(world, pos, CORNER.get().setValue(BlockLucisMushroom.FACING, Direction.SOUTH));
                 if (canReplace(world.getBlockState(pos.west()))) BlocksHelper.setWithUpdate(
                         world,
                         pos.west(),
-                        CORNER.setValue(
+                        CORNER.get().setValue(
                                 BlockLucisMushroom.FACING,
                                 Direction.EAST
                         )
@@ -136,7 +125,7 @@ public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> imple
                 if (canReplace(world.getBlockState(pos.south()))) BlocksHelper.setWithUpdate(
                         world,
                         pos.south(),
-                        CORNER.setValue(
+                        CORNER.get().setValue(
                                 BlockLucisMushroom.FACING,
                                 Direction.WEST
                         )
@@ -144,7 +133,7 @@ public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> imple
                 if (canReplace(world.getBlockState(pos.south().west()))) BlocksHelper.setWithUpdate(
                         world,
                         pos.south().west(),
-                        CORNER.setValue(
+                        CORNER.get().setValue(
                                 BlockLucisMushroom.FACING,
                                 Direction.NORTH
                         )
@@ -176,5 +165,9 @@ public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> imple
             NoneFeatureConfiguration configuration
     ) {
         return grow(level, pos, random, true);
+    }
+
+    private static BlockState baseState(BNBlockProperties.EnumLucisShape shape) {
+        return NetherBlocks.LUCIS_MUSHROOM.defaultBlockState().setValue(BlockLucisMushroom.SHAPE, shape);
     }
 }

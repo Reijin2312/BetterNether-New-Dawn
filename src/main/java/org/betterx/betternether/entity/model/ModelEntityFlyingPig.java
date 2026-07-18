@@ -1,8 +1,6 @@
 package org.betterx.betternether.entity.model;
 
-import org.betterx.betternether.entity.EntityFlyingPig;
-
-import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,11 +8,10 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
 
-import com.google.common.collect.ImmutableList;
-
-public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
+public class ModelEntityFlyingPig extends EntityModel<LivingEntityRenderState> {
     public static LayerDefinition getTexturedModelData() {
         MeshDefinition modelData = new MeshDefinition();
         PartDefinition modelPartData = modelData.getRoot();
@@ -262,6 +259,7 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
     private final ModelPart legB;
 
     public ModelEntityFlyingPig(ModelPart root) {
+        super(root);
         this.head = root.getChild(PartNames.HEAD);
         this.body = root.getChild(PartNames.BODY);
         this.tail = this.body.getChild(PartNames.TAIL);
@@ -276,25 +274,14 @@ public class ModelEntityFlyingPig extends AgeableListModel<EntityFlyingPig> {
     }
 
     @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of(head);
-    }
+    public void setupAnim(LivingEntityRenderState state) {
+        super.setupAnim(state);
+        float animationProgress = state.ageInTicks;
+        float headYaw = state.yRot;
+        float headPitch = state.xRot;
+        boolean roosting = false;
 
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(body);
-    }
-
-    @Override
-    public void setupAnim(
-            EntityFlyingPig entity,
-            float limbAngle,
-            float limbDistance,
-            float animationProgress,
-            float headYaw,
-            float headPitch
-    ) {
-        if (entity.isRoosting()) {
+        if (roosting) {
             this.head.xRot = headPitch * 0.017453292F;
             this.head.yRot = 3.1415927F - headYaw * 0.017453292F;
             this.head.zRot = 3.1415927F;

@@ -19,6 +19,7 @@ public class NetherSakuraMaterial extends NetherWoodenMaterial<NetherSakuraMater
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
+                    // лодки отключены: нет ассетов
                     .add(AbstractSaplingSlot.create(BlockNetherSakuraSapling::new));
     }
 
@@ -28,5 +29,10 @@ public class NetherSakuraMaterial extends NetherWoodenMaterial<NetherSakuraMater
 
     public boolean isTreeLog(Block block) {
         return block == getLog() || block == getBark();
+    }
+
+    @Override
+    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
+        return super.supplyBoatType();
     }
 }

@@ -1,4 +1,5 @@
 package org.betterx.betternether.blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourGlass;
 import org.betterx.bclib.behaviours.interfaces.BehaviourImmobile;
@@ -10,13 +11,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImmobile, BehaviourPortalFrame, BehaviourGlass {
     public BlockObsidianGlass() {
-        super(FabricBlockSettings.copyOf(Blocks.OBSIDIAN)
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
                                  .noOcclusion()
                                  .isSuffocating((arg1, arg2, arg3) -> {
                                      return false;
@@ -27,17 +25,15 @@ public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImm
         this.setRenderLayer(BNRenderLayer.TRANSLUCENT);
     }
 
-    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter view, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state) {
         return true;
     }
 
-    @Environment(EnvType.CLIENT)
     public boolean skipRendering(BlockState state, BlockState neighbor, Direction facing) {
         return neighbor.getBlock() == this || super.skipRendering(state, neighbor, facing);
     }

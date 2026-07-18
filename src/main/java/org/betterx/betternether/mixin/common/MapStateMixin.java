@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Map;
 
-@Mixin(MapItemSavedData.class)
+@Mixin(value = MapItemSavedData.class, remap = false)
 public abstract class MapStateMixin extends SavedData {
     public MapStateMixin(int i, int j, byte b, boolean bl, boolean bl2, boolean bl3, ResourceKey<Level> registryKey) {
         super();
@@ -45,7 +45,11 @@ public abstract class MapStateMixin extends SavedData {
     @Shadow
     private int trackedDecorationCount;
 
-    @WrapOperation(method = "addDecoration", at = @At(value = "FIELD", target = "Lnet/minecraft/world/level/Level;NETHER:Lnet/minecraft/resources/ResourceKey;"))
+    @WrapOperation(
+            method = "calculateRotation",
+            at = @At(value = "FIELD", target = "Lnet/minecraft/world/level/Level;NETHER:Lnet/minecraft/resources/ResourceKey;"),
+            require = 0
+    )
     ResourceKey<Level> bn_netherWithCompas(Operation<ResourceKey<Level>> original) {
         //this will make the game think, we are never in the nether
         return null;

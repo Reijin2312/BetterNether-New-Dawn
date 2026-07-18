@@ -21,7 +21,6 @@ import net.minecraft.world.item.enchantment.effects.*;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider;
 
-
 public class NetherEnchantmentProvider extends WoverEnchantmentProvider {
     public NetherEnchantmentProvider(ModCore modCore) {
         super(modCore, "Nether Enchantments");
@@ -54,7 +53,7 @@ public class NetherEnchantmentProvider extends WoverEnchantmentProvider {
                                         LevelBasedValue.constant(7.0F),
                                         damageGetter.getOrThrow(DamageTypes.INDIRECT_MAGIC)
                                 ),
-                                new DamageItem(
+                                new ChangeItemDamage(
                                         LevelBasedValue.constant(1.0F)
                                 ),
                                 new Ignite(LevelBasedValue.constant(100.0F))

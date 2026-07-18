@@ -15,9 +15,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -49,6 +51,14 @@ public class RubyFire {
         if (rubyFire == null) return false;
         final int fireLevel = EnchantmentHelper.getItemEnchantmentLevel(rubyFire, breakingItem);
         if (fireLevel > 0) {
+            // Respect Silk Touch: if present, skip auto-smelting entirely
+            var silk = player.registryAccess()
+                             .lookupOrThrow(Registries.ENCHANTMENT)
+                             .getOrThrow(Enchantments.SILK_TOUCH);
+            if (EnchantmentHelper.getItemEnchantmentLevel(silk, breakingItem) > 0) {
+                return false;
+            }
+
             if (FIRE_CONVERSIONS.isEmpty()) buildConversionTable(level);
 
             boolean didConvert = false;
@@ -62,8 +72,11 @@ public class RubyFire {
                     BlastingRecipe result = resultHolder != null ? resultHolder.value() : null;
                     if (result != null) {
                         didConvert = true;
-                        final ItemStack resultStack = result.getResultItem(level.registryAccess());
-                        xpDrop += result.getExperience();
+                        final ItemStack resultStack = result.assemble(
+                                new SingleRecipeInput(stack),
+                                level.registryAccess()
+                        );
+                        xpDrop += result.experience();
                         convertedDrops.get()
                                       .add(new ItemStack(
                                               resultStack.getItem(),
@@ -93,24 +106,30 @@ public class RubyFire {
     }
 
     private static void popExperience(ServerLevel level, BlockPos blockPos, int amount) {
-        if (level.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+        if (level.getGameRules().get(GameRules.BLOCK_DROPS)) {
             ExperienceOrb.award(level, Vec3.atCenterOf(blockPos), amount);
         }
     }
 
     private static void buildConversionTable(ServerLevel level) {
-        final List<RecipeHolder<BlastingRecipe>> recipes = level.getRecipeManager()
-                                                                .getAllRecipesFor(RecipeType.BLASTING);
+        final var recipes = level.getServer()
+                                 .getRecipeManager()
+                                 .getRecipes()
+                                 .stream()
+                                 .filter(recipeHolder -> recipeHolder.value() instanceof BlastingRecipe)
+                                 .map(recipeHolder -> (RecipeHolder<BlastingRecipe>) recipeHolder)
+                                 .toList();
+
         for (RecipeHolder<BlastingRecipe> r : recipes) {
-            for (Ingredient ingredient : r.value().getIngredients()) {
-                for (ItemStack stack : ingredient.getItems()) {
-                    if (stack.getItem() instanceof BlockItem blitem) {
+            Ingredient ingredient = r.value().input();
+            for (var itemHolder : ingredient.items().toList()) {
+                Item item = itemHolder.value();
+                if (item instanceof BlockItem blitem) {
                         if (blitem.getBlock().defaultBlockState().is(CommonBlockTags.IS_OBSIDIAN)) {
                             continue;
                         }
-                    }
-                    FIRE_CONVERSIONS.put(stack.getItem(), r);
                 }
+                FIRE_CONVERSIONS.put(item, r);
             }
         }
     }

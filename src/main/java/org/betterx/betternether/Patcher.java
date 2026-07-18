@@ -239,11 +239,12 @@ class Patcher_001 extends Patch {
         boolean[] changed = {false};
         palette.forEach((blockTag) -> {
             CompoundTag blockTagCompound = ((CompoundTag) blockTag);
-            final String id = blockTagCompound.getString("Name");
+            final String id = blockTagCompound.getStringOr("Name", "");
             if (LEAVE_IDS.contains(id)) {
-                final CompoundTag props = blockTagCompound.getCompound("Properties");
-                if (!props.contains("persistent") || !"true".equals(props.getString("persistent"))) {
+                final CompoundTag props = blockTagCompound.getCompoundOrEmpty("Properties");
+                if (!props.contains("persistent") || !"true".equals(props.getStringOr("persistent", ""))) {
                     props.putString("persistent", "true");
+                    blockTagCompound.put("Properties", props);
                     changed[0] = true;
                 }
             }

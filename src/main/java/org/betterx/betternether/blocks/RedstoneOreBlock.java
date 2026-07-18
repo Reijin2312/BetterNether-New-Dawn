@@ -9,9 +9,8 @@ import org.betterx.wover.loot.api.LootLookupProvider;
 import org.betterx.wover.tag.api.event.context.TagBootstrapContext;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedStoneOreBlock;
@@ -49,13 +48,13 @@ public class RedstoneOreBlock extends RedStoneOreBlock implements RuntimeBlockMo
     }
 
     @Override
-    public BlockModel getItemModel(ResourceLocation resourceLocation) {
+    public Object getItemModel(Identifier resourceLocation) {
         return getBlockModel(resourceLocation, defaultBlockState());
     }
 
     @Override
     public @Nullable LootTable.Builder registerBlockLoot(
-            @NotNull ResourceLocation location,
+            @NotNull Identifier location,
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
@@ -63,7 +62,7 @@ public class RedstoneOreBlock extends RedStoneOreBlock implements RuntimeBlockMo
     }
 
     @Override
-    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+    public void registerBlockTags(Identifier location, TagBootstrapContext<Block> context) {
         context.add(this, CommonBlockTags.NETHERRACK, CommonBlockTags.NETHER_ORES);
     }
 }

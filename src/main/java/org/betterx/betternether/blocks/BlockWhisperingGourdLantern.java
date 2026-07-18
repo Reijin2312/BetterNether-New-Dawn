@@ -1,5 +1,6 @@
 package org.betterx.betternether.blocks;
 
+import net.minecraft.core.Direction;
 import org.betterx.bclib.interfaces.tools.AddMineableAxe;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.materials.Materials;
@@ -11,11 +12,11 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
 
 public class BlockWhisperingGourdLantern extends Block implements AddMineableAxe {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public BlockWhisperingGourdLantern() {
         super(Materials.makeNetherWood(MapColor.COLOR_BLUE).lightLevel(s -> 15));

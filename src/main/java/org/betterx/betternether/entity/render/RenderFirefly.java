@@ -7,149 +7,160 @@ import org.betterx.betternether.registry.EntityRenderRegistry;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.AgeableListModel;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import com.mojang.math.Axis;
 
 import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
-
-class FireflyGlowFeatureRenderer extends RenderLayer<EntityFirefly, AgeableListModel<EntityFirefly>> {
-    private static final int LIT = 15728880;
-    //static final ModelEmpty emptyModel = new ModelEmpty();
-
-    public FireflyGlowFeatureRenderer(RenderLayerParent<EntityFirefly, AgeableListModel<EntityFirefly>> featureRendererContext) {
-        super(featureRendererContext);
-    }
-
-    @Override
-    public void render(
-            PoseStack matrices,
-            MultiBufferSource vertices,
-            int light,
-            EntityFirefly livingEntity,
-            float limbAngle,
-            float limbDistance,
-            float tickDelta,
-            float animationProgress,
-            float headYaw,
-            float headPitch
-    ) {
-        EntityModel<EntityFirefly> model = this.getParentModel();
-
-
-        if (model instanceof ModelEntityFirefly) {
-            ResourceLocation identifier = this.getTextureLocation(livingEntity);
-            RenderType renderLayer = RenderPhaseAccessor.getFirefly(identifier);
-            VertexConsumer vertexConsumer = vertices.getBuffer(renderLayer);
-
-            int color = livingEntity.getColor();
-
-            addViewAlignedGlow(matrices, vertexConsumer, color);
-
-
-            ((ModelEntityFirefly) model).getGlowPart()
-                                        .render(
-                                                matrices,
-                                                vertexConsumer,
-                                                light,
-                                                OverlayTexture.NO_OVERLAY,
-                                                color
-                                        );
-            ((ModelEntityFirefly) model).getGlowPart()
-                                        .render(
-                                                matrices,
-                                                vertexConsumer,
-                                                light,
-                                                OverlayTexture.NO_OVERLAY,
-                                                color
-                                        );
-
-        }
-    }
-
-    private void addViewAlignedGlow(
-            PoseStack matrices,
-            VertexConsumer vertexConsumer,
-            int color
-    ) {
-        matrices.pushPose();
-
-            /* //Original transform
-            matrixStack.translate(0, 0.125, 0);
-            matrixStack.multiply(this.dispatcher.getRotation());
-            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));*/
-
-        matrices.translate(0, 1.25, 0);
-
-        //Get inverse rotation to make view-aligned
-        Matrix3f normalMatrix = matrices.last().normal();
-        normalMatrix.transpose();
-//        Triple<Quaternion, Vector3f, Quaternion> trip = normalMatrix.svdDecompose();
-//        matrices.mulPose(trip.getLeft());
-        matrices.mulPose(normalMatrix.transpose(new Matrix3f()).getNormalizedRotation(new Quaternionf()));
-
-        PoseStack.Pose entry = matrices.last();
-        Matrix4f matrix4f = entry.pose();
-        Matrix3f matrix3f = entry.normal();
-
-        addVertex(matrix4f, entry, vertexConsumer, -1, -1, 0F, 0.5F, color);
-        addVertex(matrix4f, entry, vertexConsumer, 1, -1, 1F, 0.5F, color);
-        addVertex(matrix4f, entry, vertexConsumer, 1, 1, 1F, 1F, color);
-        addVertex(matrix4f, entry, vertexConsumer, -1, 1, 0F, 1F, color);
-
-        //emptyModel.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue,  1f);
-        matrices.popPose();
-    }
-
-    public static void addVertex(
-            Matrix4f matrix4f,
-            PoseStack.Pose matrix3f,
-            VertexConsumer vertexConsumer,
-            float posX,
-            float posY,
-            float u,
-            float v,
-            int color
-    ) {
-        vertexConsumer
-                .addVertex(matrix4f, posX, posY, 0)
-                .setColor(color)
-                .setUv(u, v)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setLight(LIT)
-                .setNormal(matrix3f, 0, 1, 0);
-    }
-}
-
-public class RenderFirefly extends MobRenderer<EntityFirefly, AgeableListModel<EntityFirefly>> {
-    private static final ResourceLocation TEXTURE = BetterNether.C.mk(
-            "textures/entity/firefly.png"
-    );
+public class RenderFirefly extends MobRenderer<EntityFirefly, RenderFirefly.FireflyRenderState, ModelEntityFirefly> {
+    private static final int FULL_BRIGHT = 15728880;
+    private static final Identifier TEXTURE = BetterNether.C.mk("textures/entity/firefly.png");
 
     public RenderFirefly(EntityRendererProvider.Context ctx) {
         super(ctx, new ModelEntityFirefly(ctx.bakeLayer(EntityRenderRegistry.FIREFLY_MODEL)), 0);
-
-        this.addLayer(new FireflyGlowFeatureRenderer(this));
+        this.addLayer(new FireflyGlowLayer(this));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(EntityFirefly entity) {
+    public Identifier getTextureLocation(FireflyRenderState state) {
         return TEXTURE;
     }
 
     @Override
     protected int getBlockLightLevel(EntityFirefly entity, BlockPos blockPos) {
         return 15;
+    }
+
+    @Override
+    public FireflyRenderState createRenderState() {
+        return new FireflyRenderState();
+    }
+
+    @Override
+    public void extractRenderState(EntityFirefly entity, FireflyRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.color = entity.getColor();
+    }
+
+    @Override
+    public void submit(
+            FireflyRenderState state,
+            PoseStack poseStack,
+            SubmitNodeCollector submitNodeCollector,
+            CameraRenderState cameraRenderState
+    ) {
+        state.cameraOrientation.set(cameraRenderState.orientation);
+        super.submit(state, poseStack, submitNodeCollector, cameraRenderState);
+    }
+
+    private static class FireflyGlowLayer extends RenderLayer<FireflyRenderState, ModelEntityFirefly> {
+
+        public FireflyGlowLayer(RenderLayerParent<FireflyRenderState, ModelEntityFirefly> parent) {
+            super(parent);
+        }
+
+        @Override
+        public void submit(
+                PoseStack poseStack,
+                SubmitNodeCollector submitNodeCollector,
+                int light,
+                FireflyRenderState state,
+                float yRot,
+                float xRot
+        ) {
+            ModelEntityFirefly model = this.getParentModel();
+            model.syncTransform();
+            int glowPlaneColor = withAlpha(state.color, 0x90);
+            int glowShellColor = withAlpha(state.color, 0x44);
+
+            // Keep the legacy firefly look from older versions: a view-aligned glow plane + glow shell.
+            RenderType layer = RenderPhaseAccessor.getFirefly(TEXTURE);
+            addViewAlignedGlow(poseStack, submitNodeCollector, layer, glowPlaneColor, state.cameraOrientation);
+            submitNodeCollector.order(1)
+                .submitModelPart(
+                        model.getGlowPart(),
+                        poseStack,
+                        layer,
+                        light,
+                        OverlayTexture.NO_OVERLAY,
+                        null,
+                        glowShellColor,
+                        null
+                );
+            submitNodeCollector.order(1)
+                .submitModelPart(
+                        model.getGlowPart(),
+                        poseStack,
+                        layer,
+                        light,
+                        OverlayTexture.NO_OVERLAY,
+                        null,
+                        glowShellColor,
+                        null
+                );
+        }
+
+        private static int withAlpha(int color, int alpha) {
+            return (color & 0x00FFFFFF) | ((alpha & 0xFF) << 24);
+        }
+
+        private static void addViewAlignedGlow(
+                PoseStack poseStack,
+                SubmitNodeCollector submitNodeCollector,
+                RenderType layer,
+                int color,
+                Quaternionf cameraOrientation
+        ) {
+            poseStack.pushPose();
+            poseStack.translate(0.0D, 1.25D, 0.0D);
+            // Cancel entity/model rotation first, then apply camera-facing billboard rotation.
+            Matrix3f inverseCurrentRotation = new Matrix3f(poseStack.last().normal());
+            inverseCurrentRotation.transpose();
+            poseStack.mulPose(inverseCurrentRotation.getNormalizedRotation(new Quaternionf()));
+            poseStack.mulPose(cameraOrientation);
+            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+
+            submitNodeCollector.submitCustomGeometry(poseStack, layer, (pose, consumer) -> {
+                addVertex(consumer, pose, -1.0F, -1.0F, 0.0F, 0.5F, color);
+                addVertex(consumer, pose, 1.0F, -1.0F, 1.0F, 0.5F, color);
+                addVertex(consumer, pose, 1.0F, 1.0F, 1.0F, 1.0F, color);
+                addVertex(consumer, pose, -1.0F, 1.0F, 0.0F, 1.0F, color);
+            });
+
+            poseStack.popPose();
+        }
+
+        private static void addVertex(
+                VertexConsumer vertexConsumer,
+                PoseStack.Pose pose,
+                float posX,
+                float posY,
+                float u,
+                float v,
+                int color
+        ) {
+            vertexConsumer.addVertex(pose, posX, posY, 0.0F)
+                          .setColor(color)
+                          .setUv(u, v)
+                          .setOverlay(OverlayTexture.NO_OVERLAY)
+                          .setLight(FULL_BRIGHT)
+                          .setNormal(pose, 0.0F, 1.0F, 0.0F);
+        }
+    }
+
+    public static class FireflyRenderState extends LivingEntityRenderState {
+        public int color = -1;
+        public final Quaternionf cameraOrientation = new Quaternionf();
     }
 }

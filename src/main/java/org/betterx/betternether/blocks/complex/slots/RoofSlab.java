@@ -10,7 +10,7 @@ import org.betterx.wover.recipe.api.RecipeBuilder;
 
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -31,7 +31,7 @@ public class RoofSlab extends SimpleMaterialSlot<WoodenComplexMaterial> {
 
 
     @Override
-    protected @Nullable void makeRecipe(RecipeOutput context, ComplexMaterial parentMaterial, ResourceLocation id) {
+    protected @Nullable void makeRecipe(RecipeOutput context, ComplexMaterial parentMaterial, Identifier id) {
         CraftingRecipeBuilder craftingRecipeBuilder1 = RecipeBuilder
                 .crafting(id, parentMaterial.getBlock(suffix));
         CraftingRecipeBuilder craftingRecipeBuilder2 = craftingRecipeBuilder1.outputCount(6);

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "wall",
   "key": {
-    "*": {
-      "item": "betternether:rubeus_planks"
-    },
-    "|": {
-      "item": "betternether:rubeus_fence"
-    }
+    "*": "betternether:rubeus_planks",
+    "|": "betternether:rubeus_fence"
   },
   "pattern": [
     "* *",

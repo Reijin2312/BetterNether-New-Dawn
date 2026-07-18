@@ -3,9 +3,7 @@
   "category": "equipment",
   "group": "cincinnasite_boots",
   "key": {
-    "#": {
-      "item": "betternether:cincinnasite_ingot"
-    }
+    "#": "#betternether:repair/cincinnasite"
   },
   "pattern": [
     "# #",

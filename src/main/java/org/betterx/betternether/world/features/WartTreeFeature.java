@@ -74,7 +74,7 @@ public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfigurat
                                         BlocksHelper.setWithUpdate(
                                                 world,
                                                 context.POS,
-                                                NetherBlocks.MAT_WART.getBark().defaultBlockState()
+                                                NetherBlocks.MAT_WART.getLog().defaultBlockState()
                                         );
                                     else
                                         BlocksHelper.setWithUpdate(world, context.POS, WART_BLOCK);
@@ -99,7 +99,7 @@ public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfigurat
                                         BlocksHelper.setWithUpdate(
                                                 world,
                                                 context.POS,
-                                                NetherBlocks.MAT_WART.getBark().defaultBlockState()
+                                                NetherBlocks.MAT_WART.getLog().defaultBlockState()
                                         );
                                     else {
                                         BlocksHelper.setWithUpdate(

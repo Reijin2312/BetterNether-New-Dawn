@@ -9,7 +9,6 @@
     "BlockBehaviourMixin",
     "BrewingRecipeRegistryMixin",
     "CraftingScreenHandlerMixin",
-    "DefaultAttributeRegistryMixin",
     "DeltaFeatureMixin",
     "FlatLevelGeneratorPresetsMixin",
     "LightningRodBlockMixin",

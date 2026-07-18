@@ -296,22 +296,6 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 6.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
-            }
-          ],
-          "name": "minecraft:sculk_catalyst",
-          "weight": 5
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": {
-                "type": "minecraft:uniform",
                 "max": 2.0,
                 "min": 1.0
               },
@@ -328,5 +312,6 @@
         "min": 3.0
       }
     }
-  ]
+  ],
+  "random_sequence": "betternether:chests/wither_tower_bonus"
 }

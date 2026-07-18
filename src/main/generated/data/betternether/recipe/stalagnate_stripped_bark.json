@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "betternether:stalagnate_stripped_log"
-    }
+    "#": "betternether:stalagnate_stripped_log"
   },
   "pattern": [
     "##",

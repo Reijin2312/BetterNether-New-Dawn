@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -21,14 +20,13 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.world.level.ScheduledTickAccess;
 
 public class BlockBoneMushroom extends BlockBaseNotFull implements SurvivesOnBoneBlocks, BehaviourPlant {
     private static final VoxelShape SHAPE_NORTH = box(1, 1, 8, 15, 15, 16);
@@ -36,7 +34,7 @@ public class BlockBoneMushroom extends BlockBaseNotFull implements SurvivesOnBon
     private static final VoxelShape SHAPE_WEST = box(8, 1, 1, 16, 15, 15);
     private static final VoxelShape SHAPE_EAST = box(0, 1, 1, 8, 15, 15);
     private static final VoxelShape SHAPE_UP = box(1, 0, 1, 15, 12, 15);
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final IntegerProperty AGE = BlockProperties.AGE_THREE;
 
     public BlockBoneMushroom() {
@@ -71,7 +69,6 @@ public class BlockBoneMushroom extends BlockBaseNotFull implements SurvivesOnBon
         }
     }
 
-    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -99,11 +96,13 @@ public class BlockBoneMushroom extends BlockBaseNotFull implements SurvivesOnBon
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         if (canSurvive(state, world, pos))
             return state;

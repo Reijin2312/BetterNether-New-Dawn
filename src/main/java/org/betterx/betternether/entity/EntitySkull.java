@@ -14,7 +14,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -31,8 +31,6 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 import java.util.List;
 
@@ -91,14 +89,12 @@ public class EntitySkull extends Monster implements FlyingAnimal {
     @Override
     public void playerTouch(Player player) {
         collideTick++;
-        if (this.isAlive() && collideTick > 25) {
+        if (this.level() instanceof ServerLevel serverLevel && this.isAlive() && collideTick > 25) {
             collideTick = 0;
             DamageSource damageSource = this.damageSources().mobAttack(this);
-            if (player.hurt(damageSource, this.getAttackDamage())) {
+            if (player.hurtServer(serverLevel, damageSource, this.getAttackDamage())) {
                 this.playSound(SoundEvents.SLIME_ATTACK, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-                if (this.level() instanceof ServerLevel serverLevel) {
-                    EnchantmentHelper.doPostAttackEffects(serverLevel, player, damageSource);
-                }
+                EnchantmentHelper.doPostAttackEffects(serverLevel, player, damageSource);
             }
             if (random.nextInt(16) == 0)
                 player.igniteForSeconds(3);
@@ -222,7 +218,6 @@ public class EntitySkull extends Monster implements FlyingAnimal {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public float getEyeHeight(Pose pose) {
         return this.getDimensions(pose).height() * 0.5F;
     }
@@ -233,7 +228,7 @@ public class EntitySkull extends Monster implements FlyingAnimal {
     }
 
     @Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(double fallDistance, float damageMultiplier, DamageSource source) {
         return false;
     }
 
@@ -259,7 +254,7 @@ public class EntitySkull extends Monster implements FlyingAnimal {
     public static boolean canSpawn(
             EntityType<? extends EntitySkull> type,
             LevelAccessor world,
-            MobSpawnType spawnReason,
+            EntitySpawnReason spawnReason,
             BlockPos pos,
             RandomSource random
     ) {

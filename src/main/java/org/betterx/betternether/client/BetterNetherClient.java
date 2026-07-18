@@ -7,11 +7,11 @@ import org.betterx.betternether.config.screen.ConfigScreen;
 import org.betterx.betternether.registry.EntityRenderRegistry;
 import org.betterx.betternether.registry.NetherParticles;
 
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 
 public class BetterNetherClient implements ClientModInitializer {
     @Override
@@ -24,15 +24,15 @@ public class BetterNetherClient implements ClientModInitializer {
     }
 
     private void registerRenderLayers() {
-        RenderType cutout = RenderType.cutout();
-        RenderType translucent = RenderType.translucent();
+        ChunkSectionLayer cutout = ChunkSectionLayer.CUTOUT;
+        ChunkSectionLayer translucent = ChunkSectionLayer.TRANSLUCENT;
         BuiltInRegistries.BLOCK.forEach(block -> {
             if (block instanceof IRenderTypeable) {
                 BNRenderLayer layer = ((IRenderTypeable) block).getRenderLayer();
                 if (layer == BNRenderLayer.CUTOUT)
-                    BlockRenderLayerMap.INSTANCE.putBlock(block, cutout);
+                    BlockRenderLayerMap.putBlock(block, cutout);
                 else if (layer == BNRenderLayer.TRANSLUCENT)
-                    BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
+                    BlockRenderLayerMap.putBlock(block, translucent);
             }
         });
     }

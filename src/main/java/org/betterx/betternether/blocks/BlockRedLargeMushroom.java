@@ -11,7 +11,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -22,8 +21,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockRedLargeMushroom extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape TOP_SHAPE = box(0, 0.1, 0, 16, 16, 16);
@@ -47,8 +46,7 @@ public class BlockRedLargeMushroom extends BlockBaseNotFull implements AddMineab
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return state.getValue(SHAPE) == TripleShape.TOP
                 ? new ItemStack(Items.RED_MUSHROOM)
                 : new ItemStack(NetherBlocks.MAT_NETHER_MUSHROOM.getStem());
@@ -57,11 +55,13 @@ public class BlockRedLargeMushroom extends BlockBaseNotFull implements AddMineab
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         switch (state.getValue(SHAPE)) {
             case BOTTOM:

@@ -1,6 +1,7 @@
 {
   "parent": "bclib:block/chest_item",
   "textures": {
-    "texture": "betternether:entity/chest/willow_chest"
+    "particle": "betternether:block/chest/willow_chest",
+    "texture": "betternether:block/chest/willow_chest"
   }
 }

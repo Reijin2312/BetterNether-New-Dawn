@@ -3,7 +3,7 @@ package org.betterx.betternether.integrations.wthit;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.blocks.BlockCommonPlant;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.IWailaPlugin;
@@ -11,7 +11,7 @@ import mcp.mobius.waila.api.TooltipPosition;
 
 public class WailaPlugin implements IWailaPlugin {
     static class Options {
-        public static final ResourceLocation CROP_PROGRESS = ResourceLocation.withDefaultNamespace("crop_progress");
+        public static final Identifier CROP_PROGRESS = Identifier.withDefaultNamespace("crop_progress");
     }
 
     @Override

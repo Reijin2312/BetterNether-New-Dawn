@@ -1,10 +1,9 @@
 package org.betterx.betternether.entity.model;
 
 import org.betterx.betternether.MHelper;
-import org.betterx.betternether.entity.EntityJungleSkeleton;
 import org.betterx.betternether.mixin.client.TexturedModelDataMixin;
 
-import net.minecraft.client.model.SkeletonModel;
+import net.minecraft.client.model.monster.skeleton.SkeletonModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,10 +11,11 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 
-public class ModelJungleSkeleton extends SkeletonModel<EntityJungleSkeleton> {
+public class ModelJungleSkeleton<S extends SkeletonRenderState> extends SkeletonModel<S> {
     private static final float ANGLE45 = (float) Math.PI * 0.25F;
     private static final float ANGLE90 = (float) Math.PI * 0.5F;
     private static final RandomSource RANDOM = new LegacyRandomSource(130520220100l);

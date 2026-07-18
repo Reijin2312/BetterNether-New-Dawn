@@ -16,7 +16,7 @@ import org.betterx.betternether.blocks.complex.slots.NetherSlots;
 import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -33,6 +33,7 @@ public class RubeusMaterial extends NetherWoodenMaterial<RubeusMaterial> {
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
+                    // лодки отключены: нет ассетов
                     .add(AbstractSaplingSlot.create(BlockRubeusSapling::new))
                     .add(new SimpleMaterialSlot<>(NetherSlots.CONE) {
                         @Override
@@ -45,7 +46,7 @@ public class RubeusMaterial extends NetherWoodenMaterial<RubeusMaterial> {
 
                         @Override
                         protected @Nullable void makeRecipe(
-                                RecipeOutput context, ComplexMaterial parentMaterial, ResourceLocation id
+                                RecipeOutput context, ComplexMaterial parentMaterial, Identifier id
                         ) {
 
                         }
@@ -77,5 +78,10 @@ public class RubeusMaterial extends NetherWoodenMaterial<RubeusMaterial> {
 
     public Block getSapling() {
         return getBlock(WoodSlots.SAPLING);
+    }
+
+    @Override
+    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
+        return super.supplyBoatType();
     }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "bclib:block/chest_item",
   "textures": {
-    "texture": "betternether:entity/chest/nether_mushroom_chest"
+    "particle": "betternether:block/chest/nether_mushroom_chest",
+    "texture": "betternether:block/chest/nether_mushroom_chest"
   }
 }

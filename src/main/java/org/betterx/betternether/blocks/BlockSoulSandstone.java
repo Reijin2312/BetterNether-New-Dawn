@@ -1,4 +1,5 @@
 package org.betterx.betternether.blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.wover.block.api.BlockTagProvider;
@@ -7,22 +8,23 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 public class BlockSoulSandstone extends BlockBase implements BlockTagProvider, BehaviourStone {
     public static final BooleanProperty UP = BooleanProperty.create("up");
 
     public BlockSoulSandstone() {
-        super(FabricBlockSettings.copyOf(Blocks.SANDSTONE));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.SANDSTONE));
     }
 
     @Override
@@ -33,11 +35,13 @@ public class BlockSoulSandstone extends BlockBase implements BlockTagProvider, B
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         return state.setValue(UP, world.getBlockState(pos.above()).getBlock() != this);
     }
@@ -49,7 +53,7 @@ public class BlockSoulSandstone extends BlockBase implements BlockTagProvider, B
     }
 
     @Override
-    public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
+    public void registerBlockTags(Identifier location, TagBootstrapContext<Block> context) {
         context.add(this, CommonBlockTags.NETHER_TERRAIN);
     }
 }

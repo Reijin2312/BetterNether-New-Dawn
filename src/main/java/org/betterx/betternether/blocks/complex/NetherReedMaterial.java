@@ -17,7 +17,7 @@ import org.betterx.wover.recipe.api.RecipeBuilder;
 
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -45,6 +45,7 @@ public class NetherReedMaterial extends RoofMaterial<NetherReedMaterial> {
                     .remove(WoodSlots.BARK)
                     .remove(WoodSlots.STRIPPED_LOG)
                     .remove(WoodSlots.STRIPPED_BARK)
+                    // Disable boat + chest boat for nether reed until assets are provided
 
                     .replace(new Planks() {
                         @Override
@@ -57,7 +58,7 @@ public class NetherReedMaterial extends RoofMaterial<NetherReedMaterial> {
 
                         @Override
                         protected @Nullable void makeRecipe(
-                                RecipeOutput context, ComplexMaterial parentMaterial, ResourceLocation id
+                                RecipeOutput context, ComplexMaterial parentMaterial, Identifier id
                         ) {
                             CraftingRecipeBuilder craftingRecipeBuilder1 = RecipeBuilder.crafting(id, parentMaterial.getBlock(WoodSlots.PLANKS));
                             CraftingRecipeBuilder craftingRecipeBuilder2 = craftingRecipeBuilder1
@@ -93,6 +94,7 @@ public class NetherReedMaterial extends RoofMaterial<NetherReedMaterial> {
 
     @Override
     public BoatTypeOverride supplyBoatType() {
+        // Nether reed uses the raft model layout.
         return BoatTypeOverride.create(
                 C,
                 getBaseName(),

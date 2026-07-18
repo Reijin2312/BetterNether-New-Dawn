@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "chair",
   "key": {
-    "#": {
-      "item": "betternether:cincinnasite_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "betternether:cincinnasite_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "I ",

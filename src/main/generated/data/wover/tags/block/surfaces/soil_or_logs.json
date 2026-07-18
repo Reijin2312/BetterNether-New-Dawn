@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:dirt",
+      "required": false
+    },
+    {
+      "id": "#minecraft:logs",
+      "required": false
+    },
+    {
+      "id": "#minecraft:planks",
+      "required": false
+    },
+    {
+      "id": "#wover:surfaces/terrain",
+      "required": false
+    }
+  ]
+}

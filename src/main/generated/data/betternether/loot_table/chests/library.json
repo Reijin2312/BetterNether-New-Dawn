@@ -324,5 +324,6 @@
       ],
       "rolls": 2.0
     }
-  ]
+  ],
+  "random_sequence": "betternether:chests/library"
 }

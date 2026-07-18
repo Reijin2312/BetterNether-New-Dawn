@@ -9,7 +9,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
@@ -52,7 +52,7 @@ public class BlockChestOfDrawers extends BaseEntityBlock implements BehaviourMet
             Direction.WEST, Block.box(8, 0, 0, 16, 16, 16),
             Direction.EAST, Block.box(0, 0, 0, 8, 16, 16)
     ));
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty OPEN = BNBlockProperties.OPEN;
 
     public BlockChestOfDrawers() {
@@ -81,7 +81,7 @@ public class BlockChestOfDrawers extends BaseEntityBlock implements BehaviourMet
     }
 
     @Override
-    public ItemInteractionResult useItemOn(
+    public InteractionResult useItemOn(
             ItemStack itemStack,
             BlockState state,
             Level world,
@@ -90,14 +90,14 @@ public class BlockChestOfDrawers extends BaseEntityBlock implements BehaviourMet
             InteractionHand hand,
             BlockHitResult hit
     ) {
-        if (world.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
+        if (world.isClientSide()) {
+            return InteractionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof BlockEntityChestOfDrawers) {
                 player.openMenu((BlockEntityChestOfDrawers) blockEntity);
             }
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
     }
 

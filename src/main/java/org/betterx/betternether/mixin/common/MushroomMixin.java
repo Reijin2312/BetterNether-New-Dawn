@@ -17,18 +17,27 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(MushroomBlock.class)
+@Mixin(value = MushroomBlock.class, remap = false)
 public abstract class MushroomMixin {
 
-    @Inject(method = "canSurvive", at = @At(value = "RETURN", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    @Inject(
+            method = "canSurvive",
+            at = @At("RETURN"),
+            cancellable = true,
+            remap = false
+    )
     private void canStay(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
         if (BlocksHelper.isNetherMycelium(world.getBlockState(pos.below())))
             info.setReturnValue(true);
     }
 
-    @Inject(method = "performBonemeal", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "performBonemeal",
+            at = @At(value = "HEAD"),
+            cancellable = true,
+            remap = false
+    )
     private void growStructure(
             ServerLevel world,
             RandomSource random,

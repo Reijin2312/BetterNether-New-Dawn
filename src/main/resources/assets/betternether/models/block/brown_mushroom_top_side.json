@@ -2,9 +2,9 @@
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
 	"parent": "block/block",
 	"textures": {
-		"particle": "block/brown_mushroom_block",
-		"skin": "block/brown_mushroom_block",
-		"inside": "block/mushroom_block_inside",
+		"particle": "minecraft:block/brown_mushroom_block",
+		"skin": "minecraft:block/brown_mushroom_block",
+		"inside": "minecraft:block/mushroom_block_inside",
 		"stem": "betternether:block/brown_stem"
 	},
 	"elements": [ 	 

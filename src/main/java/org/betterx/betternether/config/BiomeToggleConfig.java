@@ -27,7 +27,7 @@ public class BiomeToggleConfig extends ConfigFile {
     public BooleanValue registerBiome(ResourceKey<Biome> biomeKey) {
         return biomes.computeIfAbsent(
                 biomeKey,
-                key -> new BooleanValue("biomes", key.location().getPath(), true).setGroup(BIOMES)
+                key -> new BooleanValue("biomes", key.identifier().getPath(), true).setGroup(BIOMES)
         );
     }
 

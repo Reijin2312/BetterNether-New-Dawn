@@ -5,7 +5,6 @@ import org.betterx.bclib.util.LootUtil;
 import org.betterx.betternether.config.Configs;
 import org.betterx.betternether.interfaces.SurvivesOnNetherGround;
 import org.betterx.betternether.registry.NetherEntities;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ColorParticleOption;
@@ -32,12 +31,9 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 
 public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherGround, BehaviourPlant {
     private static final VoxelShape SHAPE = box(0, 0, 0, 16, 8, 16);
@@ -70,7 +66,6 @@ public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherG
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (!state.getValue(DESTRUCTED))
             world.addParticle(
@@ -83,7 +78,7 @@ public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherG
     }
 
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier, boolean applyEffects) {
         if (!state.getValue(DESTRUCTED)) {
             if (enableModDamage && entity instanceof LivingEntity && !((LivingEntity) entity).hasEffect(MobEffects.POISON)) {
                 if (!NetherEntities.isNetherEntity(entity))
@@ -94,7 +89,7 @@ public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherG
             double px = pos.getX() + 0.5;
             double py = pos.getY() + 0.125;
             double pz = pos.getZ() + 0.5;
-            if (world.isClientSide) {
+            if (world.isClientSide()) {
                 world.playLocalSound(px, py, pz, SoundType.WART_BLOCK.getBreakSound(), SoundSource.BLOCKS, 1, 1, false);
                 BlockParticleOption effect = new BlockParticleOption(ParticleTypes.BLOCK, state);
                 RandomSource random = world.random;

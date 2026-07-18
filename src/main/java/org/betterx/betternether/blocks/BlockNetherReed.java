@@ -11,7 +11,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -20,8 +19,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.MapColor;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.world.level.ScheduledTickAccess;
 
 public class BlockNetherReed extends BlockBase implements AddMineableSword, AddMineableHoe {
     public static final BooleanProperty TOP = BlockProperties.TOP;
@@ -39,7 +37,6 @@ public class BlockNetherReed extends BlockBase implements AddMineableSword, AddM
         stateManager.add(TOP);
     }
 
-    @Environment(EnvType.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -47,11 +44,13 @@ public class BlockNetherReed extends BlockBase implements AddMineableSword, AddM
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
         Block up = world.getBlockState(pos.above()).getBlock();
         BlockState down = world.getBlockState(pos.below());

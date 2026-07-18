@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "sign",
   "key": {
-    "#": {
-      "item": "betternether:mushroom_fir_stripped_log"
-    },
-    "I": {
-      "item": "minecraft:chain"
-    }
+    "#": "betternether:mushroom_fir_stripped_log",
+    "I": "minecraft:iron_chain"
   },
   "pattern": [
     "I I",

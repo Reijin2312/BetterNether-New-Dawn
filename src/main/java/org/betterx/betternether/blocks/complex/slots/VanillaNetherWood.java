@@ -45,4 +45,9 @@ public class VanillaNetherWood extends VanillaFallback<VanillaNetherWood> {
                 WoodSlots.CHAIR
         );
     }
+
+    @Override
+    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
+        return super.supplyBoatType();
+    }
 }

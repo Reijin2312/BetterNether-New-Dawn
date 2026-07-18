@@ -1,74 +1,118 @@
 package org.betterx.betternether.mixin.common;
 
 import org.betterx.betternether.portals.BNPortalShape;
-
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.portal.PortalShape;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(PortalShape.class)
+@Mixin(value = PortalShape.class, remap = false)
 public class PortalShapeMixin {
     @Unique
-    private BNPortalShape bn_shape;
+    private static final Map<PortalShape, BNPortalShape> BN_CUSTOM_SHAPES = Collections.synchronizedMap(
+            new WeakHashMap<>()
+    );
 
-    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/lang/Object;<init>()V", shift = At.Shift.AFTER))
-    private void bn_init(LevelAccessor levelAccessor, BlockPos blockPos, Direction.Axis axis, CallbackInfo ci) {
-        bn_shape = new BNPortalShape(levelAccessor, blockPos, axis);
+    @Shadow
+    @Final
+    @Mutable
+    private static BlockBehaviour.StatePredicate FRAME;
+
+    @Invoker("<init>")
+    public static PortalShape bn_makePortalShape(
+            Direction.Axis axis,
+            int numPortalBlocks,
+            Direction rightDir,
+            BlockPos bottomLeft,
+            int width,
+            int height
+    ) {
+        throw new AssertionError();
     }
 
-    @Inject(method = "calculateBottomLeft", at = @At(value = "HEAD"), cancellable = true)
-    private void bn_calculateBottomLeft(BlockPos blockPos, CallbackInfoReturnable<BlockPos> cir) {
-        if (bn_shape != null) {
-            cir.setReturnValue(bn_shape.calculateBottomLeft(blockPos));
-            cir.cancel();
+    @Inject(method = "<clinit>", at = @At("TAIL"))
+    private static void bn_extendPortalFramePredicate(CallbackInfo ci) {
+        BlockBehaviour.StatePredicate original = FRAME;
+        FRAME = (state, level, pos) ->
+                original.test(state, level, pos) || state.is(CommonBlockTags.NETHER_PORTAL_FRAME);
+    }
+
+    @Inject(method = "findAnyShape", at = @At("HEAD"), cancellable = true)
+    private static void bn_findAnyShape(
+            BlockGetter blockGetter,
+            BlockPos blockPos,
+            Direction.Axis axis,
+            CallbackInfoReturnable<PortalShape> cir
+    ) {
+        if (!(blockGetter instanceof LevelAccessor levelAccessor)) {
+            return;
         }
-    }
 
-    @Inject(method = "calculateWidth", at = @At(value = "HEAD"), cancellable = true)
-    private void bn_calculateWidth(CallbackInfoReturnable<Integer> cir) {
-        if (bn_shape != null) {
-            cir.setReturnValue(bn_shape.calculateWidth());
-            cir.cancel();
+        BNPortalShape shape = new BNPortalShape(levelAccessor, blockPos, axis);
+        if (!shape.isValid()) {
+            return;
         }
-    }
 
-    @Inject(method = "calculateHeight", at = @At(value = "HEAD"), cancellable = true)
-    private void bn_calculateHeight(CallbackInfoReturnable<Integer> cir) {
-        if (bn_shape != null) {
-            cir.setReturnValue(bn_shape.calculateHeight());
-            cir.cancel();
+        BlockPos bottomLeft = shape.getBottomLeft();
+        int width = shape.getBoundingWidth();
+        int height = shape.getBoundingHeight();
+        if (bottomLeft == null || width <= 0 || height <= 0) {
+            return;
         }
+
+        Direction rightDir = axis == Direction.Axis.X ? Direction.WEST : Direction.SOUTH;
+        PortalShape portalShape = bn_makePortalShape(
+                axis,
+                shape.getExistingPortalBlocks(),
+                rightDir,
+                bottomLeft,
+                width,
+                height
+        );
+        BN_CUSTOM_SHAPES.put(portalShape, shape);
+        cir.setReturnValue(portalShape);
     }
 
-    @Inject(method = "createPortalBlocks", at = @At(value = "HEAD"), cancellable = true)
-    private void bn_createPortalBlocks(CallbackInfo ci) {
-        if (bn_shape != null) {
-            bn_shape.createPortalBlocks();
+    @Inject(method = "createPortalBlocks", at = @At("HEAD"), cancellable = true)
+    private void bn_createPortalBlocks(LevelAccessor levelAccessor, CallbackInfo ci) {
+        BNPortalShape shape = BN_CUSTOM_SHAPES.get((PortalShape) (Object) this);
+        if (shape != null) {
+            shape.createPortalBlocks();
             ci.cancel();
         }
     }
 
-    @Inject(method = "isComplete", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "isComplete", at = @At("HEAD"), cancellable = true)
     private void bn_isComplete(CallbackInfoReturnable<Boolean> cir) {
-        if (bn_shape != null) {
-            cir.setReturnValue(bn_shape.isComplete());
-            cir.cancel();
+        BNPortalShape shape = BN_CUSTOM_SHAPES.get((PortalShape) (Object) this);
+        if (shape != null) {
+            cir.setReturnValue(shape.isComplete());
         }
     }
 
-    @Inject(method = "isValid", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "isValid", at = @At("HEAD"), cancellable = true)
     private void bn_isValid(CallbackInfoReturnable<Boolean> cir) {
-        if (bn_shape != null) {
-            cir.setReturnValue(bn_shape.isValid());
-            cir.cancel();
+        BNPortalShape shape = BN_CUSTOM_SHAPES.get((PortalShape) (Object) this);
+        if (shape != null) {
+            cir.setReturnValue(shape.isValid());
         }
     }
 }

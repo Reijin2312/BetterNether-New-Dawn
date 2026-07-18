@@ -22,6 +22,7 @@ public class MushroomFirMaterial extends NetherWoodenMaterial<MushroomFirMateria
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
+                    // лодки отключены: нет ассетов
                     .add(TrunkSlot.create(BlockMushroomFir::new))
                     .add(AbstractSaplingSlot.create(BlockMushroomFirSapling::new))
                     .add(NetherSlots.STEM);
@@ -37,5 +38,10 @@ public class MushroomFirMaterial extends NetherWoodenMaterial<MushroomFirMateria
 
     public Block getTrunk() {
         return getBlock(NetherSlots.TRUNK);
+    }
+
+    @Override
+    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
+        return super.supplyBoatType();
     }
 }

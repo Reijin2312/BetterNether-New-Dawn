@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(LayerDefinition.class)
+@Mixin(value = LayerDefinition.class, remap = false)
 public interface TexturedModelDataMixin {
     @Accessor("mesh")
     MeshDefinition getMesh();

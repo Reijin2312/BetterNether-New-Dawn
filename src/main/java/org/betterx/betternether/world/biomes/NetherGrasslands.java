@@ -23,7 +23,6 @@ import java.util.List;
 public class NetherGrasslands extends NetherBiomeConfig {
     static final SurfaceRules.RuleSource SOUL_SOIL = SurfaceRules.state(Blocks.SOUL_SOIL.defaultBlockState());
     static final SurfaceRules.RuleSource SOUL_SAND = SurfaceRules.state(Blocks.SOUL_SAND.defaultBlockState());
-    static final SurfaceRules.RuleSource MOSS = SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
 
     private static final SurfaceRules.RuleSource BLUE = SurfaceRules.state(Blocks.BLUE_CONCRETE.defaultBlockState());
     private static final SurfaceRules.RuleSource LIGHT_BLUE = SurfaceRules.state(Blocks.LIGHT_BLUE_CONCRETE.defaultBlockState());
@@ -59,6 +58,10 @@ public class NetherGrasslands extends NetherBiomeConfig {
         ;
     }
 
+    public static SurfaceRules.RuleSource mossRule() {
+        return SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
+    }
+
     @Override
     public void surface(BiomeSurfaceRuleBuilder<NetherBiomeBuilder> builder) {
         super.surface(builder);
@@ -69,7 +72,7 @@ public class NetherGrasslands extends NetherBiomeConfig {
                                 SurfaceRules.ON_FLOOR,
                                 new SwitchRuleSource(
                                         NetherGrasslandsNumericProvider.DEFAULT,
-                                        List.of(SOUL_SOIL, SOUL_SAND, MOSS, NETHERRACK)
+                                        List.of(SOUL_SOIL, SOUL_SAND, mossRule(), NETHERRACK)
                                 )
                         ),
                         new SwitchRuleSource(

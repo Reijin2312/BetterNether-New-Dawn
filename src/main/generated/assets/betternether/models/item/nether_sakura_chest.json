@@ -1,6 +1,7 @@
 {
   "parent": "bclib:block/chest_item",
   "textures": {
-    "texture": "betternether:entity/chest/nether_sakura_chest"
+    "particle": "betternether:block/chest/nether_sakura_chest",
+    "texture": "betternether:block/chest/nether_sakura_chest"
   }
 }

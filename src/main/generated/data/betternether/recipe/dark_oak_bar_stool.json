@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bar_stool",
   "key": {
-    "#": {
-      "item": "minecraft:dark_oak_slab"
-    },
-    "I": {
-      "item": "minecraft:stick"
-    }
+    "#": "minecraft:dark_oak_slab",
+    "I": "minecraft:stick"
   },
   "pattern": [
     "##",

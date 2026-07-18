@@ -8,7 +8,7 @@ import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
@@ -35,7 +35,7 @@ public class BlockGiantLucis extends HugeMushroomBlock implements AddMineableAxe
 
     @Override
     public @Nullable LootTable.Builder registerBlockLoot(
-            @NotNull ResourceLocation location,
+            @NotNull Identifier location,
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
@@ -45,7 +45,9 @@ public class BlockGiantLucis extends HugeMushroomBlock implements AddMineableAxe
         return LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                           .setRolls(ConstantValue.exactly(1.0F))
+                                          // Silk touch: drop the block itself once
                                           .add(LootItem.lootTableItem(this).when(silkTouch)))
+                        // Without silk touch: always drop spores and glowstone pile
                         .withPool(LootPool.lootPool()
                                           .setRolls(ConstantValue.exactly(1.0F))
                                           .when(notSilk)

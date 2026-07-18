@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "wall",
   "key": {
-    "*": {
-      "item": "betternether:mushroom_fir_planks"
-    },
-    "|": {
-      "item": "betternether:mushroom_fir_fence"
-    }
+    "*": "betternether:mushroom_fir_planks",
+    "|": "betternether:mushroom_fir_fence"
   },
   "pattern": [
     "* *",

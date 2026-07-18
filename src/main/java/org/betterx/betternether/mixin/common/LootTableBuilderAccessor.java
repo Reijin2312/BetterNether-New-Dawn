@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(LootTable.Builder.class)
+@Mixin(value = LootTable.Builder.class, remap = false)
 public interface LootTableBuilderAccessor {
     @Accessor("pools")
     ImmutableList.Builder<LootPool> getPools();

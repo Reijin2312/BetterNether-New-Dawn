@@ -1,4 +1,5 @@
 package org.betterx.betternether.blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourObsidian;
 import org.betterx.bclib.behaviours.interfaces.BehaviourObsidianPortalFrame;
@@ -7,15 +8,16 @@ import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.advancements.BNCriterion;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LightningRodBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.AABB;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import java.util.Iterator;
 
@@ -27,7 +29,7 @@ class BNObsidianBase extends BaseBlock implements BehaviourObsidian {
     }
 
     public BNObsidianBase(Block transformsTo) {
-        this(FabricBlockSettings.copyOf(Blocks.OBSIDIAN), transformsTo);
+        this(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN), transformsTo);
     }
 
     protected BNObsidianBase(Properties settings, Block transformsTo) {
@@ -42,14 +44,16 @@ class BNObsidianBase extends BaseBlock implements BehaviourObsidian {
             Level level,
             BlockPos blockPos,
             Block block,
-            BlockPos rodPos,
+            Orientation orientation,
             boolean bl
     ) {
         if (transformsTo != null) {
-            final BlockState updaterState = level.getBlockState(rodPos);
-            if (updaterState.is(Blocks.LIGHTNING_ROD)) {
-                if (updaterState.getValue(LightningRodBlock.POWERED)) {
+            for (Direction direction : Direction.values()) {
+                BlockPos rodPos = blockPos.relative(direction);
+                BlockState updaterState = level.getBlockState(rodPos);
+                if (updaterState.is(Blocks.LIGHTNING_ROD) && updaterState.getValue(LightningRodBlock.POWERED)) {
                     BNObsidian.onLightningUpdate(level, blockPos, transformsTo);
+                    break;
                 }
             }
         }

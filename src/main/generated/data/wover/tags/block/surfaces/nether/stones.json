@@ -1,6 +1,9 @@
 {
   "values": [
-    "#minecraft:base_stone_nether",
+    {
+      "id": "#minecraft:base_stone_nether",
+      "required": false
+    },
     "betternether:ceiling_mushrooms",
     "betternether:jungle_grass",
     "betternether:mushroom_grass",

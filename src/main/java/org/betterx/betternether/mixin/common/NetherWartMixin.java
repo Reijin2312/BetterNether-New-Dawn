@@ -7,8 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,19 +18,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(NetherWartBlock.class)
-public abstract class NetherWartMixin extends BushBlock {
+@Mixin(value = NetherWartBlock.class, remap = false)
+public abstract class NetherWartMixin extends VegetationBlock {
     protected NetherWartMixin(Properties settings) {
         super(settings);
     }
 
-    @Inject(method = "mayPlaceOn", at = @At(value = "RETURN"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    @Inject(
+            method = "mayPlaceOn",
+            at = @At(value = "RETURN"),
+            locals = LocalCapture.CAPTURE_FAILHARD,
+            cancellable = true,
+            remap = false
+    )
     private void canStay(BlockState floor, BlockGetter view, BlockPos pos, CallbackInfoReturnable<Boolean> info) {
         if (floor.getBlock() == NetherBlocks.FARMLAND)
             info.setReturnValue(true);
     }
 
-    @Inject(method = "randomTick", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "randomTick", at = @At(value = "HEAD"), cancellable = true, remap = false)
     private void bn_randomTick(
             BlockState state,
             ServerLevel world,

@@ -18,10 +18,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.SurfaceRules;
-
 import java.util.List;
-
-;
 
 public class PoorNetherGrasslands extends NetherBiomeConfig {
     @Override
@@ -59,7 +56,7 @@ public class PoorNetherGrasslands extends NetherBiomeConfig {
                                 SurfaceRules.ON_FLOOR,
                                 new SwitchRuleSource(
                                         NetherNoiseCondition.INSTANCE,
-                                        List.of(NetherGrasslands.MOSS, NetherGrasslands.SOUL_SOIL, NETHERRACK)
+                                        List.of(NetherGrasslands.mossRule(), NetherGrasslands.SOUL_SOIL, NETHERRACK)
                                 )
                         ),
                         soilStoneDist

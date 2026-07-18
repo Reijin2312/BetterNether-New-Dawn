@@ -93,6 +93,31 @@ public class BNPortalShape {
         return valid ? min : null;
     }
 
+    public BlockPos getBottomLeft() {
+        return valid ? min.immutable() : null;
+    }
+
+    public int getBoundingWidth() {
+        if (!valid) {
+            return 0;
+        }
+        if (axis == Direction.Axis.X) {
+            return max.getX() - min.getX() + 1;
+        }
+        if (axis == Direction.Axis.Z) {
+            return max.getZ() - min.getZ() + 1;
+        }
+        return 0;
+    }
+
+    public int getBoundingHeight() {
+        return valid ? max.getY() - min.getY() + 1 : 0;
+    }
+
+    public int getExistingPortalBlocks() {
+        return numPortalBlocks;
+    }
+
     public int calculateWidth() {
         if (axis == Direction.Axis.X)
             return valid ? max.getX() - min.getX() : 0;

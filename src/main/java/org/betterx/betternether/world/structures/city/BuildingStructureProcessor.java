@@ -92,7 +92,7 @@ public class BuildingStructureProcessor extends StructureProcessor {
         } else if (block instanceof TrapDoorBlock) {
             return setState(palette.getTrapdoor(state), structureBlockInfo2);
         } else if (block instanceof PressurePlateBlock) {
-            if (block.getSoundType(state) == SoundType.WOOD)
+            if (state.getSoundType() == SoundType.WOOD)
                 return setState(palette.getWoodenPlate(state), structureBlockInfo2);
             else
                 return setState(palette.getStonePlate(state), structureBlockInfo2);

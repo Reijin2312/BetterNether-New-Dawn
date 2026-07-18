@@ -3,7 +3,7 @@ package org.betterx.betternether.blocks;
 import org.betterx.bclib.behaviours.interfaces.BehaviourStone;
 import org.betterx.wover.block.api.CustomBlockItemProvider;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -15,7 +15,7 @@ public class BlockNetherRuby extends BlockBase implements CustomBlockItemProvide
     }
 
     @Override
-    public BlockItem getCustomBlockItem(ResourceLocation blockID, Item.Properties settings) {
+    public BlockItem getCustomBlockItem(Identifier blockID, Item.Properties settings) {
         return new BlockItem(this, settings.fireResistant());
     }
 }

@@ -1,0 +1,16 @@
+{
+  "name": "book.betternether.entry.welcome",
+  "icon": "betternether:jungle_stone",
+  "category": "betternether:intro",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "book.betternether.entry.welcome.text"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Tips",
+      "text": "- Fire Resistance helps against new biomes.\n- Silk Touch stops Rubys' Fire from smelting ores.\n- Many plants need the correct Nether soil to drop items.\n- You can search this book for blocks and items."
+    }
+  ]
+}

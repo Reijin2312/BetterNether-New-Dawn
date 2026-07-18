@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "betternether:rubeus_stripped_log"
-    }
+    "#": "betternether:rubeus_stripped_log"
   },
   "pattern": [
     "##",

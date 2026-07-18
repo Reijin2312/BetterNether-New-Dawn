@@ -70,7 +70,7 @@ public class WartForest extends NetherBiomeConfig {
                                         List.of(
                                                 NetherGrasslands.SOUL_SOIL,
                                                 NetherGrasslands.SOUL_SAND,
-                                                NetherGrasslands.MOSS,
+                                                NetherGrasslands.mossRule(),
                                                 NetherGrasslands.SOUL_SAND,
                                                 NETHERRACK
                                         )

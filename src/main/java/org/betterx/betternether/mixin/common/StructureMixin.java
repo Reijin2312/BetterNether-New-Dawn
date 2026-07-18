@@ -2,10 +2,13 @@ package org.betterx.betternether.mixin.common;
 
 import org.betterx.betternether.config.Configs;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.RandomState;
@@ -20,10 +23,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.Predicate;
 
-@Mixin(Structure.class)
+@Mixin(value = Structure.class, remap = false)
 public abstract class StructureMixin {
     @Inject(method = "generate", at = @At("HEAD"), cancellable = true)
     private void betternether$skipDisabledStructure(
+            Holder<Structure> structure,
+            ResourceKey<Level> levelKey,
             RegistryAccess registryAccess,
             ChunkGenerator chunkGenerator,
             BiomeSource biomeSource,
@@ -33,15 +38,10 @@ public abstract class StructureMixin {
             ChunkPos chunkPos,
             int references,
             LevelHeightAccessor heightAccessor,
-            Predicate<net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome>> validBiome,
+            Predicate<Holder<Biome>> validBiome,
             CallbackInfoReturnable<StructureStart> cir
     ) {
-        boolean enabled = registryAccess
-                .registryOrThrow(Registries.STRUCTURE)
-                .getResourceKey((Structure) (Object) this)
-                .map(Configs.STRUCTURES_TOGGLE::isEnabled)
-                .orElse(true);
-        if (!enabled) {
+        if (!Configs.STRUCTURES_TOGGLE.isEnabled(structure)) {
             cir.setReturnValue(StructureStart.INVALID_START);
         }
     }

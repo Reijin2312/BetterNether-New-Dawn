@@ -1,16 +1,13 @@
 package org.betterx.betternether.entity.model;
 
-import org.betterx.betternether.entity.EntityFirefly;
-
-import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartNames;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-import com.google.common.collect.ImmutableList;
-
-public class ModelEntityFirefly extends AgeableListModel<EntityFirefly> {
+public class ModelEntityFirefly extends EntityModel<LivingEntityRenderState> {
     private final ModelPart body;
     // private final ModelPart legs;
     private final ModelPart glow;
@@ -79,31 +76,15 @@ public class ModelEntityFirefly extends AgeableListModel<EntityFirefly> {
     }
 
     public ModelEntityFirefly(ModelPart root) {
+        super(root);
         this.body = root.getChild(PartNames.BODY);
         // this.legs = this.body.getChild(EntityModelPartNames.TAIL);
         this.glow = root.getChild(GLOW);
     }
 
     @Override
-    protected Iterable<ModelPart> headParts() {
-        return ImmutableList.of();
-    }
-
-    @Override
-    protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.body);
-    }
-
-    @Override
-    public void setupAnim(
-            EntityFirefly entity,
-            float limbAngle,
-            float limbDistance,
-            float customAngle,
-            float headYaw,
-            float headPitch
-    ) {
-
+    public void setupAnim(LivingEntityRenderState state) {
+        super.setupAnim(state);
     }
 
     public void syncTransform() {

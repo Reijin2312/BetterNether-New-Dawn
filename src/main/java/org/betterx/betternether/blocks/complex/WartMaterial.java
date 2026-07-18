@@ -22,6 +22,7 @@ public class WartMaterial extends RoofMaterial<WartMaterial> {
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super
                 .createMaterialSlots()
+                // лодки отключены: нет ассетов
                 .add(AbstractSeed.create(BlockWartSeed::new))
                 .add(SimpleBlockOnlyMaterialSlot.createBlockOnly(NetherSlots.ROOTS, BlockWartRoots::new));
     }
@@ -33,5 +34,10 @@ public class WartMaterial extends RoofMaterial<WartMaterial> {
 
     public Block getSeed() {
         return getBlock(NetherSlots.SEED);
+    }
+
+    @Override
+    public org.betterx.bclib.items.boat.BoatTypeOverride supplyBoatType() {
+        return super.supplyBoatType();
     }
 }

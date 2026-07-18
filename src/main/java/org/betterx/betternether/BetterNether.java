@@ -13,17 +13,18 @@ import org.betterx.betternether.world.BNWorldGenerator;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.state.api.WorldConfig;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import net.fabricmc.api.ModInitializer;
 
 public class BetterNether implements ModInitializer {
-    public static final ModCore C = ModCore.create("betternether");
+    public static final String MOD_ID = "betternether";
+    public static final ModCore C = ModCore.create(MOD_ID);
     public static final ModCore VANILLA_HAMMERS = ModCore.create("vanilla-hammers");
     public static final ModCore VANILLA_EXCAVATORS = ModCore.create("vanillaexcavators");
 
-    public static final ResourceLocation VANILLA_HAMMERS_PACK = C.addDatapack(VANILLA_HAMMERS);
-    public static final ResourceLocation VANILLA_EXCAVATORS_PACK = C.addDatapack(VANILLA_EXCAVATORS);
+    public static final Identifier VANILLA_HAMMERS_PACK = C.addDatapack(VANILLA_HAMMERS);
+    public static final Identifier VANILLA_EXCAVATORS_PACK = C.addDatapack(VANILLA_EXCAVATORS);
 
     private static boolean lavafallParticles = true;
     private static float fogStart = 0.05F;

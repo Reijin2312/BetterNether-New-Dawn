@@ -15,7 +15,7 @@ import static net.minecraft.world.level.levelgen.GenerationStep.Decoration.RAW_G
 public class NetherTerrainPlaced {
     private static final ModCore C = BetterNether.C;
     public static final PlacedConfiguredFeatureKey LAVA_PIT = PlacedFeatureManager
-            .createKey(NetherTerrain.LAVA_PITS.key.location(), NetherTerrain.LAVA_PITS)
+            .createKey(NetherTerrain.LAVA_PITS.key.identifier(), NetherTerrain.LAVA_PITS)
             .setDecoration(LAKES);
     public static final PlacedFeatureKey MAGMA_BLOBS = PlacedFeatureManager
             .createKey(C.id("magma_blob"))

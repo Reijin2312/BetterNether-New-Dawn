@@ -5,20 +5,20 @@ import org.betterx.betternether.BetterNether;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
 public class BNCriterion {
     public interface TriggerWithID<T extends CriterionTriggerInstance> extends CriterionTrigger<T> {
-        ResourceLocation getId();
+        Identifier getId();
     }
 
-    public static final ResourceLocation BREW_BLUE_ID = BetterNether.C.id("brew_blue");
-    public static final ResourceLocation USED_FORGE_ID = BetterNether.C.id("used_forge");
+    public static final Identifier BREW_BLUE_ID = BetterNether.C.id("brew_blue");
+    public static final Identifier USED_FORGE_ID = BetterNether.C.id("used_forge");
 
     public static PlayerTrigger BREW_BLUE;
     public static PlayerTrigger USED_FORGE;
@@ -31,7 +31,7 @@ public class BNCriterion {
         return register(trigger.getId(), trigger);
     }
 
-    public static <T extends CriterionTrigger<?>> T register(ResourceLocation id, T trigger) {
+    public static <T extends CriterionTrigger<?>> T register(Identifier id, T trigger) {
         return Registry.register(BuiltInRegistries.TRIGGER_TYPES, id, trigger);
     }
 

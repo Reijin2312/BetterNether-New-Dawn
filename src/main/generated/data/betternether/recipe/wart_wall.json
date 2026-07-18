@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "wall",
   "key": {
-    "*": {
-      "item": "betternether:wart_planks"
-    },
-    "|": {
-      "item": "betternether:wart_fence"
-    }
+    "*": "betternether:wart_planks",
+    "|": "betternether:wart_fence"
   },
   "pattern": [
     "* *",

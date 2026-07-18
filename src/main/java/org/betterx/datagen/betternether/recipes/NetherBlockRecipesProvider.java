@@ -214,6 +214,28 @@ public class NetherBlockRecipesProvider extends WoverRecipeProvider {
                      .group("nether_cincinnasite_pot")
                      .category(RecipeCategory.DECORATIONS)
                      .build(context);
+        RecipeBuilder.crafting(
+                             BetterNether.C.id("cincinnasite_fire_bowl"),
+                             NetherBlocks.CINCINNASITE_FIRE_BOWL
+                     )
+                     .shape("#I#", " # ", "L L")
+                     .addMaterial('#', NetherBlocks.CINCINNASITE_FORGED)
+                     .addMaterial('I', Items.NETHERRACK)
+                     .addMaterial('L', NetherItems.CINCINNASITE_INGOT)
+                     .group("fire_bowl")
+                     .category(RecipeCategory.MISC)
+                     .build(context);
+        RecipeBuilder.crafting(
+                             BetterNether.C.id("cincinnasite_fire_bowl_soul"),
+                             NetherBlocks.CINCINNASITE_FIRE_BOWL_SOUL
+                     )
+                     .shape("#I#", " # ", "L L")
+                     .addMaterial('#', NetherBlocks.CINCINNASITE_FORGED)
+                     .addMaterial('I', Items.SOUL_SAND)
+                     .addMaterial('L', NetherItems.CINCINNASITE_INGOT)
+                     .group("fire_bowl")
+                     .category(RecipeCategory.MISC)
+                     .build(context);
         RecipeBuilder.crafting(BetterNether.C.id("cincinnasite_tile_large"), NetherBlocks.CINCINNASITE_TILE_LARGE)
                      .shape("#", "#")
                      .addMaterial('#', NetherBlocks.CINCINNASITE_SLAB)

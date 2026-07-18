@@ -17,24 +17,25 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class BlockEntitiesRegistry {
-    public static final BlockEntityType<BlockEntityForge> CINCINNASITE_FORGE = BlockEntityType.Builder.of(
+    public static final BlockEntityType<BlockEntityForge> CINCINNASITE_FORGE = new BlockEntityType<>(
             BlockEntityForge::new,
-            NetherBlocks.CINCINNASITE_FORGE
-    ).build(null);
-    public static final BlockEntityType<BlockEntityFurnace> NETHERRACK_FURNACE = BlockEntityType.Builder.of(
+            Set.of(NetherBlocks.CINCINNASITE_FORGE)
+    );
+    public static final BlockEntityType<BlockEntityFurnace> NETHERRACK_FURNACE = new BlockEntityType<>(
             BlockEntityFurnace::new,
-            getFurnaces()
-    ).build(null);
-    public static final BlockEntityType<BlockEntityChestOfDrawers> CHEST_OF_DRAWERS = BlockEntityType.Builder.of(
+            Set.of(getFurnaces())
+    );
+    public static final BlockEntityType<BlockEntityChestOfDrawers> CHEST_OF_DRAWERS = new BlockEntityType<>(
             BlockEntityChestOfDrawers::new,
-            NetherBlocks.CHEST_OF_DRAWERS
-    ).build(null);
-    public static final BlockEntityType<BNBrewingStandBlockEntity> NETHER_BREWING_STAND = BlockEntityType.Builder.of(
+            Set.of(NetherBlocks.CHEST_OF_DRAWERS)
+    );
+    public static final BlockEntityType<BNBrewingStandBlockEntity> NETHER_BREWING_STAND = new BlockEntityType<>(
             BNBrewingStandBlockEntity::new,
-            NetherBlocks.NETHER_BREWING_STAND
-    ).build(null);
+            Set.of(NetherBlocks.NETHER_BREWING_STAND)
+    );
 
     public static void register() {
         RegisterBlockEntity("forge", CINCINNASITE_FORGE);

@@ -1,7 +1,6 @@
 package org.betterx.betternether;
 
 import org.betterx.betternether.blocks.BlockFarmland;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -53,8 +51,8 @@ public class BlocksHelper {
     };
 
     public static BoundingBox chunkBounds(LevelAccessor world, BlockPos pos) {
-        final int minBuildHeight = world.getMinBuildHeight() + 1;
-        final int maxBuildHeight = world.getMaxBuildHeight() - 1;
+        final int minBuildHeight = world.getMinY() + 1;
+        final int maxBuildHeight = world.getMaxY() - 1;
         return chunkBounds(world, pos, minBuildHeight, maxBuildHeight);
     }
 
@@ -66,8 +64,8 @@ public class BlocksHelper {
     }
 
     public static BoundingBox decorationBounds(LevelAccessor world, BlockPos pos) {
-        final int minBuildHeight = world.getMinBuildHeight() + 1;
-        final int maxBuildHeight = world.getMaxBuildHeight() - 1;
+        final int minBuildHeight = world.getMinY() + 1;
+        final int maxBuildHeight = world.getMaxY() - 1;
         return decorationBounds(world, pos, minBuildHeight, maxBuildHeight);
     }
 

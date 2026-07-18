@@ -3,7 +3,6 @@ plugins {
     id 'maven-publish'
     id "com.diffplug.spotless" version "6.25.0"
     id "com.modrinth.minotaur" version "2.+"
-    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 spotless {
@@ -21,10 +20,12 @@ tasks.withType(JavaCompile).configureEach {
     dependsOn(tasks.named("spotlessApply"))
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
-archivesBaseName = project.archives_base_name
+base { archivesName = project.archives_base_name }
 version = project.mod_version
 group = project.maven_group
 def local_bclib = findProject(':BCLib') != null
@@ -54,6 +55,9 @@ loom {
 
 sourceSets {
     main {
+        java {
+            exclude 'org/betterx/betternether/integrations/emi/**'
+        }
         // Add the datagenned files into the jar.
         resources {
             srcDirs += [
@@ -115,7 +119,6 @@ dependencies {
     modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
 
     // run against the full jar
-    modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
 
     println "Using local BCLib: ${local_bclib}"
     if (local_bclib) {
@@ -124,10 +127,9 @@ dependencies {
         modImplementation "org.betterx:bclib:${project.bclib_version}"
     }
 
-    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
-    modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+    modCompileOnly "mezz.jei:jei-1.21.11-fabric-api:${project.jei_version}"
+    modCompileOnly "maven.modrinth:jade:${project.jade_version}"
 
-    modLocalRuntime "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     println "Using local WunderLib: ${local_wunderlib}"
     if (local_wunderlib) {
@@ -152,6 +154,8 @@ dependencies {
 repositories {
     mavenCentral()
     maven { url "https://maven.fabricmc.net/" }
+    maven { url "https://maven.blamejared.com" }
+    maven { url "https://api.modrinth.com/maven" }
     maven { url 'https://jitpack.io' }
     maven { url "https://maven.bai.lol" }
     maven { url 'https://maven.terraformersmc.com' }
@@ -200,7 +204,7 @@ jar {
     from "LICENSE.ASSETS"
 }
 
-def modrinthModsDir = file(findProperty("modrinth_mods_dir") ?: "C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/1.21.1 server/mods")
+def modrinthModsDir = file(findProperty("modrinth_mods_dir") ?: "C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/Fabric 1.21.11/mods")
 def fabricRuntimeProjects = [project]
 if (local_bclib) fabricRuntimeProjects.add(project(":BCLib"))
 if (local_wover) fabricRuntimeProjects.add(project(":WorldWeaver"))
