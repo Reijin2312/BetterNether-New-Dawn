@@ -35,7 +35,7 @@ public class ForgeDisplay {
         if (sampleInput.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        return recipe.value().assemble(new SingleRecipeInput(sampleInput), provider);
+        return recipe.value().assemble(new SingleRecipeInput(sampleInput));
     }
 
     public Identifier getId() {

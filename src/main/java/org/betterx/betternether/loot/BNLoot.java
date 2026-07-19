@@ -17,7 +17,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 
 import com.google.common.collect.Lists;
 
@@ -41,7 +41,7 @@ public class BNLoot {
 
     public static void register() {
 
-        LootTableEvents.MODIFY.register((id, table, source) -> {
+        LootTableEvents.MODIFY.register((id, table, source, registries) -> {
             if (BuiltInLootTables.RUINED_PORTAL.equals(id) || BuiltInLootTables.NETHER_BRIDGE.equals(id)) {
                 table.withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 4))
                                        .add(LootItem.lootTableItem(NetherBlocks.BLUE_OBSIDIAN.asItem())

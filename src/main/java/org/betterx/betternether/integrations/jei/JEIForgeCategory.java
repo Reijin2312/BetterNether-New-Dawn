@@ -4,7 +4,7 @@ import org.betterx.betternether.blockentities.BlockEntityForge;
 import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -88,7 +88,7 @@ public class JEIForgeCategory implements IRecipeCategory<ForgeDisplay> {
     public void draw(
             ForgeDisplay display,
             IRecipeSlotsView recipeSlotsView,
-            GuiGraphics guiGraphics,
+            GuiGraphicsExtractor guiGraphics,
             double mouseX,
             double mouseY
     ) {
@@ -100,12 +100,12 @@ public class JEIForgeCategory implements IRecipeCategory<ForgeDisplay> {
         if (experience > 0) {
             Component experienceString = Component.translatable("betternether.jei.cooking.experience", experience);
             int xPos = 82 - Minecraft.getInstance().font.width(experienceString);
-            guiGraphics.drawString(Minecraft.getInstance().font, experienceString, xPos, 0, 0xFF808080, false);
+            guiGraphics.text(Minecraft.getInstance().font, experienceString, xPos, 0, 0xFF808080, false);
         }
 
         float cookTimeSeconds = (display.getCookingTime() / (float) BlockEntityForge.SPEEDUP) / 20.0F;
         String timeText = String.format(Locale.ROOT, "%.1fs", cookTimeSeconds);
         int timeXPos = 70 - (Minecraft.getInstance().font.width(timeText) / 2);
-        guiGraphics.drawString(Minecraft.getInstance().font, timeText, timeXPos, 46, 0xFF404040, false);
+        guiGraphics.text(Minecraft.getInstance().font, timeText, timeXPos, 46, 0xFF404040, false);
     }
 }

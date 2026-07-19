@@ -11,14 +11,14 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 
 public class RenderNagaProjectile extends EntityRenderer<EntityNagaProjectile, RenderNagaProjectile.NagaProjectileRenderState> {
     private static final Identifier TEXTURE = BetterNether.C.mk("textures/entity/naga_projectile.png");
-    private static final RenderType LAYER = RenderTypes.entityCutoutNoCull(TEXTURE);
+    private static final RenderType LAYER = RenderTypes.entityCutout(TEXTURE);
 
     public RenderNagaProjectile(EntityRendererProvider.Context context) {
         super(context);

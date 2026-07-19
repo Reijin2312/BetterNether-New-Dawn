@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -18,7 +19,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
@@ -38,6 +38,8 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.animal.pig.PigSoundVariant;
+import net.minecraft.world.entity.animal.pig.PigSoundVariants;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -164,17 +166,17 @@ public class EntityFlyingPig extends DespawnableAnimal implements FlyingAnimal {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.PIG_HURT;
+        return getClassicPigSoundSet().hurtSound().value();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.PIG_DEATH;
+        return getClassicPigSoundSet().deathSound().value();
     }
 
     @Override
     public SoundEvent getAmbientSound() {
-        return SoundEvents.PIG_AMBIENT;
+        return getClassicPigSoundSet().ambientSound().value();
     }
 
     @Override
@@ -422,7 +424,7 @@ public class EntityFlyingPig extends DespawnableAnimal implements FlyingAnimal {
             if (target.isAlive() && target.distanceTo(EntityFlyingPig.this) < 1.3) {
                 ItemStack stack = target.getItem();
 
-                ItemParticleOption effect = new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(stack.getItem()));
+                ItemParticleOption effect = new ItemParticleOption(ParticleTypes.ITEM, stack.getItem());
 
                 Iterator<?> var14 = level().players().iterator();
 
@@ -475,7 +477,7 @@ public class EntityFlyingPig extends DespawnableAnimal implements FlyingAnimal {
     public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
         EntityFlyingPig pig = NetherEntities.FLYING_PIG.type().create(world, EntitySpawnReason.BREEDING);
         if (pig != null) {
-            pig.setWarted(world.random.nextInt(4) == 0);
+            pig.setWarted(world.getRandom().nextInt(4) == 0);
         }
         return pig;
     }
@@ -483,5 +485,13 @@ public class EntityFlyingPig extends DespawnableAnimal implements FlyingAnimal {
     @Override
     public boolean isFood(ItemStack stack) {
         return stack.getItem() == Items.NETHER_WART;
+    }
+
+    private PigSoundVariant.PigSoundSet getClassicPigSoundSet() {
+        return this.registryAccess()
+                   .lookupOrThrow(Registries.PIG_SOUND_VARIANT)
+                   .getOrThrow(PigSoundVariants.CLASSIC)
+                   .value()
+                   .adultSounds();
     }
 }

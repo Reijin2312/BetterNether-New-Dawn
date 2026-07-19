@@ -21,7 +21,7 @@ public class BlockCincinnasiteAnvil extends AnvilBlock implements BehaviourMetal
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getParameter(LootContextParams.TOOL);
+        var tool = builder.getParameter(LootContextParams.TOOL);
         if (LootUtil.isCorrectTool(this, state, tool)) {
             return Lists.newArrayList(new ItemStack(this));
         } else {

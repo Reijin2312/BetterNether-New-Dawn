@@ -214,7 +214,7 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
         }
 
         source.shrink(1);
-        ItemStack remainder = source.getItem().getCraftingRemainder();
+        ItemStack remainder = source.getItem().getCraftingRemainder().create();
         if (!remainder.isEmpty()) {
             ItemStack itemStack2 = remainder.copy();
             if (source.isEmpty()) {

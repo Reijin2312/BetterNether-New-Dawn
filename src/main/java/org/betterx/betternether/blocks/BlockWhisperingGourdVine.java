@@ -68,7 +68,7 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
                         new ItemStack(
                                 NetherBlocks.WHISPERING_GOURD)
                 ));
-                if (world.random.nextBoolean()) {
+                if (world.getRandom().nextBoolean()) {
                     world.addFreshEntity(new ItemEntity(
                             world,
                             pos.getX() + 0.5,

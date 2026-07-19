@@ -48,7 +48,7 @@ public class EntitySkull extends Monster implements FlyingAnimal {
         this.lookControl = new SkullLookControl(this);
         this.setPathfindingMalus(PathType.LAVA, -1.0F);
         this.setPathfindingMalus(PathType.WATER, -1.0F);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+        this.setPathfindingMalus(PathType.FIRE_IN_NEIGHBOR, 0.0F);
         this.xpReward = 1;
     }
 

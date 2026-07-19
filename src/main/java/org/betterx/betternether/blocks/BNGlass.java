@@ -20,7 +20,7 @@ public class BNGlass extends BaseGlassBlock {
     @Override
     public void provideBlockModels(Object modelGenerator) {
         WoverBlockModelGenerators generators = (WoverBlockModelGenerators) modelGenerator;
-        var resource = TextureMapping.getBlockTexture(this);
+        Identifier resource = TextureMapping.getBlockTexture(this).sprite();
         Identifier blockModel;
         if (!resource.getPath().equals("block/quartz_glass") && !resource
                 .getPath()

@@ -6,7 +6,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.ContextAwarePredicate;
-import net.minecraft.advancements.criterion.CriterionValidator;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
@@ -14,6 +13,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.storage.loot.ValidationContextSource;
 
 import java.util.Optional;
 
@@ -63,8 +63,8 @@ public class ConvertByLightningTrigger
         }
 
         @Override
-        public void validate(CriterionValidator criterionValidator) {
-            SimpleInstance.super.validate(criterionValidator);
+        public void validate(ValidationContextSource validationContextSource) {
+            SimpleInstance.super.validate(validationContextSource);
         }
 
         @Override

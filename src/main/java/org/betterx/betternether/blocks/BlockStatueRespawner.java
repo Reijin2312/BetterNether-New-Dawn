@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -45,7 +46,8 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
     private static final DustParticleOptions EFFECT = new DustParticleOptions(0xFF0000, 1.0F);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty TOP = BooleanProperty.create("top");
-    private final ItemStack requiredItem;
+    private final Item requiredItem;
+    private final int requiredItemCount;
     private final Component requiredItemCountText;
     private final Component requiredItemNameText;
 
@@ -55,10 +57,10 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
         this.registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(TOP, false));
         this.setDropItself(false);
 
-        int count = 4;
-        requiredItem = new ItemStack(Items.GLOWSTONE, count);
-        requiredItemCountText = Component.literal(Integer.toString(count));
-        requiredItemNameText = requiredItem.getHoverName();
+        requiredItem = Items.GLOWSTONE;
+        requiredItemCount = 4;
+        requiredItemCountText = Component.literal(Integer.toString(requiredItemCount));
+        requiredItemNameText = Component.translatable(requiredItem.getDescriptionId());
     }
 
     @Override
@@ -91,18 +93,18 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
             BlockHitResult hit
     ) {
         ItemStack stack = player.getMainHandItem();
-        if (stack.getItem() == requiredItem.getItem() && stack.getCount() >= requiredItem.getCount()) {
+        if (stack.getItem() == requiredItem && stack.getCount() >= requiredItemCount) {
             float y = state.getValue(TOP) ? 0.4F : 1.4F;
             if (!player.isCreative()) {
-                player.getMainHandItem().shrink(requiredItem.getCount());
+                player.getMainHandItem().shrink(requiredItemCount);
             }
             for (int i = 0; i < 50; i++)
                 world.addParticle(EFFECT,
-                        pos.getX() + world.random.nextFloat(),
-                        pos.getY() + y + world.random.nextFloat() * 0.2,
-                        pos.getZ() + world.random.nextFloat(), 0, 0, 0
+                        pos.getX() + world.getRandom().nextFloat(),
+                        pos.getY() + y + world.getRandom().nextFloat() * 0.2,
+                        pos.getZ() + world.getRandom().nextFloat(), 0, 0, 0
                 );
-            player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
+            player.sendOverlayMessage(Component.translatable("message.spawn_set", new Object[0]));
             if (!world.isClientSide()) {
                 ((ServerPlayer) player).setRespawnPosition(
                         new ServerPlayer.RespawnConfig(LevelData.RespawnData.of(world.dimension(), pos, player.getYHeadRot(), 0.0F), false),
@@ -112,9 +114,8 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
             player.playSound(SoundEvents.TOTEM_USE, 0.7F, 1.0F);
             return InteractionResult.SUCCESS;
         } else {
-            player.displayClientMessage(
-                    Component.translatable("message.spawn_help", requiredItemCountText, requiredItemNameText),
-                    true
+            player.sendOverlayMessage(
+                    Component.translatable("message.spawn_help", requiredItemCountText, requiredItemNameText)
             );
         }
         return InteractionResult.SUCCESS;

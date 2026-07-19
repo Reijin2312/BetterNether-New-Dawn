@@ -38,8 +38,8 @@
               {
                 "type": "minecraft:block_predicate_filter",
                 "predicate": {
-                  "type": "minecraft:matching_blocks",
-                  "blocks": "minecraft:air"
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "minecraft:air"
                 }
               },
               {
@@ -86,8 +86,8 @@
                   {
                     "type": "minecraft:block_predicate_filter",
                     "predicate": {
-                      "type": "minecraft:matching_blocks",
-                      "blocks": "minecraft:air"
+                      "type": "minecraft:matching_block_tag",
+                      "tag": "minecraft:air"
                     }
                   },
                   {
@@ -134,8 +134,8 @@
                   {
                     "type": "minecraft:block_predicate_filter",
                     "predicate": {
-                      "type": "minecraft:matching_blocks",
-                      "blocks": "minecraft:air"
+                      "type": "minecraft:matching_block_tag",
+                      "tag": "minecraft:air"
                     }
                   },
                   {
@@ -217,8 +217,8 @@
                   {
                     "type": "minecraft:block_predicate_filter",
                     "predicate": {
-                      "type": "minecraft:matching_blocks",
-                      "blocks": "minecraft:air"
+                      "type": "minecraft:matching_block_tag",
+                      "tag": "minecraft:air"
                     }
                   },
                   {
@@ -276,8 +276,8 @@
                   {
                     "type": "minecraft:block_predicate_filter",
                     "predicate": {
-                      "type": "minecraft:matching_blocks",
-                      "blocks": "minecraft:air"
+                      "type": "minecraft:matching_block_tag",
+                      "tag": "minecraft:air"
                     }
                   },
                   {
@@ -324,8 +324,8 @@
                   {
                     "type": "minecraft:block_predicate_filter",
                     "predicate": {
-                      "type": "minecraft:matching_blocks",
-                      "blocks": "minecraft:air"
+                      "type": "minecraft:matching_block_tag",
+                      "tag": "minecraft:air"
                     }
                   },
                   {
@@ -372,8 +372,8 @@
                   {
                     "type": "minecraft:block_predicate_filter",
                     "predicate": {
-                      "type": "minecraft:matching_blocks",
-                      "blocks": "minecraft:air"
+                      "type": "minecraft:matching_block_tag",
+                      "tag": "minecraft:air"
                     }
                   },
                   {

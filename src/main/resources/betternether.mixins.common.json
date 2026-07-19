@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "org.betterx.betternether.mixin.common",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
     "BlockAgeProcessorMixin",

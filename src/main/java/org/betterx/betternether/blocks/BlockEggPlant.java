@@ -92,7 +92,7 @@ public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherG
             if (world.isClientSide()) {
                 world.playLocalSound(px, py, pz, SoundType.WART_BLOCK.getBreakSound(), SoundSource.BLOCKS, 1, 1, false);
                 BlockParticleOption effect = new BlockParticleOption(ParticleTypes.BLOCK, state);
-                RandomSource random = world.random;
+                RandomSource random = world.getRandom();
                 for (int i = 0; i < 24; i++)
                     world.addParticle(
                             effect,
@@ -111,7 +111,7 @@ public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherG
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getParameter(LootContextParams.TOOL);
+        var tool = builder.getParameter(LootContextParams.TOOL);
         if (LootUtil.isCorrectTool(this, state, tool))
             return Collections.singletonList(new ItemStack(this.asItem()));
         else
