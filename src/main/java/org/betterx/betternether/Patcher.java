@@ -1,7 +1,6 @@
 package org.betterx.betternether;
 
 import de.ambertation.wunderlib.utils.Version;
-import org.betterx.bclib.api.v2.datafixer.DataFixerAPI;
 import org.betterx.bclib.api.v2.datafixer.MigrationProfile;
 import org.betterx.bclib.api.v2.datafixer.Patch;
 import org.betterx.bclib.interfaces.PatchBiFunction;
@@ -14,9 +13,9 @@ import java.util.Map;
 
 public class Patcher {
     public static void register() {
-        DataFixerAPI.registerPatch(Patcher_001::new);
-        DataFixerAPI.registerPatch(Patcher_002::new);
-        DataFixerAPI.registerPatch(Patcher_003::new);
+        Patch.register(Patcher_001::new);
+        Patch.register(Patcher_002::new);
+        Patch.register(Patcher_003::new);
     }
 }
 
