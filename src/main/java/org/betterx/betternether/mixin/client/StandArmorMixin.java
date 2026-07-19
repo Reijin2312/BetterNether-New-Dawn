@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.ArmorStandRenderState;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.fabricmc.loader.api.FabricLoader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +26,9 @@ public abstract class StandArmorMixin extends LivingEntityRenderer<ArmorStand, A
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     private void onInit(EntityRendererProvider.Context ctx, CallbackInfo info) {
-        if (!Configs.CLIENT.thinArmor.get()) {
+        // See PlayerArmorMixin: EMF expects the renderer's original armor layer.
+        if (!Configs.CLIENT.thinArmor.get()
+                || FabricLoader.getInstance().isModLoaded("entity_model_features")) {
             return;
         }
 

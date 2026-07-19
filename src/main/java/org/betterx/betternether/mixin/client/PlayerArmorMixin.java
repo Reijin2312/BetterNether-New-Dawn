@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.Avatar;
+import net.fabricmc.loader.api.FabricLoader;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +26,11 @@ public abstract class PlayerArmorMixin extends LivingEntityRenderer<Avatar, Avat
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     private void bcl_onInit(EntityRendererProvider.Context context, boolean slim, CallbackInfo info) {
-        if (!Configs.CLIENT.thinArmor.get()) {
+        // EMF keeps render-state associated with the armor layer created by
+        // AvatarRenderer. Replacing that instance after construction corrupts
+        // per-slot armor models/UVs, so retain the vanilla layer when EMF is present.
+        if (!Configs.CLIENT.thinArmor.get()
+                || FabricLoader.getInstance().isModLoaded("entity_model_features")) {
             return;
         }
 
@@ -42,7 +47,7 @@ public abstract class PlayerArmorMixin extends LivingEntityRenderer<Avatar, Avat
                 new HumanoidArmorLayer<>(
                         this,
                         ArmorModelSet.bake(
-                                ModelLayers.PLAYER_SLIM_ARMOR,
+                                slim ? ModelLayers.PLAYER_SLIM_ARMOR : ModelLayers.PLAYER_ARMOR,
                                 context.getModelSet(),
                                 part -> new PlayerModel(part, slim)
                         ),
