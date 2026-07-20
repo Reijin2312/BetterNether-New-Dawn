@@ -69,23 +69,8 @@ sourceSets {
 
 tasks.register("generateBetterNetherResources") {
     group = "fabric"
-    description = "Runs BetterNether datagen before packaging the mod."
+    description = "Runs BetterNether datagen manually."
     dependsOn(tasks.named("runDatagenClient"))
-}
-
-def generatedResourcesDir = file("src/main/generated")
-tasks.register("syncGeneratedResources", Copy) {
-    group = "fabric"
-    description = "Syncs generated datagen resources into build outputs."
-    dependsOn(tasks.named("generateBetterNetherResources"))
-    dependsOn(tasks.named("processResources"))
-    from(generatedResourcesDir)
-    into(layout.buildDirectory.dir("resources/main"))
-}
-
-tasks.named("jar") {
-    dependsOn(tasks.named("generateBetterNetherResources"))
-    dependsOn(tasks.named("syncGeneratedResources"))
 }
 
 subprojects { subproject ->
@@ -202,7 +187,7 @@ jar {
     from "LICENSE.ASSETS"
 }
 
-def modrinthModsDir = file(findProperty("modrinth_mods_dir") ?: "C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/Fabric 26.1/mods")
+def modrinthModsDir = file(findProperty("modrinth_mods_dir") ?: "C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/Fabric 26.1.2/mods")
 def fabricRuntimeProjects = [project]
 if (local_bclib) fabricRuntimeProjects.add(project(":BCLib"))
 if (local_wover) fabricRuntimeProjects.add(project(":WorldWeaver"))
