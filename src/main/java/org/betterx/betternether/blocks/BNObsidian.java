@@ -51,7 +51,7 @@ class BNObsidianBase extends BaseBlock implements BehaviourObsidian {
             for (Direction direction : Direction.values()) {
                 BlockPos rodPos = blockPos.relative(direction);
                 BlockState updaterState = level.getBlockState(rodPos);
-                if (updaterState.is(Blocks.LIGHTNING_ROD) && updaterState.getValue(LightningRodBlock.POWERED)) {
+            if (updaterState.is(Blocks.LIGHTNING_ROD.weathering().unaffected()) && updaterState.getValue(LightningRodBlock.POWERED)) {
                     BNObsidian.onLightningUpdate(level, blockPos, transformsTo);
                     break;
                 }

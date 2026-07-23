@@ -23,7 +23,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -33,20 +32,20 @@ import java.util.Map;
 
 public class NetherEntities {
     public enum KnownSpawnTypes {
-        GHAST(50, 4, 4, EntityType.GHAST),
-        ZOMBIFIED_PIGLIN(100, 4, 4, EntityType.ZOMBIFIED_PIGLIN),
-        MAGMA_CUBE(2, 4, 4, EntityType.MAGMA_CUBE),
+        GHAST(50, 4, 4, EntityTypes.GHAST),
+        ZOMBIFIED_PIGLIN(100, 4, 4, EntityTypes.ZOMBIFIED_PIGLIN),
+        MAGMA_CUBE(2, 4, 4, EntityTypes.MAGMA_CUBE),
         SKULL(2, 2, 4, NetherEntities.SKULL),
-        ENDERMAN(1, 4, 4, EntityType.ENDERMAN),
-        PIGLIN(15, 4, 4, EntityType.PIGLIN),
-        STRIDER(60, 1, 2, EntityType.STRIDER),
-        HOGLIN(9, 1, 2, EntityType.HOGLIN),
+        ENDERMAN(1, 4, 4, EntityTypes.ENDERMAN),
+        PIGLIN(15, 4, 4, EntityTypes.PIGLIN),
+        STRIDER(60, 1, 2, EntityTypes.STRIDER),
+        HOGLIN(9, 1, 2, EntityTypes.HOGLIN),
         FIREFLY(5, 1, 3, NetherEntities.FIREFLY),
         HYDROGEN_JELLYFISH(5, 2, 6, NetherEntities.HYDROGEN_JELLYFISH),
         NAGA(8, 3, 5, NetherEntities.NAGA),
         FLYING_PIG(20, 2, 4, NetherEntities.FLYING_PIG),
         JUNGLE_SKELETON(40, 2, 4, NetherEntities.JUNGLE_SKELETON),
-        PIGLIN_BRUTE(0, 1, 1, EntityType.PIGLIN_BRUTE);
+        PIGLIN_BRUTE(0, 1, 1, EntityTypes.PIGLIN_BRUTE);
 
         public final int weight;
         public final int minGroupSize;
@@ -90,17 +89,10 @@ public class NetherEntities {
     private static final List<BCLEntityWrapper<?>> NETHER_ENTITIES = Lists.newArrayList();
 
 
-    public static final EntityType<EntityNagaProjectile> NAGA_PROJECTILE = FabricEntityTypeBuilder
-            .create(
-                    MobCategory.MISC,
-                    EntityNagaProjectile::new
-            )
-            .dimensions(
-                    EntityDimensions.fixed(
-                            1F,
-                            1F
-                    ))
-            .disableSummon()
+    public static final EntityType<EntityNagaProjectile> NAGA_PROJECTILE = EntityType.Builder
+            .of(EntityNagaProjectile::new, MobCategory.MISC)
+            .sized(1F, 1F)
+            .noSummon()
             .build(ResourceKey.create(Registries.ENTITY_TYPE, BetterNether.C.id("naga_projectile")));
 
     public static final BCLEntityWrapper<EntityFirefly> FIREFLY =
@@ -195,12 +187,10 @@ public class NetherEntities {
     ) {
         Identifier id = BetterNether.C.id(name);
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, id);
-        EntityType<T> type = FabricEntityTypeBuilder.create(group, entity)
-                                                    .dimensions(fixedSize
-                                                            ? EntityDimensions.fixed(width, height)
-                                                            : EntityDimensions.scalable(width, height))
-                                                    .fireImmune() //Nether Entities are by default immune to fire
-                                                    .build(key);
+        EntityType<T> type = EntityType.Builder.of(entity, group)
+                                               .sized(width, height)
+                                               .fireImmune() //Nether Entities are by default immune to fire
+                                               .build(key);
 
         type = Registry.register(BuiltInRegistries.ENTITY_TYPE, id, type);
         FabricDefaultAttributeRegistry.register(type, attributes);

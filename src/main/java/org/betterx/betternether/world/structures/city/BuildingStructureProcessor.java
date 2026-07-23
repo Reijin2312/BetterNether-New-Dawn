@@ -1,5 +1,7 @@
 package org.betterx.betternether.world.structures.city;
 
+import com.mojang.serialization.MapCodec;
+
 import org.betterx.betternether.blocks.BlockBNPot;
 import org.betterx.betternether.blocks.BlockPottedPlant;
 import org.betterx.betternether.blocks.BlockSmallLantern;
@@ -14,10 +16,9 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 
-public class BuildingStructureProcessor extends StructureProcessor {
+public class BuildingStructureProcessor implements StructureProcessor {
     protected final CityPalette palette;
 
     public BuildingStructureProcessor(CityPalette palette) {
@@ -33,11 +34,11 @@ public class BuildingStructureProcessor extends StructureProcessor {
             LevelReader worldView,
             BlockPos pos,
             BlockPos blockPos,
-            StructureBlockInfo structureBlockInfo,
+            BlockPos templateRelativePos,
             StructureBlockInfo structureBlockInfo2,
             StructurePlaceSettings structurePlacementData
     ) {
-        BlockState state = structureBlockInfo.state();
+        BlockState state = structureBlockInfo2.state();
 
         if (state.isAir())
             return structureBlockInfo2;
@@ -111,7 +112,7 @@ public class BuildingStructureProcessor extends StructureProcessor {
             return setState(Blocks.AIR.defaultBlockState(), structureBlockInfo2);
         } else if (!name.contains("nether") && !name.contains("mycelium") && state.isCollisionShapeFullBlock(
                 worldView,
-                structureBlockInfo.pos()
+                structureBlockInfo2.pos()
         ) && state.canOcclude() && !(state.getBlock() instanceof BaseEntityBlock)) {
             if (state.getLightEmission() > 0)
                 return setState(palette.getGlowingBlock(state), structureBlockInfo2);
@@ -122,7 +123,7 @@ public class BuildingStructureProcessor extends StructureProcessor {
     }
 
     @Override
-    protected StructureProcessorType<?> getType() {
-        return StructureProcessorType.NOP;
+    public MapCodec<? extends StructureProcessor> codec() {
+        return MapCodec.unit(this);
     }
 }

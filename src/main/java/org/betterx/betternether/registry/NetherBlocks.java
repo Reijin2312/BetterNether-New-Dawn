@@ -1086,33 +1086,33 @@ public class NetherBlocks {
             "warped",
             Blocks.WARPED_PLANKS.defaultMapColor(),
             MapColor.WARPED_STEM
-    ).setFurnitureCloth(Blocks.RED_WOOL).init();
+    ).setFurnitureCloth(Blocks.WOOL.red()).init();
 
 
             CRIMSON_WOOD = new VanillaNetherWood(
             "crimson",
             Blocks.CRIMSON_PLANKS.defaultMapColor(),
             MapColor.CRIMSON_STEM
-    ).setFurnitureCloth(Blocks.RED_WOOL).init();
+    ).setFurnitureCloth(Blocks.WOOL.red()).init();
 
 
-            OAK_WOOD = VanillaWood.create("oak", Blocks.RED_WOOL);
+            OAK_WOOD = VanillaWood.create("oak", Blocks.WOOL.red());
 
-            SPRUCE_WOOD = VanillaWood.create("spruce", Blocks.RED_WOOL);
+            SPRUCE_WOOD = VanillaWood.create("spruce", Blocks.WOOL.red());
 
-            BIRCH_WOOD = VanillaWood.create("birch", Blocks.RED_WOOL);
+            BIRCH_WOOD = VanillaWood.create("birch", Blocks.WOOL.red());
 
-            JUNGLE_WOOD = VanillaWood.create("jungle", Blocks.RED_WOOL);
+            JUNGLE_WOOD = VanillaWood.create("jungle", Blocks.WOOL.red());
 
-            ACACIA_WOOD = VanillaWood.create("acacia", Blocks.BLACK_WOOL);
+            ACACIA_WOOD = VanillaWood.create("acacia", Blocks.WOOL.black());
 
-            DARK_OAK_WOOD = VanillaWood.create("dark_oak", Blocks.RED_WOOL);
+            DARK_OAK_WOOD = VanillaWood.create("dark_oak", Blocks.WOOL.red());
 
-            CHERRY_WOOD = VanillaWood.create("cherry", Blocks.WHITE_WOOL);
+            CHERRY_WOOD = VanillaWood.create("cherry", Blocks.WOOL.white());
 
-            BAMBOO_WOOD = VanillaWood.create("bamboo", Blocks.BROWN_WOOL);
+            BAMBOO_WOOD = VanillaWood.create("bamboo", Blocks.WOOL.brown());
 
-            MANGROVE_WOOD = VanillaWood.create("mangrove", Blocks.BLACK_WOOL);
+            MANGROVE_WOOD = VanillaWood.create("mangrove", Blocks.WOOL.black());
 
     // Storage
             CHEST_OF_DRAWERS = registerBlock("chest_of_drawers", () -> new BlockChestOfDrawers());

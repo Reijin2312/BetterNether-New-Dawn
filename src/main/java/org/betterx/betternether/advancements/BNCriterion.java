@@ -2,10 +2,10 @@ package org.betterx.betternether.advancements;
 
 import org.betterx.betternether.BetterNether;
 
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.criterion.PlayerTrigger;
+import net.minecraft.advancements.triggers.PlayerTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;

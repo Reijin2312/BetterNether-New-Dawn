@@ -92,7 +92,7 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
     ) {
         var fruityState = LootItemBlockStatePropertyCondition
                 .hasBlockStateProperties(this)
-                .setProperties(net.minecraft.advancements.criterion.StatePropertiesPredicate.Builder
+                .setProperties(net.minecraft.advancements.predicates.StatePropertiesPredicate.Builder
                         .properties()
                         .hasProperty(SHAPE, BlockProperties.TripleShape.TOP))
                 .invert();

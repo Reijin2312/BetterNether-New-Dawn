@@ -12,7 +12,6 @@ import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -50,6 +48,7 @@ public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMinea
                        .destroyTime(0.1F)
                        .sound(SoundType.FUNGUS)
                        .strength(1)
+                       .bounceRestitution(1.0F)
                        .noOcclusion());
         boolean sodium = FabricLoader.getInstance().isModLoaded("sodium");
         this.setRenderLayer(sodium ? BNRenderLayer.CUTOUT : BNRenderLayer.TRANSLUCENT);
@@ -118,22 +117,6 @@ public class BlockJellyfishMushroom extends BlockBaseNotFull implements AddMinea
             super.fallOn(world, state, pos, entity, fallDistance);
         else
             entity.causeFallDamage(fallDistance, 0.0F, world.damageSources().fall());
-    }
-
-    @Override
-    public void updateEntityMovementAfterFallOn(BlockGetter world, Entity entity) {
-        if (entity.isSuppressingBounce())
-            super.updateEntityMovementAfterFallOn(world, entity);
-        else
-            this.bounce(entity);
-    }
-
-    private void bounce(Entity entity) {
-        Vec3 vec3d = entity.getDeltaMovement();
-        if (vec3d.y < 0.0D) {
-            double d = entity instanceof LivingEntity ? 1.0D : 0.8D;
-            entity.setDeltaMovement(vec3d.x, -vec3d.y * d, vec3d.z);
-        }
     }
 
     @Override

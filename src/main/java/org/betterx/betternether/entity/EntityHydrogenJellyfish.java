@@ -22,7 +22,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -36,7 +35,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class EntityHydrogenJellyfish extends DespawnableAnimal implements FlyingAnimal {
+public class EntityHydrogenJellyfish extends DespawnableAnimal {
     private static final EntityDataAccessor<Float> SCALE = SynchedEntityData.defineId(
             EntityHydrogenJellyfish.class,
             EntityDataSerializers.FLOAT
@@ -261,7 +260,6 @@ public class EntityHydrogenJellyfish extends DespawnableAnimal implements Flying
         }
     }
 
-    @Override
     public boolean isFlying() {
         return !this.onGround();
     }

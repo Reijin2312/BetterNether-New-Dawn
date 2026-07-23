@@ -36,7 +36,6 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -55,7 +54,7 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import org.jetbrains.annotations.NotNull;
 
-public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
+public class EntityFirefly extends DespawnableAnimal {
     private static final Vec3i[] SEARCH;
 
     private static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(
@@ -203,7 +202,6 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
         return NetherEntities.FIREFLY.type().create(world, EntitySpawnReason.BREEDING);
     }
 
-    @Override
     public boolean isFlying() {
         return !this.onGround();
     }
