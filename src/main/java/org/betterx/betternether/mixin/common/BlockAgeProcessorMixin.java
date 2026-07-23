@@ -25,7 +25,7 @@ public class BlockAgeProcessorMixin {
             LevelReader levelReader,
             BlockPos blockPos,
             BlockPos blockPos2,
-            StructureBlockInfo structureBlockInfo,
+            BlockPos templateRelativePos,
             StructureBlockInfo structureBlockInfo2,
             StructurePlaceSettings structurePlaceSettings,
             CallbackInfoReturnable<StructureBlockInfo> cir

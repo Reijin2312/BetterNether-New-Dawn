@@ -1,8 +1,6 @@
 {
   "type": "minecraft:smelting",
   "category": "blocks",
-  "cookingtime": 200,
-  "experience": 0.0,
   "ingredient": "minecraft:quartz",
   "result": {
     "id": "betternether:quartz_glass"

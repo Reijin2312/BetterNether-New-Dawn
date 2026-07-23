@@ -23,7 +23,7 @@ public class UpsideDownForest extends NetherBiomeConfig {
     public static SurfaceRules.RuleSource netherrackMossRule() {
         return SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
     }
-    static final SurfaceRules.ConditionSource NOISE_CEIL_LAYER = SurfaceRules.noiseCondition(
+    static final SurfaceRules.ConditionSource NOISE_CEIL_LAYER = SurfaceRules.noiseCondition2d(
             Noises.NETHER_STATE_SELECTOR,
             0.0
     );

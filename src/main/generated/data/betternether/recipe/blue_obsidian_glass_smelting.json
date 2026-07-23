@@ -1,8 +1,6 @@
 {
   "type": "minecraft:smelting",
   "category": "blocks",
-  "cookingtime": 200,
-  "experience": 0.0,
   "ingredient": "betternether:blue_obsidian",
   "result": {
     "id": "betternether:blue_obsidian_glass"

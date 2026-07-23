@@ -191,7 +191,7 @@ public class AnchorTreeBranchFeature extends ContextFeature<NoneFeatureConfigura
                     BlockState currentState = world.getBlockState(context.POS);
                     if (currentState.is(NetherBlocks.ANCHOR_TREE_VINE) || currentState.is(Blocks.AIR)) {
                         BlocksHelper.setWithUpdate(world, context.POS, leaves);
-                        //safeSet(world, mutableBlockPos, Blocks.WHITE_CONCRETE.defaultBlockState());
+                        //safeSet(world, mutableBlockPos, Blocks.CONCRETE.white().defaultBlockState());
 
                         //replace upward veins with leaves
                         BlockPos vpos = context.POS.above();
@@ -199,7 +199,7 @@ public class AnchorTreeBranchFeature extends ContextFeature<NoneFeatureConfigura
 
                         while (currentState.is(NetherBlocks.ANCHOR_TREE_VINE)) {
                             safeSet(world, vpos, leaves);
-                            //safeSet(world, vpos, Blocks.YELLOW_WOOL.defaultBlockState());
+                            //safeSet(world, vpos, Blocks.WOOL.yellow().defaultBlockState());
                             vpos = vpos.above();
                             currentState = world.getBlockState(vpos);
                         }
@@ -214,14 +214,14 @@ public class AnchorTreeBranchFeature extends ContextFeature<NoneFeatureConfigura
         updateDistances(world, context);
 
 //		final Block[] woool = {
-//			Blocks.BLACK_WOOL,
-//			Blocks.BLUE_WOOL,
-//			Blocks.CYAN_WOOL,
-//			Blocks.GREEN_WOOL,
-//			Blocks.LIME_WOOL,
-//			Blocks.YELLOW_WOOL,
-//			Blocks.ORANGE_WOOL,
-//			Blocks.RED_WOOL
+//			Blocks.WOOL.black(),
+//			Blocks.WOOL.blue(),
+//			Blocks.WOOL.cyan(),
+//			Blocks.WOOL.green(),
+//			Blocks.WOOL.lime(),
+//			Blocks.WOOL.yellow(),
+//			Blocks.WOOL.orange(),
+//			Blocks.WOOL.red()
 //		};
 //
 //		for (Entry<BlockPos, Byte> entry : LOGS_DIST.entrySet()){
@@ -259,14 +259,14 @@ public class AnchorTreeBranchFeature extends ContextFeature<NoneFeatureConfigura
 
                 if (cDist >= 7) {
                     safeSet(world, logPos, Blocks.AIR.defaultBlockState());
-                    //safeSet(world, logPos, Blocks.ORANGE_WOOL.defaultBlockState());
+                    //safeSet(world, logPos, Blocks.WOOL.orange().defaultBlockState());
 
                     BlockPos pos = logPos.below();
                     currentState = world.getBlockState(pos);
 
                     while (currentState.is(NetherBlocks.ANCHOR_TREE_VINE)) {
                         safeSet(world, pos, Blocks.AIR.defaultBlockState());
-                        //safeSet(world, pos, Blocks.LIGHT_BLUE_CONCRETE.defaultBlockState());
+                        //safeSet(world, pos, Blocks.CONCRETE.lightBlue().defaultBlockState());
                         pos = pos.below();
                         currentState = world.getBlockState(pos);
                     }

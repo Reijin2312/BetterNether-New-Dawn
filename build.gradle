@@ -428,6 +428,7 @@ tasks.register("fixMixinRefmap") {
     inputs.files(refmapFile).optional()
     outputs.file(refmapFile)
     dependsOn(tasks.named("compileJava"))
+    dependsOn(tasks.named("syncGeneratedResources"))
     mustRunAfter(tasks.named("processResources"))
     doLast {
         def file = refmapFile.get().asFile
@@ -482,18 +483,13 @@ tasks.register("fixMixinRefmap") {
     }
 }
 
-tasks.named("compileJava") {
-    finalizedBy(tasks.named("fixMixinRefmap"))
-}
-
 tasks.matching { it.name == "runClientData" || it.name == "runData" }.configureEach {
-    dependsOn(tasks.named("fixMixinRefmap"))
     finalizedBy(tasks.named("syncGeneratedResources"))
     // Datagen runs against named classes; disable refmap remapping to avoid obf targets.
     systemProperty "mixin.env.disableRefMap", "true"
 }
 
-tasks.matching { it.name == "runClient" || it.name == "runServer" || it.name == "runClientData" }.configureEach {
+tasks.matching { it.name == "runClient" || it.name == "runServer" }.configureEach {
     dependsOn(tasks.named("fixMixinRefmap"))
 }
 

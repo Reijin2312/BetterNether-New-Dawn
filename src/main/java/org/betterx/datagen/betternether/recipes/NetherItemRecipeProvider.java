@@ -44,7 +44,7 @@ public class NetherItemRecipeProvider extends WoverRecipeProvider {
                 .build(context);
 
         RecipeBuilder
-                .crafting(BN.id("bn_yellow_dye"), Items.YELLOW_DYE)
+                .crafting(BN.id("bn_yellow_dye"), Items.DYE.yellow())
                 .outputCount(2)
                 .shapeless()
                 .addMaterial('#', NetherBlocks.BLOOMING_VINE)
@@ -107,7 +107,7 @@ public class NetherItemRecipeProvider extends WoverRecipeProvider {
                      .group("nether_glass_bottle")
                      .outputCount(3)
                      .build(context);
-        RecipeBuilder.crafting(BetterNether.C.id("gray_dye"), Items.GRAY_DYE)
+        RecipeBuilder.crafting(BetterNether.C.id("gray_dye"), Items.DYE.gray())
                      .shapeless()
                      .addMaterial('#', NetherBlocks.GRAY_MOLD)
                      .group("nether_gray_dye")
@@ -133,7 +133,7 @@ public class NetherItemRecipeProvider extends WoverRecipeProvider {
                      .outputCount(16)
                      .category(RecipeCategory.TRANSPORTATION)
                      .build(context);
-        RecipeBuilder.crafting(BetterNether.C.id("red_dye"), Items.RED_DYE)
+        RecipeBuilder.crafting(BetterNether.C.id("red_dye"), Items.DYE.red())
                      .shapeless()
                      .addMaterial('#', NetherBlocks.RED_MOLD)
                      .group("nether_red_dye")
@@ -253,7 +253,7 @@ public class NetherItemRecipeProvider extends WoverRecipeProvider {
     }
 
     private static void registerSmelting(RecipeOutput context) {
-        RecipeBuilder.smelting(BetterNether.C.id("black_dye"), Items.BLACK_DYE)
+        RecipeBuilder.smelting(BetterNether.C.id("black_dye"), Items.DYE.black())
                      .input(NetherBlocks.INK_BUSH_SEED)
                      .cookingTime(200)
                      .build(context);
