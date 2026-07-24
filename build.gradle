@@ -73,14 +73,12 @@ def generatedResourcesDir = file("src/main/generated")
 tasks.register("syncGeneratedResources", Copy) {
     group = "fabric"
     description = "Syncs generated datagen resources into build outputs."
-    dependsOn(tasks.named("generateBetterNetherResources"))
     dependsOn(tasks.named("processResources"))
     from(generatedResourcesDir)
     into(layout.buildDirectory.dir("resources/main"))
 }
 
 tasks.named("jar") {
-    dependsOn(tasks.named("generateBetterNetherResources"))
     dependsOn(tasks.named("syncGeneratedResources"))
 }
 
