@@ -161,7 +161,7 @@ abstract class BaseBlockNetherGrass extends BasePlantBlock implements BehaviourP
     private static final VoxelShape SHAPE = box(4, 0, 4, 14, 12, 14);
 
     public BaseBlockNetherGrass() {
-        super(Materials.makeNetherGrass(MapColor.TERRACOTTA_GRAY).offsetType(Block.OffsetType.XZ));
+        super(Materials.makeNetherGrass(MapColor.TERRACOTTA_GRAY));
     }
 
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
