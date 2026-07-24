@@ -192,7 +192,7 @@ public class EntityFirefly extends DespawnableAnimal implements FlyingAnimal {
             float r = tag.getFloatOr("ColorRed", 1.0F);
             float g = tag.getFloatOr("ColorGreen", 1.0F);
             float b = tag.getFloatOr("ColorBlue", 1.0F);
-            color = ColorUtil.color((int) (r * 0xFF), (int) (g * 0xFF), (int) (g * 0xFF));
+            color = ColorUtil.color((int) (r * 0xFF), (int) (g * 0xFF), (int) (b * 0xFF));
         }
 
         this.entityData.set(COLOR, color);
