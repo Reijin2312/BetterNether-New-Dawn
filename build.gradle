@@ -125,11 +125,6 @@ dependencies {
     // Keep compileOnly for integration code, but skip runtime loading in dev runs.
     // runtimeOnly "mcp.mobius.waila:wthit:neo-${project.wthit_version}"
 
-    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
-    // EMI 1.21 artifact is not runtime-compatible with 1.21.11 mappings yet.
-    // Keep compileOnly for integration sources, but skip loading EMI in dev runs.
-    // runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
-
     compileOnly "mezz.jei:jei-1.21.11-neoforge-api:${project.jei_version}"
     if (enableJeiRuntime) {
         runtimeOnly "mezz.jei:jei-1.21.11-neoforge:${project.jei_version}"
