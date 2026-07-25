@@ -9,24 +9,24 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 
 public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAxe {
     private static final VoxelShape V_SHAPE = Block.box(4, 0, 4, 12, 16, 12);
@@ -35,7 +35,7 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
     public BlockWillowBranch() {
         super(Materials.makeNetherWood(MapColor.TERRACOTTA_RED)
                        .noOcclusion()
-                       .noCollission()
+                       .noCollision()
                        .lightLevel(BlockWillowBranch::getLuminance));
         this.setRenderLayer(BNRenderLayer.CUTOUT);
         this.setDropItself(false);
@@ -46,7 +46,6 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
         return state.getOptionalValue(SHAPE).map(s -> s == WillowBranchShape.END ? 15 : 0).orElse(0);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {
         return 1.0F;
     }
@@ -64,21 +63,22 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
     @Override
     public BlockState updateShape(
             BlockState state,
-            Direction facing,
-            BlockState neighborState,
-            LevelAccessor world,
+            LevelReader world,
+            ScheduledTickAccess scheduledTickAccess,
             BlockPos pos,
-            BlockPos neighborPos
+            Direction facing,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
     ) {
-        if (world.isEmptyBlock(pos.above()))
+        if (world.isEmptyBlock(pos.above()) && !world.getBlockState(pos.above()).is(BlockTags.LEAVES))
             return Blocks.AIR.defaultBlockState();
         else
             return state;
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(state.getValue(SHAPE) == WillowBranchShape.END
                 ? NetherBlocks.MAT_WILLOW.getTorch()
                 : NetherBlocks.WILLOW_LEAVES);
@@ -93,4 +93,3 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
         }
     }
 }
-
