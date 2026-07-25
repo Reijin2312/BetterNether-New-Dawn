@@ -12,6 +12,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.tags.BlockTags;
 
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.util.RandomSource;
@@ -39,7 +40,8 @@ public class BlockEyeBase extends BlockBase implements AddMineableHoe {
     ) {
         BlockPos blockPos = pos.above();
         Block up = world.getBlockState(blockPos).getBlock();
-        if (up != NetherBlocks.EYE_VINE && up != Blocks.NETHERRACK)
+        BlockState upState = world.getBlockState(blockPos);
+        if (up != NetherBlocks.EYE_VINE && !upState.is(BlockTags.LEAVES) && up != Blocks.NETHERRACK)
             return Blocks.AIR.defaultBlockState();
         else
             return state;

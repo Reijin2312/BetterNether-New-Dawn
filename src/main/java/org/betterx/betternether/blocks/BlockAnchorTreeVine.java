@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -78,7 +79,8 @@ public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourCl
             RandomSource random
     ) {
         Block up = world.getBlockState(pos.above()).getBlock();
-        if (up != this && up != NetherBlocks.ANCHOR_TREE_LEAVES && up != Blocks.NETHERRACK)
+        BlockState upState = world.getBlockState(pos.above());
+        if (up != this && !upState.is(BlockTags.LEAVES) && up != Blocks.NETHERRACK)
             return Blocks.AIR.defaultBlockState();
         else
             return state;
