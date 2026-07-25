@@ -45,7 +45,10 @@ public class NetherReedMaterial extends RoofMaterial<NetherReedMaterial> {
                     .remove(WoodSlots.BARK)
                     .remove(WoodSlots.STRIPPED_LOG)
                     .remove(WoodSlots.STRIPPED_BARK)
-
+                    .remove(WoodSlots.BOAT)
+                    .remove(WoodSlots.CHEST_BOAT)
+                    .add(WoodSlots.RAFT)
+                    .add(WoodSlots.CHEST_RAFT)
                     .replace(new Planks() {
                         @Override
                         protected @NotNull Block createBlock(

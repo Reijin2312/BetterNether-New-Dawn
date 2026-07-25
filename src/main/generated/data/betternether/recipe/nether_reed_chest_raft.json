@@ -7,11 +7,11 @@
       "tag": "c:chests"
     },
     {
-      "item": "betternether:nether_reed_boat"
+      "item": "betternether:nether_reed_raft"
     }
   ],
   "result": {
     "count": 1,
-    "id": "betternether:nether_reed_chest_boat"
+    "id": "betternether:nether_reed_chest_raft"
   }
 }
