@@ -45,8 +45,10 @@ public class NetherReedMaterial extends RoofMaterial<NetherReedMaterial> {
                     .remove(WoodSlots.BARK)
                     .remove(WoodSlots.STRIPPED_LOG)
                     .remove(WoodSlots.STRIPPED_BARK)
-                    // Disable boat + chest boat for nether reed until assets are provided
-
+                    .remove(WoodSlots.BOAT)
+                    .remove(WoodSlots.CHEST_BOAT)
+                    .add(WoodSlots.RAFT)
+                    .add(WoodSlots.CHEST_RAFT)
                     .replace(new Planks() {
                         @Override
                         protected @NotNull Block createBlock(
