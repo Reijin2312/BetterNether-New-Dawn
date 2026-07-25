@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -58,7 +59,7 @@ public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
         Direction direction = state.getValue(FACING);
         BlockPos targetPos = pos.relative(direction.getOpposite());
         BlockState targetState = level.getBlockState(targetPos);
-        return targetState.isFaceSturdy(level, targetPos, direction);
+        return targetState.isFaceSturdy(level, targetPos, direction) || targetState.is(BlockTags.LEAVES);
     }
 
     @Override
