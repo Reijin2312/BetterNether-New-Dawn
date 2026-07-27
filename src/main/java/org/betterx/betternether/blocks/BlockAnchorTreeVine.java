@@ -23,8 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraft.world.level.ScheduledTickAccess;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelAccessor;
 
 public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourClimableVine {
     protected static final VoxelShape SHAPE_SELECTION = Block.box(4, 0, 4, 12, 16, 12);
@@ -54,7 +53,7 @@ public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourCl
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
-        Vec3 vec3d = state.getOffset(pos);
+        Vec3 vec3d = state.getOffset(view, pos);
         return SHAPE_SELECTION.move(vec3d.x, vec3d.y, vec3d.z);
     }
 
@@ -63,20 +62,18 @@ public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourCl
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state) {
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter view, BlockPos pos) {
         return true;
     }
 
     @Override
     public BlockState updateShape(
             BlockState state,
-            LevelReader world,
-            ScheduledTickAccess scheduledTickAccess,
-            BlockPos pos,
             Direction facing,
-            BlockPos neighborPos,
             BlockState neighborState,
-            RandomSource random
+            LevelAccessor world,
+            BlockPos pos,
+            BlockPos neighborPos
     ) {
         Block up = world.getBlockState(pos.above()).getBlock();
         BlockState upState = world.getBlockState(pos.above());
@@ -86,7 +83,6 @@ public class BlockAnchorTreeVine extends BlockBaseNotFull implements BehaviourCl
             return state;
     }
 
-    @Override
     public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         return new ItemStack(NetherBlocks.ANCHOR_TREE_LEAVES);
     }

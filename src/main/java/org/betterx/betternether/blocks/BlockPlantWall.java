@@ -23,8 +23,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import java.util.EnumMap;
-import net.minecraft.world.level.ScheduledTickAccess;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelAccessor;
 
 public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
     private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(ImmutableMap.of(
@@ -65,13 +64,11 @@ public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
     @Override
     public BlockState updateShape(
             BlockState state,
-            LevelReader world,
-            ScheduledTickAccess scheduledTickAccess,
-            BlockPos pos,
             Direction facing,
-            BlockPos neighborPos,
             BlockState neighborState,
-            RandomSource random
+            LevelAccessor world,
+            BlockPos pos,
+            BlockPos neighborPos
     ) {
         if (canSurvive(state, world, pos))
             return state;
