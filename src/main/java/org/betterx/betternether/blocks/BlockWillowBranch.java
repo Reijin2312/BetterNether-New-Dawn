@@ -25,7 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import com.google.common.collect.Lists;
 
 import java.util.List;
-import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.util.RandomSource;
 
 public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAxe {
@@ -35,7 +35,7 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
     public BlockWillowBranch() {
         super(Materials.makeNetherWood(MapColor.TERRACOTTA_RED)
                        .noOcclusion()
-                       .noCollision()
+                .noOcclusion()
                        .lightLevel(BlockWillowBranch::getLuminance));
         this.setRenderLayer(BNRenderLayer.CUTOUT);
         this.setDropItself(false);
@@ -63,13 +63,11 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
     @Override
     public BlockState updateShape(
             BlockState state,
-            LevelReader world,
-            ScheduledTickAccess scheduledTickAccess,
-            BlockPos pos,
             Direction facing,
-            BlockPos neighborPos,
             BlockState neighborState,
-            RandomSource random
+            LevelAccessor world,
+            BlockPos pos,
+            BlockPos neighborPos
     ) {
         if (world.isEmptyBlock(pos.above()) && !world.getBlockState(pos.above()).is(BlockTags.LEAVES))
             return Blocks.AIR.defaultBlockState();
@@ -78,7 +76,7 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(state.getValue(SHAPE) == WillowBranchShape.END
                 ? NetherBlocks.MAT_WILLOW.getTorch()
                 : NetherBlocks.WILLOW_LEAVES);

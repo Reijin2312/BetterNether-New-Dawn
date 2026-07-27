@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.tags.BlockTags;
 
-import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.util.RandomSource;
 
 public class BlockEyeBase extends BlockBase implements AddMineableHoe {
@@ -30,13 +30,11 @@ public class BlockEyeBase extends BlockBase implements AddMineableHoe {
     @Override
     public BlockState updateShape(
             BlockState state,
-            LevelReader world,
-            ScheduledTickAccess scheduledTickAccess,
-            BlockPos pos,
             Direction facing,
-            BlockPos neighborPos,
             BlockState neighborState,
-            RandomSource random
+            LevelAccessor world,
+            BlockPos pos,
+            BlockPos neighborPos
     ) {
         BlockPos blockPos = pos.above();
         Block up = world.getBlockState(blockPos).getBlock();
@@ -48,7 +46,7 @@ public class BlockEyeBase extends BlockBase implements AddMineableHoe {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state) {
         return new ItemStack(NetherBlocks.EYE_SEED);
     }
 }

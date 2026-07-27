@@ -23,7 +23,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import java.util.EnumMap;
-import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.util.RandomSource;
 
 public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
@@ -65,13 +65,11 @@ public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
     @Override
     public BlockState updateShape(
             BlockState state,
-            LevelReader world,
-            ScheduledTickAccess scheduledTickAccess,
-            BlockPos pos,
             Direction facing,
-            BlockPos neighborPos,
             BlockState neighborState,
-            RandomSource random
+            LevelAccessor world,
+            BlockPos pos,
+            BlockPos neighborPos
     ) {
         if (canSurvive(state, world, pos))
             return state;
