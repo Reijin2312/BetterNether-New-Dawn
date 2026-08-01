@@ -22,7 +22,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -161,7 +160,7 @@ abstract class BaseBlockNetherGrass extends BasePlantBlock implements BehaviourP
     private static final VoxelShape SHAPE = box(4, 0, 4, 14, 12, 14);
 
     public BaseBlockNetherGrass() {
-        super(Materials.makeNetherGrass(MapColor.TERRACOTTA_GRAY).offsetType(Block.OffsetType.XZ));
+        super(Materials.makeNetherGrass(MapColor.TERRACOTTA_GRAY));
     }
 
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {

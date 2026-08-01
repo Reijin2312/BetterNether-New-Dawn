@@ -226,6 +226,7 @@ public class NetherEntities {
 
     public static void register() {
         registerEntity("naga_projectile", NAGA_PROJECTILE);
+        FabricDefaultAttributeRegistry.register(NAGA_PROJECTILE, Mob.createMobAttributes());
 
         SpawnRuleBuilder
                 .start(FIREFLY)

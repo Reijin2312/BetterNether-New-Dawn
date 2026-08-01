@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -70,7 +71,7 @@ public class BlockWillowBranch extends BlockBaseNotFull implements AddMineableAx
             BlockState neighborState,
             RandomSource random
     ) {
-        if (world.isEmptyBlock(pos.above()))
+        if (world.isEmptyBlock(pos.above()) && !world.getBlockState(pos.above()).is(BlockTags.LEAVES))
             return Blocks.AIR.defaultBlockState();
         else
             return state;
