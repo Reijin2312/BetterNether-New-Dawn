@@ -128,11 +128,6 @@ dependencies {
     // Keep compileOnly for integration code, but skip runtime loading in dev runs.
     // runtimeOnly "mcp.mobius.waila:wthit:neo-${project.wthit_version}"
 
-    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
-    // EMI 1.21 artifact is not runtime-compatible with 1.21.11 mappings yet.
-    // Keep compileOnly for integration sources, but skip loading EMI in dev runs.
-    // runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
-
     compileOnly "mezz.jei:jei-26.1-neoforge-api:${project.jei_version}"
     if (enableJeiRuntime) {
         runtimeOnly "mezz.jei:jei-26.1-neoforge:${project.jei_version}"
@@ -265,7 +260,6 @@ processResources {
 }
 
 tasks.named("jar") {
-    dependsOn(tasks.named("generateBetterXResources"))
     dependsOn(tasks.named("syncGeneratedResources"))
     from("src/main/generated")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
@@ -427,6 +421,7 @@ tasks.register("fixMixinRefmap") {
     def refmapFile = layout.buildDirectory.file("resources/main/${refmapName}")
     inputs.files(refmapFile).optional()
     outputs.file(refmapFile)
+    dependsOn(tasks.named("syncGeneratedResources"))
     dependsOn(tasks.named("compileJava"))
     dependsOn(tasks.named("syncGeneratedResources"))
     mustRunAfter(tasks.named("processResources"))
@@ -505,8 +500,7 @@ jar {
 
 // Collect built jars for BetterNether and its local BetterX libraries into one folder
 def distDir = new File(rootProject.projectDir.parentFile, "betterx-dist")
-def modrinthModsDir = new File("C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/26.1/mods")
-def test2ModsDir = file((project.findProperty("test2_mods_dir") ?: "C:/Users/Redmi/Desktop/test2/mods").toString())
+def modrinthModsDir = new File("C:/Users/Roboute Guilliman/AppData/Roaming/ModrinthApp/profiles/26.1-neo/mods")
 def betterNetherModrinthJarPatterns = [
         "BetterNether-*.jar",
         "bclib-*.jar",
@@ -547,22 +541,8 @@ tasks.register("copyModrinthJars", Copy) {
     into(modrinthModsDir)
 }
 
-tasks.register("copyTest2Jars", Copy) {
-    dependsOn(
-            tasks.named("jar"),
-            project(":BCLib").tasks.named("jar"),
-            project(":WorldWeaver").tasks.named("jar"),
-            project(":wunderlib").tasks.named("jar")
-    )
-    from(tasks.named("jar"))
-    from(project(":BCLib").tasks.named("jar"))
-    from(project(":WorldWeaver").tasks.named("jar"))
-    from(project(":wunderlib").tasks.named("jar"))
-    into(test2ModsDir)
-}
-
 tasks.named("build") {
-    finalizedBy("copyDistJars", "copyModrinthJars", "copyTest2Jars")
+    finalizedBy("copyDistJars", "copyModrinthJars")
 }
 
 apply from: "helper.gradle"

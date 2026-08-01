@@ -1,20 +1,37 @@
-name: Report a Bug
-description: File a bug report for the NeoForge port
+name: "Report a Bug"
+description: "File a bug report for BetterNether: New Dawn"
 title: "[Bug] "
-labels: ["bug"]
+labels:
+  - bug
+
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report a bug in BetterNether (NeoForge)!
+        Thanks for taking the time to report a bug in BetterNether: New Dawn!
+
+        Please make sure you are using compatible versions of Minecraft,
+        your mod loader, BetterNether, and all required dependencies.
 
   - type: textarea
-    id: what-happened
+    id: what_happened
     attributes:
-      label: What happened?
-      description: Also tell us what you expected to happen.
-      placeholder: Tell us what you see!
-      value: "A bug happened!"
+      label: "What happened?"
+      description: "Describe the problem and what you expected to happen instead."
+      placeholder: "Tell us what happened."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: "Steps to reproduce"
+      description: "Provide clear steps that consistently reproduce the issue."
+      placeholder: |
+        1. Install ...
+        2. Create or load a world
+        3. Go to ...
+        4. The issue occurs
     validations:
       required: true
 
@@ -23,61 +40,95 @@ body:
       value: |
         ## Versions
 
-  - type: input
-    id: bn_version
+  - type: dropdown
+    id: mod_loader
     attributes:
-      label: BetterNether (NeoForge)
-      description: What version of BetterNether are you running?
-      placeholder: 21.0.x
+      label: "Mod loader"
+      description: "Which mod loader are you using?"
+      options:
+        - NeoForge
+        - Fabric
+        - Quilt
+    validations:
+      required: true
+
+  - type: input
+    id: loader_version
+    attributes:
+      label: "Mod loader version"
+      description: "Enter your NeoForge, Fabric Loader, or Quilt Loader version."
+      placeholder: "NeoForge 21.x.x / Fabric Loader 0.x.x / Quilt Loader 0.x.x"
+    validations:
+      required: true
+
+  - type: input
+    id: loader_api_version
+    attributes:
+      label: "Fabric API / Quilt API version"
+      description: "Required when using Fabric or Quilt. Enter N/A when using NeoForge."
+      placeholder: "Fabric API 0.x.x or N/A"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: minecraft_version
+    attributes:
+      label: "Minecraft version"
+      description: "Which Minecraft version are you using?"
+      options:
+        - "1.21.1"
+        - "1.21.11"
+        - "26.1"
+        - "26.1.1"
+        - "26.1.2"
+        - "Other / development build"
+    validations:
+      required: true
+
+  - type: input
+    id: betternether_version
+    attributes:
+      label: "BetterNether: New Dawn version"
+      description: "Enter the exact BetterNether version shown in your mod file or log."
+      placeholder: "21.0.x"
     validations:
       required: true
 
   - type: input
     id: bclib_version
     attributes:
-      label: BCLib (NeoForge)
-      description: What version of BCLib are you running?
-      placeholder: 21.0.x
+      label: "BCLib: New Dawn version"
+      description: "Enter the exact BCLib version you are using."
+      placeholder: "21.0.x"
     validations:
       required: true
 
   - type: input
-    id: wover_version
+    id: worldweaver_version
     attributes:
-      label: WorldWeaver (NeoForge)
-      description: What version of WorldWeaver are you running?
-      placeholder: 21.0.x
+      label: "WorldWeaver: New Dawn version"
+      description: "Enter the exact WorldWeaver version you are using."
+      placeholder: "21.0.x"
     validations:
       required: true
 
   - type: input
-    id: neoforge_version
+    id: wunderlib_version
     attributes:
-      label: NeoForge
-      description: What version of NeoForge are you using?
-      placeholder: 21.x.x
+      label: "WunderLib: New Dawn version"
+      description: "Enter the exact WunderLib version you are using."
+      placeholder: "21.0.x"
     validations:
       required: true
 
   - type: input
     id: java_version
     attributes:
-      label: Java
-      description: What Java version are you running? (from the log or `java -version`)
+      label: "Java version"
+      description: "Enter the Java version shown in the log or by running java -version."
       placeholder: "21.0.x"
     validations:
       required: false
-
-  - type: dropdown
-    id: mc_version
-    attributes:
-      label: Minecraft
-      description: What Minecraft version is installed?
-      options:
-        - 1.21.1
-        - 1.21
-    validations:
-      required: true
 
   - type: markdown
     attributes:
@@ -87,58 +138,86 @@ body:
   - type: dropdown
     id: environment
     attributes:
-      label: Where does it happen?
-      description: Select where the issue occurs.
+      label: "Where does the issue happen?"
+      description: "Select the environment where the problem occurs."
       options:
         - Singleplayer
-        - Dedicated Server
+        - Dedicated server
         - Both
     validations:
       required: true
 
   - type: input
-    id: os
+    id: operating_system
     attributes:
-      label: Operating System
-      description: Windows / Linux / macOS + version
-      placeholder: "Windows 11 / Ubuntu 24.04 / macOS 14"
+      label: "Operating system"
+      description: "Enter your operating system and version."
+      placeholder: "Windows 11 / Ubuntu 24.04 / macOS 15"
+    validations:
+      required: false
+
+  - type: input
+    id: world_seed
+    attributes:
+      label: "World seed"
+      description: "Provide the affected world seed if the problem involves world generation."
+      placeholder: "Example: 123456789"
+    validations:
+      required: false
+
+  - type: input
+    id: coordinates
+    attributes:
+      label: "Coordinates"
+      description: "Provide coordinates if the issue occurs at a specific location."
+      placeholder: "Example: X: 120, Y: 64, Z: -340"
     validations:
       required: false
 
   - type: markdown
     attributes:
       value: |
-        ## Additional Information
+        ## Additional information
 
   - type: textarea
     id: logs
     attributes:
-      label: Relevant log output
+      label: "Logs or crash report"
       description: |
-        Please include `latest.log` and, if present, the crash report file.
-        Paste the relevant part here (or link to a paste site).
-      render: shell
+        Attach your latest.log and crash report, if one was generated.
+        You can drag and drop files directly into this field.
+      placeholder: "Attach the files or paste a link here."
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: other_mods
     attributes:
-      label: Other Mods
-      description: If possible, supply a list of installed mods (besides BetterNether and BCLib).
+      label: "Other installed mods"
+      description: |
+        Provide a complete mod list if possible.
+        This may already be included in your log.
+      placeholder: "Paste your mod list here."
       render: shell
     validations:
       required: false
 
   - type: textarea
-    id: repro
+    id: additional_context
     attributes:
-      label: Steps to reproduce
-      description: Minimal steps to reproduce the issue.
-      placeholder: |
-        1. Install ...
-        2. Launch ...
-        3. Click ...
-        4. Crash ...
+      label: "Additional context"
+      description: "Add screenshots, videos, datapacks, configurations, or other useful information."
     validations:
       required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: "Confirmation"
+      options:
+        - label: "I am using matching Minecraft, loader, mod, and dependency versions."
+          required: true
+        - label: "I searched existing issues and did not find a duplicate."
+          required: true
+        - label: "I understand that New Dawn-specific issues should not be reported to the upstream BetterX projects."
+          required: true

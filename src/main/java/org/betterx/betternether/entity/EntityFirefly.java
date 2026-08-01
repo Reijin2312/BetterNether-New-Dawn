@@ -191,7 +191,7 @@ public class EntityFirefly extends DespawnableAnimal {
             float r = tag.getFloatOr("ColorRed", 1.0F);
             float g = tag.getFloatOr("ColorGreen", 1.0F);
             float b = tag.getFloatOr("ColorBlue", 1.0F);
-            color = ColorUtil.color((int) (r * 0xFF), (int) (g * 0xFF), (int) (g * 0xFF));
+            color = ColorUtil.color((int) (r * 0xFF), (int) (g * 0xFF), (int) (b * 0xFF));
         }
 
         this.entityData.set(COLOR, color);
@@ -463,34 +463,34 @@ public class EntityFirefly extends DespawnableAnimal {
         float f7 = brightness * (1.0F - saturation * (1.0F - f4));
         switch ((int) f3) {
             case 0:
-                red = (byte) (brightness * 255F + 0.5F);
-                green = (byte) (f7 * 255F + 0.5F);
-                blue = (byte) (f5 * 255F + 0.5F);
+                red = (int) (brightness * 255F + 0.5F);
+                green = (int) (f7 * 255F + 0.5F);
+                blue = (int) (f5 * 255F + 0.5F);
                 break;
             case 1:
-                red = (byte) (f6 * 255F + 0.5F);
-                green = (byte) (brightness * 255F + 0.5F);
-                blue = (byte) (f5 * 255F + 0.5F);
+                red = (int) (f6 * 255F + 0.5F);
+                green = (int) (brightness * 255F + 0.5F);
+                blue = (int) (f5 * 255F + 0.5F);
                 break;
             case 2:
-                red = (byte) (f5 * 255F + 0.5F);
-                green = (byte) (brightness * 255F + 0.5F);
-                blue = (byte) (f7 * 255F + 0.5F);
+                red = (int) (f5 * 255F + 0.5F);
+                green = (int) (brightness * 255F + 0.5F);
+                blue = (int) (f7 * 255F + 0.5F);
                 break;
             case 3:
-                red = (byte) (f5 * 255F + 0.5F);
-                green = (byte) (f6 * 255F + 0.5F);
-                blue = (byte) (brightness * 255F + 0.5F);
+                red = (int) (f5 * 255F + 0.5F);
+                green = (int) (f6 * 255F + 0.5F);
+                blue = (int) (brightness * 255F + 0.5F);
                 break;
             case 4:
-                red = (byte) (f7 * 255F + 0.5F);
-                green = (byte) (f5 * 255F + 0.5F);
-                blue = (byte) (brightness * 255F + 0.5F);
+                red = (int) (f7 * 255F + 0.5F);
+                green = (int) (f5 * 255F + 0.5F);
+                blue = (int) (brightness * 255F + 0.5F);
                 break;
             case 5:
-                red = (byte) (brightness * 255F + 0.5F);
-                green = (byte) (f5 * 255F + 0.5F);
-                blue = (byte) (f6 * 255F + 0.5F);
+                red = (int) (brightness * 255F + 0.5F);
+                green = (int) (f5 * 255F + 0.5F);
+                blue = (int) (f6 * 255F + 0.5F);
                 break;
         }
 
