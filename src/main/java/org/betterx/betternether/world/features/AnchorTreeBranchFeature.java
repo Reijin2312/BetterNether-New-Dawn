@@ -6,6 +6,7 @@ import org.betterx.betternether.blocks.BlockAnchorTreeVine;
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
 import org.betterx.wover.block.api.BlockProperties;
+import org.betterx.wover.feature.api.WriteZone;
 import org.betterx.wover.feature.api.features.GrowableFeature;
 
 import net.minecraft.core.BlockPos;
@@ -54,6 +55,7 @@ public class AnchorTreeBranchFeature extends ContextFeature<NoneFeatureConfigura
     ) {
         context.clear();
         world.setBlock(pos, Blocks.AIR.defaultBlockState(), 0);
+        final WriteZone zone = WriteZone.of(world);
         float scale = MHelper.randRange(0.5F, 1F, random);
         int minCount = scale < 0.75 ? 3 : 4;
         int maxCount = scale < 0.75 ? 5 : 7;
@@ -88,7 +90,11 @@ public class AnchorTreeBranchFeature extends ContextFeature<NoneFeatureConfigura
             float crownR = 9 * branchSize;
             if (crownR < 1.5F)
                 crownR = 1.5F;
-            crown(world, new BlockPos(x1, y1 + 1, z1), crownR, random, scale_factor, context);
+            final float fittedR = zone.fitRadius(x1, z1, crownR, 1.5F);
+            if (fittedR >= 0) {
+                crownR = Math.min(crownR, fittedR);
+                crown(world, new BlockPos(x1, y1 + 1, z1), crownR, random, scale_factor, context);
+            }
 
             int middle = Math.round(pos.getY() + (MIDDLE_Y + MHelper.randRange(-2, 2, random)) * branchSize);
             boolean generate = true;

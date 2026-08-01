@@ -7,6 +7,7 @@ import org.betterx.betternether.blocks.*;
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.world.features.configs.NaturalTreeConfiguration;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
+import org.betterx.wover.feature.api.WriteZone;
 import org.betterx.wover.feature.api.features.GrowableFeature;
 
 import net.minecraft.core.BlockPos;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguration> implements GrowableFeature<NaturalTreeConfiguration> {
+    private static final float CROWN_SQUASH = 0.70710678F;
     private static final float[] CURVE_X = new float[]{9F, 7F, 1.5F, 0.5F, 3F, 7F};
     private static final float[] CURVE_Y = new float[]{20F, 17F, 12F, 4F, 0F, -2F};
     private static final java.util.function.Supplier<Block[]> WALL_PLANTS = () -> new Block[]{
@@ -50,6 +52,7 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
         int maxCount = scale < 1 ? 5 : 7;
         int count = MHelper.randRange(minCount, maxCount, random);
         final BoundingBox blockBox = BlocksHelper.decorationBounds(world, pos);
+        final WriteZone zone = WriteZone.of(world);
         for (int n = 0; n < count; n++) {
             float branchSize = MHelper.randRange(0.5F, 1F, random) * scale;
             float angle = n * MHelper.PI2 / count;
@@ -67,7 +70,11 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
             ) * branchSize);
             float crownR = 10 * branchSize;
             if (crownR < 1.5F) crownR = 1.5F;
-            crown(world, new BlockPos(x1, y1 + 1, z1), crownR, random, blockBox);
+            final float fittedR = zone.fitRadius(x1, z1, crownR * CROWN_SQUASH, 1.5F * CROWN_SQUASH);
+            if (fittedR >= 0) {
+                crownR = Math.min(crownR, fittedR / CROWN_SQUASH);
+                crown(world, new BlockPos(x1, y1 + 1, z1), crownR, random, blockBox);
+            }
 
             boolean generate = true;
             for (int i = 1; i < CURVE_X.length && generate; i++) {
@@ -131,30 +138,13 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
                 if (random.nextInt(8) == 0) {
                     Block[] wallPlants = WALL_PLANTS.get();
                     state = wallPlants[random.nextInt(wallPlants.length)].defaultBlockState();
-                    if (random.nextInt(8) == 0 && !context.BLOCKS.contains(bpos.north()) && world.isEmptyBlock(bpos.north()))
-                        BlocksHelper.setWithUpdate(
-                                world,
-                                bpos.north(),
-                                state.setValue(BlockPlantWall.FACING, Direction.NORTH)
-                        );
-                    if (random.nextInt(8) == 0 && !context.BLOCKS.contains(bpos.south()) && world.isEmptyBlock(bpos.south()))
-                        BlocksHelper.setWithUpdate(
-                                world,
-                                bpos.south(),
-                                state.setValue(BlockPlantWall.FACING, Direction.SOUTH)
-                        );
-                    if (random.nextInt(8) == 0 && !context.BLOCKS.contains(bpos.east()) && world.isEmptyBlock(bpos.east()))
-                        BlocksHelper.setWithUpdate(
-                                world,
-                                bpos.east(),
-                                state.setValue(BlockPlantWall.FACING, Direction.EAST)
-                        );
-                    if (random.nextInt(8) == 0 && !context.BLOCKS.contains(bpos.west()) && world.isEmptyBlock(bpos.west()))
-                        BlocksHelper.setWithUpdate(
-                                world,
-                                bpos.west(),
-                                state.setValue(BlockPlantWall.FACING, Direction.WEST)
-                        );
+                    for (Direction side : BlocksHelper.HORIZONTAL) {
+                        if (random.nextInt(8) != 0) continue;
+                        final BlockPos sidePos = bpos.relative(side);
+                        if (!BlocksHelper.isInsideHorizontally(blockBox, sidePos)) continue;
+                        if (context.BLOCKS.contains(sidePos) || !world.isEmptyBlock(sidePos)) continue;
+                        BlocksHelper.setWithUpdate(world, sidePos, state.setValue(BlockPlantWall.FACING, side), blockBox);
+                    }
                 }
             }
         }
