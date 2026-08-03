@@ -29,6 +29,9 @@
         ],
         "fabric-datagen": [
             "org.betterx.datagen.betternether.BetterNetherDatagen"
+        ],
+        "jei_mod_plugin": [
+            "org.betterx.betternether.integrations.jei.JEIPlugin"
         ]
     },
     "accessWidener": "betternether.accesswidener",
@@ -46,6 +49,9 @@
         "bclib": "26.1.x",
         "wover": "26.1.x",
         "wunderlib": "26.1.x"
+    },
+    "suggests": {
+        "jei": ">=29.0.0"
     },
     "breaks": {
         "bclib": "<26.1.0",
