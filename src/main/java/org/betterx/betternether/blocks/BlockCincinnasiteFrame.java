@@ -11,7 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class BlockCincinnasiteFrame extends BlockBaseNotFull implements BehaviourMetal {
     public BlockCincinnasiteFrame() {
-        super(Properties.ofFullCopy(NetherBlocks.CINCINNASITE_BLOCK).noOcclusion());
+        super(Properties.ofFullCopy(NetherBlocks.CINCINNASITE_BLOCK).noOcclusion()
+                .isValidSpawn((state, world, pos, type) -> false)
+                .isRedstoneConductor((state, world, pos) -> false));
         this.setRenderLayer(BNRenderLayer.CUTOUT);
     }
 

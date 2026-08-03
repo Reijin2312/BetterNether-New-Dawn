@@ -16,6 +16,8 @@ public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImm
     public BlockObsidianGlass() {
         super(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
                                  .noOcclusion()
+                                 .isValidSpawn((state, world, pos, type) -> false)
+                                 .isRedstoneConductor((state, world, pos) -> false)
                                  .isSuffocating((arg1, arg2, arg3) -> {
                                      return false;
                                  })

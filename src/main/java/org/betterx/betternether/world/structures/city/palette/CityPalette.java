@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CityPalette {
-    private static final RandomSource RANDOM = new LegacyRandomSource(130520220057l);
     private final String name;
 
     private final List<Block> foundationBlocks = new ArrayList<Block>();
@@ -194,8 +193,8 @@ public class CityPalette {
             return list.get(0);
 
         String seed = BuiltInRegistries.BLOCK.getKey(state.getBlock()).getPath();
-        RANDOM.setSeed(seed.hashCode());
-        return list.get(RANDOM.nextInt(list.size()));
+        final RandomSource random = new LegacyRandomSource(seed.hashCode());
+        return list.get(random.nextInt(list.size()));
     }
 
     private BlockState getFullState(BlockState input, List<Block> list) {
@@ -519,11 +518,11 @@ public class CityPalette {
 
     public BlockState getPlant(BlockState input) {
         String seed = BuiltInRegistries.BLOCK.getKey(input.getBlock()).getPath();
-        RANDOM.setSeed(seed.hashCode());
+        final RandomSource random = new LegacyRandomSource(seed.hashCode());
         return NetherBlocks.POTTED_PLANT.defaultBlockState()
                                         .setValue(
                                                 BlockPottedPlant.PLANT,
-                                                BNBlockProperties.PottedPlantShape.values()[RANDOM.nextInt(
+                                                BNBlockProperties.PottedPlantShape.values()[random.nextInt(
                                                         BNBlockProperties.PottedPlantShape.values().length)]
                                         );
     }
