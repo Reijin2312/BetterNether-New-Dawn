@@ -11,11 +11,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_iron_chain": {
+    "has_chain": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:iron_chain"
+            "items": "minecraft:chain"
           }
         ]
       },
@@ -32,7 +32,7 @@
     [
       "has_the_recipe",
       "has_gloomwood_dark_stripped_log",
-      "has_iron_chain"
+      "has_chain"
     ]
   ],
   "rewards": {

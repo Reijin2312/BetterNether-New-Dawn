@@ -1,16 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "chest",
-  "key": {
-    "#": "betternether:gloomwood_planks"
-  },
-  "pattern": [
-    "###",
-    "# #",
-    "###"
-  ],
-  "result": {
-    "id": "betternether:gloomwood_chest"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "misc",
+    "group":  "chest",
+    "key":  {
+                "#":  {
+                          "item":  "betternether:gloomwood_planks"
+                      }
+            },
+    "pattern":  [
+                    "###",
+                    "# #",
+                    "###"
+                ],
+    "result":  {
+                   "id":  "betternether:gloomwood_chest"
+               }
 }

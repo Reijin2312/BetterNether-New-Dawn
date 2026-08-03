@@ -1,17 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "chair",
-  "key": {
-    "#": "betternether:gloomwood_slab",
-    "I": "minecraft:stick"
-  },
-  "pattern": [
-    "I ",
-    "##",
-    "II"
-  ],
-  "result": {
-    "id": "betternether:gloomwood_chair"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "misc",
+    "group":  "chair",
+    "key":  {
+                "#":  {
+                          "item":  "betternether:gloomwood_slab"
+                      },
+                "I":  {
+                          "item":  "minecraft:stick"
+                      }
+            },
+    "pattern":  [
+                    "I ",
+                    "##",
+                    "II"
+                ],
+    "result":  {
+                   "id":  "betternether:gloomwood_chair"
+               }
 }

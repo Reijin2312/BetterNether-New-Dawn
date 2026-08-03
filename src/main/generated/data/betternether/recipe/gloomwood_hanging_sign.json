@@ -1,18 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "hanging_sign",
-  "key": {
-    "#": "betternether:gloomwood_stripped_log",
-    "I": "minecraft:iron_chain"
-  },
-  "pattern": [
-    "I I",
-    "###",
-    "###"
-  ],
-  "result": {
-    "count": 3,
-    "id": "betternether:gloomwood_hanging_sign"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "misc",
+    "group":  "hanging_sign",
+    "key":  {
+                "#":  {
+                          "item":  "betternether:gloomwood_stripped_log"
+                      },
+                "I":  {
+                          "item":  "minecraft:chain"
+                      }
+            },
+    "pattern":  [
+                    "I I",
+                    "###",
+                    "###"
+                ],
+    "result":  {
+                   "count":  3,
+                   "id":  "betternether:gloomwood_hanging_sign"
+               }
 }
