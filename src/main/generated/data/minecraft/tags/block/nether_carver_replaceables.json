@@ -4,6 +4,9 @@
     "minecraft:magma_block",
     "minecraft:red_sand",
     "minecraft:sculk",
+    "betternether:bleached_gloomsculk",
+    "betternether:molten_gloomsculk",
+    "betternether:veined_gloomsculk",
     "#wover:surfaces/nether/netherrack",
     "#wover:surfaces/nether/stones"
   ]
