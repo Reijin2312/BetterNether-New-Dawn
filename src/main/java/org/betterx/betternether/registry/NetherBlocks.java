@@ -31,6 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
@@ -58,6 +59,41 @@ public class NetherBlocks {
             "willow_leaves",
             new BlockWillowLeaves(MAT_WILLOW.getSapling())
     );
+
+    // Gloomwood //
+    public static final GloomwoodMaterial MAT_GLOOMWOOD = new GloomwoodMaterial().init();
+    public static final GloomwoodDarkMaterial MAT_GLOOMWOOD_DARK = new GloomwoodDarkMaterial().init();
+    public static final Block GLOOMWOOD_TRANSITION_STRIPPED_LOG = registerBlock(
+            "gloomwood_transition_stripped_log", new RotatedPillarBlock(FabricBlockSettings.copyOf(Blocks.WARPED_STEM)));
+    public static final Block GLOOMWOOD_TRANSITION_LOG = registerBlock(
+            "gloomwood_transition_log", new RotatedPillarBlock(FabricBlockSettings.copyOf(Blocks.WARPED_STEM)));
+    public static final Block GLOOMWOOD_TRANSITION_PLANKS = registerBlock(
+            "gloomwood_transition_planks", new Block(FabricBlockSettings.copyOf(Blocks.WARPED_PLANKS)));
+    public static final Block GLOOMWOOD_DARK_MOLTEN_LOG = registerBlock(
+            "gloomwood_dark_molten_log", new BlockMoltenGloomwoodLog(FabricBlockSettings.copyOf(Blocks.WARPED_STEM).luminance(s -> 7)));
+    public static final Block GLOOMWOOD_LEAVES = registerBlock(
+            "gloomwood_leaves", new BNLeaves(MAT_GLOOMWOOD.getSapling(), MapColor.COLOR_LIGHT_GRAY));
+    public static final Block GLOOMWOOD_BLEACHED_LEAVES = registerBlock(
+            "gloomwood_bleached_leaves", new BNLeaves(MAT_GLOOMWOOD.getSapling(), MapColor.TERRACOTTA_WHITE));
+    public static final Block BLEACHED_GLOOMSCULK = registerBlock(
+            "bleached_gloomsculk", new BlockTerrain(FabricBlockSettings.copyOf(Blocks.SCULK)));
+    public static final Block MOLTEN_GLOOMSCULK = registerBlock(
+            "molten_gloomsculk", new BlockMoltenGloomsculk(FabricBlockSettings.copyOf(Blocks.SCULK).luminance(s -> 5)));
+    public static final Block VEINED_GLOOMSCULK = registerBlock(
+            "veined_gloomsculk", new BlockTerrain(FabricBlockSettings.copyOf(Blocks.NETHERRACK)));
+    public static final Block GLOOMSCULK_GEODE = registerBlock(
+            "gloomsculk_geode", new BlockGloomsculkGeode(FabricBlockSettings.copyOf(Blocks.SCULK).luminance(s -> 10).nonOpaque()));
+    public static final Block GLOOMSCULK_GEODE_CRYSTAL = registerBlock(
+            "gloomsculk_geode_crystal", new BlockGloomsculkCrystal(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).luminance(s -> 8).nonOpaque()));
+    public static final Block GLOOMSCULK_LAMP = registerBlock(
+            "gloomsculk_lamp", new Block(FabricBlockSettings.copyOf(Blocks.SCULK).luminance(s -> 15).nonOpaque()));
+    public static final Block GLOOMSCULK_CRYSTAL = registerBlock(
+            "gloomsculk_crystal", new BlockGloomsculkCrystal(FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).luminance(s -> 6).nonOpaque()));
+    public static final Block PALE_GLOOMGRASS = registerBlock("pale_gloomgrass", new BlockNetherGrass.BoneGrass());
+    public static final Block GLOOMGRASS = registerBlock("gloomgrass", new BlockNetherGrass.BoneGrass());
+    public static final Block GLOOMSCULK_VINE = registerBlock("gloomsculk_vine", new BlockBlackVine());
+    public static final Block GLOOMWISP_VINE = registerBlock(
+            "gloomwisp_vine", new BlockGloomwispVine(FabricBlockSettings.copyOf(Blocks.WARPED_ROOTS).luminance(s -> 5).ticksRandomly()));
 
     // Wart //
     public static final WartMaterial MAT_WART = new WartMaterial(

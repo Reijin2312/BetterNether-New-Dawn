@@ -5,6 +5,7 @@ import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.blocks.BNRenderLayer;
 import org.betterx.betternether.config.screen.ConfigScreen;
 import org.betterx.betternether.registry.EntityRenderRegistry;
+import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherParticles;
 
 import net.minecraft.client.renderer.RenderType;
@@ -35,5 +36,6 @@ public class BetterNetherClient implements ClientModInitializer {
                     BlockRenderLayerMap.INSTANCE.putBlock(block, translucent);
             }
         });
+        BlockRenderLayerMap.INSTANCE.putBlock(NetherBlocks.MAT_GLOOMWOOD.getSapling(), cutout);
     }
 }

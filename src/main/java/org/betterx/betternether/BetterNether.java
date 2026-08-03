@@ -40,6 +40,7 @@ public class BetterNether implements ModInitializer {
 
         initOptions();
         SoundsRegistry.ensureStaticallyLoaded();
+        NetherGameRules.ensureStaticallyLoaded();
         NetherEnchantments.ensureStaticallyLoaded();
         NetherBlocks.register();
         BlockEntitiesRegistry.register();

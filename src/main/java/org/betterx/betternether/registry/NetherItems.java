@@ -14,6 +14,7 @@ import org.betterx.betternether.items.materials.BNArmorTiers;
 import org.betterx.betternether.items.materials.BNToolMaterial;
 import org.betterx.betternether.items.materials.BNToolTiers;
 import org.betterx.betternether.loot.BNLoot;
+import org.betterx.betternether.registry.item.NetherMusicDiscItems;
 import org.betterx.wover.complex.api.equipment.ArmorSlot;
 import org.betterx.wover.complex.api.equipment.ToolSlot;
 import org.betterx.wover.item.api.ItemRegistry;
@@ -410,6 +411,6 @@ public class NetherItems {
 
     @ApiStatus.Internal
     public static void register() {
-        //NO-OP
+        NetherMusicDiscItems.ensureLoaded();
     }
 }

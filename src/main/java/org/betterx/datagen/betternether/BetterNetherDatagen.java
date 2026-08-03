@@ -26,6 +26,7 @@ public class BetterNetherDatagen extends WoverDataGenEntryPoint {
         NetherBlocks.register();
 
         globalPack.addMultiProvider(NetherBiomesProvider::new);
+        globalPack.addProvider(NetherJukeboxSongProvider::new);
         globalPack.addMultiProvider(ObjectFeatureDataProvider::new);
         globalPack.addMultiProvider(OreFeatureDataProvider::new);
         globalPack.addMultiProvider(TerrainFeatureDataProvider::new);
