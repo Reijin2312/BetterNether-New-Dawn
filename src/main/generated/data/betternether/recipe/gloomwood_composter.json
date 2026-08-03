@@ -1,16 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "composter",
-  "key": {
-    "#": "betternether:gloomwood_slab"
-  },
-  "pattern": [
-    "# #",
-    "# #",
-    "###"
-  ],
-  "result": {
-    "id": "betternether:gloomwood_composter"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "misc",
+    "group":  "composter",
+    "key":  {
+                "#":  {
+                          "item":  "betternether:gloomwood_slab"
+                      }
+            },
+    "pattern":  [
+                    "# #",
+                    "# #",
+                    "###"
+                ],
+    "result":  {
+                   "id":  "betternether:gloomwood_composter"
+               }
 }

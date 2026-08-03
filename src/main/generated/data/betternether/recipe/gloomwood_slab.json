@@ -1,15 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "building",
-  "group": "wooden_slab",
-  "key": {
-    "#": "betternether:gloomwood_planks"
-  },
-  "pattern": [
-    "###"
-  ],
-  "result": {
-    "count": 6,
-    "id": "betternether:gloomwood_slab"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "building",
+    "group":  "wooden_slab",
+    "key":  {
+                "#":  {
+                          "item":  "betternether:gloomwood_planks"
+                      }
+            },
+    "pattern":  [
+                    "###"
+                ],
+    "result":  {
+                   "count":  6,
+                   "id":  "betternether:gloomwood_slab"
+               }
 }

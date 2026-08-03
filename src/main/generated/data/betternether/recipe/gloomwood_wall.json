@@ -1,17 +1,21 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "wooden_wall",
-  "key": {
-    "*": "betternether:gloomwood_planks",
-    "|": "betternether:gloomwood_fence"
-  },
-  "pattern": [
-    "* *",
-    "|||"
-  ],
-  "result": {
-    "count": 6,
-    "id": "betternether:gloomwood_wall"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "misc",
+    "group":  "wooden_wall",
+    "key":  {
+                "*":  {
+                          "item":  "betternether:gloomwood_planks"
+                      },
+                "|":  {
+                          "item":  "betternether:gloomwood_fence"
+                      }
+            },
+    "pattern":  [
+                    "* *",
+                    "|||"
+                ],
+    "result":  {
+                   "count":  6,
+                   "id":  "betternether:gloomwood_wall"
+               }
 }

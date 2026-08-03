@@ -1,11 +1,13 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
-  "group": "wooden_button",
-  "ingredients": [
-    "betternether:gloomwood_dark_planks"
-  ],
-  "result": {
-    "id": "betternether:gloomwood_dark_button"
-  }
+    "type":  "minecraft:crafting_shapeless",
+    "category":  "redstone",
+    "group":  "wooden_button",
+    "ingredients":  [
+                        {
+                            "item":  "betternether:gloomwood_dark_planks"
+                        }
+                    ],
+    "result":  {
+                   "id":  "betternether:gloomwood_dark_button"
+               }
 }

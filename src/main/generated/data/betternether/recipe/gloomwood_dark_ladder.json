@@ -1,18 +1,22 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "group": "ladder",
-  "key": {
-    "#": "betternether:gloomwood_dark_planks",
-    "I": "minecraft:stick"
-  },
-  "pattern": [
-    "I I",
-    "I#I",
-    "I I"
-  ],
-  "result": {
-    "count": 3,
-    "id": "betternether:gloomwood_dark_ladder"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "misc",
+    "group":  "ladder",
+    "key":  {
+                "#":  {
+                          "item":  "betternether:gloomwood_dark_planks"
+                      },
+                "I":  {
+                          "item":  "minecraft:stick"
+                      }
+            },
+    "pattern":  [
+                    "I I",
+                    "I#I",
+                    "I I"
+                ],
+    "result":  {
+                   "count":  3,
+                   "id":  "betternether:gloomwood_dark_ladder"
+               }
 }

@@ -1,13 +1,17 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "building",
-  "group": "gloomwood_transition",
-  "ingredients": [
-    "betternether:gloomwood_transition_log",
-    "betternether:gloomwood_log"
-  ],
-  "result": {
-    "count": 2,
-    "id": "betternether:gloomwood_log"
-  }
+    "type":  "minecraft:crafting_shapeless",
+    "category":  "building",
+    "group":  "gloomwood_transition",
+    "ingredients":  [
+                        {
+                            "item":  "betternether:gloomwood_transition_log"
+                        },
+                        {
+                            "item":  "betternether:gloomwood_log"
+                        }
+                    ],
+    "result":  {
+                   "count":  2,
+                   "id":  "betternether:gloomwood_log"
+               }
 }

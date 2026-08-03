@@ -1,17 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "group": "door",
-  "key": {
-    "#": "betternether:gloomwood_planks"
-  },
-  "pattern": [
-    "##",
-    "##",
-    "##"
-  ],
-  "result": {
-    "count": 3,
-    "id": "betternether:gloomwood_door"
-  }
+    "type":  "minecraft:crafting_shaped",
+    "category":  "redstone",
+    "group":  "door",
+    "key":  {
+                "#":  {
+                          "item":  "betternether:gloomwood_planks"
+                      }
+            },
+    "pattern":  [
+                    "##",
+                    "##",
+                    "##"
+                ],
+    "result":  {
+                   "count":  3,
+                   "id":  "betternether:gloomwood_door"
+               }
 }
