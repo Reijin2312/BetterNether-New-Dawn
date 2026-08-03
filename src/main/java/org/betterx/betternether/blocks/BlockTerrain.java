@@ -1,5 +1,4 @@
 package org.betterx.betternether.blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import org.betterx.bclib.api.v3.bonemeal.BonemealAPI;
 import org.betterx.bclib.api.v3.bonemeal.BonemealNyliumLike;
@@ -20,10 +19,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +38,11 @@ public class BlockTerrain extends BlockBase implements BlockTagProvider, Bonemea
     );
 
     public BlockTerrain() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERRACK).sound(TERRAIN_SOUND).requiresCorrectToolForDrops());
+        this(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERRACK).sound(TERRAIN_SOUND).requiresCorrectToolForDrops());
+    }
+
+    public BlockTerrain(BlockBehaviour.Properties properties) {
+        super(properties);
         this.setDropItself(false);
     }
 
@@ -81,8 +84,6 @@ public class BlockTerrain extends BlockBase implements BlockTagProvider, Bonemea
 
     @Override
     public void registerBlockTags(ResourceLocation location, TagBootstrapContext<Block> context) {
-        context.add(this, CommonBlockTags.NETHERRACK, CommonBlockTags.NETHER_STONES, CommonBlockTags.NETHER_TERRAIN);
+        context.add(this, CommonBlockTags.NETHERRACK, CommonBlockTags.NETHER_STONES);
     }
 }
-
-

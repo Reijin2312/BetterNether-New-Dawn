@@ -20,6 +20,14 @@ public class NetherBlockTagDataProvider extends WoverTagProvider.ForBlocks {
     public void prepareTags(TagBootstrapContext<Block> context) {
         context.add(NetherTags.NETHER_SAND, Blocks.SOUL_SAND);
         context.add(BlockTags.BEACON_BASE_BLOCKS, NetherBlocks.NETHER_RUBY_BLOCK);
+        context.add(
+                CommonBlockTags.SCULK_LIKE,
+                Blocks.SCULK,
+                NetherBlocks.BLEACHED_GLOOMSCULK,
+                NetherBlocks.GLOOMSCULK_GEODE,
+                NetherBlocks.MOLTEN_GLOOMSCULK,
+                NetherBlocks.VEINED_GLOOMSCULK
+        );
 
         context.add(
                 NetherTags.FIREFLY_FLOWERS,

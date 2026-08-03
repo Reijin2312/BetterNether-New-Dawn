@@ -14,6 +14,7 @@ import org.betterx.betternether.items.materials.BNArmorTiers;
 import org.betterx.betternether.items.materials.BNToolMaterial;
 import org.betterx.betternether.items.materials.BNToolTiers;
 import org.betterx.betternether.loot.BNLoot;
+import org.betterx.betternether.registry.item.NetherMusicDiscItems;
 import org.betterx.betternether.registry.NetherTemplates;
 import org.betterx.wover.complex.api.equipment.ArmorSlot;
 import org.betterx.wover.complex.api.equipment.ToolSlot;
@@ -341,6 +342,8 @@ public class NetherItems {
     private static void registerItems() {
         if (itemsRegistered) return;
         itemsRegistered = true;
+
+        NetherMusicDiscItems.ensureLoaded();
 
         // Templates must be initialized before tiers/sets so smithing recipes are generated.
         registerSmithingTemplates();

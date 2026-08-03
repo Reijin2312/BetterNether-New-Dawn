@@ -1,4 +1,4 @@
-﻿{
+{
   "values": [
     "betternether:bar_stool_cincinnasite",
     "betternether:basalt_bricks",
@@ -184,6 +184,13 @@
     "betternether:soul_sandstone_stairs",
     "betternether:soul_sandstone_wall",
     "betternether:swampland_grass",
-    "betternether:weeping_obsidian"
+    "betternether:weeping_obsidian",
+    "betternether:bleached_gloomsculk",
+    "betternether:gloomsculk_crystal",
+    "betternether:gloomsculk_geode",
+    "betternether:gloomsculk_geode_crystal",
+    "betternether:gloomsculk_lamp",
+    "betternether:molten_gloomsculk",
+    "betternether:veined_gloomsculk"
   ]
 }

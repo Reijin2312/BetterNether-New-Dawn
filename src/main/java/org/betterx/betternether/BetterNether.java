@@ -84,6 +84,7 @@ public class BetterNether {
 
         initOptions();
         SoundsRegistry.ensureStaticallyLoaded();
+        NetherGameRules.ensureStaticallyLoaded();
         NetherEnchantments.ensureStaticallyLoaded();
         BlockEntitiesRegistry.register();
         NetherEntities.register();

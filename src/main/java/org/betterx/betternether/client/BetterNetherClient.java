@@ -3,6 +3,7 @@ package org.betterx.betternether.client;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.blocks.BNRenderLayer;
 import org.betterx.betternether.config.screen.ConfigScreen;
+import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherParticles;
 
 import org.betterx.bclib.items.boat.BoatTypeOverride;
@@ -75,5 +76,6 @@ public final class BetterNetherClient {
                     ItemBlockRenderTypes.setRenderLayer(block, translucent);
             }
         });
+        ItemBlockRenderTypes.setRenderLayer(NetherBlocks.MAT_GLOOMWOOD.getSapling(), cutout);
     }
 }
