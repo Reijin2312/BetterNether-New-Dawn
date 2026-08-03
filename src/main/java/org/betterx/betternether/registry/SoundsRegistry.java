@@ -15,6 +15,30 @@ public class SoundsRegistry {
     public static final Holder<SoundEvent> AMBIENT_NETHER_JUNGLE = registerHolder("betternether.ambient.nether_jungle");
     public static final Holder<SoundEvent> AMBIENT_SWAMPLAND = registerHolder("betternether.ambient.swampland");
 
+    /**
+     * A {@link net.minecraft.sounds.Music} names a single sound event, so all three gloomwood tracks
+     * hang off this one event and the sound engine picks between them each time the music starts.
+     */
+    public static final Holder<SoundEvent> MUSIC_GLOOMWOOD = registerHolder("betternether.music.gloomwood");
+
+    /**
+     * A {@link net.minecraft.world.item.JukeboxSong} also names a single sound event, but a disc has to play
+     * the one track printed on its label - so the three gloomwood tracks get an event each here, next to the
+     * pooled {@link #MUSIC_GLOOMWOOD} the biome uses.
+     */
+    public static final Holder<SoundEvent> MUSIC_DISC_GLOOM_WOODS = registerHolder("betternether.music_disc.gloom_woods");
+    public static final Holder<SoundEvent> MUSIC_DISC_GLOOM_WISPS = registerHolder("betternether.music_disc.gloom_wisps");
+    public static final Holder<SoundEvent> MUSIC_DISC_GLOOMSCULK = registerHolder("betternether.music_disc.gloomsculk");
+
+    public static final Holder<SoundEvent> BLOCK_GLOOMWISP_CHIME = registerHolder("betternether.block.gloomwisp_chime");
+
+    /**
+     * The descending run a wisp gives off when it actually pays out, in place of the single
+     * {@link #BLOCK_GLOOMWISP_CHIME} note it rings the rest of the time - so the two are told apart by ear
+     * rather than only by the orb appearing.
+     */
+    public static final Holder<SoundEvent> BLOCK_GLOOMWISP_BOON = registerHolder("betternether.block.gloomwisp_boon");
+
     public static final Holder<SoundEvent> MOB_FIREFLY_FLY = registerHolder("betternether.mob.firefly.fly");
     public static final Holder<SoundEvent> MOB_JELLYFISH = registerHolder("betternether.mob.jellyfish");
     public static final Holder<SoundEvent> MOB_NAGA_IDLE = registerHolder("betternether.mob.naga_idle");

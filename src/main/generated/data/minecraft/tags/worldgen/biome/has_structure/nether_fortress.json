@@ -1,17 +1,18 @@
 {
-  "values": [
-    "betternether:bone_reef",
-    "betternether:flooded_deltas",
-    "betternether:gravel_desert",
-    "betternether:magma_land",
-    "betternether:nether_grasslands",
-    "betternether:nether_swampland",
-    "betternether:nether_swampland_terraces",
-    "betternether:old_fungiwoods",
-    "betternether:old_swampland",
-    "betternether:old_warped_woods",
-    "betternether:poor_nether_grasslands",
-    "betternether:sulfuric_bone_reef",
-    "betternether:upside_down_forest_cleared"
-  ]
+    "values":  [
+                   "betternether:bone_reef",
+                   "betternether:flooded_deltas",
+                   "betternether:gravel_desert",
+                   "betternether:magma_land",
+                   "betternether:nether_grasslands",
+                   "betternether:nether_swampland",
+                   "betternether:nether_swampland_terraces",
+                   "betternether:old_fungiwoods",
+                   "betternether:old_swampland",
+                   "betternether:old_warped_woods",
+                   "betternether:poor_nether_grasslands",
+                   "betternether:sulfuric_bone_reef",
+                   "betternether:upside_down_forest_cleared",
+                   "betternether:gloomwood"
+               ]
 }
