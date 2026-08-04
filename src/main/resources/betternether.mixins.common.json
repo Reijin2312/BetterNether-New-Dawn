@@ -6,6 +6,7 @@
     "AbstractFurnaceBlockEntityMixin",
     "BlockAgeProcessorMixin",
     "BlockBehaviourAccessor",
+    "BlockBehaviourPropertiesAccessor",
     "BlockBehaviourMixin",
     "BrewingRecipeRegistryMixin",
     "CraftingScreenHandlerMixin",

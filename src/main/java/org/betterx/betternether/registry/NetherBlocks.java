@@ -31,6 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
@@ -56,6 +57,27 @@ public class NetherBlocks {
     // Willow //
         public static WillowMaterial MAT_WILLOW;
         public static Block WILLOW_LEAVES;
+
+    // Gloomwood //
+        public static GloomwoodMaterial MAT_GLOOMWOOD;
+        public static GloomwoodDarkMaterial MAT_GLOOMWOOD_DARK;
+        public static Block GLOOMWOOD_TRANSITION_STRIPPED_LOG;
+        public static Block GLOOMWOOD_TRANSITION_LOG;
+        public static Block GLOOMWOOD_TRANSITION_PLANKS;
+        public static Block GLOOMWOOD_DARK_MOLTEN_LOG;
+        public static Block GLOOMWOOD_LEAVES;
+        public static Block GLOOMWOOD_BLEACHED_LEAVES;
+        public static Block BLEACHED_GLOOMSCULK;
+        public static Block MOLTEN_GLOOMSCULK;
+        public static Block VEINED_GLOOMSCULK;
+        public static Block GLOOMSCULK_GEODE;
+        public static Block GLOOMSCULK_GEODE_CRYSTAL;
+        public static Block GLOOMSCULK_LAMP;
+        public static Block GLOOMSCULK_CRYSTAL;
+        public static Block PALE_GLOOMGRASS;
+        public static Block GLOOMGRASS;
+        public static Block GLOOMSCULK_VINE;
+        public static Block GLOOMWISP_VINE;
 
     // Wart //
         public static WartMaterial MAT_WART;
@@ -355,6 +377,45 @@ public class NetherBlocks {
             "willow_leaves",
             () -> new BlockWillowLeaves(MAT_WILLOW.getSapling())
     );
+
+            MAT_GLOOMWOOD = new GloomwoodMaterial().init();
+            MAT_GLOOMWOOD_DARK = new GloomwoodDarkMaterial().init();
+            GLOOMWOOD_TRANSITION_STRIPPED_LOG = registerBlock("gloomwood_transition_stripped_log", () ->
+                    new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_STEM)));
+            GLOOMWOOD_TRANSITION_LOG = registerBlock("gloomwood_transition_log", () ->
+                    new BaseStripableLogBlock.Wood(
+                            MapColor.COLOR_BLUE,
+                            GLOOMWOOD_TRANSITION_STRIPPED_LOG,
+                            false
+                    ));
+            GLOOMWOOD_TRANSITION_PLANKS = registerBlock("gloomwood_transition_planks", () ->
+                    new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_PLANKS)));
+            GLOOMWOOD_DARK_MOLTEN_LOG = registerBlock("gloomwood_dark_molten_log", () ->
+                    new BlockMoltenGloomwoodLog(BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_STEM).lightLevel(s -> 7)));
+            GLOOMWOOD_LEAVES = registerBlock("gloomwood_leaves", () ->
+                    new BNLeaves(MAT_GLOOMWOOD.getSapling(), MapColor.COLOR_LIGHT_GRAY));
+            GLOOMWOOD_BLEACHED_LEAVES = registerBlock("gloomwood_bleached_leaves", () ->
+                    new BNLeaves(MAT_GLOOMWOOD.getSapling(), MapColor.TERRACOTTA_WHITE));
+
+            BLEACHED_GLOOMSCULK = registerBlock("bleached_gloomsculk", () ->
+                    new BlockTerrain(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)));
+            MOLTEN_GLOOMSCULK = registerBlock("molten_gloomsculk", () ->
+                    new BlockMoltenGloomsculk(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK).lightLevel(s -> 5)));
+            VEINED_GLOOMSCULK = registerBlock("veined_gloomsculk", () ->
+                    new BlockTerrain(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERRACK)));
+            GLOOMSCULK_GEODE = registerBlock("gloomsculk_geode", () ->
+                    new BlockGloomsculkGeode(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK).lightLevel(s -> 10).noOcclusion()));
+            GLOOMSCULK_GEODE_CRYSTAL = registerBlock("gloomsculk_geode_crystal", () ->
+                    new BlockGloomsculkCrystal(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER).lightLevel(s -> 8).noOcclusion()));
+            GLOOMSCULK_LAMP = registerBlock("gloomsculk_lamp", () ->
+                    new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK).lightLevel(s -> 15).noOcclusion()));
+            GLOOMSCULK_CRYSTAL = registerBlock("gloomsculk_crystal", () ->
+                    new BlockGloomsculkCrystal(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER).lightLevel(s -> 6).noOcclusion()));
+            PALE_GLOOMGRASS = registerBlock("pale_gloomgrass", BlockNetherGrass.BoneGrass::new);
+            GLOOMGRASS = registerBlock("gloomgrass", BlockNetherGrass.BoneGrass::new);
+            GLOOMSCULK_VINE = registerBlock("gloomsculk_vine", BlockBlackVine::new);
+            GLOOMWISP_VINE = registerBlock("gloomwisp_vine", () ->
+                    new BlockGloomwispVine(BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_ROOTS).lightLevel(s -> 5).randomTicks()));
 
 
     // Wart //
@@ -1504,7 +1565,7 @@ public class NetherBlocks {
 
     @ApiStatus.Internal
     public static void register() {
-        //NO-OP; registration happens through BlockRegistry initializer
+        // NO-OP; registration happens through BlockRegistry initializer.
         getBlockRegistry();
     }
 }

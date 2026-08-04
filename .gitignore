@@ -2,6 +2,8 @@
 
 .gradle/
 build/
+!src/main/java/**/build/
+!src/main/java/**/build/*.java
 out/
 classes/
 
