@@ -3,7 +3,7 @@
   "config": {
     "default": {
       "feature": {
-        "type": "minecraft:random_patch",
+        "type": "wover:random_patch",
         "config": {
           "feature": {
             "feature": {
@@ -68,7 +68,7 @@
         "chance": 0.2739726,
         "feature": {
           "feature": {
-            "type": "minecraft:random_patch",
+            "type": "wover:random_patch",
             "config": {
               "feature": {
                 "feature": {
@@ -116,7 +116,7 @@
         "chance": 0.24657534,
         "feature": {
           "feature": {
-            "type": "minecraft:random_patch",
+            "type": "wover:random_patch",
             "config": {
               "feature": {
                 "feature": {
@@ -164,7 +164,7 @@
         "chance": 0.1369863,
         "feature": {
           "feature": {
-            "type": "minecraft:random_patch",
+            "type": "wover:random_patch",
             "config": {
               "feature": {
                 "feature": {
@@ -247,7 +247,7 @@
         "chance": 0.08219178,
         "feature": {
           "feature": {
-            "type": "minecraft:random_patch",
+            "type": "wover:random_patch",
             "config": {
               "feature": {
                 "feature": {
@@ -306,7 +306,7 @@
         "chance": 0.10958904,
         "feature": {
           "feature": {
-            "type": "minecraft:random_patch",
+            "type": "wover:random_patch",
             "config": {
               "feature": {
                 "feature": {
@@ -354,7 +354,7 @@
         "chance": 0.10958904,
         "feature": {
           "feature": {
-            "type": "minecraft:random_patch",
+            "type": "wover:random_patch",
             "config": {
               "feature": {
                 "feature": {

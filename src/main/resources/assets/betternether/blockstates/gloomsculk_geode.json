@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "": [
+            { "model": "betternether:block/gloomsculk_geode" },
+            { "model": "betternether:block/gloomsculk_geode", "y": 90 },
+            { "model": "betternether:block/gloomsculk_geode", "y": 180 },
+            { "model": "betternether:block/gloomsculk_geode", "y": 270 }
+        ]
+    }
+}

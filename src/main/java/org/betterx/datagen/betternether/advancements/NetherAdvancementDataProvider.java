@@ -19,6 +19,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Items;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -285,6 +286,33 @@ public class NetherAdvancementDataProvider extends AdvancementDataProvider {
                 .requireAll()
                 .build();
 
+        var disturbedWisp = AdvancementManager.Builder
+                .create(BetterNether.C.id("disturbed_wisp"))
+                .parent(enterNether)
+                .startDisplay(NetherBlocks.GLOOMWISP_VINE)
+                .endDisplay()
+                .addCriterion("disturbed_wisp", BNCriterion.DISTURBED_WISP_CRITERION)
+                .requireOne()
+                .build();
+
+        AdvancementManager.Builder
+                .create(BetterNether.C.id("wisp_shed_experience"))
+                .parent(disturbedWisp)
+                .startDisplay(Items.EXPERIENCE_BOTTLE)
+                .endDisplay()
+                .addCriterion("wisp_shed_experience", BNCriterion.WISP_SHED_EXPERIENCE_CRITERION)
+                .requireOne()
+                .build();
+
+        AdvancementManager.Builder
+                .create(BetterNether.C.id("burned_gloomsculk_crystal"))
+                .parent(disturbedWisp)
+                .startDisplay(NetherBlocks.GLOOMSCULK_GEODE_CRYSTAL)
+                .goal()
+                .endDisplay()
+                .addCriterion("burned_crystal", BNCriterion.BURNED_GLOOMSCULK_CRYSTAL_CRITERION)
+                .requireOne()
+                .build();
 
         final var biomes = biomeLookup
                 .listElementIds()

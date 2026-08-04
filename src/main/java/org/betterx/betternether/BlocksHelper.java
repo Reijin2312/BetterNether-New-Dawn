@@ -1,6 +1,7 @@
 package org.betterx.betternether;
 
 import org.betterx.betternether.blocks.BlockFarmland;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 import org.betterx.wover.feature.api.WriteZone;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -84,6 +85,10 @@ public class BlocksHelper {
 
     public static boolean isNetherrack(BlockState state) {
         return state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHERRACK);
+    }
+
+    public static boolean isSculkLike(BlockState state) {
+        return state.is(CommonBlockTags.SCULK_LIKE);
     }
 
     public static boolean isSoulSand(BlockState state) {
