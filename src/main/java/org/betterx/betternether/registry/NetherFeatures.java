@@ -20,6 +20,7 @@ public class NetherFeatures {
     public static Feature<NoneFeatureConfiguration> OBSIDIAN_CRYSTAL;
     public static Feature<NoneFeatureConfiguration> WART_BUSH;
     public static RubeusTreeFeature RUBEUS_TREE;
+    public static GloomwoodTreeFeature GLOOMWOOD_TREE;
     public static MushroomFirFeature MUSHROOM_FIR;
     public static BigBrownMushroomFeature BIG_BROWN_MUSHROOM;
     public static Feature<NoneFeatureConfiguration> RUBEUS_BUSH;
@@ -77,6 +78,10 @@ public class NetherFeatures {
         RUBEUS_TREE = FeatureManager.register(
                 BN.id("rubeus_tree"),
                 new RubeusTreeFeature()
+        );
+        GLOOMWOOD_TREE = FeatureManager.register(
+                BN.id("gloomwood_tree"),
+                new GloomwoodTreeFeature()
         );
         MUSHROOM_FIR = FeatureManager.register(
                 BN.id("mushroom_fir"),

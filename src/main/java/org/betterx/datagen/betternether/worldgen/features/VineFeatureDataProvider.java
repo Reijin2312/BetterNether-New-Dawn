@@ -7,10 +7,12 @@ import org.betterx.betternether.registry.features.configured.NetherVines;
 import org.betterx.betternether.registry.features.placed.NetherVinesPlaced;
 import org.betterx.wover.block.api.BlockProperties;
 import org.betterx.wover.core.api.ModCore;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 import org.betterx.wover.datagen.api.provider.multi.WoverFeatureProvider;
 import org.betterx.wover.feature.api.features.config.PillarFeatureConfig;
 
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.BiasedToBottomInt;
@@ -83,6 +85,19 @@ public class VineFeatureDataProvider extends WoverFeatureProvider {
                 .bootstrap(ctx)
                 .featureToPlace(NetherVinesPlaced.PLACED_EYE_VINE)
                 .tries(48)
+                .spreadXZ(5)
+                .register();
+        NetherVines.PATCH_GLOOMSCULK_VINE
+                .bootstrap(ctx)
+                .transformer(PillarFeatureConfig.KnownTransformers.BOTTOM_GROW)
+                .direction(Direction.DOWN)
+                .blockState(NetherBlocks.GLOOMSCULK_VINE)
+                .minHeight(2)
+                .maxHeight(ClampedNormalInt.of(7, 2.0f, 2, 11))
+                .inlinePlace()
+                .isEmptyAndUnder(BlockPredicate.matchesTag(CommonBlockTags.SCULK_LIKE))
+                .inRandomPatch()
+                .tries(20)
                 .spreadXZ(5)
                 .register();
         NetherVines.PATCH_BLACK_VINE
@@ -175,6 +190,7 @@ public class VineFeatureDataProvider extends WoverFeatureProvider {
         NetherVinesPlaced.GOLDEN_VINE.place(ctx).betterNetherCeiling(4).onceEvery(2).register();
         NetherVinesPlaced.GOLDEN_VINE_SPARSE.place(ctx).betterNetherCeiling(4).onceEvery(3).register();
         NetherVinesPlaced.EYE_VINE.place(ctx).betterNetherCeiling(4).onceEvery(2).register();
+        NetherVinesPlaced.GLOOMSCULK_VINE.place(ctx).betterNetherCeiling(6).register();
         NetherVinesPlaced.BLACK_VINE.place(ctx).betterNetherCeiling(4).onceEvery(2).register();
         NetherVinesPlaced.BLOOMING_VINE.place(ctx).betterNetherCeiling(4).onceEvery(2).register();
         NetherVinesPlaced.TWISTING_VINES.place(ctx).vanillaNetherGround(12).onceEvery(2).register();

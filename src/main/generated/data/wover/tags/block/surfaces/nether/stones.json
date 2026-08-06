@@ -1,14 +1,15 @@
 {
-  "values": [
-    {
-      "id": "#minecraft:base_stone_nether",
-      "required": false
-    },
-    "betternether:ceiling_mushrooms",
-    "betternether:jungle_grass",
-    "betternether:mushroom_grass",
-    "betternether:netherrack_moss",
-    "betternether:sepia_mushroom_grass",
-    "betternether:swampland_grass"
-  ]
+    "values":  [
+                   {
+                       "id":  "#minecraft:base_stone_nether",
+                       "required":  false
+                   },
+                   "betternether:ceiling_mushrooms",
+                   "betternether:jungle_grass",
+                   "betternether:mushroom_grass",
+                   "betternether:netherrack_moss",
+                   "betternether:sepia_mushroom_grass",
+                   "betternether:swampland_grass",
+                   "betternether:veined_gloomsculk"
+               ]
 }

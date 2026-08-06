@@ -1,4 +1,4 @@
-﻿{
+{
     "values":  [
                    "betternether:agave",
                    "betternether:anchor_tree_leaves",
@@ -49,6 +49,13 @@
                    "betternether:willow_leaves",
                    "betternether:willow_sapling",
                    "betternether:willow_torch",
-                   "betternether:whispering_gourd_lantern"
+                   "betternether:whispering_gourd_lantern",
+                   "betternether:gloomgrass",
+                   "betternether:gloomsculk_vine",
+                   "betternether:gloomwisp_vine",
+                   "betternether:gloomwood_bleached_leaves",
+                   "betternether:gloomwood_leaves",
+                   "betternether:gloomwood_sapling",
+                   "betternether:pale_gloomgrass"
                ]
 }

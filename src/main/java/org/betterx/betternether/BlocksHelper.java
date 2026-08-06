@@ -108,6 +108,10 @@ public class BlocksHelper {
         return isNetherGround(state) || state.is(Blocks.MAGMA_BLOCK);
     }
 
+    public static boolean isSculkLike(BlockState state) {
+        return state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.SCULK_LIKE);
+    }
+
     public static boolean isNetherMycelium(BlockState state) {
         return state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHER_MYCELIUM);
     }
