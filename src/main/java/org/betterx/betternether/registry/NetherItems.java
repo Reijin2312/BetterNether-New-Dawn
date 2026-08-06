@@ -15,6 +15,7 @@ import org.betterx.betternether.items.materials.BNArmorTiers;
 import org.betterx.betternether.items.materials.BNToolMaterial;
 import org.betterx.betternether.items.materials.BNToolTiers;
 import org.betterx.betternether.loot.BNLoot;
+import org.betterx.betternether.registry.item.NetherMusicDiscItems;
 import org.betterx.wover.item.api.ItemRegistry;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -362,6 +363,8 @@ public class NetherItems {
         AGAVE_LEAF = registerItem("agave_leaf", () -> new Item(defaultSettings()));
         AGAVE_MEDICINE = registerMedicine("agave_medicine", 40, 2, true);
         HERBAL_MEDICINE = registerMedicine("herbal_medicine", 10, 5, true);
+
+        NetherMusicDiscItems.ensureLoaded();
 
         if (BCLib.isDevEnvironment()) {
             BetterNether.C.log.warn("Generating Debug Helpers");

@@ -1,0 +1,19 @@
+{
+    "variants":  {
+                     "facing=east":  {
+                                         "model":  "betternether:block/gloomwood_wall_hanging_sign",
+                                         "y":  270
+                                     },
+                     "facing=north":  {
+                                          "model":  "betternether:block/gloomwood_wall_hanging_sign",
+                                          "y":  180
+                                      },
+                     "facing=south":  {
+                                          "model":  "betternether:block/gloomwood_wall_hanging_sign"
+                                      },
+                     "facing=west":  {
+                                         "model":  "betternether:block/gloomwood_wall_hanging_sign",
+                                         "y":  90
+                                     }
+                 }
+}

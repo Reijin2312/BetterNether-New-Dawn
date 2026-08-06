@@ -9,6 +9,7 @@ import org.betterx.betternether.world.features.AnchorTreeRootFeature;
 import org.betterx.betternether.world.features.BigBrownMushroomFeature;
 import org.betterx.betternether.world.features.CavesFeature;
 import org.betterx.betternether.world.features.CrystalFeature;
+import org.betterx.betternether.world.features.GloomwoodTreeFeature;
 import org.betterx.betternether.world.features.JellyfishMushroomFeature;
 import org.betterx.betternether.world.features.LucisFeature;
 import org.betterx.betternether.world.features.MushroomFirFeature;
@@ -40,11 +41,12 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 public class NetherFeatures {
-    // Будут заполнены во время RegisterEvent, до заморозки реестров
+    // ????? ????????? ?? ????? RegisterEvent, ?? ????????? ????????
     public static Feature<NoneFeatureConfiguration> JELLYFISH_MUSHROOM;
     public static Feature<NoneFeatureConfiguration> OBSIDIAN_CRYSTAL;
     public static Feature<NoneFeatureConfiguration> WART_BUSH;
     public static RubeusTreeFeature RUBEUS_TREE;
+    public static GloomwoodTreeFeature GLOOMWOOD_TREE;
     public static MushroomFirFeature MUSHROOM_FIR;
     public static BigBrownMushroomFeature BIG_BROWN_MUSHROOM;
     public static Feature<NoneFeatureConfiguration> RUBEUS_BUSH;
@@ -108,6 +110,7 @@ public class NetherFeatures {
                 BN.id("rubeus_tree"),
                 new RubeusTreeFeature()
         );
+        GLOOMWOOD_TREE = FeatureManager.register(BN.id("gloomwood_tree"), new GloomwoodTreeFeature());
         MUSHROOM_FIR = FeatureManager.register(
                 BN.id("mushroom_fir"),
                 new MushroomFirFeature()

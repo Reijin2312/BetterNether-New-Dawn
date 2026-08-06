@@ -1,5 +1,8 @@
 {
-  "values": [
-    "minecraft:sculk"
-  ]
+    "values":  [
+                   "betternether:bleached_gloomsculk",
+                   "betternether:gloomsculk_geode",
+                   "betternether:molten_gloomsculk",
+                   "betternether:veined_gloomsculk"
+               ]
 }

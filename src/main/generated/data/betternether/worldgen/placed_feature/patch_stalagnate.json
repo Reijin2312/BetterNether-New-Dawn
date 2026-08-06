@@ -1,6 +1,6 @@
 {
   "feature": {
-    "type": "minecraft:random_patch",
+    "type": "wover:random_patch",
     "config": {
       "feature": {
         "feature": "betternether:stalagnate",

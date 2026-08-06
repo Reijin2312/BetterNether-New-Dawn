@@ -1,6 +1,8 @@
 package org.betterx.betternether;
 
 import org.betterx.betternether.blocks.BlockFarmland;
+import org.betterx.wover.feature.api.WriteZone;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
@@ -70,14 +72,23 @@ public class BlocksHelper {
     }
 
     public static BoundingBox decorationBounds(LevelAccessor world, BlockPos pos, int minY, int maxY) {
-        final int chunkStartX = (pos.getX() >> 4) << 4;
-        final int chunkStartZ = (pos.getZ() >> 4) << 4;
+        return WriteZone.of(world).toBoundingBox(minY, maxY);
+    }
 
-        return new BoundingBox(chunkStartX - 16, minY, chunkStartZ - 16, chunkStartX + 31, maxY, chunkStartZ + 31);
+    public static boolean isInsideHorizontally(BoundingBox bounds, int x, int z) {
+        return x >= bounds.minX() && x <= bounds.maxX() && z >= bounds.minZ() && z <= bounds.maxZ();
+    }
+
+    public static boolean isInsideHorizontally(BoundingBox bounds, BlockPos pos) {
+        return isInsideHorizontally(bounds, pos.getX(), pos.getZ());
     }
 
     public static boolean isNetherrack(BlockState state) {
         return state.is(org.betterx.wover.tag.api.predefined.CommonBlockTags.NETHERRACK);
+    }
+
+    public static boolean isSculkLike(BlockState state) {
+        return state.is(CommonBlockTags.SCULK_LIKE);
     }
 
     public static boolean isSoulSand(BlockState state) {

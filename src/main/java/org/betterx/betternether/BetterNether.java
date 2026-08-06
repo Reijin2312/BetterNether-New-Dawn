@@ -41,6 +41,7 @@ public class BetterNether {
         NetherBlocks.getBlockRegistry();
         NetherItems.getItemRegistry();
         modBus.addListener(SoundsRegistry::register);
+        modBus.addListener(RegisterEvent.class, NetherGameRules::register);
         modBus.addListener(RegisterEvent.class, NetherEntities::onRegister);
         modBus.addListener(RegisterEvent.class, NetherParticles::onRegister);
         modBus.addListener(RegisterEvent.class, NetherPoiTypes::onRegister);
@@ -84,6 +85,7 @@ public class BetterNether {
 
         initOptions();
         SoundsRegistry.ensureStaticallyLoaded();
+        NetherGameRules.ensureStaticallyLoaded();
         NetherEnchantments.ensureStaticallyLoaded();
         BlockEntitiesRegistry.register();
         NetherEntities.register();
