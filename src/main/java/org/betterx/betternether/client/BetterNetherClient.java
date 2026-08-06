@@ -77,5 +77,7 @@ public final class BetterNetherClient {
             }
         });
         ItemBlockRenderTypes.setRenderLayer(NetherBlocks.MAT_GLOOMWOOD.getSapling(), cutout);
+        ItemBlockRenderTypes.setRenderLayer(NetherBlocks.GLOOMSCULK_GEODE, translucent);
+        ItemBlockRenderTypes.setRenderLayer(NetherBlocks.GLOOMSCULK_LAMP, translucent);
     }
 }
