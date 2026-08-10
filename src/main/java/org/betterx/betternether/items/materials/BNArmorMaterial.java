@@ -2,13 +2,13 @@ package org.betterx.betternether.items.materials;
 
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.registry.NetherItems;
+import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.wover.item.api.armor.CustomArmorMaterial;
 
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Blocks;
 
 class BNArmorMaterials {
     public static final Holder<ArmorMaterial> CINCINNASITE = CustomArmorMaterial
@@ -38,6 +38,9 @@ class BNArmorMaterials {
             .equipSound(SoundEvents.ARMOR_EQUIP_NETHERITE)
             .toughness(2.6f)
             .knockbackResistance(0.3f)
-            .repairIngredientSupplier(() -> Ingredient.of(Blocks.SCULK_CATALYST))
+            .repairIngredientSupplier(() -> Ingredient.of(
+                    NetherBlocks.GLOOMSCULK_CRYSTAL,
+                    NetherBlocks.GLOOMSCULK_GEODE_CRYSTAL
+            ))
             .buildAndRegister();
 }

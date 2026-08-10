@@ -17,6 +17,12 @@ public class NetherTreesPlaced {
     public static PlacedConfiguredFeatureKey GLOOMWOOD_TREE = PlacedFeatureManager
             .createKey(NetherTrees.GLOOMWOOD_TREE)
             .setDecoration(VEGETAL_DECORATION);
+    public static PlacedConfiguredFeatureKey GLOOMWOOD_TREE_EDGE = PlacedFeatureManager
+            .createKey(C.id("tree_gloomwood_edge"), NetherTrees.GLOOMWOOD_TREE)
+            .setDecoration(VEGETAL_DECORATION);
+    public static PlacedConfiguredFeatureKey GLOOMWOOD_TREE_SOLITARY = PlacedFeatureManager
+            .createKey(NetherTrees.GLOOMWOOD_TREE_SOLITARY)
+            .setDecoration(VEGETAL_DECORATION);
     public static PlacedConfiguredFeatureKey MUSHROOM_FIR = PlacedFeatureManager
             .createKey(NetherTrees.MUSHROOM_FIR)
             .setDecoration(VEGETAL_DECORATION);
@@ -65,8 +71,8 @@ public class NetherTreesPlaced {
     public static PlacedFeatureKey SOUL_LILY = PlacedFeatureManager
             .createKey(C.id("patch_soul_lily"))
             .setDecoration(VEGETAL_DECORATION);
-    public static PlacedFeatureKey OLD_WILLOW_TREE = PlacedFeatureManager
-            .createKey(C.id("tree_old_willow"))
+    public static PlacedConfiguredFeatureKey OLD_WILLOW_TREE = PlacedFeatureManager
+            .createKey(NetherTrees.OLD_WILLOW_TREE)
             .setDecoration(VEGETAL_DECORATION);
     public static PlacedConfiguredFeatureKey ANCHOR_TREE_SPARSE = PlacedFeatureManager
             .createKey(C.id("anchor_tree_sparse"), NetherTrees.ANCHOR_TREE)

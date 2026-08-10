@@ -1,33 +1,35 @@
 package org.betterx.betternether.items.materials;
 
 import org.betterx.betternether.registry.NetherItems;
+import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 public enum BNToolMaterial implements Tier {
     CINCINNASITE(Tiers.IRON.getIncorrectBlocksForDrops(),
             2, 512, 6.2F, 2.5F, 16,
-            NetherItems.CINCINNASITE_INGOT
+            () -> Ingredient.of(NetherItems.CINCINNASITE_INGOT)
     ),
     CINCINNASITE_DIAMOND(Tiers.DIAMOND.getIncorrectBlocksForDrops(),
             3, 2061, 8.2F, 3.7F, 14,
-            Items.DIAMOND
+            () -> Ingredient.of(Items.DIAMOND)
     ),
     NETHER_RUBY(Tiers.DIAMOND.getIncorrectBlocksForDrops(),
             3, 2561, 7.1F, 3.1F, 18,
-            NetherItems.NETHER_RUBY
+            () -> Ingredient.of(NetherItems.NETHER_RUBY)
     ),
     FLAMING_RUBY(Tiers.NETHERITE.getIncorrectBlocksForDrops(),
             4, 2861, 10.4F, 6.0F, 32,
-            Items.SCULK_CATALYST
+            () -> Ingredient.of(NetherBlocks.GLOOMSCULK_CRYSTAL, NetherBlocks.GLOOMSCULK_GEODE_CRYSTAL)
     );
 
 
@@ -44,7 +46,7 @@ public enum BNToolMaterial implements Tier {
     private final int level;
     private final int enchantibility;
     private final float damage;
-    private final ItemLike reapair;
+    private final Supplier<Ingredient> repair;
     public final TagKey<Block> incorrectBlocksForDrops;
 
     BNToolMaterial(
@@ -54,7 +56,7 @@ public enum BNToolMaterial implements Tier {
             float speed,
             float damage,
             int enchantibility,
-            ItemLike reapair
+            Supplier<Ingredient> repair
     ) {
 
         this.incorrectBlocksForDrops = incorrectBlocksForDrops;
@@ -63,7 +65,7 @@ public enum BNToolMaterial implements Tier {
         this.level = level;
         this.enchantibility = enchantibility;
         this.damage = damage;
-        this.reapair = reapair;
+        this.repair = repair;
     }
 
     @Override
@@ -98,6 +100,6 @@ public enum BNToolMaterial implements Tier {
 
     @Override
     public @NotNull Ingredient getRepairIngredient() {
-        return Ingredient.of(reapair);
+        return repair.get();
     }
 }

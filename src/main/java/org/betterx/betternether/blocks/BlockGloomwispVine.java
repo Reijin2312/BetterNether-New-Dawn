@@ -7,6 +7,7 @@ import org.betterx.betternether.client.IRenderTypeable;
 import org.betterx.betternether.mixin.common.BlockBehaviourPropertiesAccessor;
 import org.betterx.betternether.registry.NetherGameRules;
 import org.betterx.betternether.registry.SoundsRegistry;
+import org.betterx.bclib.items.tool.BaseShearsItem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +25,6 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -61,7 +61,9 @@ public class BlockGloomwispVine extends Block implements IRenderTypeable {
      * How tall a wisp may grow. Worldgen places them anywhere from {@link #MIN_HEIGHT} to this, so a
      * stand of wisps is ragged rather than a row of identical stalks.
      */
-    public static final int MAX_HEIGHT = 5;
+    public static final int MAX_HEIGHT = 6;
+    public static final int MAX_NATURAL_HEIGHT = 4;
+    private static final int GROW_CHANCE = 32;
 
     /**
      * The shortest a wisp can be: just the head, sitting on the ground.
@@ -298,7 +300,7 @@ public class BlockGloomwispVine extends Block implements IRenderTypeable {
             InteractionHand hand,
             BlockHitResult hit
     ) {
-        if (!stack.is(Items.SHEARS) || state.getValue(PERSISTENT)) {
+        if (!BaseShearsItem.isShear(stack) || state.getValue(PERSISTENT)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hit);
         }
         if (!level.isClientSide()) {
@@ -480,9 +482,9 @@ public class BlockGloomwispVine extends Block implements IRenderTypeable {
             return;
         }
         if (state.getValue(PERSISTENT)) return;
-        if (state.getValue(SHAPE) == BlockProperties.TripleShape.TOP && random.nextInt(16) == 0) {
+        if (state.getValue(SHAPE) == BlockProperties.TripleShape.TOP && random.nextInt(GROW_CHANCE) == 0) {
             BlockPos up = pos.above();
-            if (world.isEmptyBlock(up) && BlocksHelper.getLengthDown(world, pos, this) < MAX_HEIGHT) {
+            if (world.isEmptyBlock(up) && BlocksHelper.getLengthDown(world, pos, this) < MAX_NATURAL_HEIGHT) {
                 // The new head inherits this segment's aim and offset rather than taking the default. The offset
                 // especially: a wisp whose segments disagreed about it would grow a stalk that stepped sideways
                 // halfway up, since the offset moves the model and the outline with it.

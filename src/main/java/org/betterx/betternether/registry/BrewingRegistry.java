@@ -3,6 +3,7 @@ package org.betterx.betternether.registry;
 import org.betterx.betternether.BN;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.alchemy.Potions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class BrewingRegistry {
     private static final List<BrewingRecipe> RECIPES = new ArrayList<>();
@@ -67,7 +69,22 @@ public class BrewingRegistry {
         }
 
         public boolean isValid(ItemStack source, ItemStack bottle) {
-            return ItemStack.isSameItem(this.source, source) && ItemStack.isSameItem(this.bottle, bottle);
+            return ItemStack.isSameItem(this.source, source) && matchesBottle(bottle);
+        }
+
+        private boolean matchesBottle(ItemStack bottle) {
+            if (!ItemStack.isSameItem(this.bottle, bottle)) return false;
+
+            final Optional<Holder<Potion>> expected = potionOf(this.bottle);
+            if (expected.isEmpty()) return true;
+
+            final Optional<Holder<Potion>> actual = potionOf(bottle);
+            return actual.isPresent() && actual.get().is(expected.get());
+        }
+
+        private static Optional<Holder<Potion>> potionOf(ItemStack stack) {
+            final PotionContents contents = stack.get(DataComponents.POTION_CONTENTS);
+            return contents == null ? Optional.empty() : contents.potion();
         }
 
         public boolean isValid(ItemStack source) {

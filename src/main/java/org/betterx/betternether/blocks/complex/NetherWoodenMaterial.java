@@ -67,6 +67,7 @@ public class NetherWoodenMaterial<T extends NetherWoodenMaterial<T>> extends Woo
                 WoodSlots.BARREL,
                 WoodSlots.CRAFTING_TABLE,
                 WoodSlots.BOOKSHELF,
+                WoodSlots.CHISELED_BOOKSHELF,
                 WoodSlots.COMPOSTER,
                 WoodSlots.BOAT,
                 WoodSlots.CHEST_BOAT,

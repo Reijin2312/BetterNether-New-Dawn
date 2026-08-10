@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "chiseled_bookshelf",
+  "key": {
+    "#": {
+      "item": "betternether:nether_mushroom_planks"
+    },
+    "S": {
+      "item": "betternether:nether_mushroom_slab"
+    }
+  },
+  "pattern": [
+    "###",
+    "SSS",
+    "###"
+  ],
+  "result": {
+    "id": "betternether:nether_mushroom_chiseled_bookshelf"
+  }
+}

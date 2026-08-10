@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "chiseled_bookshelf",
+  "key": {
+    "#": {
+      "item": "betternether:anchor_tree_planks"
+    },
+    "S": {
+      "item": "betternether:anchor_tree_slab"
+    }
+  },
+  "pattern": [
+    "###",
+    "SSS",
+    "###"
+  ],
+  "result": {
+    "id": "betternether:anchor_tree_chiseled_bookshelf"
+  }
+}
