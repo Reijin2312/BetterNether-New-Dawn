@@ -24,7 +24,6 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 
 public class CityPiece extends CustomPiece {
-    private final MutableBlockPos POS = new MutableBlockPos();
     private final StructureProcessor paletteProcessor;
     private final StructureCityBuilding building;
     private final CityPalette palette;
@@ -100,6 +99,9 @@ public class CityPiece extends CustomPiece {
 
         ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
 
+        // postProcess may run concurrently for different intersecting chunks of this piece.
+        // Keep the mutable cursor local so worker threads never share it.
+        final MutableBlockPos POS = new MutableBlockPos();
         BlockState state;
         for (int x = clamped.minX(); x <= clamped.maxX(); x++)
             for (int z = clamped.minZ(); z <= clamped.maxZ(); z++) {
