@@ -46,6 +46,10 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
             NaturalTreeConfiguration config,
             StructureGeneratorThreadContext context
     ) {
+        context.BLOCKS.clear();
+        // Player-grown trees must not replace surrounding builds. Natural worldgen keeps its
+        // terrain-replacement behavior.
+        final boolean airOnly = !config.natural;
         world.setBlock(pos, Blocks.AIR.defaultBlockState(), 0);
         float scale = MHelper.randRange(0.7F, 1.3F, random);
         int minCount = scale < 1 ? 3 : 4;
@@ -73,7 +77,7 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
             final float fittedR = zone.fitRadius(x1, z1, crownR * CROWN_SQUASH, 1.5F * CROWN_SQUASH);
             if (fittedR >= 0) {
                 crownR = Math.min(crownR, fittedR / CROWN_SQUASH);
-                crown(world, new BlockPos(x1, y1 + 1, z1), crownR, random, blockBox);
+                crown(world, new BlockPos(x1, y1 + 1, z1), crownR, random, blockBox, airOnly);
             }
 
             boolean generate = true;
@@ -127,7 +131,8 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
 
         for (BlockPos bpos : context.BLOCKS) {
             if (!blockBox.isInside(bpos)) continue;
-            if (BlocksHelper.isNetherGround(state = world.getBlockState(bpos)) || state.canBeReplaced()) {
+            state = world.getBlockState(bpos);
+            if (airOnly ? state.isAir() : (BlocksHelper.isNetherGround(state) || state.canBeReplaced())) {
                 BlocksHelper.setWithUpdate(
                         world,
                         bpos,
@@ -247,7 +252,14 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
         }
     }
 
-    private void crown(LevelAccessor world, BlockPos pos, float radius, RandomSource random, BoundingBox bounds) {
+    private void crown(
+            LevelAccessor world,
+            BlockPos pos,
+            float radius,
+            RandomSource random,
+            BoundingBox bounds,
+            boolean airOnly
+    ) {
         final BlockPos.MutableBlockPos POS = new BlockPos.MutableBlockPos();
 
         BlockState leaves = NetherBlocks.WILLOW_LEAVES.defaultBlockState().setValue(BlockWillowLeaves.NATURAL, false);
@@ -267,31 +279,32 @@ public class OldWillowTree extends NonOverlappingFeature<NaturalTreeConfiguratio
                     int cz2 = cz * cz * 2;
                     if (cx2 + cy2_out + cz2 < r2 && cx2 + cy2_in + cz2 > r2) {
                         POS.setZ(pos.getZ() + cz);
-                        if (world.getBlockState(POS).canBeReplaced()) {
+                        if (airOnly ? world.getBlockState(POS).isAir() : world.getBlockState(POS).canBeReplaced()) {
+                            // Branches need their supporting leaf first when a player grows the tree.
+                            if (airOnly) BlocksHelper.setWithUpdate(world, POS, leaves, bounds);
                             if (random.nextBoolean()) {
                                 int length = BlocksHelper.downRay(world, POS, 12);
-                                if (length < 3) {
-                                    BlocksHelper.setWithUpdate(world, POS, leaves, bounds);
-                                    continue;
+                                if (length >= 3) {
+                                    length = MHelper.randRange(3, length, random);
+                                    for (int i = 1; i < length - 1; i++) {
+                                        BlocksHelper.setWithUpdate(world, POS.below(i), vine, bounds);
+                                    }
+                                    BlocksHelper.setWithUpdate(
+                                            world,
+                                            POS.below(length - 1),
+                                            vine.setValue(
+                                                    BlockWillowBranch.SHAPE,
+                                                    BNBlockProperties.WillowBranchShape.END
+                                            ),
+                                            bounds
+                                    );
                                 }
-                                length = MHelper.randRange(3, length, random);
-                                for (int i = 1; i < length - 1; i++) {
-                                    BlocksHelper.setWithUpdate(world, POS.below(i), vine, bounds);
-                                }
-                                BlocksHelper.setWithUpdate(
-                                        world,
-                                        POS.below(length - 1),
-                                        vine.setValue(
-                                                BlockWillowBranch.SHAPE,
-                                                BNBlockProperties.WillowBranchShape.END
-                                        ),
-                                        bounds
-                                );
-                            } else if (random.nextBoolean() && world.getBlockState(POS.below())
-                                                                    .canBeReplaced()) {
+                            } else if (random.nextBoolean() && (airOnly
+                                    ? world.getBlockState(POS.below()).isAir()
+                                    : world.getBlockState(POS.below()).canBeReplaced())) {
                                 BlocksHelper.setWithUpdate(world, POS.below(), leaves, bounds);
                             }
-                            BlocksHelper.setWithUpdate(world, POS, leaves, bounds);
+                            if (!airOnly) BlocksHelper.setWithUpdate(world, POS, leaves, bounds);
                         }
                     }
                 }

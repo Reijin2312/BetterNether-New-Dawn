@@ -56,6 +56,7 @@ public class NetherSet extends EquipmentSet {
             add(ToolSlot.SHOVEL_SLOT, NetherShovel::new, toolPropertiesBuilder);
             add(ToolSlot.HOE_SLOT, NetherHoe::new, toolPropertiesBuilder);
             add(ToolSlot.SWORD_SLOT, NetherSword::new, toolPropertiesBuilder);
+            add(ToolSlot.SPEAR_SLOT, NetherSpear::new);
 
 
             if (withShears) {

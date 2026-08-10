@@ -25,7 +25,7 @@ import net.minecraft.util.RandomSource;
  */
 public class BlockGloomsculkGeode extends Block {
     /** One random tick in this many buds a crystal, if there is a free face to grow it on. */
-    private static final int BUD_CHANCE = 6;
+    private static final int BUD_CHANCE = 18;
 
     public BlockGloomsculkGeode(Properties settings) {
         super(settings);

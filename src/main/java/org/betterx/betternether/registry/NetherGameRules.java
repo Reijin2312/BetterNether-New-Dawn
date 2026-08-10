@@ -20,6 +20,16 @@ public class NetherGameRules {
             .category(GameRuleCategory.DROPS)
             .buildAndRegister(BetterNether.C.id("gloomwisp_drops_experience"));
 
+    public static final GameRule<Boolean> GENERATE_BLUE_RUINED_PORTALS = GameRuleBuilder
+            .forBoolean(true).category(GameRuleCategory.MISC)
+            .buildAndRegister(BetterNether.C.id("generate_blue_ruined_portals"));
+    public static final GameRule<Boolean> GROW_LARGE_WILLOWS = GameRuleBuilder
+            .forBoolean(true).category(GameRuleCategory.UPDATES)
+            .buildAndRegister(BetterNether.C.id("grow_large_willows"));
+    public static final GameRule<Boolean> GROW_LARGE_ANCHOR_TREES = GameRuleBuilder
+            .forBoolean(false).category(GameRuleCategory.UPDATES)
+            .buildAndRegister(BetterNether.C.id("grow_large_anchor_trees"));
+
     public static void ensureStaticallyLoaded() {
     }
 }
