@@ -4,6 +4,7 @@ import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.world.structures.piece.CavePiece;
 import org.betterx.betternether.world.structures.piece.CityPiece;
 import org.betterx.betternether.world.structures.piece.DestructionPiece;
+import org.betterx.betternether.world.structures.piece.LavaLakePiece;
 import org.betterx.wover.structure.api.StructureManager;
 
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
@@ -20,6 +21,10 @@ public class NetherStructurePieces {
     public static final StructurePieceType DESTRUCTION_PIECE = StructureManager.registerPiece(
             BetterNether.C.id("bndestr"),
             DestructionPiece::new
+    );
+    public static final StructurePieceType LAVA_LAKE_PIECE = StructureManager.registerPiece(
+            BetterNether.C.id("lava_lake"),
+            LavaLakePiece::new
     );
     public static final StructurePieceType ANCHOR_TREE_PIECE = StructureManager.registerPiece(
             BetterNether.C.id("anchor_tree"),

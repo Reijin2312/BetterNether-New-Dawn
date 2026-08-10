@@ -24,6 +24,8 @@ public class NetherVines {
             ConfiguredFeatureManager.blockColumn(C.id("eye_vine"));
     public static final ConfiguredFeatureKey<RandomPatch> PATCH_LUMABUS_VINE =
             ConfiguredFeatureManager.randomPatch(C.id("patch_lumabus_vine"));
+    public static final ConfiguredFeatureKey<RandomPatch> PATCH_LUMABUS_VINE_GLOOM =
+            ConfiguredFeatureManager.randomPatch(C.id("patch_lumabus_vine_gloom"));
     public static final ConfiguredFeatureKey<RandomPatch> PATCH_GOLDEN_LUMABUS_VINE =
             ConfiguredFeatureManager.randomPatch(C.id("patch_golden_lumabus_vine"));
     public static final ConfiguredFeatureKey<AsBlockColumn> PATCH_GOLDEN_VINE =

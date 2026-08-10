@@ -141,7 +141,7 @@ public class NetherItems {
                 public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
                     if (stack.getCount() == 1) {
                         super.finishUsingItem(stack, world, user);
-                        return new ItemStack(NetherItems.STALAGNATE_BOWL, stack.getCount());
+                        return new ItemStack(NetherItems.STALAGNATE_BOWL, 1);
                     } else {
                         if (user instanceof Player player) {
                             if (!player.isCreative())

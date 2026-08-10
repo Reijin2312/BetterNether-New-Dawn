@@ -33,13 +33,25 @@ public class NetherGameRules {
             FeatureFlagSet.of()
     );
 
+    public static final GameRule<Boolean> GENERATE_BLUE_RUINED_PORTALS = booleanRule(GameRuleCategory.MISC, true);
+    public static final GameRule<Boolean> GROW_LARGE_WILLOWS = booleanRule(GameRuleCategory.UPDATES, true);
+    public static final GameRule<Boolean> GROW_LARGE_ANCHOR_TREES = booleanRule(GameRuleCategory.UPDATES, false);
+
+    private static GameRule<Boolean> booleanRule(GameRuleCategory category, boolean defaultValue) {
+        return new GameRule<>(category, GameRuleType.BOOL, BoolArgumentType.bool(),
+                GameRuleTypeVisitor::visitBoolean, Codec.BOOL, value -> value ? 1 : 0,
+                defaultValue, FeatureFlagSet.of());
+    }
+
     public static void register(RegisterEvent event) {
         event.register(
                 Registries.GAME_RULE,
-                helper -> helper.register(
-                        BetterNether.C.mk("gloomwisp_drops_experience"),
-                        GLOOMWISP_DROPS_EXPERIENCE
-                )
+                helper -> {
+                    helper.register(BetterNether.C.mk("gloomwisp_drops_experience"), GLOOMWISP_DROPS_EXPERIENCE);
+                    helper.register(BetterNether.C.mk("generate_blue_ruined_portals"), GENERATE_BLUE_RUINED_PORTALS);
+                    helper.register(BetterNether.C.mk("grow_large_willows"), GROW_LARGE_WILLOWS);
+                    helper.register(BetterNether.C.mk("grow_large_anchor_trees"), GROW_LARGE_ANCHOR_TREES);
+                }
         );
     }
 

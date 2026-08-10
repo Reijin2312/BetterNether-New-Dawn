@@ -5,6 +5,7 @@ import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherFeatures;
 import org.betterx.betternether.registry.features.configured.NetherTrees;
 import org.betterx.betternether.registry.features.placed.NetherTreesPlaced;
+import org.betterx.betternether.world.features.configs.GloomwoodTreeConfiguration;
 import org.betterx.betternether.world.features.configs.NaturalTreeConfiguration;
 import org.betterx.wover.block.api.predicate.BlockPredicates;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
@@ -20,6 +21,12 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class PlacedTreeFeatureDataProvider extends WoverFeatureProvider {
+    private static final float GROVE_SCALE_XZ = 2.0F;
+    private static final float GROVE_SCALE_Y = 1.0F;
+    private static final double GROVE_CORE = 0.25;
+    private static final double GROVE_EDGE = 0.05;
+    private static final float BLEACHED_GLOOMWOOD_CHANCE = 0.33F;
+
     public PlacedTreeFeatureDataProvider(ModCore modCore) {
         super(modCore, modCore.id("trees"));
     }
@@ -33,7 +40,12 @@ public class PlacedTreeFeatureDataProvider extends WoverFeatureProvider {
 
         NetherTrees.GLOOMWOOD_TREE
                 .bootstrap(ctx)
-                .configuration(NaturalTreeConfiguration.natural())
+                .configuration(GloomwoodTreeConfiguration.natural())
+                .register();
+
+        NetherTrees.GLOOMWOOD_TREE_SOLITARY
+                .bootstrap(ctx)
+                .configuration(GloomwoodTreeConfiguration.bleachedSometimes(BLEACHED_GLOOMWOOD_CHANCE))
                 .register();
 
         NetherTrees.MUSHROOM_FIR.bootstrap(ctx).register();
@@ -139,7 +151,23 @@ public class PlacedTreeFeatureDataProvider extends WoverFeatureProvider {
         // isEmptyAndOnNetherGround() filter would reject every position in its own biome.
         NetherTreesPlaced.GLOOMWOOD_TREE
                 .place(ctx)
-                .vanillaNetherGround(10)
+                .vanillaNetherGround(8)
+                .noiseAbove(GROVE_CORE, GROVE_SCALE_XZ, GROVE_SCALE_Y)
+                .isEmptyAndOn(BlockPredicate.matchesTag(CommonBlockTags.SCULK_LIKE))
+                .register();
+
+        NetherTreesPlaced.GLOOMWOOD_TREE_EDGE
+                .place(ctx)
+                .vanillaNetherGround(3)
+                .noiseIn(GROVE_EDGE, GROVE_CORE, GROVE_SCALE_XZ, GROVE_SCALE_Y)
+                .isEmptyAndOn(BlockPredicate.matchesTag(CommonBlockTags.SCULK_LIKE))
+                .register();
+
+        NetherTreesPlaced.GLOOMWOOD_TREE_SOLITARY
+                .place(ctx)
+                .vanillaNetherGround(1)
+                .noiseBelow(GROVE_EDGE, GROVE_SCALE_XZ, GROVE_SCALE_Y)
+                .onceEvery(3)
                 .isEmptyAndOn(BlockPredicate.matchesTag(CommonBlockTags.SCULK_LIKE))
                 .register();
 
@@ -238,10 +266,7 @@ public class PlacedTreeFeatureDataProvider extends WoverFeatureProvider {
                 .register();
 
         NetherTreesPlaced.OLD_WILLOW_TREE
-                .inlineConfiguration(ctx)
-                .withFeature(NetherFeatures.OLD_WILLOW_TREE)
-                .configuration(NaturalTreeConfiguration.naturalLarge())
-                .inlinePlace()
+                .place(ctx)
                 .vanillaNetherGround(14)
                 .onceEvery(16)
                 .isEmptyAndOnNetherGround()
