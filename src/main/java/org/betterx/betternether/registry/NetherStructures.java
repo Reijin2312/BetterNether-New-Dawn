@@ -3,6 +3,7 @@ package org.betterx.betternether.registry;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.config.Configs;
 import org.betterx.betternether.world.structures.city.CityStructure;
+import org.betterx.betternether.world.structures.lake.MegaLavaLakeStructure;
 import org.betterx.betternether.world.structures.templates.*;
 import org.betterx.wover.structure.api.StructureKey;
 import org.betterx.wover.structure.api.StructureManager;
@@ -55,6 +56,10 @@ public class NetherStructures {
 
     public static final StructureKey.Simple<JungleTemples> JUNGLE_TEMPLES = StructureManager
             .structure(BetterNether.C.id("jungle_temples"), JungleTemples::new, JungleTemples.CODEC)
+            .step(GenerationStep.Decoration.SURFACE_STRUCTURES);
+
+    public static final StructureKey.Simple<MegaLavaLakeStructure> MEGA_LAVA_LAKE = StructureManager
+            .structure(BetterNether.C.id("mega_lava_lake"), MegaLavaLakeStructure::new)
             .step(GenerationStep.Decoration.SURFACE_STRUCTURES);
 
 

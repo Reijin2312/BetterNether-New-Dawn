@@ -21,6 +21,16 @@ public class NetherGameRules {
                     GameRuleFactory.createBooleanRule(true)
             );
 
+    public static final GameRules.Key<GameRules.BooleanValue> GENERATE_BLUE_RUINED_PORTALS = GameRuleRegistry.register(
+            "betternether:generate_blue_ruined_portals", GameRules.Category.MISC,
+            GameRuleFactory.createBooleanRule(true));
+    public static final GameRules.Key<GameRules.BooleanValue> GROW_LARGE_WILLOWS = GameRuleRegistry.register(
+            "betternether:grow_large_willows", GameRules.Category.UPDATES,
+            GameRuleFactory.createBooleanRule(true));
+    public static final GameRules.Key<GameRules.BooleanValue> GROW_LARGE_ANCHOR_TREES = GameRuleRegistry.register(
+            "betternether:grow_large_anchor_trees", GameRules.Category.UPDATES,
+            GameRuleFactory.createBooleanRule(false));
+
     public static void ensureStaticallyLoaded() {
     }
 }

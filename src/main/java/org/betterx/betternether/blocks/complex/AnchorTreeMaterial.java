@@ -2,9 +2,9 @@ package org.betterx.betternether.blocks.complex;
 
 import org.betterx.bclib.complexmaterials.WoodenComplexMaterial;
 import org.betterx.bclib.complexmaterials.entry.SlotMap;
-import org.betterx.bclib.complexmaterials.set.wood.AbstractSaplingSlot;
 import org.betterx.bclib.complexmaterials.set.wood.WoodSlots;
 import org.betterx.betternether.blocks.BlockAnchorTreeSapling;
+import org.betterx.betternether.blocks.complex.slots.AnchorTreeSaplingSlot;
 import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.world.level.block.Block;
@@ -21,7 +21,7 @@ public class AnchorTreeMaterial extends NetherWoodenMaterial<AnchorTreeMaterial>
     @Override
     protected SlotMap<WoodenComplexMaterial> createMaterialSlots() {
         return super.createMaterialSlots()
-                    .add(AbstractSaplingSlot.create(BlockAnchorTreeSapling::new));
+                    .add(AnchorTreeSaplingSlot.create(BlockAnchorTreeSapling::new));
     }
 
     public Block getSapling() {
