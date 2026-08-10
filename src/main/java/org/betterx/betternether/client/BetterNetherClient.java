@@ -37,5 +37,7 @@ public class BetterNetherClient implements ClientModInitializer {
             }
         });
         BlockRenderLayerMap.putBlock(NetherBlocks.MAT_GLOOMWOOD.getSapling(), cutout);
+        BlockRenderLayerMap.putBlock(NetherBlocks.GLOOMSCULK_GEODE, translucent);
+        BlockRenderLayerMap.putBlock(NetherBlocks.GLOOMSCULK_LAMP, translucent);
     }
 }

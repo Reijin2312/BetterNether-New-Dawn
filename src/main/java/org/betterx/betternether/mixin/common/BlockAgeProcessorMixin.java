@@ -1,10 +1,12 @@
 package org.betterx.betternether.mixin.common;
 
 import org.betterx.betternether.registry.NetherBlocks;
+import org.betterx.betternether.registry.NetherGameRules;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockAgeProcessor;
@@ -32,7 +34,7 @@ public class BlockAgeProcessorMixin {
     ) {
         final boolean makeBlue = (blockPos.getX() + blockPos.getZ()) % 3 == 0;
 
-        if (makeBlue && structureBlockInfo2.state().is(Blocks.OBSIDIAN)) {
+        if (makeBlue && structureBlockInfo2.state().is(Blocks.OBSIDIAN) && bn_blueRuinedPortalsEnabled(levelReader)) {
             final BlockPos structurePos = structureBlockInfo2.pos();
             final RandomSource random = structurePlaceSettings.getRandom(structurePos);
 
@@ -44,5 +46,10 @@ public class BlockAgeProcessorMixin {
             ));
             cir.cancel();
         }
+    }
+
+    private static boolean bn_blueRuinedPortalsEnabled(LevelReader levelReader) {
+        return !(levelReader instanceof ServerLevelAccessor serverLevelAccessor)
+                || serverLevelAccessor.getLevel().getGameRules().get(NetherGameRules.GENERATE_BLUE_RUINED_PORTALS);
     }
 }
