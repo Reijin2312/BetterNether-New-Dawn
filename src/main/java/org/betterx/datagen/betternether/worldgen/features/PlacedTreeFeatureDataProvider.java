@@ -223,10 +223,7 @@ public class PlacedTreeFeatureDataProvider extends WoverFeatureProvider {
                 .register();
 
         NetherTreesPlaced.OLD_WILLOW_TREE
-                .inlineConfiguration(ctx)
-                .withFeature(NetherFeatures.OLD_WILLOW_TREE)
-                .configuration(NaturalTreeConfiguration.naturalLarge())
-                .inlinePlace()
+                .place(ctx)
                 .vanillaNetherGround(14)
                 .onceEvery(16)
                 .isEmptyAndOnNetherGround()

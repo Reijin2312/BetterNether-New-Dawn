@@ -5,6 +5,7 @@ import org.betterx.wover.surface.api.Conditions;
 import org.betterx.wover.surface.api.conditions.NoiseCondition;
 import org.betterx.wover.surface.impl.BaseSurfaceRuleBuilder;
 import org.betterx.betternether.registry.NetherEntities;
+import org.betterx.betternether.registry.NetherStructures;
 import org.betterx.betternether.registry.SoundsRegistry;
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.features.placed.*;
@@ -56,6 +57,7 @@ public class Gloomwood extends NetherBiomeConfig {
                .music(SoundsRegistry.MUSIC_GLOOMWOOD, 1800, 7200, false)
                .particles(ParticleTypes.WARPED_SPORE, 0.015F)
                .structure(BiomeTags.HAS_NETHER_FORTRESS)
+               .structure(NetherStructures.MEGA_LAVA_LAKE)
                // Order matters inside a decoration step: the pits are cut first so the molten rock that
                // keys off them has something to find. Both sit in LAKES, ahead of everything vegetal.
                .feature(NetherTerrainPlaced.LAVA_PITS_SPARSE)
@@ -70,6 +72,8 @@ public class Gloomwood extends NetherBiomeConfig {
                .feature(NetherObjectsPlaced.BONES)
                .feature(NetherObjectsPlaced.BONE_STALAGMITE)
                .feature(NetherTreesPlaced.GLOOMWOOD_TREE)
+               .feature(NetherTreesPlaced.GLOOMWOOD_TREE_EDGE)
+               .feature(NetherTreesPlaced.GLOOMWOOD_TREE_SOLITARY)
                .feature(NetherVegetationPlaced.VEGETATION_GLOOMWOOD)
                // after the geodes, so the crystals have something to have grown out of
                .feature(NetherTerrainPlaced.GLOOMSCULK_CRYSTAL_FLOOR)
@@ -80,6 +84,7 @@ public class Gloomwood extends NetherBiomeConfig {
                .feature(NetherTerrainPlaced.SCULK_VEIN_WALL)
                .feature(NetherTerrainPlaced.SCULK_VEIN_CEILING)
                .feature(NetherVinesPlaced.GLOOMSCULK_VINE)
+               .feature(NetherVinesPlaced.LUMABUS_VINE_SPARSE)
                .feature(NetherObjectsPlaced.STALACTITE)
                .addNetherClimate(-0.25f, -0.35f, 0.0f)
                .genChance(0.3f)

@@ -3,6 +3,7 @@ package org.betterx.betternether.registry.features.configured;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.registry.NetherFeatures;
 import org.betterx.betternether.world.features.*;
+import org.betterx.betternether.world.features.configs.GloomwoodTreeConfiguration;
 import org.betterx.betternether.world.features.configs.NaturalTreeConfiguration;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.feature.api.configured.ConfiguredFeatureKey;
@@ -19,8 +20,11 @@ public class NetherTrees {
     public static final ConfiguredFeatureKey<WithConfiguration<RubeusTreeFeature, NaturalTreeConfiguration>> RUBEUS_TREE
             = ConfiguredFeatureManager.configuration(C.id("tree_rubeus"), NetherFeatures.RUBEUS_TREE);
 
-    public static final ConfiguredFeatureKey<WithConfiguration<GloomwoodTreeFeature, NaturalTreeConfiguration>> GLOOMWOOD_TREE
+    public static final ConfiguredFeatureKey<WithConfiguration<GloomwoodTreeFeature, GloomwoodTreeConfiguration>> GLOOMWOOD_TREE
             = ConfiguredFeatureManager.configuration(C.id("tree_gloomwood"), NetherFeatures.GLOOMWOOD_TREE);
+
+    public static final ConfiguredFeatureKey<WithConfiguration<GloomwoodTreeFeature, GloomwoodTreeConfiguration>> GLOOMWOOD_TREE_SOLITARY
+            = ConfiguredFeatureManager.configuration(C.id("tree_gloomwood_solitary"), NetherFeatures.GLOOMWOOD_TREE);
 
     public static final ConfiguredFeatureKey<WithConfiguration<MushroomFirFeature, NoneFeatureConfiguration>> MUSHROOM_FIR
             = ConfiguredFeatureManager.configuration(C.id("tree_mushroom_fir"), NetherFeatures.MUSHROOM_FIR);
@@ -45,6 +49,9 @@ public class NetherTrees {
 
     public static final ConfiguredFeatureKey<WithConfiguration<WillowTreeFeature, NoneFeatureConfiguration>> WILLOW_TREE
             = ConfiguredFeatureManager.configuration(C.id("tree_willow"), NetherFeatures.WILLOW_TREE);
+
+    public static final ConfiguredFeatureKey<WithConfiguration<OldWillowTree, NaturalTreeConfiguration>> OLD_WILLOW_TREE
+            = ConfiguredFeatureManager.configuration(C.id("tree_old_willow"), NetherFeatures.OLD_WILLOW_TREE);
 
     public static final ConfiguredFeatureKey<WithConfiguration<AnchorTreeBranchFeature, NoneFeatureConfiguration>> ANCHOR_TREE_BRANCH
             = ConfiguredFeatureManager.configuration(C.id("anchor_tree_branch"), NetherFeatures.ANCHOR_TREE_BRANCH);

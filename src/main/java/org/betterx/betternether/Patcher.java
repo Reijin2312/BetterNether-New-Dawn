@@ -16,9 +16,66 @@ public class Patcher {
         Patch.register(Patcher_001::new);
         Patch.register(Patcher_002::new);
         Patch.register(Patcher_003::new);
+        Patch.register(Patcher_004::new);
     }
 }
 
+class Patcher_004 extends Patch {
+    public Patcher_004() {
+        super(BetterNether.C, new Version(21, 8, 6));
+    }
+
+    @Override
+    public Map<String, String> getIDReplacements() {
+        return Map.<String, String>ofEntries(
+                Map.entry("betternether:anchor_tree_wall_hanging_sign", "betternether:anchor_tree_hanging_wall_sign"),
+                Map.entry("betternether:mushroom_fir_wall_hanging_sign", "betternether:mushroom_fir_hanging_wall_sign"),
+                Map.entry("betternether:nether_mushroom_wall_hanging_sign", "betternether:nether_mushroom_hanging_wall_sign"),
+                Map.entry("betternether:nether_reed_wall_hanging_sign", "betternether:nether_reed_hanging_wall_sign"),
+                Map.entry("betternether:nether_sakura_wall_hanging_sign", "betternether:nether_sakura_hanging_wall_sign"),
+                Map.entry("betternether:rubeus_wall_hanging_sign", "betternether:rubeus_hanging_wall_sign"),
+                Map.entry("betternether:stalagnate_wall_hanging_sign", "betternether:stalagnate_hanging_wall_sign"),
+                Map.entry("betternether:wart_wall_hanging_sign", "betternether:wart_hanging_wall_sign"),
+                Map.entry("betternether:willow_wall_hanging_sign", "betternether:willow_hanging_wall_sign"),
+                Map.entry("betternether:common_bark_striped", "betternether:common_bark_stripped"),
+                Map.entry("betternether:common_log_striped", "betternether:common_log_stripped"),
+                Map.entry("betternether:stalagnate_striped_bark", "betternether:stalagnate_stripped_bark"),
+                Map.entry("betternether:stalagnate_striped_log", "betternether:stalagnate_stripped_log"),
+                Map.entry("betternether:striped_wood_mushroom_fir", "betternether:mushroom_fir_stripped_bark"),
+                Map.entry("betternether:nether_reed_boat", "betternether:nether_reed_raft"),
+                Map.entry("betternether:nether_reed_chest_boat", "betternether:nether_reed_chest_raft"),
+                Map.entry("betternether:spawn_naga", "betternether:spawn_egg_naga")
+        );
+    }
+
+    @Override
+    public PatchBiFunction<ListTag, ListTag, Boolean> getBlockStatePatcher() {
+        return Patcher_004::patchBlockState;
+    }
+
+    private static boolean patchBlockState(ListTag palette, ListTag states, MigrationProfile profile) {
+        boolean[] changed = {false};
+        palette.forEach((blockTag) -> {
+            final CompoundTag block = (CompoundTag) blockTag;
+            final String id = block.getStringOr("Name", "");
+            if ("betternether:nether_brick_tile_slab_double".equals(id)) {
+                final CompoundTag props = block.getCompound("Properties").orElseGet(CompoundTag::new);
+                props.remove("half");
+                props.putString("type", "double");
+                block.putString("Name", "betternether:nether_brick_tile_slab");
+                block.put("Properties", props);
+                changed[0] = true;
+            } else if ("betternether:stalagnate_seed_bottom".equals(id)) {
+                final CompoundTag props = block.getCompound("Properties").orElseGet(CompoundTag::new);
+                props.putString("top", "false");
+                block.putString("Name", "betternether:stalagnate_seed");
+                block.put("Properties", props);
+                changed[0] = true;
+            }
+        });
+        return changed[0];
+    }
+}
 class Patcher_003 extends Patch {
     public Patcher_003() {
         super(BetterNether.C, new Version(9, 0, 1));
