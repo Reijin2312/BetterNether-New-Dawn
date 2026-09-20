@@ -94,6 +94,7 @@ public class NetherBiomes {
                 CRIMSON_GLOWING_WOODS.key,
                 CRIMSON_PINEWOOD.key,
                 FLOODED_DELTAS.key,
+                GLOOMWOOD.key,
                 GRAVEL_DESERT.key,
                 MAGMA_LAND.key,
                 NETHER_GRASSLANDS.key,
