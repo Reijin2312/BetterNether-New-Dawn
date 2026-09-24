@@ -87,7 +87,7 @@ class BaseBlockMold extends BlockBaseNotFull {
             c = world.getBlockState(pos.east()).getBlock() == this ? c++ : c;
             c = world.getBlockState(pos.west()).getBlock() == this ? c++ : c;
             if (c < 2) {
-                BlockPos npos = new BlockPos(pos);
+                BlockPos npos = pos;
                 switch (random.nextInt(4)) {
                     case 0:
                         npos = npos.offset(-1, 0, 0);

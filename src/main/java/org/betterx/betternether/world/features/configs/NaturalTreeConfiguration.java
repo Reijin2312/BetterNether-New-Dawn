@@ -1,16 +1,13 @@
 package org.betterx.betternether.world.features.configs;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import org.betterx.betternether.world.features.NonOverlappingFeature;
 
-public class NaturalTreeConfiguration implements FeatureConfiguration {
-    public static final Codec<NaturalTreeConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance
-            .group(
-                    Codec.BOOL.fieldOf("natural").orElse(true).forGetter(o -> o.natural),
-                    Codec.INT.fieldOf("distance").orElse(7).forGetter(o -> o.distance)
-            )
-            .apply(instance, NaturalTreeConfiguration::new));
+import java.util.function.Function;
+
+public class NaturalTreeConfiguration {
     private static final NaturalTreeConfiguration NATURAL = new NaturalTreeConfiguration(true, 7);
     private static final NaturalTreeConfiguration USER = new NaturalTreeConfiguration(false, 7);
     private static final NaturalTreeConfiguration NATURAL_LARGE = new NaturalTreeConfiguration(true, 13);
@@ -18,6 +15,17 @@ public class NaturalTreeConfiguration implements FeatureConfiguration {
     public final boolean natural;
     public final int distance;
     public final int manDist;
+
+    public static <T extends NonOverlappingFeature<?>> MapCodec<T> mapCodecFor(
+            Function<NaturalTreeConfiguration, T> factory
+    ) {
+        return RecordCodecBuilder.mapCodec(instance -> instance
+                .group(
+                        Codec.BOOL.fieldOf("natural").orElse(true).forGetter(o -> o.config.natural),
+                        Codec.INT.fieldOf("distance").orElse(7).forGetter(o -> o.config.distance)
+                )
+                .apply(instance, (natural, distance) -> factory.apply(new NaturalTreeConfiguration(natural, distance))));
+    }
 
     public NaturalTreeConfiguration(boolean natural, int distance) {
         this.natural = natural;

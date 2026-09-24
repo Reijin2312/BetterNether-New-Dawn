@@ -6,7 +6,7 @@ import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -70,8 +70,8 @@ public class BlockGloomsculkGeode extends Block {
      */
     @Override
     public void playerDestroy(
-            Level level,
-            Player player,
+            ServerLevel level,
+            ServerPlayer player,
             BlockPos pos,
             BlockState state,
             BlockEntity blockEntity,

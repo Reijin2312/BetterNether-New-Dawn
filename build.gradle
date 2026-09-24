@@ -71,6 +71,16 @@ java {
     withSourcesJar()
 }
 
+sourceSets {
+    main {
+        java {
+            // Generated data is checked in. Datagen sources are not part of the runtime mod
+            // and currently target a different generation API on 26.3.
+            exclude 'org/betterx/datagen/**'
+        }
+    }
+}
+
 neoForge {
     version = project.neoforge_version
     accessTransformers = files("src/main/resources/META-INF/accesstransformer.cfg")
@@ -500,7 +510,7 @@ jar {
 
 // Collect built jars for BetterNether and its local BetterX libraries into one folder
 def distDir = new File(rootProject.projectDir.parentFile, "betterx-dist")
-def modrinthModsDir = new File("C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/NeoForge 26.2/mods")
+def modrinthModsDir = new File("C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/NeoForge 26.3/mods")
 def test2ModsDir = file((project.findProperty("test2_mods_dir") ?: "C:/Users/Redmi/Desktop/test2/mods").toString())
 def betterNetherModrinthJarPatterns = [
         "BetterNether-*.jar",

@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.BNBlockProperties;
 import org.betterx.betternether.blocks.BlockWillowBranch;
@@ -17,16 +18,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class WillowTreeFeature extends ContextFeature<NoneFeatureConfiguration> implements GrowableFeature<NoneFeatureConfiguration> {
+public class WillowTreeFeature extends ContextFeature implements GrowableFeature {
+    public static final MapCodec<WillowTreeFeature> CODEC = MapCodec.unit(WillowTreeFeature::new);
     private static final Direction[] HOR = HorizontalDirectionalBlock
             .FACING
             .getPossibleValues()
             .toArray(new Direction[]{});
 
-    public WillowTreeFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+    @Override
+    public MapCodec<WillowTreeFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -34,7 +36,6 @@ public class WillowTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
@@ -43,7 +44,7 @@ public class WillowTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
         return grow(world, pos, random);
     }
 
-    protected boolean grow(
+    public boolean grow(
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random
@@ -242,13 +243,4 @@ public class WillowTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
         );
     }
 
-    @Override
-    public boolean grow(
-            ServerLevelAccessor level,
-            BlockPos pos,
-            RandomSource random,
-            NoneFeatureConfiguration configuration
-    ) {
-        return grow(level, pos, random);
-    }
 }

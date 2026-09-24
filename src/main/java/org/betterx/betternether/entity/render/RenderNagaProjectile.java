@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
+import org.joml.Matrix4f;
 
 public class RenderNagaProjectile extends EntityRenderer<EntityNagaProjectile, RenderNagaProjectile.NagaProjectileRenderState> {
     private static final Identifier TEXTURE = BetterNether.C.mk("textures/entity/naga_projectile.png");
@@ -41,7 +42,7 @@ public class RenderNagaProjectile extends EntityRenderer<EntityNagaProjectile, R
 
         poseStack.pushPose();
         poseStack.scale(2.0F, 2.0F, 2.0F);
-        poseStack.mulPose(cameraRenderState.orientation);
+        poseStack.mulPose(new Matrix4f().rotation(cameraRenderState.orientation));
         submitNodeCollector.submitCustomGeometry(poseStack, LAYER, (pose, consumer) -> {
             vertex(consumer, pose, state.lightCoords, 0.0F, 0, 0, end);
             vertex(consumer, pose, state.lightCoords, 1.0F, 0, 1, end);

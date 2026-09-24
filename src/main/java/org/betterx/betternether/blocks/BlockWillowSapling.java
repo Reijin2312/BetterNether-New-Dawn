@@ -14,6 +14,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -68,7 +69,8 @@ public class BlockWillowSapling extends FeatureSaplingBlock implements Bonemeala
             Level world,
             @NotNull RandomSource random,
             BlockPos pos,
-            @NotNull BlockState state
+            @NotNull BlockState state,
+            BonemealSource source
     ) {
         return (BlocksHelper.isFertile(world.getBlockState(pos.below()))
                 ? (random.nextInt(8) == 0)

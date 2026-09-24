@@ -10,6 +10,7 @@ import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -24,9 +25,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -82,21 +82,22 @@ public class BlockLumabusVine extends BaseVineBlock implements DeferedSeedBlock,
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
-        var fruityState = LootItemBlockStatePropertyCondition
-                .hasBlockStateProperties(this)
-                .setProperties(net.minecraft.advancements.predicates.StatePropertiesPredicate.Builder
-                        .properties()
-                        .hasProperty(SHAPE, BlockProperties.TripleShape.BOTTOM));
+        var fruityState = MatchBlock.blockMatches(
+                provider.getProvider().lookupOrThrow(Registries.BLOCK),
+                this,
+                net.minecraft.advancements.predicates.StatePropertiesPredicate.Builder.properties()
+                        .hasProperty(SHAPE, BlockProperties.TripleShape.BOTTOM)
+        );
 
 
         return LootTable
                 .lootTable()
                 .withPool(LootPool
                         .lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
+                        .setRolls(ContextIntProviders.exactly(1))
                         .add(LootItem.lootTableItem(seed)
                                      .when(fruityState.and(provider.shearsOrSilkTouchCondition()))
-                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                                     .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 3)))
                                      .otherwise(LootItem.lootTableItem(seed)
                                                         .when(ExplosionCondition.survivesExplosion())
                                                         .when(BonusLevelTableCondition.bonusLevelFlatChance(provider.fortune(), LootLookupProvider.VANILLA_LEAVES_SAPLING_CHANCES))
@@ -105,10 +106,10 @@ public class BlockLumabusVine extends BaseVineBlock implements DeferedSeedBlock,
                 )
                 .withPool(LootPool
                         .lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
+                        .setRolls(ContextIntProviders.exactly(1))
                         .add(LootItem.lootTableItem(NetherItems.GLOWSTONE_PILE)
                                      .when(fruityState.and(provider.shearsOrHoeSilkTouchCondition()))
-                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                                     .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 3)))
                         )
                 );
     }

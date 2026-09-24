@@ -14,6 +14,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -35,18 +36,22 @@ public class BlockEyeSeed extends BlockBaseNotFull implements BonemealableBlock,
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, BonemealSource source) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return random.nextInt(4) == 0 && world.getBlockState(pos.below()).getBlock() == Blocks.AIR;
     }
 
-    @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    private void grow(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         NetherVines.EYE_VINE.placeInWorld(WorldState.registryAccess(), level, pos, random);
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+        grow(level, random, pos, state);
     }
 
     @Override
@@ -74,8 +79,8 @@ public class BlockEyeSeed extends BlockBaseNotFull implements BonemealableBlock,
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state, world, pos, random);
-        if (isBonemealSuccess(world, random, pos, state)) {
-            performBonemeal(world, random, pos, state);
+        if (random.nextInt(4) == 0 && world.getBlockState(pos.below()).getBlock() == Blocks.AIR) {
+            grow(world, random, pos, state);
         }
     }
 }

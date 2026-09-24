@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.MHelper;
 import org.betterx.betternether.blocks.BlockPlantWall;
@@ -24,9 +25,16 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import java.util.Iterator;
 import java.util.Map;
 
-public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfiguration> implements GrowableFeature<NaturalTreeConfiguration> {
-    public RubeusTreeFeature() {
-        super(NaturalTreeConfiguration.CODEC);
+public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfiguration> implements GrowableFeature {
+    public static final MapCodec<RubeusTreeFeature> CODEC = NaturalTreeConfiguration.mapCodecFor(RubeusTreeFeature::new);
+
+    public RubeusTreeFeature(NaturalTreeConfiguration config) {
+        super(config);
+    }
+
+    @Override
+    public MapCodec<RubeusTreeFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -45,13 +53,12 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            NaturalTreeConfiguration config,
             final int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
         int length = BlocksHelper.upRay(world, pos, BlockStalagnateSeed.MAX_SEARCH_LENGTH + 2);
         if (length >= BlockStalagnateSeed.MAX_SEARCH_LENGTH)
-            return super.place(world, pos, random, config, MAX_HEIGHT, context);
+            return super.place(world, pos, random, MAX_HEIGHT, context);
         return false;
     }
 
@@ -413,14 +420,13 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
     public boolean grow(
             ServerLevelAccessor level,
             BlockPos pos,
-            RandomSource random,
-            NaturalTreeConfiguration configuration
+            RandomSource random
     ) {
         return grow(
                 level,
                 pos,
                 random,
-                new NaturalTreeConfiguration(false, configuration.distance),
+                new NaturalTreeConfiguration(false, this.config.distance),
                 NetherThreadDataStorage.generatorForThread().context
         );
     }

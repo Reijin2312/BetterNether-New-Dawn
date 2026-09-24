@@ -45,7 +45,7 @@ public class BlockEyeVine extends BaseVineBlock implements BlockLootProvider {
     ) {
         return LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                          .setRolls(net.minecraft.world.level.storage.loot.providers.number.ConstantValue.exactly(1.0F))
+                                          .setRolls(net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.exactly(1))
                                           .add(LootItem.lootTableItem(NetherBlocks.EYE_SEED)
                                                        .when(ExplosionCondition.survivesExplosion())));
     }

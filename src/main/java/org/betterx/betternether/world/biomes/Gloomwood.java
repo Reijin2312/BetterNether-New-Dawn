@@ -18,7 +18,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 /**
@@ -132,24 +132,24 @@ public class Gloomwood extends NetherBiomeConfig {
         // fallback everywhere else. Written this way round deliberately - a threshold condition is true
         // well under half the time, so whichever state it guards is the one that ends up scattered.
         builder.rule(
-                SurfaceRules.ifTrue(
-                        SurfaceRules.stoneDepthCheck(1, false, CaveSurface.CEILING),
-                        SurfaceRules.sequence(
-                                SurfaceRules.ifTrue(
+                MaterialRules.ifTrue(
+                        MaterialRules.stoneDepthCheck(1, false, CaveSurface.CEILING),
+                        MaterialRules.sequence(
+                                MaterialRules.ifTrue(
                                         CEILING_NETHERRACK,
-                                        SurfaceRules.state(Blocks.NETHERRACK.defaultBlockState())
+                                        MaterialRules.state(Blocks.NETHERRACK.defaultBlockState())
                                 ),
-                                SurfaceRules.state(sculk)
+                                MaterialRules.state(sculk)
                         )
                 ),
                 BaseSurfaceRuleBuilder.CEILING_PRIORITY
         );
         builder.rule(
-                SurfaceRules.ifTrue(
+                MaterialRules.ifTrue(
                         CEILING_DEEP,
-                        SurfaceRules.ifTrue(
-                                SurfaceRules.stoneDepthCheck(5, false, CaveSurface.CEILING),
-                                SurfaceRules.state(sculk)
+                        MaterialRules.ifTrue(
+                                MaterialRules.stoneDepthCheck(5, false, CaveSurface.CEILING),
+                                MaterialRules.state(sculk)
                         )
                 ),
                 BaseSurfaceRuleBuilder.ABOVE_CEILING_PRIORITY + 10

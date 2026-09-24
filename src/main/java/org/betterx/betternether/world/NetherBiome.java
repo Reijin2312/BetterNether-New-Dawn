@@ -6,7 +6,6 @@ import org.betterx.wover.generator.api.biomesource.WoverBiomeData;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.biome.Biome;
 
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +13,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class NetherBiome extends WoverBiomeData {
     public static final MapCodec<NetherBiome> CODEC = codec(NetherBiome::new);
-    public static final KeyDispatchDataCodec<NetherBiome> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     public NetherBiome(
             float fogDensity,
@@ -34,11 +32,10 @@ public class NetherBiome extends WoverBiomeData {
     }
 
     @Override
-    public KeyDispatchDataCodec<? extends WoverBiomeData> codec() {
-        return KEY_CODEC;
+    public MapCodec<? extends WoverBiomeData> codec() {
+        return CODEC;
     }
 
-    @Override
     public boolean isEnabled() {
         return Configs.BIOMES_TOGGLE.isEnabled(biomeKey);
     }

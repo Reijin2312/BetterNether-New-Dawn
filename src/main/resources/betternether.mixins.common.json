@@ -8,7 +8,6 @@
     "BlockBehaviourAccessor",
     "BlockBehaviourPropertiesAccessor",
     "BlockBehaviourMixin",
-    "BrewingRecipeRegistryMixin",
     "CraftingScreenHandlerMixin",
     "DeltaFeatureMixin",
     "LightningRodBlockMixin",

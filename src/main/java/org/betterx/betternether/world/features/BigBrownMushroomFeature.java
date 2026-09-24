@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
 
@@ -8,12 +9,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.EnumMap;
 import java.util.Map;
 
-public class BigBrownMushroomFeature extends ContextFeature<NoneFeatureConfiguration> {
+public class BigBrownMushroomFeature extends ContextFeature {
+    public static final MapCodec<BigBrownMushroomFeature> CODEC = MapCodec.unit(BigBrownMushroomFeature::new);
     private static final Map<org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape, BlockState> STATE_CACHE = new EnumMap<>(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape.class);
 
     private static BlockState state(org.betterx.betternether.blocks.BNBlockProperties.BrownMushroomShape shape) {
@@ -25,8 +26,9 @@ public class BigBrownMushroomFeature extends ContextFeature<NoneFeatureConfigura
         );
     }
 
-    public BigBrownMushroomFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+    @Override
+    public MapCodec<BigBrownMushroomFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -34,7 +36,6 @@ public class BigBrownMushroomFeature extends ContextFeature<NoneFeatureConfigura
             ServerLevelAccessor level,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {

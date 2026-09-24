@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.function.ToIntFunction;
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +58,7 @@ public class RedstoneOreBlock extends RedStoneOreBlock implements RuntimeBlockMo
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
-        return provider.dropOre(this, Items.REDSTONE, UniformGenerator.between(minCount, maxCount));
+        return provider.dropOre(this, Items.REDSTONE, ContextIntProviders.between(minCount, maxCount));
     }
 
     @Override

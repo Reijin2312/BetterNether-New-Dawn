@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -69,12 +70,12 @@ public abstract class BlockCommonPlant extends BlockBaseNotFull implements Bonem
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, BonemealSource source) {
         return state.getValue(AGE) < 3;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         int age = state.getValue(AGE);
         if (age < 3)
             return BlocksHelper.isFertile(world.getBlockState(pos.below()))
@@ -94,16 +95,20 @@ public abstract class BlockCommonPlant extends BlockBaseNotFull implements Bonem
             return false;
     }
 
-    @Override
-    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+    protected void grow(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
         int age = state.getValue(AGE);
         world.setBlockAndUpdate(pos, state.setValue(AGE, age + 1));
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+        grow(world, random, pos, state);
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state, world, pos, random);
         if (canGrowTerrain(world, random, pos, state))
-            performBonemeal(world, random, pos, state);
+            grow(world, random, pos, state);
     }
 }

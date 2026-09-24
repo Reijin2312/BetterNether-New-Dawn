@@ -10,6 +10,7 @@ import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
@@ -26,9 +27,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.minecraft.world.phys.BlockHitResult;
 
 import org.jetbrains.annotations.NotNull;
@@ -90,20 +90,20 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
-        var fruityState = LootItemBlockStatePropertyCondition
-                .hasBlockStateProperties(this)
-                .setProperties(net.minecraft.advancements.predicates.StatePropertiesPredicate.Builder
-                        .properties()
+        var fruityState = MatchBlock.blockMatches(
+                provider.getProvider().lookupOrThrow(Registries.BLOCK),
+                this,
+                net.minecraft.advancements.predicates.StatePropertiesPredicate.Builder.properties()
                         .hasProperty(SHAPE, BlockProperties.TripleShape.TOP))
                 .invert();
 
 
         return LootTable.lootTable().withPool(LootPool
                 .lootPool()
-                .setRolls(ConstantValue.exactly(1.0F))
+                .setRolls(ContextIntProviders.exactly(1))
                 .add(LootItem.lootTableItem(NetherBlocks.WHISPERING_GOURD.asItem())
                              .when(fruityState.and(provider.shearsOrSilkTouchCondition()))
-                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                             .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 2)))
                              .otherwise(LootItem.lootTableItem(this.asItem())
                                                 .when(ExplosionCondition.survivesExplosion())
                                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(provider.fortune(), LootLookupProvider.VANILLA_LEAVES_SAPLING_CHANCES))

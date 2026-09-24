@@ -17,8 +17,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
@@ -72,14 +71,14 @@ public class BlockEyeball extends BlockEyeBase implements BlockLootProvider {
     ) {
         return LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                          .setRolls(ConstantValue.exactly(1.0F))
+                                          .setRolls(ContextIntProviders.exactly(1))
                                           .add(LootItem.lootTableItem(net.minecraft.world.item.Items.SLIME_BALL)
-                                                       .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4)))
+                                                       .apply(SetItemCountFunction.setCount(ContextIntProviders.between(2, 4)))
                                                        .when(ExplosionCondition.survivesExplosion())))
                         .withPool(LootPool.lootPool()
-                                          .setRolls(ConstantValue.exactly(1.0F))
+                                          .setRolls(ContextIntProviders.exactly(1))
                                           .add(LootItem.lootTableItem(NetherBlocks.EYE_SEED)
-                                                       .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                                                       .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 2)))
                                                        .when(ExplosionCondition.survivesExplosion())));
     }
 }

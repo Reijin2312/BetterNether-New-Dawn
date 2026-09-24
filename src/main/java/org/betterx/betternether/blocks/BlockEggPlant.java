@@ -119,7 +119,7 @@ public class BlockEggPlant extends BlockCommonPlant implements SurvivesOnNetherG
     }
 
     @Override
-    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+    protected void grow(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
         if (state.getValue(DESTRUCTED))
             world.setBlockAndUpdate(pos, this.defaultBlockState());
     }

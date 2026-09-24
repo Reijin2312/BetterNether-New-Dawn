@@ -9,10 +9,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.FuelValues;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -27,7 +28,7 @@ public abstract class AbstractFurnaceBlockEntityMixin {
 
     @Inject(method = "getTotalCookTime", at = @At("RETURN"), cancellable = true)
     private static void betternether$getTotalCookTime(
-            ServerLevel level,
+            RecipeHolder<? extends AbstractCookingRecipe> recipe,
             AbstractFurnaceBlockEntity inventory,
             CallbackInfoReturnable<Integer> cir
     ) {
@@ -39,7 +40,7 @@ public abstract class AbstractFurnaceBlockEntityMixin {
 
     @Inject(method = "getBurnDuration", at = @At("RETURN"))
     private void betternether$creditCrystalBurn(
-            FuelValues fuelValues,
+            ServerLevel level,
             ItemStack itemStack,
             CallbackInfoReturnable<Integer> cir
     ) {
@@ -50,9 +51,6 @@ public abstract class AbstractFurnaceBlockEntityMixin {
         }
 
         BlockEntity self = (BlockEntity) (Object) this;
-        Level level = self.getLevel();
-        if (!(level instanceof ServerLevel)) return;
-
         BlockPos pos = self.getBlockPos();
         Player player = level.getNearestPlayer(
                 pos.getX() + 0.5,

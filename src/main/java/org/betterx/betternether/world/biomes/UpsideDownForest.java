@@ -11,19 +11,20 @@ import org.betterx.wover.surface.impl.BaseSurfaceRuleBuilder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.levelgen.Noises;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 ;
 
 public class UpsideDownForest extends NetherBiomeConfig {
-    public static SurfaceRules.RuleSource ceilingMossRule() {
-        return SurfaceRules.state(NetherBlocks.CEILING_MUSHROOMS.defaultBlockState());
+    public static net.minecraft.world.level.levelgen.material.rule.MaterialRule ceilingMossRule() {
+        return MaterialRules.state(NetherBlocks.CEILING_MUSHROOMS.defaultBlockState());
     }
 
-    public static SurfaceRules.RuleSource netherrackMossRule() {
-        return SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
+    public static net.minecraft.world.level.levelgen.material.rule.MaterialRule netherrackMossRule() {
+        return MaterialRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
     }
-    static final SurfaceRules.ConditionSource NOISE_CEIL_LAYER = SurfaceRules.noiseCondition2d(
+    static final net.minecraft.world.level.levelgen.material.condition.MaterialCondition NOISE_CEIL_LAYER = MaterialRules.noiseCondition2d(
             Noises.NETHER_STATE_SELECTOR,
             0.0
     );
@@ -71,9 +72,9 @@ public class UpsideDownForest extends NetherBiomeConfig {
     public void surface(BiomeSurfaceRuleBuilder<NetherBiomeBuilder> builder) {
         super.surface(builder);
         builder.rule(
-                SurfaceRules.ifTrue(
-                        SurfaceRules.ON_CEILING,
-                        SurfaceRules.sequence(SurfaceRules.ifTrue(
+                MaterialRules.ifTrue(
+                        MaterialRules.stoneDepthCheck(0, false, CaveSurface.CEILING),
+                        MaterialRules.sequence(MaterialRules.ifTrue(
                                 Conditions.FORREST_FLOOR_SURFACE_NOISE_A,
                                 ceilingMossRule()
                         ), NETHERRACK)
@@ -81,12 +82,12 @@ public class UpsideDownForest extends NetherBiomeConfig {
                 BaseSurfaceRuleBuilder.CEILING_PRIORITY
         ).rule(
 
-                SurfaceRules.ifTrue(
-                        SurfaceRules.ON_FLOOR,
-                        SurfaceRules.sequence(SurfaceRules.ifTrue(
+                MaterialRules.ifTrue(
+                        MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR),
+                        MaterialRules.sequence(MaterialRules.ifTrue(
                                 Conditions.roughNoise(Noises.NETHERRACK, 0.021),
                                 netherrackMossRule()
-                        ), SurfaceRules.state(
+                        ), MaterialRules.state(
                                 NetherBlocks.MUSHROOM_GRASS.defaultBlockState()))
                 ),
                 BaseSurfaceRuleBuilder.FLOOR_PRIORITY

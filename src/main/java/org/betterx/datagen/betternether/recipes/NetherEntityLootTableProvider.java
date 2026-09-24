@@ -18,7 +18,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.UniformInt;
 
 import java.util.function.BiConsumer;
 import org.jetbrains.annotations.NotNull;
@@ -95,8 +95,8 @@ public class NetherEntityLootTableProvider extends WoverLootTableProvider {
                 .setRolls(ConstantValue.exactly(1))
                 .add(LootItem
                         .lootTableItem(drop)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0, maxDrop)))
-                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(lookup, UniformGenerator.between(0, maxLootingDrop)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(0, maxDrop)))
+                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(lookup, UniformInt.between(0, maxLootingDrop)))
                 );
 
     }

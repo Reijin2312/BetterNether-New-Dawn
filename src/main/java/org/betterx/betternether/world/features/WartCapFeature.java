@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
 
@@ -11,9 +12,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class WartCapFeature extends ContextFeature<NoneFeatureConfiguration> {
+public class WartCapFeature extends ContextFeature {
+    public static final MapCodec<WartCapFeature> CODEC = MapCodec.unit(WartCapFeature::new);
     private static final BlockState INSIDE = Blocks.RED_MUSHROOM_BLOCK
             .defaultBlockState()
             .setValue(HugeMushroomBlock.NORTH, false)
@@ -25,8 +26,9 @@ public class WartCapFeature extends ContextFeature<NoneFeatureConfiguration> {
     private static final BlockState SKIN = Blocks.NETHER_WART_BLOCK
             .defaultBlockState();
 
-    public WartCapFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+    @Override
+    public MapCodec<WartCapFeature> codec() {
+        return CODEC;
     }
 
 
@@ -35,7 +37,6 @@ public class WartCapFeature extends ContextFeature<NoneFeatureConfiguration> {
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {

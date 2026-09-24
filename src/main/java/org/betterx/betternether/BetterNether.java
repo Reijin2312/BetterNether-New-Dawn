@@ -9,7 +9,6 @@ import org.betterx.betternether.registry.*;
 import org.betterx.betternether.registry.features.configured.NetherVegetation;
 import org.betterx.betternether.tab.BECreativeTabs;
 import org.betterx.betternether.world.BNWorldGenerator;
-import org.betterx.datagen.betternether.BetterNetherDatagen;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.state.api.WorldConfig;
 import net.minecraft.resources.Identifier;
@@ -45,7 +44,6 @@ public class BetterNether {
         modBus.addListener(RegisterEvent.class, NetherEntities::onRegister);
         modBus.addListener(RegisterEvent.class, NetherParticles::onRegister);
         modBus.addListener(RegisterEvent.class, NetherPoiTypes::onRegister);
-        modBus.addListener(RegisterEvent.class, NetherFeatures::onRegister);
         modBus.addListener(net.neoforged.neoforge.registries.RegisterEvent.class, BlockEntitiesRegistry::register);
         modBus.addListener(RegisterEvent.class, this::ensureBlocksLoaded);
         modBus.addListener(RegisterEvent.class, this::ensureItemsLoaded);
@@ -53,11 +51,6 @@ public class BetterNether {
         modBus.addListener(RegisterEvent.class, BECreativeTabs::onRegister);
         org.betterx.wover.block.api.BlockRegistry.hook(modBus);
         org.betterx.wover.item.api.ItemRegistry.hook(modBus);
-        if (ModCore.isDatagen()) {
-            BetterNetherDatagen datagen = new BetterNetherDatagen();
-            modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Client.class, datagen::onGatherData);
-            modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Server.class, datagen::onGatherData);
-        }
         initialize();
     }
 
@@ -89,6 +82,7 @@ public class BetterNether {
         NetherEnchantments.ensureStaticallyLoaded();
         BlockEntitiesRegistry.register();
         NetherEntities.register();
+        NetherFeatures.register();
         BNWorldGenerator.onModInit();
         NetherStructures.register();
         NetherBiomes.register();
