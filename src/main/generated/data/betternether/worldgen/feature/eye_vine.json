@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:block_column",
+  "allowed_placement": {
+    "type": "minecraft:matching_block_tag",
+    "tag": "minecraft:air"
+  },
+  "direction": "down",
+  "layers": [
+    {
+      "height": {
+        "type": "minecraft:clamped_normal",
+        "deviation": 3,
+        "max_inclusive": 16,
+        "mean": 6,
+        "min_inclusive": 3
+      },
+      "provider": {
+        "type": "minecraft:simple",
+        "state": {
+          "id": "betternether:eye_vine",
+          "properties": {
+            "shape": "bottom"
+          }
+        }
+      }
+    },
+    {
+      "height": 1,
+      "provider": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": "betternether:eyeball",
+            "weight": 1
+          },
+          {
+            "data": "betternether:eyeball_small",
+            "weight": 1
+          }
+        ]
+      }
+    }
+  ],
+  "prioritize_tip": true
+}

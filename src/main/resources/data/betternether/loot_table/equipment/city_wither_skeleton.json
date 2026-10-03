@@ -2,7 +2,7 @@
   "type": "minecraft:equipment",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
@@ -11,7 +11,7 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
@@ -20,14 +20,14 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:cincinnasite_boots",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_components",
+              "type": "minecraft:set_components",
               "components": {
                 "minecraft:equippable": {
                   "slot": "feet",
@@ -36,10 +36,10 @@
               }
             },
             {
-              "function": "minecraft:set_enchantments",
+              "type": "minecraft:set_enchantments",
               "add": false,
               "enchantments": {
-                "minecraft:protection": 4.0
+                "minecraft:protection": 4
               }
             }
           ]
@@ -47,14 +47,14 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:cincinnasite_leggings",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_components",
+              "type": "minecraft:set_components",
               "components": {
                 "minecraft:equippable": {
                   "slot": "legs",
@@ -63,10 +63,10 @@
               }
             },
             {
-              "function": "minecraft:set_enchantments",
+              "type": "minecraft:set_enchantments",
               "add": false,
               "enchantments": {
-                "minecraft:protection": 4.0
+                "minecraft:protection": 4
               }
             }
           ]
@@ -74,14 +74,14 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:cincinnasite_chestplate",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_components",
+              "type": "minecraft:set_components",
               "components": {
                 "minecraft:equippable": {
                   "slot": "chest",
@@ -90,11 +90,11 @@
               }
             },
             {
-              "function": "minecraft:set_enchantments",
+              "type": "minecraft:set_enchantments",
               "add": false,
               "enchantments": {
-                "minecraft:protection": 4.0,
-                "minecraft:thorns": 3.0
+                "minecraft:protection": 4,
+                "minecraft:thorns": 3
               }
             }
           ]
@@ -102,14 +102,14 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:cincinnasite_helmet",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:set_components",
+              "type": "minecraft:set_components",
               "components": {
                 "minecraft:equippable": {
                   "slot": "head",
@@ -118,10 +118,10 @@
               }
             },
             {
-              "function": "minecraft:set_enchantments",
+              "type": "minecraft:set_enchantments",
               "add": false,
               "enchantments": {
-                "minecraft:protection": 4.0
+                "minecraft:protection": 4
               }
             }
           ]

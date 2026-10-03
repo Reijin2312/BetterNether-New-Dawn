@@ -3,5 +3,6 @@
   "ingredient": "betternether:ink_bush_seed",
   "result": {
     "id": "minecraft:black_dye"
-  }
+  },
+  "cookingtime": 200
 }

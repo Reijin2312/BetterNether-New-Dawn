@@ -8,14 +8,14 @@
           "location": "betternether:lava/pyramid_1",
           "offset_y": 0
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:lava/pyramid_2",
           "offset_y": 0
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {

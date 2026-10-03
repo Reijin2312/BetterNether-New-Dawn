@@ -1,8 +1,9 @@
 {
-	"variants":
-	{
-        "":  [
-			{ "model": "betternether:block/cincinnasite_pedestal" }
-		]
-    }
+  "variants": {
+    "": [
+      {
+        "model": "betternether:block/cincinnasite_pedestal"
+      }
+    ]
+  }
 }

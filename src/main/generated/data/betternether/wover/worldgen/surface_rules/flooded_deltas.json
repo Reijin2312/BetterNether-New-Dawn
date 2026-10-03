@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -57,8 +53,8 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "minecraft:deepslate",
-            "Properties": {
+            "id": "minecraft:deepslate",
+            "properties": {
               "axis": "y"
             }
           }
@@ -70,17 +66,15 @@
           {
             "type": "minecraft:block",
             "result_state": {
-              "Name": "minecraft:deepslate",
-              "Properties": {
+              "id": "minecraft:deepslate",
+              "properties": {
                 "axis": "y"
               }
             }
           },
           {
             "type": "minecraft:block",
-            "result_state": {
-              "Name": "minecraft:blackstone"
-            }
+            "result_state": "minecraft:blackstone"
           }
         ],
         "selector": {
@@ -90,9 +84,7 @@
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

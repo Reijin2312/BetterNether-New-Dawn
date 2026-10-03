@@ -17,6 +17,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.jetbrains.annotations.Nullable;
 
 public class BuildingStructureProcessor implements StructureProcessor {
     protected final CityPalette palette;
@@ -27,6 +29,26 @@ public class BuildingStructureProcessor implements StructureProcessor {
 
     private StructureBlockInfo setState(BlockState state, StructureBlockInfo info) {
         return new StructureBlockInfo(info.pos(), state, info.nbt());
+    }
+
+    @Override
+    public @Nullable StructureBlockInfo process(
+            LevelReader worldView,
+            BlockPos targetPosition,
+            BlockPos referencePosition,
+            StructureBlockInfo originalBlockInfo,
+            StructureBlockInfo processedBlockInfo,
+            StructurePlaceSettings settings,
+            @Nullable StructureTemplate template
+    ) {
+        return processBlock(
+                worldView,
+                targetPosition,
+                referencePosition,
+                originalBlockInfo.pos(),
+                processedBlockInfo,
+                settings
+        );
     }
 
     @Override

@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -61,7 +57,7 @@
               "type": "minecraft:condition",
               "if_true": {
                 "type": "wover:rough_noise_condition",
-                "max_threshold": 1.7976931348623157E308,
+                "max_threshold": 1.7976931348623157e+308,
                 "min_threshold": 0.19,
                 "noise": "minecraft:netherrack",
                 "roughness": {
@@ -72,9 +68,7 @@
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "betternether:swampland_grass"
-                }
+                "result_state": "betternether:swampland_grass"
               }
             }
           },
@@ -90,28 +84,22 @@
               "scale_x": 0.5,
               "scale_z": 0.5,
               "seed": 523,
-              "threshold": 0.0
+              "threshold": 0
             },
             "then_run": {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "minecraft:soul_sand"
-              }
+              "result_state": "minecraft:soul_sand"
             }
           },
           {
             "type": "minecraft:block",
-            "result_state": {
-              "Name": "minecraft:soul_soil"
-            }
+            "result_state": "minecraft:soul_soil"
           }
         ]
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

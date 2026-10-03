@@ -1,35 +1,27 @@
 {
   "feature": {
-    "type": "minecraft:nether_forest_vegetation",
-    "config": {
-      "spread_height": 4,
-      "spread_width": 8,
-      "state_provider": {
-        "type": "minecraft:weighted_state_provider",
-        "entries": [
-          {
-            "data": {
-              "Name": "minecraft:crimson_roots"
-            },
-            "weight": 120
+    "type": "minecraft:simple_block",
+    "to_place": {
+      "type": "minecraft:weighted",
+      "entries": [
+        {
+          "data": "minecraft:crimson_roots",
+          "weight": 120
+        },
+        {
+          "data": "minecraft:crimson_fungus",
+          "weight": 80
+        },
+        {
+          "data": {
+            "id": "betternether:wart_seed",
+            "properties": {
+              "facing": "up"
+            }
           },
-          {
-            "data": {
-              "Name": "minecraft:crimson_fungus"
-            },
-            "weight": 80
-          },
-          {
-            "data": {
-              "Name": "betternether:wart_seed",
-              "Properties": {
-                "facing": "up"
-              }
-            },
-            "weight": 80
-          }
-        ]
-      }
+          "weight": 80
+        }
+      ]
     }
   },
   "placement": [
@@ -77,6 +69,50 @@
         "type": "minecraft:matching_block_tag",
         "tag": "wover:surfaces/nether/terrain"
       }
+    },
+    {
+      "predicate": {
+        "offset": [
+          0,
+          -1,
+          0
+        ],
+        "tag": "minecraft:nylium",
+        "type": "minecraft:matching_block_tag"
+      },
+      "type": "minecraft:block_predicate_filter"
+    },
+    {
+      "count": 64,
+      "type": "minecraft:count"
+    },
+    {
+      "y": {
+        "plateau": 0,
+        "min": -3,
+        "type": "minecraft:trapezoid",
+        "max": 3
+      },
+      "z": {
+        "plateau": 0,
+        "min": -7,
+        "type": "minecraft:trapezoid",
+        "max": 7
+      },
+      "type": "minecraft:offset",
+      "x": {
+        "plateau": 0,
+        "min": -7,
+        "type": "minecraft:trapezoid",
+        "max": 7
+      }
+    },
+    {
+      "predicate": {
+        "tag": "minecraft:air",
+        "type": "minecraft:matching_block_tag"
+      },
+      "type": "minecraft:block_predicate_filter"
     }
   ]
 }

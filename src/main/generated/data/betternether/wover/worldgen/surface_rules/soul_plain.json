@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -70,20 +66,16 @@
                 "scale_y": 0.2,
                 "scale_z": 0.1,
                 "seed": 245,
-                "threshold": 0.0
+                "threshold": 0
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:soul_soil"
-                }
+                "result_state": "minecraft:soul_soil"
               }
             },
             {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "minecraft:soul_sand"
-              }
+              "result_state": "minecraft:soul_sand"
             }
           ]
         }
@@ -100,8 +92,8 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "betternether:soul_sandstone",
-            "Properties": {
+            "id": "betternether:soul_sandstone",
+            "properties": {
               "up": "true"
             }
           }
@@ -132,20 +124,18 @@
                 "scale_y": 0.2,
                 "scale_z": 0.1,
                 "seed": 245,
-                "threshold": 0.0
+                "threshold": 0
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:soul_soil"
-                }
+                "result_state": "minecraft:soul_soil"
               }
             },
             {
               "type": "minecraft:block",
               "result_state": {
-                "Name": "betternether:soul_sandstone",
-                "Properties": {
+                "id": "betternether:soul_sandstone",
+                "properties": {
                   "up": "true"
                 }
               }
@@ -161,42 +151,32 @@
             "collection": [
               {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:soul_soil"
-                }
+                "result_state": "minecraft:soul_soil"
+              },
+              {
+                "type": "minecraft:block",
+                "result_state": "minecraft:soul_sand"
               },
               {
                 "type": "minecraft:block",
                 "result_state": {
-                  "Name": "minecraft:soul_sand"
-                }
-              },
-              {
-                "type": "minecraft:block",
-                "result_state": {
-                  "Name": "betternether:soul_sandstone",
-                  "Properties": {
+                  "id": "betternether:soul_sandstone",
+                  "properties": {
                     "up": "true"
                   }
                 }
               },
               {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:magma_block"
-                }
+                "result_state": "minecraft:magma_block"
               },
               {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:magma_block"
-                }
+                "result_state": "minecraft:magma_block"
               },
               {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:soul_sand"
-                }
+                "result_state": "minecraft:soul_sand"
               }
             ],
             "selector": {
@@ -208,9 +188,7 @@
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

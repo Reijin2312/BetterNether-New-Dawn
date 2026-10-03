@@ -1,9 +1,9 @@
 {
-    "variants":
-	{
-        "":
-		[
-			{ "model": "betternether:block/roof_tile_cincinnasite" }
-		]
-    }
+  "variants": {
+    "": [
+      {
+        "model": "betternether:block/roof_tile_cincinnasite"
+      }
+    ]
+  }
 }

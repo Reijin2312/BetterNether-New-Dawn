@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bclib:tag_compass"
+        "recipes": "bclib:tag_compass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

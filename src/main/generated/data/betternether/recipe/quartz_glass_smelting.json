@@ -4,5 +4,6 @@
   "ingredient": "minecraft:quartz",
   "result": {
     "id": "betternether:quartz_glass"
-  }
+  },
+  "cookingtime": 200
 }

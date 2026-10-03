@@ -1,6 +1,7 @@
 {
-    "variants":
-	{
-        "": { "model": "betternether:block/nether_ruby_block" }
+  "variants": {
+    "": {
+      "model": "betternether:block/nether_ruby_block"
     }
+  }
 }

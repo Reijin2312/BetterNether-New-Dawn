@@ -1,44 +1,46 @@
 {
-    "type": "block",
-    "pools": [
+  "type": "block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
         {
-            "rolls": 1,
-			"entries": [
-				{
-					"type": "minecraft:alternatives",
-					"children": [
-						{
-							"type": "minecraft:item",
-							"name": "minecraft:red_mushroom",
-							"functions": [
-								{
-									"function": "set_count",
-									"count": {
-										"min": 2,
-										"max": 4
-									}
-								}
-							],
-							"conditions": [
-								{
-									"condition": "minecraft:block_state_property",
-									"block": "betternether:red_large_mushroom",
-									"properties": {
-										"shape": "top"
-									}
-								},
-								{
-									"condition": "minecraft:survives_explosion"
-								}
-							]
-						},
-						{
-							"type": "minecraft:item",
-							"name": "betternether:nether_mushroom_stem"
-						}
-					]
-				}
-			]
-		}
-    ]
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:red_mushroom",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "betternether:red_large_mushroom",
+                    "state": {
+                      "shape": "top"
+                    }
+                  },
+                  {
+                    "type": "minecraft:survives_explosion"
+                  }
+                ]
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": {
+                  "min": 2,
+                  "max": 4,
+                  "type": "minecraft:uniform"
+                }
+              }
+            },
+            {
+              "type": "minecraft:item",
+              "name": "betternether:nether_mushroom_stem"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

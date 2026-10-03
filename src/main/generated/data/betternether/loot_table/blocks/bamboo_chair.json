@@ -2,22 +2,20 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "block": "betternether:bamboo_chair",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "top": "false"
-          }
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:bamboo_chair"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1,
+      "condition": {
+        "type": "minecraft:match_block",
+        "blocks": "betternether:bamboo_chair",
+        "state": {
+          "top": "false"
+        }
+      }
     }
   ],
   "random_sequence": "betternether:blocks/bamboo_chair"

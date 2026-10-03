@@ -1,6 +1,7 @@
 {
-	"variants":
-	{
-        "":  { "model": "betternether:block/farmland" }
+  "variants": {
+    "": {
+      "model": "betternether:block/farmland"
     }
+  }
 }

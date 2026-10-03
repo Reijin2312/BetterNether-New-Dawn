@@ -1,6 +1,10 @@
 {
-    "variants": {
-        "lit=false": { "model": "betternether:block/cincinnasite_fire_bowl_off" },
-        "lit=true": { "model": "betternether:block/cincinnasite_fire_bowl_on" }
+  "variants": {
+    "lit=false": {
+      "model": "betternether:block/cincinnasite_fire_bowl_off"
+    },
+    "lit=true": {
+      "model": "betternether:block/cincinnasite_fire_bowl_on"
     }
+  }
 }

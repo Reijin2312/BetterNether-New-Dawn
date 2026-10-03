@@ -1,6 +1,7 @@
 {
-    "variants":
-	{
-        "": { "model": "betternether:block/cincinnasite_forged" }
+  "variants": {
+    "": {
+      "model": "betternether:block/cincinnasite_forged"
     }
+  }
 }

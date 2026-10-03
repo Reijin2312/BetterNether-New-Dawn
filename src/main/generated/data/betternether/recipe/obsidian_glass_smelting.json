@@ -4,5 +4,6 @@
   "ingredient": "minecraft:obsidian",
   "result": {
     "id": "betternether:obsidian_glass"
-  }
+  },
+  "cookingtime": 200
 }

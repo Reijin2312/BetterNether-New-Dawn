@@ -2,22 +2,20 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "block": "betternether:jungle_chair",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "top": "false"
-          }
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:jungle_chair"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1,
+      "condition": {
+        "type": "minecraft:match_block",
+        "blocks": "betternether:jungle_chair",
+        "state": {
+          "top": "false"
+        }
+      }
     }
   ],
   "random_sequence": "betternether:blocks/jungle_chair"

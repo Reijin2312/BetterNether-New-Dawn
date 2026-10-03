@@ -1,0 +1,177 @@
+{
+  "type": "minecraft:overlay",
+  "features": [
+    {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "to_place": {
+          "type": "minecraft:weighted",
+          "entries": [
+            {
+              "data": {
+                "id": "betternether:egg_plant",
+                "properties": {
+                  "age": "0",
+                  "destructed": "false"
+                }
+              },
+              "weight": 20
+            },
+            {
+              "data": {
+                "id": "betternether:egg_plant",
+                "properties": {
+                  "age": "1",
+                  "destructed": "false"
+                }
+              },
+              "weight": 20
+            },
+            {
+              "data": {
+                "id": "betternether:egg_plant",
+                "properties": {
+                  "age": "2",
+                  "destructed": "false"
+                }
+              },
+              "weight": 20
+            },
+            {
+              "data": {
+                "id": "betternether:egg_plant",
+                "properties": {
+                  "age": "3",
+                  "destructed": "false"
+                }
+              },
+              "weight": 20
+            },
+            {
+              "data": "betternether:jungle_plant",
+              "weight": 80
+            },
+            {
+              "data": {
+                "id": "betternether:magma_flower",
+                "properties": {
+                  "age": "0"
+                }
+              },
+              "weight": 7
+            },
+            {
+              "data": {
+                "id": "betternether:magma_flower",
+                "properties": {
+                  "age": "1"
+                }
+              },
+              "weight": 7
+            },
+            {
+              "data": {
+                "id": "betternether:magma_flower",
+                "properties": {
+                  "age": "2"
+                }
+              },
+              "weight": 7
+            },
+            {
+              "data": {
+                "id": "betternether:magma_flower",
+                "properties": {
+                  "age": "3"
+                }
+              },
+              "weight": 7
+            },
+            {
+              "data": {
+                "id": "betternether:feather_fern",
+                "properties": {
+                  "age": "0"
+                }
+              },
+              "weight": 5
+            },
+            {
+              "data": {
+                "id": "betternether:feather_fern",
+                "properties": {
+                  "age": "1"
+                }
+              },
+              "weight": 5
+            },
+            {
+              "data": {
+                "id": "betternether:feather_fern",
+                "properties": {
+                  "age": "2"
+                }
+              },
+              "weight": 5
+            },
+            {
+              "data": {
+                "id": "betternether:feather_fern",
+                "properties": {
+                  "age": "3"
+                }
+              },
+              "weight": 5
+            }
+          ]
+        }
+      },
+      "placement": [
+        {
+          "predicate": {
+            "offset": [
+              0,
+              -1,
+              0
+            ],
+            "tag": "minecraft:nylium",
+            "type": "minecraft:matching_block_tag"
+          },
+          "type": "minecraft:block_predicate_filter"
+        },
+        {
+          "count": 64,
+          "type": "minecraft:count"
+        },
+        {
+          "y": {
+            "plateau": 0,
+            "min": -3,
+            "type": "minecraft:trapezoid",
+            "max": 3
+          },
+          "z": {
+            "plateau": 0,
+            "min": -7,
+            "type": "minecraft:trapezoid",
+            "max": 7
+          },
+          "type": "minecraft:offset",
+          "x": {
+            "plateau": 0,
+            "min": -7,
+            "type": "minecraft:trapezoid",
+            "max": 7
+          }
+        },
+        {
+          "predicate": {
+            "tag": "minecraft:air",
+            "type": "minecraft:matching_block_tag"
+          },
+          "type": "minecraft:block_predicate_filter"
+        }
+      ]
+    }
+  ]
+}

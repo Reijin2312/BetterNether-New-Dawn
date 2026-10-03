@@ -1,6 +1,7 @@
 {
-    "variants":
-	{
-        "": { "model": "betternether:block/eye_seed" }
+  "variants": {
+    "": {
+      "model": "betternether:block/eye_seed"
     }
+  }
 }

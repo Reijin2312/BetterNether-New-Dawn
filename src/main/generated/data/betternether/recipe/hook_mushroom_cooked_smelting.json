@@ -4,5 +4,6 @@
   "ingredient": "betternether:hook_mushroom",
   "result": {
     "id": "betternether:hook_mushroom_cooked"
-  }
+  },
+  "cookingtime": 200
 }

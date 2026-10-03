@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -57,8 +53,8 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "betternether:nether_mycelium",
-            "Properties": {
+            "id": "betternether:nether_mycelium",
+            "properties": {
               "blue": "false"
             }
           }
@@ -66,9 +62,7 @@
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

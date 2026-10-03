@@ -8,14 +8,14 @@
           "location": "betternether:garden_01",
           "offset_y": -3
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:garden_02",
           "offset_y": -2
         },
-        "weight": 1.0
+        "weight": 1
       }
     ]
   },

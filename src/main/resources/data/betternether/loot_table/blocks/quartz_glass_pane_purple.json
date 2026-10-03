@@ -9,21 +9,19 @@
           "name": "betternether:quartz_glass_pane_purple"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "enchantments": [
-              {
-                "enchantment": "minecraft:silk_touch",
-                "levels": {
-                  "min": 1
-                }
+      "condition": {
+        "type": "minecraft:match_tool",
+        "predicate": {
+          "enchantments": [
+            {
+              "enchantment": "minecraft:silk_touch",
+              "levels": {
+                "min": 1
               }
-            ]
-          }
+            }
+          ]
         }
-      ]
+      }
     }
   ]
 }

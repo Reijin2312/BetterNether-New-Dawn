@@ -1,8 +1,9 @@
 {
-	"variants":
-	{
-        "":  [
-			{ "model": "betternether:block/cincinnasite_pot" }
-		]
-    }
+  "variants": {
+    "": [
+      {
+        "model": "betternether:block/cincinnasite_pot"
+      }
+    ]
+  }
 }

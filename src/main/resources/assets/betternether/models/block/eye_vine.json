@@ -1,6 +1,6 @@
 {
-    "parent": "block/cross",
-    "textures": {
-        "cross": "betternether:block/eye_vine"
-    }
+  "parent": "block/cross",
+  "textures": {
+    "cross": "betternether:block/eye_vine"
+  }
 }

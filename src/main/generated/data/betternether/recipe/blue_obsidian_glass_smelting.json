@@ -4,5 +4,6 @@
   "ingredient": "betternether:blue_obsidian",
   "result": {
     "id": "betternether:blue_obsidian_glass"
-  }
+  },
+  "cookingtime": 200
 }

@@ -6,20 +6,16 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:copy_name",
-              "source": "block_entity"
-            }
-          ],
-          "name": "betternether:nether_brewing_stand"
+          "name": "betternether:nether_brewing_stand",
+          "modifier": {
+            "type": "minecraft:copy_name",
+            "source": "block_entity"
+          }
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
     }
   ]
 }

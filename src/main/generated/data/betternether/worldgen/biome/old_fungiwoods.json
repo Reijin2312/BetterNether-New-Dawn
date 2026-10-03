@@ -8,7 +8,7 @@
       "loop": "betternether:betternether.ambient.mushroom_forest",
       "mood": {
         "block_search_extent": 8,
-        "offset": 2.0,
+        "offset": 2,
         "sound": "minecraft:ambient.crimson_forest.mood",
         "tick_delay": 6000
       }
@@ -34,7 +34,7 @@
     "minecraft:visual/water_fog_color": "#050533"
   },
   "carvers": "minecraft:nether_cave",
-  "downfall": 0.0,
+  "downfall": 0,
   "effects": {
     "water_color": "#3f76e4"
   },
@@ -91,14 +91,20 @@
     "ambient": [
       {
         "type": "betternether:firefly",
-        "maxCount": 3,
-        "minCount": 1,
+        "count": {
+          "type": "minecraft:uniform",
+          "min_inclusive": 1,
+          "max_inclusive": 3
+        },
         "weight": 5
       },
       {
         "type": "betternether:hydrogen_jellyfish",
-        "maxCount": 6,
-        "minCount": 2,
+        "count": {
+          "type": "minecraft:uniform",
+          "min_inclusive": 2,
+          "max_inclusive": 6
+        },
         "weight": 5
       }
     ],
@@ -106,8 +112,11 @@
     "creature": [
       {
         "type": "minecraft:strider",
-        "maxCount": 2,
-        "minCount": 1,
+        "count": {
+          "type": "minecraft:uniform",
+          "min_inclusive": 1,
+          "max_inclusive": 2
+        },
         "weight": 60
       }
     ],
@@ -115,44 +124,45 @@
     "monster": [
       {
         "type": "minecraft:ghast",
-        "maxCount": 4,
-        "minCount": 4,
+        "count": 4,
         "weight": 50
       },
       {
         "type": "minecraft:zombified_piglin",
-        "maxCount": 4,
-        "minCount": 4,
+        "count": 4,
         "weight": 100
       },
       {
         "type": "minecraft:magma_cube",
-        "maxCount": 4,
-        "minCount": 4,
+        "count": 4,
         "weight": 2
       },
       {
         "type": "betternether:skull",
-        "maxCount": 4,
-        "minCount": 2,
+        "count": {
+          "type": "minecraft:uniform",
+          "min_inclusive": 2,
+          "max_inclusive": 4
+        },
         "weight": 2
       },
       {
         "type": "minecraft:enderman",
-        "maxCount": 4,
-        "minCount": 4,
+        "count": 4,
         "weight": 1
       },
       {
         "type": "minecraft:piglin",
-        "maxCount": 4,
-        "minCount": 4,
+        "count": 4,
         "weight": 15
       },
       {
         "type": "betternether:naga",
-        "maxCount": 5,
-        "minCount": 3,
+        "count": {
+          "type": "minecraft:uniform",
+          "min_inclusive": 3,
+          "max_inclusive": 5
+        },
         "weight": 8
       }
     ],
@@ -160,5 +170,5 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 2.0
+  "temperature": 2
 }

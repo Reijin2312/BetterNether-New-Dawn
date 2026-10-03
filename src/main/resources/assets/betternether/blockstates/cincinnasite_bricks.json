@@ -1,6 +1,7 @@
 {
-    "variants":
-	{
-        "": { "model": "betternether:block/cincinnasite_bricks" }
+  "variants": {
+    "": {
+      "model": "betternether:block/cincinnasite_bricks"
     }
+  }
 }

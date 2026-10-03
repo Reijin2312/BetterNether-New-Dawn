@@ -27,7 +27,7 @@
       "type": "wover:noise_filter",
       "min_noise_level": 0.25,
       "noise": "minecraft:gravel",
-      "scale_xz": 2.0
+      "scale_xz": 2
     },
     {
       "type": "minecraft:block_predicate_filter",

@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -69,13 +65,11 @@
                 "scale_x": 0.05,
                 "scale_z": 0.05,
                 "seed": 245,
-                "threshold": 0.0
+                "threshold": 0
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:magma_block"
-                }
+                "result_state": "minecraft:magma_block"
               }
             },
             {
@@ -94,7 +88,7 @@
                     "scale_y": 0.2,
                     "scale_z": 0.1,
                     "seed": 245,
-                    "threshold": 0.0
+                    "threshold": 0
                   },
                   "then_run": {
                     "type": "minecraft:sequence",
@@ -106,25 +100,19 @@
                         },
                         "then_run": {
                           "type": "minecraft:block",
-                          "result_state": {
-                            "Name": "minecraft:netherrack"
-                          }
+                          "result_state": "minecraft:netherrack"
                         }
                       },
                       {
                         "type": "minecraft:block",
-                        "result_state": {
-                          "Name": "minecraft:red_sand"
-                        }
+                        "result_state": "minecraft:red_sand"
                       }
                     ]
                   }
                 },
                 {
                   "type": "minecraft:block",
-                  "result_state": {
-                    "Name": "minecraft:netherrack"
-                  }
+                  "result_state": "minecraft:netherrack"
                 }
               ]
             }
@@ -133,9 +121,7 @@
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

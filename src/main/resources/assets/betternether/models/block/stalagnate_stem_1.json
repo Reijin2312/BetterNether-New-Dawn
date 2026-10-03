@@ -1,8 +1,7 @@
 {
-    "parent": "betternether:block/stalagnate_trunk",
-	"textures":
-	{
-        "side": "betternether:block/stalagnate_trunk_middle",
-        "top": "betternether:block/stalagnate_top"
-    }
+  "parent": "betternether:block/stalagnate_trunk",
+  "textures": {
+    "side": "betternether:block/stalagnate_trunk_middle",
+    "top": "betternether:block/stalagnate_top"
+  }
 }

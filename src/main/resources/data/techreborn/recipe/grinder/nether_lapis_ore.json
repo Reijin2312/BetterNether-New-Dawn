@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "techreborn"
+    }
+  ],
+  "type": "techreborn:grinder",
+  "power": 4,
+  "time": 200,
+  "ingredients": [
+    {
+      "item": "betternether:nether_lapis_ore"
+    }
+  ],
+  "results": [
+    {
+      "item": "betternether:lapis_pile",
+      "count": 5
+    }
+  ]
+}

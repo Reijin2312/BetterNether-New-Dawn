@@ -22,7 +22,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "betternether:nether_sakura_planks"
+        "recipes": "betternether:nether_sakura_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

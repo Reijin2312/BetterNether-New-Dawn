@@ -6,14 +6,20 @@
   "spawns": [
     {
       "type": "betternether:firefly",
-      "maxCount": 3,
-      "minCount": 1,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 1,
+        "max_inclusive": 3
+      },
       "weight": 15
     },
     {
       "type": "betternether:hydrogen_jellyfish",
-      "maxCount": 6,
-      "minCount": 2,
+      "count": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 2,
+        "max_inclusive": 6
+      },
       "weight": 5
     }
   ]

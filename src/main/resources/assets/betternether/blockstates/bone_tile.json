@@ -1,8 +1,9 @@
 {
-	"variants":
-	{
-        "":  [
-			{ "model": "betternether:block/bone_tile" }
-		]
-    }
+  "variants": {
+    "": [
+      {
+        "model": "betternether:block/bone_tile"
+      }
+    ]
+  }
 }

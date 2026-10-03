@@ -10,7 +10,6 @@ import org.betterx.wover.feature.api.configured.configurators.WithFeature;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.MultifaceGrowthFeature;
 import org.betterx.betternether.registry.NetherBlocks;
 public class NetherTerrain {

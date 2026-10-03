@@ -22,8 +22,8 @@
       "type": "wover:noise_filter",
       "min_noise_level": 0.10000000149011612,
       "noise": "minecraft:gravel",
-      "scale_xz": 20.0,
-      "scale_y": 10.0
+      "scale_xz": 20,
+      "scale_y": 10
     },
     {
       "type": "wover:is_basin",

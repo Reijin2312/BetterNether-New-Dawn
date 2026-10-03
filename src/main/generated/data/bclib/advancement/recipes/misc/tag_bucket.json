@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bclib:tag_bucket"
+        "recipes": "bclib:tag_bucket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

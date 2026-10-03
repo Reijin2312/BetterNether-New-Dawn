@@ -1,9 +1,9 @@
 {
-    "variants":
-	{
-        "":
-		[
-			{ "model": "betternether:block/stalagnate_seed" }
-		]
-    }
+  "variants": {
+    "": [
+      {
+        "model": "betternether:block/stalagnate_seed"
+      }
+    ]
+  }
 }

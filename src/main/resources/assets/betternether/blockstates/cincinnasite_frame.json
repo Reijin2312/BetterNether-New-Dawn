@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "": { "model": "betternether:block/cincinnasite_frame" }
+  "variants": {
+    "": {
+      "model": "betternether:block/cincinnasite_frame"
     }
+  }
 }

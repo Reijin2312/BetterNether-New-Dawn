@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -56,9 +52,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:netherrack"
-          }
+          "result_state": "minecraft:netherrack"
         }
       },
       {
@@ -72,9 +66,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:gravel"
-          }
+          "result_state": "minecraft:gravel"
         }
       },
       {
@@ -88,9 +80,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:gravel"
-          }
+          "result_state": "minecraft:gravel"
         }
       },
       {
@@ -115,21 +105,17 @@
             "scale_y": 0.2,
             "scale_z": 0.1,
             "seed": 245,
-            "threshold": 0.0
+            "threshold": 0
           },
           "then_run": {
             "type": "minecraft:block",
-            "result_state": {
-              "Name": "minecraft:gravel"
-            }
+            "result_state": "minecraft:gravel"
           }
         }
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

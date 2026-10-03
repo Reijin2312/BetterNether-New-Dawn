@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -69,20 +65,16 @@
                 "scale_x": 0.25,
                 "scale_z": 0.25,
                 "seed": 6357102,
-                "threshold": 0.0
+                "threshold": 0
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "minecraft:netherrack"
-                }
+                "result_state": "minecraft:netherrack"
               }
             },
             {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "minecraft:sculk"
-              }
+              "result_state": "minecraft:sculk"
             }
           ]
         }
@@ -105,26 +97,22 @@
                 "type": "wover:threshold_condition",
                 "roughness": {
                   "type": "minecraft:uniform",
-                  "max_exclusive": 0.0,
+                  "max_exclusive": 0,
                   "min_inclusive": -0.2
                 },
                 "scale_x": 0.1,
                 "scale_z": 0.1,
                 "seed": 614,
-                "threshold": 0.0
+                "threshold": 0
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "betternether:bleached_gloomsculk"
-                }
+                "result_state": "betternether:bleached_gloomsculk"
               }
             },
             {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "minecraft:sculk"
-              }
+              "result_state": "minecraft:sculk"
             }
           ]
         }
@@ -140,9 +128,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "betternether:veined_gloomsculk"
-          }
+          "result_state": "betternether:veined_gloomsculk"
         }
       },
       {
@@ -157,7 +143,7 @@
           "scale_x": 0.08,
           "scale_z": 0.08,
           "seed": 6357085,
-          "threshold": 0.0
+          "threshold": 0
         },
         "then_run": {
           "type": "minecraft:condition",
@@ -170,9 +156,7 @@
           },
           "then_run": {
             "type": "minecraft:block",
-            "result_state": {
-              "Name": "minecraft:sculk"
-            }
+            "result_state": "minecraft:sculk"
           }
         }
       },
@@ -187,16 +171,12 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:sculk"
-          }
+          "result_state": "minecraft:sculk"
         }
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

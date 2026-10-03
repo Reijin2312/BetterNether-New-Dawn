@@ -4,5 +4,6 @@
   "ingredient": "betternether:cincinnasite",
   "result": {
     "id": "betternether:cincinnasite_ingot"
-  }
+  },
+  "cookingtime": 100
 }

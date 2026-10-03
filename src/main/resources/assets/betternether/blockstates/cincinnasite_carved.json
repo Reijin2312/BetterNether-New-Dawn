@@ -1,6 +1,7 @@
 {
-    "variants":
-	{
-        "": { "model": "betternether:block/cincinnasite_carved" }
+  "variants": {
+    "": {
+      "model": "betternether:block/cincinnasite_carved"
     }
+  }
 }

@@ -3,8 +3,6 @@ package org.betterx.betternether.registry.features.configured;
 import org.betterx.betternether.BetterNether;
 import org.betterx.betternether.registry.NetherFeatures;
 import org.betterx.betternether.world.features.*;
-import org.betterx.betternether.world.features.configs.GloomwoodTreeConfiguration;
-import org.betterx.betternether.world.features.configs.NaturalTreeConfiguration;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.feature.api.configured.FeatureKey;
 import org.betterx.wover.feature.api.configured.FeatureContentManager;

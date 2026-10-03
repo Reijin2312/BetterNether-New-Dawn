@@ -21,9 +21,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -40,9 +38,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
-          }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -61,7 +57,7 @@
               "type": "minecraft:condition",
               "if_true": {
                 "type": "wover:rough_noise_condition",
-                "max_threshold": 1.7976931348623157E308,
+                "max_threshold": 1.7976931348623157e+308,
                 "min_threshold": 0.221,
                 "noise": "minecraft:netherrack",
                 "roughness": {
@@ -72,16 +68,12 @@
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "betternether:netherrack_moss"
-                }
+                "result_state": "betternether:netherrack_moss"
               }
             },
             {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "betternether:mushroom_grass"
-              }
+              "result_state": "betternether:mushroom_grass"
             }
           ]
         }
@@ -102,31 +94,25 @@
               "type": "minecraft:condition",
               "if_true": {
                 "type": "minecraft:noise_threshold",
-                "max_threshold": 1.7976931348623157E308,
-                "min_threshold": 0.0,
+                "max_threshold": 1.7976931348623157e+308,
+                "min_threshold": 0,
                 "noise": "minecraft:nether_state_selector"
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "betternether:ceiling_mushrooms"
-                }
+                "result_state": "betternether:ceiling_mushrooms"
               }
             },
             {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "minecraft:netherrack"
-              }
+              "result_state": "minecraft:netherrack"
             }
           ]
         }
       },
       {
         "type": "minecraft:block",
-        "result_state": {
-          "Name": "minecraft:netherrack"
-        }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }

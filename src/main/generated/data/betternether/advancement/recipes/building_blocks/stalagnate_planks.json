@@ -22,7 +22,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "betternether:stalagnate_planks"
+        "recipes": "betternether:stalagnate_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
