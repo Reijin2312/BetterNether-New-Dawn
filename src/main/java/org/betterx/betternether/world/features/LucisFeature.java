@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.BNBlockProperties;
 import org.betterx.betternether.blocks.BlockLucisMushroom;
@@ -14,17 +15,18 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import java.util.function.Supplier;
 
-public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> implements GrowableFeature<NoneFeatureConfiguration> {
+public class LucisFeature extends ContextFeature implements GrowableFeature {
+    public static final MapCodec<LucisFeature> CODEC = MapCodec.unit(LucisFeature::new);
 
     private static final Supplier<BlockState> CENTER = () -> baseState(BNBlockProperties.EnumLucisShape.CENTER);
     private static final Supplier<BlockState> SIDE = () -> baseState(BNBlockProperties.EnumLucisShape.SIDE);
     private static final Supplier<BlockState> CORNER = () -> baseState(BNBlockProperties.EnumLucisShape.CORNER);
 
-    public LucisFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+    @Override
+    public MapCodec<LucisFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -32,7 +34,6 @@ public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> imple
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
@@ -161,8 +162,7 @@ public class LucisFeature extends ContextFeature<NoneFeatureConfiguration> imple
     public boolean grow(
             ServerLevelAccessor level,
             BlockPos pos,
-            RandomSource random,
-            NoneFeatureConfiguration configuration
+            RandomSource random
     ) {
         return grow(level, pos, random, true);
     }

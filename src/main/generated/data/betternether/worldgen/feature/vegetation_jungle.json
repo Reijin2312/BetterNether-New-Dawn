@@ -1,0 +1,153 @@
+{
+  "type": "wover:random_patch",
+  "feature": {
+    "feature": {
+      "type": "minecraft:simple_block",
+      "to_place": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": {
+              "id": "betternether:egg_plant",
+              "properties": {
+                "age": "0",
+                "destructed": "false"
+              }
+            },
+            "weight": 20
+          },
+          {
+            "data": {
+              "id": "betternether:egg_plant",
+              "properties": {
+                "age": "1",
+                "destructed": "false"
+              }
+            },
+            "weight": 20
+          },
+          {
+            "data": {
+              "id": "betternether:egg_plant",
+              "properties": {
+                "age": "2",
+                "destructed": "false"
+              }
+            },
+            "weight": 20
+          },
+          {
+            "data": {
+              "id": "betternether:egg_plant",
+              "properties": {
+                "age": "3",
+                "destructed": "false"
+              }
+            },
+            "weight": 20
+          },
+          {
+            "data": "betternether:jungle_plant",
+            "weight": 80
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "0"
+              }
+            },
+            "weight": 7
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "1"
+              }
+            },
+            "weight": 7
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "2"
+              }
+            },
+            "weight": 7
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "3"
+              }
+            },
+            "weight": 7
+          },
+          {
+            "data": {
+              "id": "betternether:feather_fern",
+              "properties": {
+                "age": "0"
+              }
+            },
+            "weight": 5
+          },
+          {
+            "data": {
+              "id": "betternether:feather_fern",
+              "properties": {
+                "age": "1"
+              }
+            },
+            "weight": 5
+          },
+          {
+            "data": {
+              "id": "betternether:feather_fern",
+              "properties": {
+                "age": "2"
+              }
+            },
+            "weight": 5
+          },
+          {
+            "data": {
+              "id": "betternether:feather_fern",
+              "properties": {
+                "age": "3"
+              }
+            },
+            "weight": 5
+          }
+        ]
+      }
+    },
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "minecraft:air"
+        }
+      },
+      {
+        "type": "wover:is",
+        "offset": [
+          0,
+          -1,
+          0
+        ],
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "wover:surfaces/nether/terrain"
+        }
+      }
+    ]
+  },
+  "tries": 96,
+  "xz_spread": 7,
+  "y_spread": 3
+}

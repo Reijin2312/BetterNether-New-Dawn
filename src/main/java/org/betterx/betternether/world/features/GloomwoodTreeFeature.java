@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.registry.NetherBlocks;
 
@@ -44,10 +45,16 @@ import net.minecraft.world.level.block.state.BlockState;
  * branch into it rather than hiding a detached log in the foliage.
  */
 public class GloomwoodTreeFeature extends NonOverlappingFeature<GloomwoodTreeConfiguration>
-        implements GrowableFeature<GloomwoodTreeConfiguration> {
+        implements GrowableFeature {
+    public static final MapCodec<GloomwoodTreeFeature> CODEC = GloomwoodTreeConfiguration.gloomCodecFor(GloomwoodTreeFeature::new);
 
-    public GloomwoodTreeFeature() {
-        super(GloomwoodTreeConfiguration.CODEC);
+    public GloomwoodTreeFeature(GloomwoodTreeConfiguration config) {
+        super(config);
+    }
+
+    @Override
+    public MapCodec<GloomwoodTreeFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -343,14 +350,13 @@ public class GloomwoodTreeFeature extends NonOverlappingFeature<GloomwoodTreeCon
     public boolean grow(
             ServerLevelAccessor level,
             BlockPos pos,
-            RandomSource random,
-            GloomwoodTreeConfiguration configuration
+            RandomSource random
     ) {
         return grow(
                 level,
                 pos,
                 random,
-                new GloomwoodTreeConfiguration(false, configuration.distance, configuration.bleachedChance),
+                new GloomwoodTreeConfiguration(false, this.config.distance, this.config.bleachedChance),
                 NetherThreadDataStorage.generatorForThread().context
         );
     }

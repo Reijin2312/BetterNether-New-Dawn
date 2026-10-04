@@ -2,23 +2,20 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "betternether:acacia_chair",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "top": "false"
-          }
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:acacia_chair"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1,
+      "condition": {
+        "type": "minecraft:match_block",
+        "blocks": "betternether:acacia_chair",
+        "state": {
+          "top": "false"
+        }
+      }
     }
   ],
   "random_sequence": "betternether:blocks/acacia_chair"

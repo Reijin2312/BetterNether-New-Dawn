@@ -87,18 +87,18 @@ public class BlockWartSeed extends BlockBaseNotFull implements BonemealableBlock
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, BonemealSource source) {
         Direction direction = state.getValue(FACING);
         return direction == Direction.UP && BlocksHelper.isSoulSand(world.getBlockState(pos.below()));
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return random.nextInt(8) == 0;
     }
 
     @Override
-    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         NetherTrees.WART_TREE.placeInWorld(WorldState.registryAccess(), world, pos, random);
     }
 

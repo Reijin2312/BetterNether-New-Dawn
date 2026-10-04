@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bclib:tag_minecart"
+        "recipes": "bclib:tag_minecart"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,7 +1,11 @@
 package org.betterx.betternether.world.features.configs;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import org.betterx.betternether.world.features.NonOverlappingFeature;
+
+import java.util.function.Function;
 
 /**
  * {@link NaturalTreeConfiguration} plus the one thing that varies between the gloomwood's configured
@@ -31,21 +35,24 @@ public class GloomwoodTreeConfiguration extends NaturalTreeConfiguration {
      */
     public static final int SPACING = 9;
 
-    public static final Codec<GloomwoodTreeConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance
-            .group(
-                    Codec.BOOL.fieldOf("natural").orElse(true).forGetter(o -> o.natural),
-                    Codec.INT.fieldOf("distance").orElse(SPACING).forGetter(o -> o.distance),
-                    // optionalFieldOf with a default omits the field when it holds that default, so the
-                    // ordinary gloomwood's json is byte-identical to what the shared configuration wrote.
-                    Codec.FLOAT.optionalFieldOf("bleached_chance", 0.0F).forGetter(o -> o.bleachedChance)
-            )
-            .apply(instance, GloomwoodTreeConfiguration::new));
-
     private static final GloomwoodTreeConfiguration NATURAL = new GloomwoodTreeConfiguration(true, SPACING, 0.0F);
     private static final GloomwoodTreeConfiguration USER = new GloomwoodTreeConfiguration(false, SPACING, 0.0F);
 
     /** Probability, per tree, that the canopy palette is inverted. */
     public final float bleachedChance;
+
+    public static <T extends NonOverlappingFeature<GloomwoodTreeConfiguration>> MapCodec<T> gloomCodecFor(
+            Function<GloomwoodTreeConfiguration, T> factory
+    ) {
+        return RecordCodecBuilder.mapCodec(instance -> instance
+                .group(
+                        Codec.BOOL.fieldOf("natural").orElse(true).forGetter(o -> o.config.natural),
+                        Codec.INT.fieldOf("distance").orElse(SPACING).forGetter(o -> o.config.distance),
+                        Codec.FLOAT.optionalFieldOf("bleached_chance", 0.0F).forGetter(o -> o.config.bleachedChance)
+                )
+                .apply(instance, (natural, distance, bleachedChance) ->
+                        factory.apply(new GloomwoodTreeConfiguration(natural, distance, bleachedChance))));
+    }
 
     public GloomwoodTreeConfiguration(boolean natural, int distance, float bleachedChance) {
         super(natural, distance);

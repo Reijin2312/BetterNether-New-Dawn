@@ -1,6 +1,7 @@
 {
-	"variants":
-	{
-        "":  { "model": "betternether:block/rubeus_sapling" }
+  "variants": {
+    "": {
+      "model": "betternether:block/rubeus_sapling"
     }
+  }
 }

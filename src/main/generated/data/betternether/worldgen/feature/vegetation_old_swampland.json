@@ -1,0 +1,69 @@
+{
+  "type": "wover:random_patch",
+  "feature": {
+    "feature": {
+      "type": "minecraft:simple_block",
+      "to_place": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": "betternether:soul_vein",
+            "weight": 80
+          },
+          {
+            "data": "betternether:swamp_grass",
+            "weight": 100
+          },
+          {
+            "data": {
+              "id": "minecraft:sculk_vein",
+              "properties": {
+                "down": "false",
+                "east": "false",
+                "north": "false",
+                "south": "false",
+                "up": "false",
+                "waterlogged": "false",
+                "west": "false"
+              }
+            },
+            "weight": 40
+          },
+          {
+            "data": {
+              "id": "betternether:feather_fern",
+              "properties": {
+                "age": "0"
+              }
+            },
+            "weight": 80
+          }
+        ]
+      }
+    },
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "minecraft:air"
+        }
+      },
+      {
+        "type": "wover:is",
+        "offset": [
+          0,
+          -1,
+          0
+        ],
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "wover:surfaces/nether/terrain"
+        }
+      }
+    ]
+  },
+  "tries": 96,
+  "xz_spread": 7,
+  "y_spread": 3
+}

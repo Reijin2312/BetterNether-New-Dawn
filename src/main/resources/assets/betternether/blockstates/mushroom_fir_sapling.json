@@ -1,6 +1,7 @@
 {
-	"variants":
-	{
-        "":  { "model": "betternether:block/mushroom_fir_sapling" }
+  "variants": {
+    "": {
+      "model": "betternether:block/mushroom_fir_sapling"
     }
+  }
 }

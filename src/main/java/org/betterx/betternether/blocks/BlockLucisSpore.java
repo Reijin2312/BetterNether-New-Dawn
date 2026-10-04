@@ -57,18 +57,22 @@ public class BlockLucisSpore extends BlockBaseNotFull implements BonemealableBlo
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, BonemealSource source) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return random.nextInt(16) == 0;
     }
 
-    @Override
-    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+    private void grow(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
         NetherVegetation.WALL_LUCIS.placeInWorld(WorldState.registryAccess(), world, pos, random);
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
+        grow(world, random, pos, state);
     }
 
     @Override
@@ -91,8 +95,8 @@ public class BlockLucisSpore extends BlockBaseNotFull implements BonemealableBlo
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state, world, pos, random);
-        if (isBonemealSuccess(world, random, pos, state)) {
-            performBonemeal(world, random, pos, state);
+        if (random.nextInt(16) == 0) {
+            grow(world, random, pos, state);
         }
     }
 

@@ -48,7 +48,7 @@ public abstract class PlayerEntityMixin {
         }
         pos = pos.relative(state.getValue(BlockStatueRespawner.FACING));
         BlockState state2 = world.getBlockState(pos);
-        if (!state2.blocksMotion() && state2.getCollisionShape(world, pos).isEmpty()) {
+        if (!state2.isSolid() && state2.getCollisionShape(world, pos).isEmpty()) {
             Vec3 respawnPos = Vec3.atLowerCornerOf(pos).add(0.5, 0, 0.5);
             return Optional.of(ServerPlayer.RespawnPosAngle.of(respawnPos, pos, 0.0F));
         }

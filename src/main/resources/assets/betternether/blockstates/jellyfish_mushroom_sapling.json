@@ -1,5 +1,7 @@
 {
-	"variants": {
-        "": { "model": "betternether:block/jellyfish_mushroom_sapling" }
+  "variants": {
+    "": {
+      "model": "betternether:block/jellyfish_mushroom_sapling"
     }
+  }
 }

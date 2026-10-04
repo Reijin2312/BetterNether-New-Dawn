@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "": { "model": "betternether:block/anchor_tree_leaves" }
+  "variants": {
+    "": {
+      "model": "betternether:block/anchor_tree_leaves"
     }
+  }
 }

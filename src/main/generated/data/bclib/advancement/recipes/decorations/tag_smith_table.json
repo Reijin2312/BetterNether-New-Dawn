@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bclib:tag_smith_table"
+        "recipes": "bclib:tag_smith_table"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

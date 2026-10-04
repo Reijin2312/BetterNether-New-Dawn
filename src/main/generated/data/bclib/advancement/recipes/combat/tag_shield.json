@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bclib:tag_shield"
+        "recipes": "bclib:tag_shield"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

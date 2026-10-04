@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:block_column",
+  "allowed_placement": {
+    "type": "minecraft:matching_block_tag",
+    "tag": "minecraft:air"
+  },
+  "direction": "down",
+  "layers": [
+    {
+      "height": 1,
+      "provider": {
+        "type": "minecraft:simple",
+        "state": {
+          "id": "betternether:whispering_gourd_vine",
+          "properties": {
+            "shape": "bottom"
+          }
+        }
+      }
+    },
+    {
+      "height": {
+        "type": "minecraft:biased_to_bottom",
+        "max_inclusive": 5,
+        "min_inclusive": 1
+      },
+      "provider": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": {
+              "id": "betternether:whispering_gourd_vine",
+              "properties": {
+                "shape": "top"
+              }
+            },
+            "weight": 5
+          },
+          {
+            "data": {
+              "id": "betternether:whispering_gourd_vine",
+              "properties": {
+                "shape": "middle"
+              }
+            },
+            "weight": 5
+          }
+        ]
+      }
+    }
+  ],
+  "prioritize_tip": true
+}

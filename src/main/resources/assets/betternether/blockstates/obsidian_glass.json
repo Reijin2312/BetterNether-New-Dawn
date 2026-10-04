@@ -1,6 +1,7 @@
 {
-	"variants":
-	{
-        "":  { "model": "betternether:block/obsidian_glass" }
+  "variants": {
+    "": {
+      "model": "betternether:block/obsidian_glass"
     }
+  }
 }

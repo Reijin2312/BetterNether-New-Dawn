@@ -1,0 +1,78 @@
+{
+  "type": "minecraft:overlay",
+  "features": [
+    {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "to_place": {
+          "type": "minecraft:weighted",
+          "entries": [
+            {
+              "data": "betternether:soul_vein",
+              "weight": 80
+            },
+            {
+              "data": "betternether:swamp_grass",
+              "weight": 200
+            },
+            {
+              "data": {
+                "id": "betternether:feather_fern",
+                "properties": {
+                  "age": "0"
+                }
+              },
+              "weight": 80
+            }
+          ]
+        }
+      },
+      "placement": [
+        {
+          "predicate": {
+            "offset": [
+              0,
+              -1,
+              0
+            ],
+            "tag": "minecraft:nylium",
+            "type": "minecraft:matching_block_tag"
+          },
+          "type": "minecraft:block_predicate_filter"
+        },
+        {
+          "count": 64,
+          "type": "minecraft:count"
+        },
+        {
+          "y": {
+            "plateau": 0,
+            "min": -3,
+            "type": "minecraft:trapezoid",
+            "max": 3
+          },
+          "z": {
+            "plateau": 0,
+            "min": -7,
+            "type": "minecraft:trapezoid",
+            "max": 7
+          },
+          "type": "minecraft:offset",
+          "x": {
+            "plateau": 0,
+            "min": -7,
+            "type": "minecraft:trapezoid",
+            "max": 7
+          }
+        },
+        {
+          "predicate": {
+            "tag": "minecraft:air",
+            "type": "minecraft:matching_block_tag"
+          },
+          "type": "minecraft:block_predicate_filter"
+        }
+      ]
+    }
+  ]
+}

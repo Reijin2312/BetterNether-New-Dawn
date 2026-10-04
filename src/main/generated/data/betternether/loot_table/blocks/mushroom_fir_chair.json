@@ -2,23 +2,20 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "block": "betternether:mushroom_fir_chair",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "top": "false"
-          }
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "betternether:mushroom_fir_chair"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1,
+      "condition": {
+        "type": "minecraft:match_block",
+        "blocks": "betternether:mushroom_fir_chair",
+        "state": {
+          "top": "false"
+        }
+      }
     }
   ],
   "random_sequence": "betternether:blocks/mushroom_fir_chair"

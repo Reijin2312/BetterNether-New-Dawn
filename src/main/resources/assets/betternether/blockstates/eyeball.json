@@ -1,6 +1,7 @@
 {
-    "variants":
-	{
-        "": { "model": "betternether:block/block_eyeball" }
+  "variants": {
+    "": {
+      "model": "betternether:block/block_eyeball"
     }
+  }
 }

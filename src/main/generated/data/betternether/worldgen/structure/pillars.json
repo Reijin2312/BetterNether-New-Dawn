@@ -8,42 +8,42 @@
           "location": "betternether:pillar_01",
           "offset_y": -1
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:pillar_02",
           "offset_y": -1
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:pillar_03",
           "offset_y": -1
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:pillar_04",
           "offset_y": -1
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:pillar_05",
           "offset_y": -1
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:pillar_06",
           "offset_y": -1
         },
-        "weight": 1.0
+        "weight": 1
       }
     ]
   },

@@ -21,6 +21,7 @@ import net.minecraft.resources.Identifier;
 import com.mojang.math.Axis;
 
 import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 public class RenderFirefly extends MobRenderer<EntityFirefly, RenderFirefly.FireflyRenderState, ModelEntityFirefly> {
@@ -96,7 +97,7 @@ public class RenderFirefly extends MobRenderer<EntityFirefly, RenderFirefly.Fire
                         OverlayTexture.NO_OVERLAY,
                         null,
                         glowShellColor,
-                        null
+                        0
                 );
             submitNodeCollector.order(1)
                 .submitModelPart(
@@ -107,7 +108,7 @@ public class RenderFirefly extends MobRenderer<EntityFirefly, RenderFirefly.Fire
                         OverlayTexture.NO_OVERLAY,
                         null,
                         glowShellColor,
-                        null
+                        0
                 );
         }
 
@@ -127,9 +128,9 @@ public class RenderFirefly extends MobRenderer<EntityFirefly, RenderFirefly.Fire
             // Cancel entity/model rotation first, then apply camera-facing billboard rotation.
             Matrix3f inverseCurrentRotation = new Matrix3f(poseStack.last().normal());
             inverseCurrentRotation.transpose();
-            poseStack.mulPose(inverseCurrentRotation.getNormalizedRotation(new Quaternionf()));
-            poseStack.mulPose(cameraOrientation);
-            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+            poseStack.mulPose(new Matrix4f().rotation(inverseCurrentRotation.getNormalizedRotation(new Quaternionf())));
+            poseStack.mulPose(new Matrix4f().rotation(cameraOrientation));
+            poseStack.mulPose(new Matrix4f().rotation(Axis.YP.rotationDegrees(180.0F)));
 
             submitNodeCollector.submitCustomGeometry(poseStack, layer, (pose, consumer) -> {
                 addVertex(consumer, pose, -1.0F, -1.0F, 0.0F, 0.5F, color);

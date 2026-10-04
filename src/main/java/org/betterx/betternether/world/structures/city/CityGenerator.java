@@ -155,7 +155,7 @@ public class CityGenerator {
         add.clear();
     }
 
-    public ArrayList<CityPiece> generate(BlockPos pos, RandomSource random, CityPalette palette) {
+    public synchronized ArrayList<CityPiece> generate(BlockPos pos, RandomSource random, CityPalette palette) {
         ArrayList<CityPiece> city = new ArrayList<CityPiece>();
         placeCenterBuilding(pos, centers.get(random.nextInt(centers.size())), city, random, palette);
 

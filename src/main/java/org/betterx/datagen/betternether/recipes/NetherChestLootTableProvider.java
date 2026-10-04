@@ -26,7 +26,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.UniformInt;
 
 import java.util.function.BiConsumer;
 import org.jetbrains.annotations.NotNull;
@@ -155,11 +155,11 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
     private LootPool.Builder ghastHive() {
         return LootPool
                 .lootPool()
-                .setRolls(UniformGenerator.between(8, 12))
+                .setRolls(UniformInt.between(8, 12))
                 .add(LootItem
                         .lootTableItem(Items.DIAMOND)
                         .setWeight(40)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 2)))
                 )
                 .add(LootItem
                         .lootTableItem(Blocks.SKELETON_SKULL)
@@ -172,32 +172,32 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                 .add(LootItem
                         .lootTableItem(Items.BROWN_MUSHROOM)
                         .setWeight(60)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.RED_MUSHROOM)
                         .setWeight(60)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.BONE)
                         .setWeight(60)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.QUARTZ)
                         .setWeight(50)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 4)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.GHAST_TEAR)
                         .setWeight(45)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 4)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 4)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.GOLD_INGOT)
                         .setWeight(55)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.GOLDEN_APPLE)
@@ -216,10 +216,10 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                 .setRolls(ConstantValue.exactly(1))
                 .add(LootItem
                         .lootTableItem(Blocks.BOOKSHELF)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 4)))
                 ).add(LootItem
                         .lootTableItem(Items.BOOK)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 8)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(4, 8)))
                 )
                 .when(LootItemRandomChanceCondition.randomChance(0.7f));
     }
@@ -246,7 +246,7 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
     ) {
         return LootPool
                 .lootPool()
-                .setRolls(UniformGenerator.between(1, max))
+                .setRolls(UniformInt.between(1, max))
                 .add(LootItem
                         .lootTableItem(set.get(ArmorSlot.HELMET_SLOT))
                         .setWeight(3)
@@ -291,7 +291,7 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                 .add(LootItem
                         .lootTableItem(NetherTemplates.CINCINNASITE_DIAMOND_TEMPLATE)
                         .setWeight(3 * max)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, max)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, max)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
@@ -304,7 +304,7 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
     private LootPool.Builder flamingTemplate(int max, float chance) {
         return LootPool
                 .lootPool()
-                .setRolls(UniformGenerator.between(1, max))
+                .setRolls(UniformInt.between(1, max))
                 .add(LootItem
                         .lootTableItem(NetherTemplates.FLAMING_RUBY_TEMPLATE)
                         .setWeight(1)
@@ -315,7 +315,7 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
     private LootPool.Builder allTemplates() {
         return LootPool
                 .lootPool()
-                .setRolls(UniformGenerator.between(2, 3))
+                .setRolls(UniformInt.between(2, 3))
                 .add(LootItem
                         .lootTableItem(NetherTemplates.FLAMING_RUBY_TEMPLATE)
                         .setWeight(1)
@@ -395,7 +395,7 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                 .add(LootItem
                         .lootTableItem(Blocks.LAPIS_BLOCK)
                         .setWeight(8)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 6)))
                 ).add(LootItem
                         .lootTableItem(NetherItems.FLAMING_RUBY_SET.get(ToolSlot.PICKAXE_SLOT))
                         .apply(new EnchantRandomlyFunction.Builder()
@@ -438,27 +438,27 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                 .add(LootItem
                         .lootTableItem(Blocks.OBSIDIAN)
                         .setWeight(9)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 8)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 8)))
                 ).add(LootItem
                         .lootTableItem(NetherBlocks.BLUE_OBSIDIAN)
                         .setWeight(9)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 8)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 8)))
                 ).add(LootItem
                         .lootTableItem(Blocks.CRYING_OBSIDIAN)
                         .setWeight(3)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 ).add(LootItem
                         .lootTableItem(NetherBlocks.BLUE_CRYING_OBSIDIAN)
                         .setWeight(3)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 ).add(LootItem
                         .lootTableItem(NetherBlocks.WEEPING_OBSIDIAN)
                         .setWeight(1)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 ).add(LootItem
                         .lootTableItem(NetherBlocks.BLUE_WEEPING_OBSIDIAN)
                         .setWeight(1)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 );
     }
 
@@ -469,70 +469,70 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                 .add(LootItem
                         .lootTableItem(Blocks.NETHERRACK)
                         .setWeight(12)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 12)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(4, 12)))
                 ).add(LootItem
                         .lootTableItem(Items.NETHER_WART)
                         .setWeight(3)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 8)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 8)))
                 ).add(LootItem
                         .lootTableItem(Items.FLINT_AND_STEEL)
                         .setWeight(5)
                 ).add(LootItem
                         .lootTableItem(Items.QUARTZ)
                         .setWeight(8)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 12)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 12)))
                 );
     }
 
     private LootPool.Builder superBonusOreLoot() {
         return LootPool
                 .lootPool()
-                .setRolls(UniformGenerator.between(3, 6))
+                .setRolls(UniformInt.between(3, 6))
                 .add(LootItem
                         .lootTableItem(Blocks.GOLD_BLOCK)
                         .setWeight(6)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.GOLD_INGOT)
                         .setWeight(8)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 6)))
                 )
                 .add(LootItem
                         .lootTableItem(NetherItems.NETHER_RUBY)
                         .setWeight(8)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 8)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(3, 8)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.NETHERITE_SCRAP)
                         .setWeight(6)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 5)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 5)))
                 )
                 .add(LootItem
                         .lootTableItem(Blocks.NETHERITE_BLOCK)
                         .setWeight(4)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 2)))
                 );
     }
 
     private LootPool.Builder bonusOreLoot() {
         return LootPool
                 .lootPool()
-                .setRolls(UniformGenerator.between(1, 3))
+                .setRolls(UniformInt.between(1, 3))
                 .add(LootItem
                         .lootTableItem(Items.DIAMOND)
                         .setWeight(15)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(NetherItems.NETHER_RUBY)
                         .setWeight(12)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(2, 4)))
                 )
                 .add(LootItem
                         .lootTableItem(Items.NETHERITE_SCRAP)
                         .setWeight(8)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 2)))
                 );
     }
 
@@ -550,42 +550,42 @@ public class NetherChestLootTableProvider extends WoverLootTableProvider {
                         .setWeight(2)
 
                 )
-                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6)));
+                .apply(SetItemCountFunction.setCount(UniformInt.between(2, 6)));
     }
 
     private LootPool.Builder simpleCityLoot() {
         return LootPool
                 .lootPool()
-                .setRolls(UniformGenerator.between(1, 3))
+                .setRolls(UniformInt.between(1, 3))
                 .add(LootItem
                         .lootTableItem(NetherBlocks.BLUE_CRYING_OBSIDIAN)
                         .setWeight(3)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(NetherBlocks.BLUE_WEEPING_OBSIDIAN)
                         .setWeight(2)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 2)))
                 )
                 .add(LootItem
                         .lootTableItem(Blocks.CRYING_OBSIDIAN)
                         .setWeight(3)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(NetherBlocks.WEEPING_OBSIDIAN)
                         .setWeight(2)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 2)))
                 )
                 .add(LootItem
                         .lootTableItem(NetherBlocks.BLUE_OBSIDIAN)
                         .setWeight(4)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 )
                 .add(LootItem
                         .lootTableItem(Blocks.OBSIDIAN)
                         .setWeight(4)
-                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetItemCountFunction.setCount(UniformInt.between(1, 3)))
                 );
     }
 }

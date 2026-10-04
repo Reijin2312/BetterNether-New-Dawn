@@ -14,11 +14,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
 
 public final class CrimsonGlowingWoods extends NetherBiomeConfig {
-    public static final SurfaceRules.RuleSource NETHER_WART_BLOCK = SurfaceRules.state(Blocks.NETHER_WART_BLOCK.defaultBlockState());
-    public static final SurfaceRules.RuleSource CRIMSON_NYLIUM = SurfaceRules.state(Blocks.CRIMSON_NYLIUM.defaultBlockState());
+    public static final net.minecraft.world.level.levelgen.material.rule.MaterialRule NETHER_WART_BLOCK = MaterialRules.state(Blocks.NETHER_WART_BLOCK.defaultBlockState());
+    public static final net.minecraft.world.level.levelgen.material.rule.MaterialRule CRIMSON_NYLIUM = MaterialRules.state(Blocks.CRIMSON_NYLIUM.defaultBlockState());
 
 
     @Override

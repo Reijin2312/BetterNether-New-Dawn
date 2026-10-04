@@ -43,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bclib:tag_piston"
+        "recipes": "bclib:tag_piston"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

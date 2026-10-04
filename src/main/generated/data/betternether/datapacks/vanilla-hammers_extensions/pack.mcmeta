@@ -1,0 +1,12 @@
+{
+  "pack": {
+    "description": {
+      "translate": "pack.betternether.vanilla-hammers_extensions.description"
+    },
+    "max_format": 107,
+    "min_format": [
+      107,
+      1
+    ]
+  }
+}

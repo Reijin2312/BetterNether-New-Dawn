@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.BNBlockProperties;
 import org.betterx.betternether.blocks.BlockJellyfishMushroom;
@@ -13,11 +14,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class JellyfishMushroomFeature extends ContextFeature<NoneFeatureConfiguration> implements GrowableFeature<NoneFeatureConfiguration> {
-    public JellyfishMushroomFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+public class JellyfishMushroomFeature extends ContextFeature implements GrowableFeature {
+    public static final MapCodec<JellyfishMushroomFeature> CODEC = MapCodec.unit(JellyfishMushroomFeature::new);
+
+    @Override
+    public MapCodec<JellyfishMushroomFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -25,18 +28,17 @@ public class JellyfishMushroomFeature extends ContextFeature<NoneFeatureConfigur
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
         if (world.isEmptyBlock(pos) && world.getBlockState(pos.below()).is(BlockTags.NYLIUM)) {
-            grow(world, pos, random);
+            growHere(world, pos, random);
             return true;
         }
         return false;
     }
 
-    public void grow(ServerLevelAccessor world, BlockPos pos, RandomSource random) {
+    public void growHere(ServerLevelAccessor world, BlockPos pos, RandomSource random) {
         if (random.nextBoolean() && world.isEmptyBlock(pos.above()))
             growMedium(world, pos);
         else
@@ -94,10 +96,9 @@ public class JellyfishMushroomFeature extends ContextFeature<NoneFeatureConfigur
     public boolean grow(
             ServerLevelAccessor level,
             BlockPos pos,
-            RandomSource random,
-            NoneFeatureConfiguration configuration
+            RandomSource random
     ) {
-        grow(level, pos, random);
+        growHere(level, pos, random);
         return true;
     }
 }

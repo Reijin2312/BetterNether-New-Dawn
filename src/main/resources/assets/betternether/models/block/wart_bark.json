@@ -1,6 +1,6 @@
 {
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "betternether:block/wart_bark"
-    }
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "betternether:block/wart_bark"
+  }
 }

@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.noise.OpenSimplexNoise;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
@@ -17,6 +18,12 @@ import net.minecraft.world.level.dimension.DimensionDefaults;
 import net.minecraft.world.phys.Vec3;
 
 public class CrystalFeature extends NetherSurfaceFeature {
+    public static final MapCodec<CrystalFeature> CODEC = MapCodec.unit(CrystalFeature::new);
+
+    @Override
+    public MapCodec<CrystalFeature> codec() {
+        return CODEC;
+    }
     private static final Identifier[] PALETTE_IDS = new Identifier[]{
             BetterNether.C.id("obsidian_glass"),
             BuiltInRegistries.BLOCK.getKey(Blocks.OBSIDIAN),

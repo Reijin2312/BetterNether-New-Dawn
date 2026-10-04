@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.MHelper;
 import org.betterx.betternether.blocks.BlockPlantWall;
@@ -18,16 +19,21 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> implements GrowableFeature<NoneFeatureConfiguration> {
+public class AnchorTreeFeature extends ContextFeature implements GrowableFeature {
+    public static final MapCodec<AnchorTreeFeature> CODEC = MapCodec.unit(AnchorTreeFeature::new);
+
     public AnchorTreeFeature() {
-        super(NoneFeatureConfiguration.CODEC);
         legacyStructure = new LegacyStructureAnchorTree();
+    }
+
+    @Override
+    public MapCodec<AnchorTreeFeature> codec() {
+        return CODEC;
     }
 
     protected static final OpenSimplexNoise NOISE = new OpenSimplexNoise(2145);
@@ -77,7 +83,6 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
@@ -117,8 +122,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
     public boolean grow(
             ServerLevelAccessor level,
             BlockPos pos,
-            RandomSource random,
-            NoneFeatureConfiguration configuration
+            RandomSource random
     ) {
         final int maxHeight = level.getLevel().getChunkSource().getGenerator().getGenDepth();
         // All the way to the next ceiling, or to the build limit when there is none. Capping this at a
@@ -197,7 +201,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
                     }
                 }
                 if (at == null) continue;
-                FOLIAGE.grow(level, at, random, NoneFeatureConfiguration.INSTANCE);
+            FOLIAGE.grow(level, at, random);
                 break;
             }
         }

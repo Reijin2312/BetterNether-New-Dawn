@@ -1,76 +1,84 @@
 {
-    "type": "block",
-    "pools": [
+  "type": "block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
         {
-            "rolls": 1,
-			"entries": [
-				{
-					"type": "minecraft:alternatives",
-					"children": [
-						{
-							"type": "minecraft:item",
-							"name": "betternether:mushroom_fir_stem",
-							"conditions": [
-								{
-									"condition": "minecraft:block_state_property",
-									"block": "betternether:mushroom_fir_trunk",
-									"properties": {
-										"shape": "bottom"
-									}
-								},
-								{
-									"condition": "minecraft:survives_explosion"
-								}
-							]
-						},
-						{
-							"type": "minecraft:item",
-							"name": "betternether:mushroom_fir_stem",
-							"conditions": [
-								{
-									"condition": "minecraft:block_state_property",
-									"block": "betternether:mushroom_fir_trunk",
-									"properties": {
-										"shape": "middle"
-									}
-								},
-								{
-									"condition": "minecraft:survives_explosion"
-								}
-							]
-						},
-						{
-							"type": "minecraft:item",
-							"name": "betternether:mushroom_fir_stem",
-							"conditions": [
-								{
-									"condition": "minecraft:block_state_property",
-									"block": "betternether:mushroom_fir_trunk",
-									"properties": {
-										"shape": "top"
-									}
-								},
-								{
-									"condition": "minecraft:survives_explosion"
-								}
-							]
-						},
-						{
-							"type": "minecraft:item",
-							"name": "betternether:mushroom_fir_sapling",
-							"functions": [
-								{
-									"function": "set_count",
-									"count": {
-										"min": 1,
-										"max": 2
-									}
-								}
-							]
-						}
-					]
-				}
-			]
-		}
-    ]
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "betternether:mushroom_fir_stem",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "betternether:mushroom_fir_trunk",
+                    "state": {
+                      "shape": "bottom"
+                    }
+                  },
+                  {
+                    "type": "minecraft:survives_explosion"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "minecraft:item",
+              "name": "betternether:mushroom_fir_stem",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "betternether:mushroom_fir_trunk",
+                    "state": {
+                      "shape": "middle"
+                    }
+                  },
+                  {
+                    "type": "minecraft:survives_explosion"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "minecraft:item",
+              "name": "betternether:mushroom_fir_stem",
+              "condition": {
+                "type": "minecraft:all_of",
+                "terms": [
+                  {
+                    "type": "minecraft:match_block",
+                    "blocks": "betternether:mushroom_fir_trunk",
+                    "state": {
+                      "shape": "top"
+                    }
+                  },
+                  {
+                    "type": "minecraft:survives_explosion"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "minecraft:item",
+              "name": "betternether:mushroom_fir_sapling",
+              "modifier": {
+                "type": "minecraft:set_count",
+                "count": {
+                  "min": 1,
+                  "max": 2,
+                  "type": "minecraft:uniform"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

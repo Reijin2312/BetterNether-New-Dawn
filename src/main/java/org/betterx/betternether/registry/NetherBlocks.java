@@ -1479,7 +1479,7 @@ public class NetherBlocks {
         registerBlockDirectly(name, block, BlockTags.MINEABLE_WITH_AXE);
         addFuel(source, block);
         RecipesHelper.addProvider(ctx -> Taburet.makeTaburetRecipe(
-                ctx.context,
+                ctx.context.recipeOutput(),
                 BetterNether.C.mk(name),
                 block,
                 source
@@ -1495,7 +1495,7 @@ public class NetherBlocks {
         registerBlockDirectly(name, block, BlockTags.MINEABLE_WITH_AXE);
         addFuel(source, block);
         RecipesHelper.addProvider(ctx -> Chair.makeChairRecipe(
-                ctx.context,
+                ctx.context.recipeOutput(),
                 BetterNether.C.mk(name),
                 block,
                 source
@@ -1511,7 +1511,7 @@ public class NetherBlocks {
         registerBlockDirectly(name, block, BlockTags.MINEABLE_WITH_PICKAXE);
         addFuel(source, block);
         RecipesHelper.addProvider(ctx -> BarStool.makeBarStoolRecipe(
-                ctx.context,
+                ctx.context.recipeOutput(),
                 BetterNether.C.mk(name),
                 block,
                 source

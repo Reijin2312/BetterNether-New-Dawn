@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.MHelper;
 import org.betterx.betternether.blocks.BlockAnchorTreeVine;
@@ -15,17 +16,18 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnchorTreeRootFeature extends ContextFeature<NoneFeatureConfiguration> {
+public class AnchorTreeRootFeature extends ContextFeature {
+    public static final MapCodec<AnchorTreeRootFeature> CODEC = MapCodec.unit(AnchorTreeRootFeature::new);
     private static final LucisFeature LUCIS = new LucisFeature();
 
-    public AnchorTreeRootFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+    @Override
+    public MapCodec<AnchorTreeRootFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -33,7 +35,6 @@ public class AnchorTreeRootFeature extends ContextFeature<NoneFeatureConfigurati
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {

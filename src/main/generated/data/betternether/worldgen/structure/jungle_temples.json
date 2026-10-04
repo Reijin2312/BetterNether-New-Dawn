@@ -8,21 +8,21 @@
           "location": "betternether:ruined_temple",
           "offset_y": -4
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:jungle_temple_altar",
           "offset_y": -2
         },
-        "weight": 1.0
+        "weight": 1
       },
       {
         "value": {
           "location": "betternether:jungle_temple_2",
           "offset_y": -2
         },
-        "weight": 1.0
+        "weight": 1
       }
     ]
   },

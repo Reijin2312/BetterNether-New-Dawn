@@ -83,7 +83,7 @@ public class NetherBiomes {
 
 
     public static void register() {
-        BiomeCodecRegistry.register(BetterNether.C.id("biome"), NetherBiome.KEY_CODEC);
+        BiomeCodecRegistry.register(BetterNether.C.id("biome"), NetherBiome.CODEC);
         registerBiomeToggles();
         registerNumericProviders();
     }

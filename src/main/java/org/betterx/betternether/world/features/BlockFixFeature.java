@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.bclib.api.v2.levelgen.features.features.DefaultFeature;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.BlockStalactite;
@@ -8,17 +9,22 @@ import org.betterx.betternether.world.structures.StructureGeneratorThreadContext
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 
 public class BlockFixFeature extends DefaultFeature {
+    public static final MapCodec<BlockFixFeature> CODEC = MapCodec.unit(BlockFixFeature::new);
+
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> featurePlaceContext) {
-        final BlockPos worldPos = featurePlaceContext.origin();
-        final WorldGenLevel level = featurePlaceContext.level();
+    public MapCodec<BlockFixFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BlockPos worldPos) {
         final int sx = (worldPos.getX() >> 4) << 4;
         final int sz = (worldPos.getZ() >> 4) << 4;
 

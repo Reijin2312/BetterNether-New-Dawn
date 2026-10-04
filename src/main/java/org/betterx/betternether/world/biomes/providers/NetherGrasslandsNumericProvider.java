@@ -2,8 +2,8 @@ package org.betterx.betternether.world.biomes.providers;
 
 
 import org.betterx.wover.math.api.MathHelper;
-import org.betterx.wover.surface.api.conditions.SurfaceRulesContext;
 import org.betterx.wover.surface.api.noise.NumericProvider;
+import net.minecraft.world.level.levelgen.material.MaterialRuleContext;
 import net.minecraft.util.RandomSource;
 
 import com.mojang.serialization.Codec;
@@ -20,9 +20,9 @@ public class NetherGrasslandsNumericProvider implements NumericProvider {
             );
 
     @Override
-    public int getNumber(SurfaceRulesContext ctx) {
-        final int depth = ctx.getStoneDepthAbove();
-        final RandomSource random = RandomSource.create(MathHelper.getSeed(SEED, ctx.getBlockX(), ctx.getBlockY(), ctx.getBlockZ()));
+    public int getNumber(MaterialRuleContext ctx) {
+        final int depth = ctx.stoneDepthAbove();
+        final RandomSource random = RandomSource.create(MathHelper.getSeed(SEED, ctx.blockX(), ctx.blockY(), ctx.blockZ()));
         if (depth <= 1) return random.nextInt(3);
         if (depth <= random.nextInt(3) + 1) return 0;
         return 2;

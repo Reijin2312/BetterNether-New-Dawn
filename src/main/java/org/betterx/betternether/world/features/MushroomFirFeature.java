@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.BlockMushroomFir;
 import org.betterx.betternether.registry.NetherBlocks;
@@ -10,12 +11,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.EnumMap;
 import java.util.Map;
 
-public class MushroomFirFeature extends ContextFeature<NoneFeatureConfiguration> implements GrowableFeature<NoneFeatureConfiguration> {
+public class MushroomFirFeature extends ContextFeature implements GrowableFeature {
+    public static final MapCodec<MushroomFirFeature> CODEC = MapCodec.unit(MushroomFirFeature::new);
 
     private static final Map<BlockMushroomFir.MushroomFirShape, BlockState> STATE_CACHE = new EnumMap<>(BlockMushroomFir.MushroomFirShape.class);
     private static BlockState state(BlockMushroomFir.MushroomFirShape shape) {
@@ -28,8 +29,9 @@ public class MushroomFirFeature extends ContextFeature<NoneFeatureConfiguration>
         return NetherBlocks.NETHER_MYCELIUM.defaultBlockState().setValue(org.betterx.betternether.blocks.BlockNetherMycelium.IS_BLUE, true);
     }
 
-    public MushroomFirFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+    @Override
+    public MapCodec<MushroomFirFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -37,7 +39,6 @@ public class MushroomFirFeature extends ContextFeature<NoneFeatureConfiguration>
             ServerLevelAccessor level,
             BlockPos pos,
             RandomSource random,
-            NoneFeatureConfiguration config,
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
@@ -151,8 +152,7 @@ public class MushroomFirFeature extends ContextFeature<NoneFeatureConfiguration>
     public boolean grow(
             ServerLevelAccessor level,
             BlockPos pos,
-            RandomSource random,
-            NoneFeatureConfiguration configuration
+            RandomSource random
     ) {
         return grow(level, pos, random, 1, NetherThreadDataStorage.generatorForThread().context);
     }

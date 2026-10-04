@@ -16,7 +16,8 @@ import org.betterx.wover.surface.impl.rules.SwitchRuleSource;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 import java.util.List;
 
@@ -41,9 +42,9 @@ public class WartForestEdge extends NetherBiomeConfig {
     public void surface(BiomeSurfaceRuleBuilder<NetherBiomeBuilder> builder) {
         super.surface(builder);
         builder.rule(
-                SurfaceRules.sequence(
-                        SurfaceRules.ifTrue(
-                                SurfaceRules.ON_FLOOR,
+                MaterialRules.sequence(
+                        MaterialRules.ifTrue(
+                                MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR),
                                 new SwitchRuleSource(
                                         NetherNoiseCondition.INSTANCE,
                                         List.of(
@@ -54,7 +55,7 @@ public class WartForestEdge extends NetherBiomeConfig {
                                         )
                                 )
                         ),
-                        SurfaceRules.ifTrue(
+                        MaterialRules.ifTrue(
                                 Conditions.NETHER_VOLUME_NOISE,
                                 NetherGrasslands.SOUL_SAND
                         ),

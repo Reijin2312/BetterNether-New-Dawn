@@ -14,7 +14,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Noises;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 public class UpsideDownForestCleared extends NetherBiomeConfig {
     @Override
@@ -57,24 +58,24 @@ public class UpsideDownForestCleared extends NetherBiomeConfig {
     public void surface(BiomeSurfaceRuleBuilder<NetherBiomeBuilder> builder) {
         super.surface(builder);
         builder.rule(
-                       SurfaceRules.ifTrue(
-                               SurfaceRules.ON_FLOOR,
-                               SurfaceRules.sequence(
-                                        SurfaceRules.ifTrue(
+                       MaterialRules.ifTrue(
+                               MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR),
+                               MaterialRules.sequence(
+                                        MaterialRules.ifTrue(
                                                 Conditions.roughNoise(Noises.NETHERRACK, 0.221),
                                                 UpsideDownForest.netherrackMossRule()
                                         ),
-                                        SurfaceRules.state(
+                                        MaterialRules.state(
                                                 NetherBlocks.MUSHROOM_GRASS.defaultBlockState())
                                 )
                         ),
                        BaseSurfaceRuleBuilder.FLOOR_PRIORITY
                )
                .rule(
-                       SurfaceRules.ifTrue(
-                               SurfaceRules.ON_CEILING,
-                               SurfaceRules.sequence(
-                                        SurfaceRules.ifTrue(
+                       MaterialRules.ifTrue(
+                               MaterialRules.stoneDepthCheck(0, false, CaveSurface.CEILING),
+                               MaterialRules.sequence(
+                                        MaterialRules.ifTrue(
                                                 UpsideDownForest.NOISE_CEIL_LAYER,
                                                 UpsideDownForest.ceilingMossRule()
                                         ),

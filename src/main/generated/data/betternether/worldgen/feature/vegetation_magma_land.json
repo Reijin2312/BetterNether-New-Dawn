@@ -1,0 +1,77 @@
+{
+  "type": "wover:random_patch",
+  "feature": {
+    "feature": {
+      "type": "minecraft:simple_block",
+      "to_place": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": "betternether:geyser",
+            "weight": 40
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "0"
+              }
+            },
+            "weight": 30
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "1"
+              }
+            },
+            "weight": 30
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "2"
+              }
+            },
+            "weight": 30
+          },
+          {
+            "data": {
+              "id": "betternether:magma_flower",
+              "properties": {
+                "age": "3"
+              }
+            },
+            "weight": 30
+          }
+        ]
+      }
+    },
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "minecraft:air"
+        }
+      },
+      {
+        "type": "wover:is",
+        "offset": [
+          0,
+          -1,
+          0
+        ],
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "wover:surfaces/nether/terrain"
+        }
+      }
+    ]
+  },
+  "tries": 96,
+  "xz_spread": 7,
+  "y_spread": 3
+}

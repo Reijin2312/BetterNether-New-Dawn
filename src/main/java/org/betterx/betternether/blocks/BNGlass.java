@@ -3,18 +3,20 @@ package org.betterx.betternether.blocks;
 import org.betterx.bclib.blocks.BaseGlassBlock;
 import org.betterx.betternether.BetterNether;
 import org.betterx.wover.block.api.model.WoverBlockModelGenerators;
+import org.betterx.wover.block.api.model.BlockModelProvider;
 
 import org.betterx.wover.block.api.model.WoverBlockModelGeneratorsAccess;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 
 import java.util.Optional;
 
-public class BNGlass extends BaseGlassBlock {
+public class BNGlass extends BaseGlassBlock implements BlockModelProvider {
     public BNGlass(Block block) {
-        super(block, 0.3f);
+        super(BlockBehaviour.Properties.ofFullCopy(block).explosionResistance(0.3F).noOcclusion());
     }
 
     @Override

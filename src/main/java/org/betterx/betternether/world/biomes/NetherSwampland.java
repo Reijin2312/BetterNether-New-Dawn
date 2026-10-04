@@ -14,7 +14,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.levelgen.Noises;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 public class NetherSwampland extends NetherBiomeConfig {
     @Override
@@ -64,15 +65,15 @@ public class NetherSwampland extends NetherBiomeConfig {
     public void surface(BiomeSurfaceRuleBuilder<NetherBiomeBuilder> builder) {
         super.surface(builder);
         builder.rule(
-                SurfaceRules.sequence(
-                        SurfaceRules.ifTrue(
-                                SurfaceRules.ON_FLOOR,
-                                SurfaceRules.ifTrue(
+                MaterialRules.sequence(
+                        MaterialRules.ifTrue(
+                                MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR),
+                                MaterialRules.ifTrue(
                                         Conditions.roughNoise(Noises.NETHERRACK, 0.14),
-                                        SurfaceRules.state(NetherBlocks.SWAMPLAND_GRASS.defaultBlockState())
+                                        MaterialRules.state(NetherBlocks.SWAMPLAND_GRASS.defaultBlockState())
                                 )
                         ),
-                        SurfaceRules.ifTrue(
+                        MaterialRules.ifTrue(
                                 Conditions.roughNoise(Noises.NETHER_WART, 0.19),
                                 NetherGrasslands.SOUL_SAND
                         ),

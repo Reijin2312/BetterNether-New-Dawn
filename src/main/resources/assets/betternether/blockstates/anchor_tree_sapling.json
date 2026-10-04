@@ -1,10 +1,6 @@
 {
   "variants": {
-    "hanging=false": {
-      "model": "betternether:block/anchor_tree_sapling",
-      "x": 180
-    },
-    "hanging=true": {
+    "": {
       "model": "betternether:block/anchor_tree_sapling"
     }
   }

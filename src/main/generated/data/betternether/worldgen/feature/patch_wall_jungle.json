@@ -1,0 +1,59 @@
+{
+  "type": "wover:random_patch",
+  "feature": {
+    "feature": {
+      "type": "wover:place_block",
+      "dir": [
+        "north",
+        "east",
+        "west",
+        "south"
+      ],
+      "entries": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": {
+              "id": "betternether:wall_mushroom_red",
+              "properties": {
+                "facing": "north"
+              }
+            },
+            "weight": 20
+          },
+          {
+            "data": {
+              "id": "betternether:wall_mushroom_brown",
+              "properties": {
+                "facing": "north"
+              }
+            },
+            "weight": 15
+          },
+          {
+            "data": {
+              "id": "betternether:jungle_moss",
+              "properties": {
+                "facing": "north"
+              }
+            },
+            "weight": 40
+          },
+          {
+            "data": {
+              "id": "betternether:wall_moss",
+              "properties": {
+                "facing": "north"
+              }
+            },
+            "weight": 40
+          }
+        ]
+      }
+    },
+    "placement": []
+  },
+  "tries": 120,
+  "xz_spread": 7,
+  "y_spread": 7
+}

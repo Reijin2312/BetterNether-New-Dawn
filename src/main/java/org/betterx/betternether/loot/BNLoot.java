@@ -14,8 +14,7 @@ import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 
@@ -43,82 +42,82 @@ public class BNLoot {
 
         LootTableEvents.MODIFY.register((id, table, source, registries) -> {
             if (BuiltInLootTables.RUINED_PORTAL.equals(id) || BuiltInLootTables.NETHER_BRIDGE.equals(id)) {
-                table.withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0, 4))
+                table.withPool(LootPool.lootPool().setRolls(ContextIntProviders.between(0, 4))
                                        .add(LootItem.lootTableItem(NetherBlocks.BLUE_OBSIDIAN.asItem())
                                                     .setWeight(1)
-                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                            1.0F,
-                                                            2.0F
+                                                    .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                            1,
+                                                            2
                                                     ))))
                                        .add(EmptyLootItem.emptyItem()
                                                          .setWeight(9)));
                 table.withPool(LootPool.lootPool()
-                                       .setRolls(ConstantValue.exactly(1.0f))
+                                       .setRolls(ContextIntProviders.exactly(1))
                                        .add(EmptyLootItem.emptyItem().setWeight(9))
                                        .add(LootItem.lootTableItem(NetherTemplates.NETHER_BOWL_SMITHING_TEMPLATE)
                                                     .setWeight(1)));
             } else if (BuiltInLootTables.BASTION_BRIDGE.equals(id) || BuiltInLootTables.BASTION_HOGLIN_STABLE.equals(id) || BuiltInLootTables.BASTION_TREASURE.equals(
                     id)) {
                 table.withPool(LootPool.lootPool()
-                                       .setRolls(UniformGenerator.between(1, 2))
+                                       .setRolls(ContextIntProviders.between(1, 2))
                                        .add(LootItem.lootTableItem(NetherBlocks.BLUE_CRYING_OBSIDIAN.asItem())
                                                     .setWeight(5)
-                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                            3.0F,
-                                                            8.0F
+                                                    .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                            3,
+                                                            8
                                                     ))))
                                        .add(LootItem
                                                .lootTableItem(NetherBlocks.BLUE_WEEPING_OBSIDIAN.asItem())
                                                .setWeight(1)
-                                               .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                       1.0F,
-                                                       4.0F
+                                               .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                       1,
+                                                       4
                                                ))))
                                        .add(LootItem.lootTableItem(NetherBlocks.WEEPING_OBSIDIAN.asItem())
                                                     .setWeight(1)
-                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                            1.0F,
-                                                            4.0F
+                                                    .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                            1,
+                                                            4
                                                     ))))
                                        .add(EmptyLootItem.emptyItem()
                                                          .setWeight(50)));
                 table.withPool(LootPool.lootPool()
-                                       .setRolls(ConstantValue.exactly(1.0f))
+                                       .setRolls(ContextIntProviders.exactly(1))
                                        .add(EmptyLootItem.emptyItem().setWeight(99))
                                        .add(LootItem.lootTableItem(NetherTemplates.NETHER_BOWL_SMITHING_TEMPLATE)
                                                     .setWeight(1)));
             } else if (BuiltInLootTables.BASTION_OTHER.equals(id)) {
                 table.withPool(LootPool.lootPool()
-                                       .setRolls(UniformGenerator.between(1, 2))
+                                       .setRolls(ContextIntProviders.between(1, 2))
                                        .add(LootItem.lootTableItem(NetherBlocks.BLUE_OBSIDIAN.asItem())
                                                     .setWeight(10)
-                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                            4.0F,
-                                                            6.0F
+                                                    .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                            4,
+                                                            6
                                                     ))))
                                        .add(LootItem.lootTableItem(NetherBlocks.BLUE_CRYING_OBSIDIAN.asItem())
                                                     .setWeight(5)
-                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                            1.0F,
-                                                            5.0F
+                                                    .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                            1,
+                                                            5
                                                     ))))
                                        .add(LootItem
                                                .lootTableItem(NetherBlocks.BLUE_WEEPING_OBSIDIAN.asItem())
                                                .setWeight(1)
-                                               .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                       1.0F,
-                                                       2.0F
+                                               .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                       1,
+                                                       2
                                                ))))
                                        .add(LootItem.lootTableItem(NetherBlocks.WEEPING_OBSIDIAN.asItem())
                                                     .setWeight(1)
-                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(
-                                                            1.0F,
-                                                            2.0F
+                                                    .apply(SetItemCountFunction.setCount(ContextIntProviders.between(
+                                                            1,
+                                                            2
                                                     ))))
                                        .add(EmptyLootItem.emptyItem()
                                                          .setWeight(50)));
                 table.withPool(LootPool.lootPool()
-                                       .setRolls(ConstantValue.exactly(1.0f))
+                                       .setRolls(ContextIntProviders.exactly(1))
                                        .add(EmptyLootItem.emptyItem().setWeight(9))
                                        .add(LootItem.lootTableItem(NetherTemplates.NETHER_BOWL_SMITHING_TEMPLATE)
                                                     .setWeight(1)));
@@ -131,25 +130,25 @@ public class BNLoot {
                         .lootTableItem(NetherBlocks.BLUE_CRYING_OBSIDIAN.asItem())
                         .setWeight(40)
                         .apply(SetItemCountFunction.setCount(
-                                UniformGenerator.between(
-                                        1.0F,
-                                        3.0F
+                                ContextIntProviders.between(
+                                        1,
+                                        3
                                 ))).build());
                 list.add(LootItem
                         .lootTableItem(NetherBlocks.BLUE_WEEPING_OBSIDIAN.asItem())
                         .setWeight(20)
                         .apply(SetItemCountFunction.setCount(
-                                UniformGenerator.between(
-                                        1.0F,
-                                        2.0F
+                                ContextIntProviders.between(
+                                        1,
+                                        2
                                 ))).build());
                 list.add(LootItem
                         .lootTableItem(NetherBlocks.WEEPING_OBSIDIAN.asItem())
                         .setWeight(20)
                         .apply(SetItemCountFunction.setCount(
-                                UniformGenerator.between(
-                                        1.0F,
-                                        2.0F
+                                ContextIntProviders.between(
+                                        1,
+                                        2
                                 ))).build());
 
                 if (!LootUtil.addToPool(table, 0, list)) {

@@ -13,7 +13,8 @@ import org.betterx.wover.surface.impl.BaseSurfaceRuleBuilder;
 import org.betterx.wover.surface.impl.rules.SwitchRuleSource;
 
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 import java.util.List;
 
@@ -36,13 +37,13 @@ public class NetherMushroomForestEdge extends NetherBiomeConfig {
     public void surface(BiomeSurfaceRuleBuilder<NetherBiomeBuilder> builder) {
         super.surface(builder);
         builder.rule(
-                SurfaceRules.ifTrue(
-                        SurfaceRules.ON_FLOOR,
+                MaterialRules.ifTrue(
+                        MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR),
                         new SwitchRuleSource(
                                 NetherMushroomForestEdgeNumericProvider.DEFAULT,
                                 List.of(
-                                        SurfaceRules.state(NetherBlocks.NETHER_MYCELIUM.defaultBlockState()),
-                                        SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState()),
+                                        MaterialRules.state(NetherBlocks.NETHER_MYCELIUM.defaultBlockState()),
+                                        MaterialRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState()),
                                         NETHERRACK
                                 )
                         )

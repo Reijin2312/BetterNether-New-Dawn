@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#minecraft:mineable/pickaxe",
-      "required": false
-    }
+    "#minecraft:mineable/pickaxe"
   ]
 }

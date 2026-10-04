@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "": { "model": "glass_black" }
+  "variants": {
+    "": {
+      "model": "glass_black"
     }
+  }
 }

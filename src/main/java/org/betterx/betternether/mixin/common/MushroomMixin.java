@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.MushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,6 +44,7 @@ public abstract class MushroomMixin {
             RandomSource random,
             BlockPos pos,
             BlockState state,
+            BonemealSource source,
             CallbackInfo info
     ) {
         if (BlocksHelper.isNetherMycelium(world.getBlockState(pos.below()))) {

@@ -9,7 +9,7 @@ import org.betterx.betternether.registry.features.placed.NetherObjectsPlaced;
 import org.betterx.wover.block.api.predicate.BlockPredicates;
 import org.betterx.wover.core.api.ModCore;
 import org.betterx.wover.datagen.api.provider.multi.WoverFeatureProvider;
-import org.betterx.wover.feature.api.configured.ConfiguredFeatureManager;
+import org.betterx.wover.feature.api.configured.FeatureContentManager;
 import org.betterx.wover.feature.api.features.config.PillarFeatureConfig;
 import org.betterx.wover.feature.api.placed.modifiers.ExtendXYZ;
 
@@ -116,7 +116,7 @@ public class ObjectFeatureDataProvider extends WoverFeatureProvider {
         NetherObjectsPlaced.BONE_STALAGMITE
                 .inlineConfiguration(ctx)
                 .sequence()
-                .add(ConfiguredFeatureManager.INLINE_BUILDER
+                .add(FeatureContentManager.INLINE_BUILDER
                         .simple()
                         .block(NetherBlocks.BONE_BLOCK)
                         .inlinePlace()
@@ -128,7 +128,7 @@ public class ObjectFeatureDataProvider extends WoverFeatureProvider {
                         .is(BlockPredicates.ONLY_NETHER_GROUND)
                         .directHolder()
                 )
-                .add(ConfiguredFeatureManager.INLINE_BUILDER
+                .add(FeatureContentManager.INLINE_BUILDER
                         .pillar()
                         .transformer(PillarFeatureConfig.KnownTransformers.SIZE_DECREASE)
                         .direction(Direction.UP)
@@ -204,7 +204,7 @@ public class ObjectFeatureDataProvider extends WoverFeatureProvider {
                 .inlineConfiguration(ctx)
                 .sequence()
                 .add(NetherObjectsPlaced.PATCH_TERRACOTTA_CLUMP)
-                .add(ConfiguredFeatureManager.INLINE_BUILDER
+                .add(FeatureContentManager.INLINE_BUILDER
                         .pillar()
                         .transformer(PillarFeatureConfig.KnownTransformers.SIZE_DECREASE)
                         .direction(Direction.DOWN)
@@ -224,7 +224,7 @@ public class ObjectFeatureDataProvider extends WoverFeatureProvider {
                 .inlineConfiguration(ctx)
                 .sequence()
                 .add(NetherObjectsPlaced.PATCH_TERRACOTTA_CLUMP)
-                .add(ConfiguredFeatureManager.INLINE_BUILDER
+                .add(FeatureContentManager.INLINE_BUILDER
                         .pillar()
                         .transformer(PillarFeatureConfig.KnownTransformers.SIZE_DECREASE)
                         .direction(Direction.UP)

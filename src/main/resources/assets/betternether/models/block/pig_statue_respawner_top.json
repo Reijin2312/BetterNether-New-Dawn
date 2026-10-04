@@ -1,5 +1,5 @@
 {
-	"textures": {
-		"particle": "betternether:block/pig_statue_1"
-	}
+  "textures": {
+    "particle": "betternether:block/pig_statue_1"
+  }
 }

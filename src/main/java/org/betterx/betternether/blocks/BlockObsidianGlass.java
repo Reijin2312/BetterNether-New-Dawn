@@ -21,7 +21,7 @@ public class BlockObsidianGlass extends BlockBaseNotFull implements BehaviourImm
                                  .isSuffocating((arg1, arg2, arg3) -> {
                                      return false;
                                  })
-                                 .isViewBlocking((arg1, arg2, arg3) -> {
+                                 .isViewBlocking((arg1, arg2, arg3, arg4) -> {
                                      return false;
                                  }));
         this.setRenderLayer(BNRenderLayer.TRANSLUCENT);

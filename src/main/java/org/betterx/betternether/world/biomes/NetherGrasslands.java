@@ -16,26 +16,27 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 import java.util.List;
 
 public class NetherGrasslands extends NetherBiomeConfig {
-    static final SurfaceRules.RuleSource SOUL_SOIL = SurfaceRules.state(Blocks.SOUL_SOIL.defaultBlockState());
-    static final SurfaceRules.RuleSource SOUL_SAND = SurfaceRules.state(Blocks.SOUL_SAND.defaultBlockState());
+    static final net.minecraft.world.level.levelgen.material.rule.MaterialRule SOUL_SOIL = MaterialRules.state(Blocks.SOUL_SOIL.defaultBlockState());
+    static final net.minecraft.world.level.levelgen.material.rule.MaterialRule SOUL_SAND = MaterialRules.state(Blocks.SOUL_SAND.defaultBlockState());
 
-    private static final SurfaceRules.RuleSource BLUE = SurfaceRules.state(Blocks.CONCRETE.blue().defaultBlockState());
-    private static final SurfaceRules.RuleSource LIGHT_BLUE = SurfaceRules.state(Blocks.CONCRETE.lightBlue().defaultBlockState());
-    private static final SurfaceRules.RuleSource CYAN = SurfaceRules.state(Blocks.CONCRETE.cyan().defaultBlockState());
-    private static final SurfaceRules.RuleSource GREEN = SurfaceRules.state(Blocks.CONCRETE.green().defaultBlockState());
-    private static final SurfaceRules.RuleSource LIME_GREEN = SurfaceRules.state(Blocks.CONCRETE.lime().defaultBlockState());
-    private static final SurfaceRules.RuleSource YELLOW = SurfaceRules.state(Blocks.CONCRETE.yellow().defaultBlockState());
-    private static final SurfaceRules.RuleSource ORANGE = SurfaceRules.state(Blocks.CONCRETE.orange().defaultBlockState());
-    private static final SurfaceRules.RuleSource RED = SurfaceRules.state(Blocks.CONCRETE.red().defaultBlockState());
-    private static final SurfaceRules.RuleSource PINK = SurfaceRules.state(Blocks.CONCRETE.pink().defaultBlockState());
-    private static final SurfaceRules.RuleSource PURPLE = SurfaceRules.state(Blocks.CONCRETE.purple().defaultBlockState());
-    private static final SurfaceRules.RuleSource MAGENTA = SurfaceRules.state(Blocks.CONCRETE.magenta().defaultBlockState());
-    private static final SurfaceRules.RuleSource BLACK = SurfaceRules.state(Blocks.CONCRETE.black().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule BLUE = MaterialRules.state(Blocks.CONCRETE.blue().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule LIGHT_BLUE = MaterialRules.state(Blocks.CONCRETE.lightBlue().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule CYAN = MaterialRules.state(Blocks.CONCRETE.cyan().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule GREEN = MaterialRules.state(Blocks.CONCRETE.green().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule LIME_GREEN = MaterialRules.state(Blocks.CONCRETE.lime().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule YELLOW = MaterialRules.state(Blocks.CONCRETE.yellow().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule ORANGE = MaterialRules.state(Blocks.CONCRETE.orange().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule RED = MaterialRules.state(Blocks.CONCRETE.red().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule PINK = MaterialRules.state(Blocks.CONCRETE.pink().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule PURPLE = MaterialRules.state(Blocks.CONCRETE.purple().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule MAGENTA = MaterialRules.state(Blocks.CONCRETE.magenta().defaultBlockState());
+    private static final net.minecraft.world.level.levelgen.material.rule.MaterialRule BLACK = MaterialRules.state(Blocks.CONCRETE.black().defaultBlockState());
     //List.of(BLUE, LIGHT_BLUE, CYAN, GREEN, LIME_GREEN, YELLOW, ORANGE, RED, PINK, MAGENTA, PURPLE, BLACK)
 
 
@@ -58,8 +59,8 @@ public class NetherGrasslands extends NetherBiomeConfig {
         ;
     }
 
-    public static SurfaceRules.RuleSource mossRule() {
-        return SurfaceRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
+    public static net.minecraft.world.level.levelgen.material.rule.MaterialRule mossRule() {
+        return MaterialRules.state(NetherBlocks.NETHERRACK_MOSS.defaultBlockState());
     }
 
     @Override
@@ -67,9 +68,9 @@ public class NetherGrasslands extends NetherBiomeConfig {
         super.surface(builder);
 
         builder.rule(
-                SurfaceRules.sequence(
-                        SurfaceRules.ifTrue(
-                                SurfaceRules.ON_FLOOR,
+                MaterialRules.sequence(
+                        MaterialRules.ifTrue(
+                                MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR),
                                 new SwitchRuleSource(
                                         NetherGrasslandsNumericProvider.DEFAULT,
                                         List.of(SOUL_SOIL, SOUL_SAND, mossRule(), NETHERRACK)

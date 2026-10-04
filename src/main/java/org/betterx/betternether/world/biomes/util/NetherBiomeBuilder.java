@@ -28,7 +28,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 
 import org.jetbrains.annotations.NotNull;
@@ -57,14 +57,14 @@ public class NetherBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuil
             .feature(NetherVegetationPlaced.WART_CAP);
     }
 
-    public static final SurfaceRules.RuleSource BEDROCK = SurfaceRules.state(Blocks.BEDROCK.defaultBlockState());
+    public static final net.minecraft.world.level.levelgen.material.rule.MaterialRule BEDROCK = MaterialRules.state(Blocks.BEDROCK.defaultBlockState());
 
-    public static final SurfaceRules.ConditionSource BEDROCK_BOTTOM = SurfaceRules.verticalGradient(
+    public static final net.minecraft.world.level.levelgen.material.condition.MaterialCondition BEDROCK_BOTTOM = MaterialRules.verticalGradient(
             BetterNether.C.id("bedrock_floor").toString(),
             VerticalAnchor.bottom(),
             VerticalAnchor.aboveBottom(5)
     );
-    public static final SurfaceRules.ConditionSource BEDROCK_TOP = SurfaceRules.verticalGradient(
+    public static final net.minecraft.world.level.levelgen.material.condition.MaterialCondition BEDROCK_TOP = MaterialRules.verticalGradient(
             BetterNether.C.id("bedrock_roof").toString(),
             VerticalAnchor.belowTop(5),
             VerticalAnchor.top()

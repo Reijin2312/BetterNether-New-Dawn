@@ -1,5 +1,7 @@
 {
-    "variants": {
-		"": { "model": "betternether:block/rubeus_leaves" }
-	}
+  "variants": {
+    "": {
+      "model": "betternether:block/rubeus_leaves"
+    }
+  }
 }

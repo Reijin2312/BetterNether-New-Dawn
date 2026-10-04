@@ -1,6 +1,7 @@
 {
-	"variants":
-	{
-        "":  { "model": "betternether:block/rubeus_cone" }
+  "variants": {
+    "": {
+      "model": "betternether:block/rubeus_cone"
     }
+  }
 }

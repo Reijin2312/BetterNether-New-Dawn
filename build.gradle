@@ -56,6 +56,9 @@ loom {
 sourceSets {
     main {
         java {
+            // Generated data is checked in. Datagen sources still target the pre-26.3
+            // generation API and are not part of the runtime mod.
+            exclude 'org/betterx/datagen/**'
             exclude 'org/betterx/betternether/integrations/emi/**'
         }
         // Add the datagenned files into the jar.
@@ -187,7 +190,7 @@ jar {
     from "LICENSE.ASSETS"
 }
 
-def modrinthModsDir = file(findProperty("modrinth_mods_dir") ?: "C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/Fabric 26.2/mods")
+def modrinthModsDir = file(findProperty("modrinth_mods_dir") ?: "C:/Users/Redmi/AppData/Roaming/ModrinthApp/profiles/Fabric 26.3/mods")
 def fabricRuntimeProjects = [project]
 if (local_bclib) fabricRuntimeProjects.add(project(":BCLib"))
 if (local_wover) fabricRuntimeProjects.add(project(":WorldWeaver"))

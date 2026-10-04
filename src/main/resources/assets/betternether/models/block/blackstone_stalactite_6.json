@@ -1,7 +1,7 @@
 {
-	"parent": "betternether:block/stalactite_6",
-	"textures": {
-		"particle": "block/blackstone",
-		"texture": "block/blackstone"
-	}
+  "parent": "betternether:block/stalactite_6",
+  "textures": {
+    "particle": "block/blackstone",
+    "texture": "block/blackstone"
+  }
 }

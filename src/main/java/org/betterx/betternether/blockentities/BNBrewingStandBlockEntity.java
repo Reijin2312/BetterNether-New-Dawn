@@ -9,6 +9,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.WorldlyContainer;
@@ -19,12 +20,16 @@ import net.minecraft.world.inventory.BrewingStandMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.crafting.BrewingInput;
+import net.minecraft.world.item.crafting.BrewingRecipe;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipePropertySet;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BrewingStandBlock;
-import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -45,6 +50,8 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
     private boolean[] slotsEmptyLastTick;
     private Item itemBrewing;
     private int fuel;
+    private final RecipeManager.CachedCheck<BrewingInput, BrewingRecipe> quickCheck =
+            RecipeManager.createCheck(RecipeType.BREWING);
     protected final ContainerData propertyDelegate;
 
     public BNBrewingStandBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -119,7 +126,8 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
             setChanged(world, pos, state);
         }
 
-        boolean bl = blockEntity.canCraft(world != null ? world.potionBrewing() : PotionBrewing.EMPTY);
+        ServerLevel serverLevel = world instanceof ServerLevel sl ? sl : null;
+        boolean bl = blockEntity.canCraft(serverLevel);
         boolean bl2 = blockEntity.brewTime > 0;
         ItemStack itemStack2 = blockEntity.inventory.get(3);
         if (bl2) {
@@ -174,19 +182,24 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
         return bls;
     }
 
-    private boolean canCraft(PotionBrewing potionBrewing) {
+    private static boolean isBrewingReagent(@Nullable Level level, ItemStack stack) {
+        return BrewingRegistry.isValidIngridient(stack)
+                || level != null && level.recipeAccess().propertySet(RecipePropertySet.BREWING_REAGENTS).test(stack);
+    }
+
+    private boolean canCraft(@Nullable ServerLevel level) {
         ItemStack source = this.inventory.get(3);
         if (source.isEmpty()) {
             return false;
-        } else if (!potionBrewing.isIngredient(source)) {
+        } else if (!isBrewingReagent(level, source)) {
             return false;
         } else {
             for (int i = 0; i < 3; ++i) {
                 ItemStack bottle = this.inventory.get(i);
                 if (!bottle.isEmpty()) {
-                    if (potionBrewing.hasMix(bottle, source))
+                    if (BrewingRegistry.getResult(source, bottle) != null)
                         return true;
-                    else if (BrewingRegistry.getResult(source, bottle) != null)
+                    else if (level != null && quickCheck.getRecipeFor(new BrewingInput(bottle, source), level).isPresent())
                         return true;
                 }
             }
@@ -201,22 +214,27 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
 
     private void craft(Level world, BlockPos blockPos, BlockState state) {
         ItemStack source = this.inventory.get(3);
-        PotionBrewing potionBrewing = this.level != null ? this.level.potionBrewing() : PotionBrewing.EMPTY;
-        for (int i = 0; i < 3; ++i) {
-            ItemStack bottle = this.inventory.get(i);
-            if (!bottle.isEmpty()) {
-                ItemStack result = BrewingRegistry.getResult(source, bottle);
-                if (result != null)
-                    this.inventory.set(i, result.copy());
-                else
-                    this.inventory.set(i, potionBrewing.mix(source, this.inventory.get(i)));
+        if (world instanceof ServerLevel serverLevel) {
+            for (int i = 0; i < 3; ++i) {
+                ItemStack bottle = this.inventory.get(i);
+                if (!bottle.isEmpty()) {
+                    ItemStack result = BrewingRegistry.getResult(source, bottle);
+                    if (result != null) {
+                        this.inventory.set(i, result.copy());
+                    } else {
+                        BrewingInput input = new BrewingInput(bottle, source);
+                        this.inventory.set(i, quickCheck.getRecipeFor(input, serverLevel)
+                                .map(holder -> holder.value().assemble(input))
+                                .orElse(bottle));
+                    }
+                }
             }
         }
 
         source.shrink(1);
-        ItemStack remainder = source.getItem().getCraftingRemainder().create();
-        if (!remainder.isEmpty()) {
-            ItemStack itemStack2 = remainder.copy();
+        ItemStackTemplate remainderTemplate = source.getItem().getCraftingRemainder();
+        ItemStack itemStack2 = remainderTemplate != null ? remainderTemplate.create() : ItemStack.EMPTY;
+        if (!itemStack2.isEmpty()) {
             if (source.isEmpty()) {
                 source = itemStack2;
             } else if (!world.isClientSide()) {
@@ -227,7 +245,7 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
         }
 
         this.inventory.set(3, source);
-        this.level.levelEvent(LevelEvent.SOUND_BREWING_STAND_BREW, blockPos, 0);
+        this.level.levelEvent(1035, blockPos, 0);
     }
 
     @Override
@@ -280,8 +298,7 @@ public class BNBrewingStandBlockEntity extends BaseContainerBlockEntity implemen
 
     public boolean canPlaceItem(int slot, ItemStack stack) {
         if (slot == 3) {
-            PotionBrewing potionBrewing = this.level != null ? this.level.potionBrewing() : PotionBrewing.EMPTY;
-            return potionBrewing.isIngredient(stack);
+            return isBrewingReagent(this.level, stack);
         } else {
             Item item = stack.getItem();
             if (slot == 4) {

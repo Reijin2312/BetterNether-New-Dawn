@@ -1,8 +1,9 @@
 {
-	"variants":
-	{
-        "":  [
-			{ "model": "betternether:block/brick_pot" }
-		]
-    }
+  "variants": {
+    "": [
+      {
+        "model": "betternether:block/brick_pot"
+      }
+    ]
+  }
 }

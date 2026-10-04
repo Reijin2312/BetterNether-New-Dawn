@@ -1,0 +1,407 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": {
+      "type": "wover:random_patch",
+      "feature": {
+        "feature": {
+          "type": "minecraft:simple_block",
+          "to_place": {
+            "type": "minecraft:simple",
+            "state": {
+              "id": "betternether:wart_seed",
+              "properties": {
+                "facing": "up"
+              }
+            }
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:matching_block_tag",
+              "tag": "minecraft:air"
+            }
+          },
+          {
+            "type": "wover:is",
+            "offset": [
+              0,
+              -1,
+              0
+            ],
+            "predicate": {
+              "type": "minecraft:matching_block_tag",
+              "tag": "wover:surfaces/nether/terrain"
+            }
+          }
+        ]
+      },
+      "tries": 96,
+      "xz_spread": 7,
+      "y_spread": 3
+    },
+    "placement": []
+  },
+  "features": [
+    {
+      "chance": 0.07017544,
+      "feature": {
+        "feature": {
+          "type": "wover:random_patch",
+          "feature": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "to_place": {
+                "type": "minecraft:weighted",
+                "entries": [
+                  {
+                    "data": {
+                      "id": "minecraft:nether_wart",
+                      "properties": {
+                        "age": "0"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "minecraft:nether_wart",
+                      "properties": {
+                        "age": "1"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "minecraft:nether_wart",
+                      "properties": {
+                        "age": "2"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "minecraft:nether_wart",
+                      "properties": {
+                        "age": "3"
+                      }
+                    },
+                    "weight": 1
+                  }
+                ]
+              }
+            },
+            "placement": [
+              {
+                "type": "minecraft:block_predicate_filter",
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "minecraft:air"
+                }
+              },
+              {
+                "type": "wover:is",
+                "offset": [
+                  0,
+                  -1,
+                  0
+                ],
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "wover:surfaces/nether/terrain"
+                }
+              }
+            ]
+          },
+          "tries": 96,
+          "xz_spread": 7,
+          "y_spread": 3
+        },
+        "placement": []
+      }
+    },
+    {
+      "chance": 0.21052632,
+      "feature": {
+        "feature": {
+          "type": "wover:random_patch",
+          "feature": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "to_place": {
+                "type": "minecraft:weighted",
+                "entries": [
+                  {
+                    "data": {
+                      "id": "betternether:magma_flower",
+                      "properties": {
+                        "age": "0"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:magma_flower",
+                      "properties": {
+                        "age": "1"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:magma_flower",
+                      "properties": {
+                        "age": "2"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:magma_flower",
+                      "properties": {
+                        "age": "3"
+                      }
+                    },
+                    "weight": 1
+                  }
+                ]
+              }
+            },
+            "placement": [
+              {
+                "type": "minecraft:block_predicate_filter",
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "minecraft:air"
+                }
+              },
+              {
+                "type": "wover:is",
+                "offset": [
+                  0,
+                  -1,
+                  0
+                ],
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "wover:surfaces/nether/terrain"
+                }
+              }
+            ]
+          },
+          "tries": 96,
+          "xz_spread": 7,
+          "y_spread": 3
+        },
+        "placement": []
+      }
+    },
+    {
+      "chance": 0.3508772,
+      "feature": {
+        "feature": {
+          "type": "wover:random_patch",
+          "feature": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "to_place": {
+                "type": "minecraft:simple",
+                "state": "betternether:nether_grass"
+              }
+            },
+            "placement": [
+              {
+                "type": "minecraft:block_predicate_filter",
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "minecraft:air"
+                }
+              },
+              {
+                "type": "wover:is",
+                "offset": [
+                  0,
+                  -1,
+                  0
+                ],
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "wover:surfaces/nether/terrain"
+                }
+              }
+            ]
+          },
+          "tries": 96,
+          "xz_spread": 7,
+          "y_spread": 3
+        },
+        "placement": []
+      }
+    },
+    {
+      "chance": 0.14035088,
+      "feature": {
+        "feature": {
+          "type": "wover:random_patch",
+          "feature": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "to_place": {
+                "type": "minecraft:weighted",
+                "entries": [
+                  {
+                    "data": {
+                      "id": "betternether:ink_bush",
+                      "properties": {
+                        "age": "0"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:ink_bush",
+                      "properties": {
+                        "age": "1"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:ink_bush",
+                      "properties": {
+                        "age": "2"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:ink_bush",
+                      "properties": {
+                        "age": "3"
+                      }
+                    },
+                    "weight": 1
+                  }
+                ]
+              }
+            },
+            "placement": [
+              {
+                "type": "minecraft:block_predicate_filter",
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "minecraft:air"
+                }
+              },
+              {
+                "type": "wover:is",
+                "offset": [
+                  0,
+                  -1,
+                  0
+                ],
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "wover:surfaces/nether/terrain"
+                }
+              }
+            ]
+          },
+          "tries": 96,
+          "xz_spread": 7,
+          "y_spread": 3
+        },
+        "placement": []
+      }
+    },
+    {
+      "chance": 0.0877193,
+      "feature": {
+        "feature": {
+          "type": "wover:random_patch",
+          "feature": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "to_place": {
+                "type": "minecraft:weighted",
+                "entries": [
+                  {
+                    "data": {
+                      "id": "betternether:black_apple",
+                      "properties": {
+                        "age": "0"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:black_apple",
+                      "properties": {
+                        "age": "1"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:black_apple",
+                      "properties": {
+                        "age": "2"
+                      }
+                    },
+                    "weight": 1
+                  },
+                  {
+                    "data": {
+                      "id": "betternether:black_apple",
+                      "properties": {
+                        "age": "3"
+                      }
+                    },
+                    "weight": 1
+                  }
+                ]
+              }
+            },
+            "placement": [
+              {
+                "type": "minecraft:block_predicate_filter",
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "minecraft:air"
+                }
+              },
+              {
+                "type": "wover:is",
+                "offset": [
+                  0,
+                  -1,
+                  0
+                ],
+                "predicate": {
+                  "type": "minecraft:matching_block_tag",
+                  "tag": "wover:surfaces/nether/terrain"
+                }
+              }
+            ]
+          },
+          "tries": 96,
+          "xz_spread": 7,
+          "y_spread": 3
+        },
+        "placement": []
+      }
+    }
+  ]
+}

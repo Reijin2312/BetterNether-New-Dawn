@@ -2,33 +2,31 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": 0,
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "name": "betternether:gloomwood_slab",
+          "modifier": [
             {
               "add": false,
-              "conditions": [
-                {
-                  "block": "betternether:gloomwood_slab",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "type": "double"
-                  }
+              "count": 2,
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "betternether:gloomwood_slab",
+                "state": {
+                  "type": "double"
                 }
-              ],
-              "count": 2.0,
-              "function": "minecraft:set_count"
+              }
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
-          ],
-          "name": "betternether:gloomwood_slab"
+          ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ]
 }

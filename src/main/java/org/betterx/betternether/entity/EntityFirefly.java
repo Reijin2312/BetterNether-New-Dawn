@@ -98,9 +98,9 @@ public class EntityFirefly extends DespawnableAnimal {
                 boolean valid = !state.isAir() && !world.getFluidState(pos.below()).is(FluidTags.LAVA);
                 if (valid) {
                     state = this.level.getBlockState(pos);
-                    valid = state.isAir() || !state.blocksMotion();
+                    valid = state.isAir() || !state.isSolid();
                     valid = valid && state.getBlock() != NetherBlocks.EGG_PLANT;
-                    valid = valid && !state.blocksMotion();
+                    valid = valid && !state.isSolid();
                 }
                 return valid;
             }
@@ -304,7 +304,7 @@ public class EntityFirefly extends DespawnableAnimal {
         public void start() {
             BlockPos pos = this.getFlowerLocation();
             if (pos != null) {
-                Path path = EntityFirefly.this.navigation.createPath(new BlockPos(pos), 1);
+                Path path = EntityFirefly.this.navigation.createPath(pos, 1);
                 EntityFirefly.this.navigation.moveTo(path, 1.0D);
             }
             super.start();

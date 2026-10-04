@@ -3,16 +3,17 @@ package org.betterx.betternether.world.features;
 import org.betterx.betternether.world.features.configs.NaturalTreeConfiguration;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
-public abstract class NonOverlappingFeature<FC extends NaturalTreeConfiguration> extends ContextFeature<FC> {
-    public NonOverlappingFeature(Codec<FC> codec) {
-        super(codec);
+public abstract class NonOverlappingFeature<FC extends NaturalTreeConfiguration> extends ContextFeature {
+    public final FC config;
+
+    protected NonOverlappingFeature(FC config) {
+        this.config = config;
     }
 
     protected abstract boolean isStructure(BlockState state);
@@ -23,12 +24,11 @@ public abstract class NonOverlappingFeature<FC extends NaturalTreeConfiguration>
             ServerLevelAccessor world,
             BlockPos pos,
             RandomSource random,
-            FC config,
             final int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
-        if (isGround(world.getBlockState(pos.below())) && noObjNear(world, pos, config)) {
-            return grow(world, pos, random, config, context);
+        if (isGround(world.getBlockState(pos.below())) && noObjNear(world, pos, this.config)) {
+            return grow(world, pos, random, this.config, context);
         }
         return false;
     }

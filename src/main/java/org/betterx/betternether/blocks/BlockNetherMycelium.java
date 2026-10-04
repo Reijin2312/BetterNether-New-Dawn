@@ -17,13 +17,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -62,12 +63,14 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
     public boolean isValidBonemealTarget(
             LevelReader blockGetter,
             BlockPos blockPos,
-            BlockState blockState
+            BlockState blockState,
+            BonemealSource source
     ) {
         return vegetationFeature != null && BonemealNyliumLike.super.isValidBonemealTarget(
                 blockGetter,
                 blockPos,
-                blockState
+                blockState,
+                source
         );
     }
 
@@ -77,7 +80,7 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
     }
 
     @Override
-    public @Nullable Holder<? extends ConfiguredFeature<?, ?>> getCoverFeature() {
+    public @Nullable Holder<Feature> getCoverFeature() {
         return vegetationFeature.getFeature();
     }
 
@@ -87,6 +90,6 @@ public class BlockNetherMycelium extends BlockBase implements BonemealNyliumLike
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
-        return provider.dropWithSilkTouch(this, Blocks.NETHERRACK, ConstantValue.exactly(1));
+        return provider.dropWithSilkTouch(this, Blocks.NETHERRACK, ContextIntProviders.exactly(1));
     }
 }

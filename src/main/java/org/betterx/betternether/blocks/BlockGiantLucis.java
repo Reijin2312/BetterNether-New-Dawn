@@ -17,8 +17,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -44,21 +43,21 @@ public class BlockGiantLucis extends HugeMushroomBlock implements AddMineableAxe
 
         return LootTable.lootTable()
                         .withPool(LootPool.lootPool()
-                                          .setRolls(ConstantValue.exactly(1.0F))
+                                          .setRolls(ContextIntProviders.exactly(1))
                                           // Silk touch: drop the block itself once
                                           .add(LootItem.lootTableItem(this).when(silkTouch)))
                         // Without silk touch: always drop spores and glowstone pile
                         .withPool(LootPool.lootPool()
-                                          .setRolls(ConstantValue.exactly(1.0F))
+                                          .setRolls(ContextIntProviders.exactly(1))
                                           .when(notSilk)
                                           .when(ExplosionCondition.survivesExplosion())
                                           .add(LootItem.lootTableItem(NetherBlocks.LUCIS_SPORE)
-                                                       .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1)))))
+                                                       .apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1)))))
                         .withPool(LootPool.lootPool()
-                                          .setRolls(ConstantValue.exactly(1.0F))
+                                          .setRolls(ContextIntProviders.exactly(1))
                                           .when(notSilk)
                                           .when(ExplosionCondition.survivesExplosion())
                                           .add(LootItem.lootTableItem(NetherItems.GLOWSTONE_PILE)
-                                                       .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))));
+                                                       .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 2)))));
     }
 }

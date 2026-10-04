@@ -1,5 +1,6 @@
 package org.betterx.betternether.world.features;
 
+import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.BlockWartSeed;
 import org.betterx.betternether.registry.NetherBlocks;
@@ -20,7 +21,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfiguration> implements GrowableFeature<NaturalTreeConfiguration> {
+public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfiguration> implements GrowableFeature {
+    public static final MapCodec<WartTreeFeature> CODEC = NaturalTreeConfiguration.mapCodecFor(WartTreeFeature::new);
     private static final BlockState WART_BLOCK = Blocks
             .NETHER_WART_BLOCK
             .defaultBlockState();
@@ -30,8 +32,13 @@ public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfigurat
             .getPossibleValues()
             .toArray(new Direction[]{});
 
-    public WartTreeFeature() {
-        super(NaturalTreeConfiguration.CODEC);
+    public WartTreeFeature(NaturalTreeConfiguration config) {
+        super(config);
+    }
+
+    @Override
+    public MapCodec<WartTreeFeature> codec() {
+        return CODEC;
     }
 
     @Override
@@ -80,7 +87,7 @@ public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfigurat
                                         BlocksHelper.setWithUpdate(world, context.POS, WART_BLOCK);
                                     if (random.nextInt(8) == 0) {
                                         Direction dir = HORIZONTAL[random.nextInt(HORIZONTAL.length)];
-                                        seedBlocks.add(new BlockPos(context.POS).relative(dir));
+                                        seedBlocks.add(context.POS.immutable().relative(dir));
                                     }
                                 }
                             }
@@ -128,7 +135,7 @@ public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfigurat
                                     if (world.isEmptyBlock(context.POS)) {
                                         BlocksHelper.setWithUpdate(world, context.POS, WART_BLOCK);
                                         for (int i = 0; i < 4; i++)
-                                            seedBlocks.add(new BlockPos(context.POS).relative(Direction.values()[random.nextInt(
+                                            seedBlocks.add(context.POS.immutable().relative(Direction.values()[random.nextInt(
                                                     6)]));
                                     }
                                 }
@@ -194,14 +201,13 @@ public class WartTreeFeature extends NonOverlappingFeature<NaturalTreeConfigurat
     public boolean grow(
             ServerLevelAccessor level,
             BlockPos pos,
-            RandomSource random,
-            NaturalTreeConfiguration configuration
+            RandomSource random
     ) {
         return grow(
                 level,
                 pos,
                 random,
-                new NaturalTreeConfiguration(false, configuration.distance),
+                new NaturalTreeConfiguration(false, this.config.distance),
                 NetherThreadDataStorage.generatorForThread().context
         );
     }
