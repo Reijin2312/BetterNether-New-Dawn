@@ -17,7 +17,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": { "Name": "minecraft:bedrock" }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -30,7 +30,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": { "Name": "minecraft:bedrock" }
+          "result_state": "minecraft:bedrock"
         }
       },
       {
@@ -61,12 +61,12 @@
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": { "Name": "minecraft:netherrack" }
+                "result_state": "minecraft:netherrack"
               }
             },
             {
               "type": "minecraft:block",
-              "result_state": { "Name": "minecraft:sculk" }
+              "result_state": "minecraft:sculk"
             }
           ]
         }
@@ -99,12 +99,12 @@
               },
               "then_run": {
                 "type": "minecraft:block",
-                "result_state": { "Name": "betternether:bleached_gloomsculk" }
+                "result_state": "betternether:bleached_gloomsculk"
               }
             },
             {
               "type": "minecraft:block",
-              "result_state": { "Name": "minecraft:sculk" }
+              "result_state": "minecraft:sculk"
             }
           ]
         }
@@ -120,7 +120,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": { "Name": "betternether:veined_gloomsculk" }
+          "result_state": "betternether:veined_gloomsculk"
         }
       },
       {
@@ -148,7 +148,7 @@
           },
           "then_run": {
             "type": "minecraft:block",
-            "result_state": { "Name": "minecraft:sculk" }
+            "result_state": "minecraft:sculk"
           }
         }
       },
@@ -163,12 +163,12 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": { "Name": "minecraft:sculk" }
+          "result_state": "minecraft:sculk"
         }
       },
       {
         "type": "minecraft:block",
-        "result_state": { "Name": "minecraft:netherrack" }
+        "result_state": "minecraft:netherrack"
       }
     ]
   }
