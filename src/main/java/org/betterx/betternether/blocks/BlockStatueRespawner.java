@@ -14,8 +14,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -30,9 +32,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.Optional;
 
 
 public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourMetal {
@@ -108,7 +113,8 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
                 );
             player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
             if (!world.isClientSide) {
-                ((ServerPlayer) player).setRespawnPosition(world.dimension(), pos, player.getYHeadRot(), true, false);
+                BlockPos spawnPos = state.getValue(TOP) ? pos.below() : pos;
+                ((ServerPlayer) player).setRespawnPosition(world.dimension(), spawnPos, player.getYHeadRot(), false, false);
             }
             player.playSound(SoundEvents.TOTEM_USE, 0.7F, 1.0F);
             return InteractionResult.SUCCESS;
@@ -168,7 +174,50 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
         }
         return super.playerWillDestroy(world, pos, state, player);
     }
+
+    @Override
+    public Optional<ServerPlayer.RespawnPosAngle> getRespawnPosition(
+            BlockState state,
+            EntityType<?> type,
+            LevelReader level,
+            BlockPos pos,
+            float orientation
+    ) {
+        BlockPos basePos = state.getValue(TOP) ? pos.below() : pos;
+        BlockState baseState = level.getBlockState(basePos);
+        if (!(baseState.getBlock() instanceof BlockStatueRespawner)) {
+            return Optional.empty();
+        }
+
+        Direction facing = baseState.getValue(FACING);
+        Direction right = facing.getClockWise();
+        Direction left = right.getOpposite();
+        Direction back = facing.getOpposite();
+        int[] yOffsets = new int[]{0, -1, 1};
+        int[][] xzOffsets = new int[][]{
+                {facing.getStepX(), facing.getStepZ()},
+                {right.getStepX(), right.getStepZ()},
+                {left.getStepX(), left.getStepZ()},
+                {back.getStepX(), back.getStepZ()},
+                {facing.getStepX() + right.getStepX(), facing.getStepZ() + right.getStepZ()},
+                {facing.getStepX() + left.getStepX(), facing.getStepZ() + left.getStepZ()},
+                {back.getStepX() + right.getStepX(), back.getStepZ() + right.getStepZ()},
+                {back.getStepX() + left.getStepX(), back.getStepZ() + left.getStepZ()}
+        };
+
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        for (boolean onlySafePositions : new boolean[]{true, false}) {
+            for (int[] xzOffset : xzOffsets) {
+                for (int yOffset : yOffsets) {
+                    mutable.set(basePos.getX() + xzOffset[0], basePos.getY() + yOffset, basePos.getZ() + xzOffset[1]);
+                    Vec3 spawnPos = DismountHelper.findSafeDismountLocation(type, level, mutable, onlySafePositions);
+                    if (spawnPos != null) {
+                        return Optional.of(ServerPlayer.RespawnPosAngle.of(spawnPos, basePos));
+                    }
+                }
+            }
+        }
+
+        return Optional.empty();
+    }
 }
-
-
-

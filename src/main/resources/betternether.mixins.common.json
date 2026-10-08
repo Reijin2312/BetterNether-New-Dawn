@@ -18,7 +18,6 @@
     "MapStateMixin",
     "MushroomMixin",
     "NetherWartMixin",
-    "PlayerEntityMixin",
     "PortalShapeMixin",
     "RecipeManagerMixin",
     "StructureMixin",
