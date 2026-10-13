@@ -1,9 +1,5 @@
 package org.betterx.betternether.world.features;
 
-import org.betterx.betternether.registry.block.NetherLeavesBlocks;
-import org.betterx.betternether.registry.block.NetherPlantBlocks;
-import org.betterx.betternether.registry.block.NetherWoodBlocks;
-
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.MHelper;
 import org.betterx.betternether.blocks.BlockPlantWall;
@@ -12,8 +8,8 @@ import org.betterx.betternether.blocks.RubeusLog;
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.world.features.configs.NaturalTreeConfiguration;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
-import de.ambertation.wover.block.api.BlockProperties.TripleShape;
-import de.ambertation.wover.feature.api.features.GrowableFeature;
+import org.betterx.wover.block.api.BlockProperties.TripleShape;
+import org.betterx.wover.feature.api.features.GrowableFeature;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,7 +36,8 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
 
     @Override
     protected boolean isStructure(BlockState state) {
-        return state.getBlock() == NetherWoodBlocks.MAT_RUBEUS.getLog();
+        return state.getBlock() == NetherBlocks.MAT_RUBEUS.getBark()
+                || state.getBlock() == NetherBlocks.MAT_RUBEUS.getLog();
     }
 
     @Override
@@ -95,16 +92,16 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
             for (Direction dir : Direction.values()) {
                 final BlockPos neighbour = current.relative(dir);
                 if (!leaves.contains(neighbour) || distance.containsKey(neighbour)) continue;
-                if (!world.getBlockState(neighbour).is(NetherLeavesBlocks.RUBEUS_LEAVES)) continue;
+                if (!world.getBlockState(neighbour).is(NetherBlocks.RUBEUS_LEAVES)) continue;
                 distance.put(neighbour, next);
                 queue.add(neighbour);
             }
         }
 
-        final BlockState cone = NetherWoodBlocks.MAT_RUBEUS.getCone().defaultBlockState();
+        final BlockState cone = NetherBlocks.MAT_RUBEUS.getCone().defaultBlockState();
         for (BlockPos leaf : leaves) {
             final BlockState state = world.getBlockState(leaf);
-            if (!state.is(NetherLeavesBlocks.RUBEUS_LEAVES)) continue;
+            if (!state.is(NetherBlocks.RUBEUS_LEAVES)) continue;
             final Integer dist = distance.get(leaf);
             if (dist != null) {
                 BlocksHelper.setWithoutUpdate(world, leaf, state.setValue(LeavesBlock.DISTANCE, dist));
@@ -223,7 +220,7 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
 
         for (BlockPos bpos : context.POINTS) {
             if (context.POINTS.contains(bpos.above()) && context.POINTS.contains(bpos.below())) {
-                state = NetherWoodBlocks.MAT_RUBEUS.getLog().defaultBlockState();
+                state = NetherBlocks.MAT_RUBEUS.getLog().defaultBlockState();
                 if (context.MIDDLE.contains(bpos))
                     setCondition(
                             world,
@@ -252,7 +249,7 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
                             random
                     );
             } else {
-                state = NetherWoodBlocks.MAT_RUBEUS.getBark().defaultBlockState();
+                state = NetherBlocks.MAT_RUBEUS.getBark().defaultBlockState();
                 if (context.MIDDLE.contains(bpos))
                     setCondition(
                             world,
@@ -357,8 +354,8 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
 
         // Not persistent: these leaves decay once the tree is felled (#97). updateDistances() gives each
         // one its real distance afterwards; until then they carry the default (DECAY_DISTANCE).
-        BlockState leaves = NetherLeavesBlocks.RUBEUS_LEAVES.defaultBlockState();
-        BlockState cone = NetherWoodBlocks.MAT_RUBEUS.getCone().defaultBlockState();
+        BlockState leaves = NetherBlocks.RUBEUS_LEAVES.defaultBlockState();
+        BlockState cone = NetherBlocks.MAT_RUBEUS.getCone().defaultBlockState();
         float halfR = radius * 0.5F;
         float r2 = radius * radius;
         int start = (int) Math.floor(-radius);
@@ -400,7 +397,7 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
         if (moss && Math.abs(pos.getY() - y) < 4) {
             for (Direction dir : BlocksHelper.HORIZONTAL) {
                 if (random.nextInt(3) > 0)
-                    setIfAir(world, pos.relative(dir), NetherPlantBlocks.JUNGLE_MOSS.defaultBlockState().setValue(
+                    setIfAir(world, pos.relative(dir), NetherBlocks.JUNGLE_MOSS.defaultBlockState().setValue(
                             BlockPlantWall.FACING, dir));
             }
         }
@@ -412,8 +409,8 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
         BlockState bState = world.getBlockState(pos);
         if (world.isEmptyBlock(pos)
                 || bState.canBeReplaced()
-                || bState.getBlock() == NetherLeavesBlocks.RUBEUS_LEAVES
-                || bState.getBlock() == NetherWoodBlocks.MAT_RUBEUS.getCone()
+                || bState.getBlock() == NetherBlocks.RUBEUS_LEAVES
+                || bState.getBlock() == NetherBlocks.MAT_RUBEUS.getCone()
         ) {
             if (state.canSurvive(world, pos)) {
                 BlocksHelper.setWithoutUpdate(world, pos, state);
@@ -424,8 +421,8 @@ public class RubeusTreeFeature extends NonOverlappingFeature<NaturalTreeConfigur
     private void setIfGroundOrAir(LevelAccessor world, BlockPos pos, BlockState state) {
         BlockState bState = world.getBlockState(pos);
         if (bState.isAir()
-                || bState.getBlock() == NetherLeavesBlocks.RUBEUS_LEAVES
-                || bState.getBlock() == NetherWoodBlocks.MAT_RUBEUS.getCone()
+                || bState.getBlock() == NetherBlocks.RUBEUS_LEAVES
+                || bState.getBlock() == NetherBlocks.MAT_RUBEUS.getCone()
                 || bState.canBeReplaced()
                 || BlocksHelper.isNetherGround(bState)) {
             if (state.canSurvive(world, pos)) {
