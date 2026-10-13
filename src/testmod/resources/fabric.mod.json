@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "betternether_testmod",
+  "version": "1.0.0",
+  "name": "BetterNether GameTests",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.betterx.betternether.gametest.BetterNetherGameTests"
+    ],
+    "fabric-gametest": [
+      "org.betterx.betternether.gametest.BetterNetherGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "*",
+    "betternether": "*",
+    "fabric-gametest-api-v1": "*"
+  }
+}
