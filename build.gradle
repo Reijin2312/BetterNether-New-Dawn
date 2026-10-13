@@ -81,6 +81,14 @@ sourceSets {
     }
 }
 
+sourceSets {
+    gametest {
+        java.srcDir 'src/gametest/java'
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += output + compileClasspath + sourceSets.main.runtimeClasspath
+    }
+}
+
 neoForge {
     version = project.neoforge_version
     accessTransformers = files("src/main/resources/META-INF/accesstransformer.cfg")
@@ -90,6 +98,10 @@ neoForge {
         }
         server {
             server()
+        }
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', modId
         }
         clientData {
             clientData()
@@ -105,6 +117,7 @@ neoForge {
     mods {
         "${modId}" {
             sourceSet sourceSets.main
+            sourceSet sourceSets.gametest
         }
     }
 }
@@ -500,6 +513,10 @@ tasks.matching { it.name == "runClient" || it.name == "runServer" }.configureEac
 
 tasks.matching { it.name == "createMinecraftArtifacts" }.configureEach {
     doNotTrackState("Work around Gradle 8.8 state tracking for moddev task outputs.")
+}
+
+tasks.named("compileGametestJava") {
+    dependsOn(tasks.named("fixMixinRefmap"))
 }
 
 jar {
