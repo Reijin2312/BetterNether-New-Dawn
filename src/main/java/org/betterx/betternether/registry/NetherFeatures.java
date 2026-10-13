@@ -29,18 +29,27 @@ import org.betterx.betternether.world.features.WillowBushFeature;
 import org.betterx.betternether.world.features.WillowTreeFeature;
 import org.betterx.betternether.world.features.configs.GloomwoodTreeConfiguration;
 import org.betterx.betternether.world.features.configs.NaturalTreeConfiguration;
+import org.betterx.betternether.world.structures.city.AvoidNetherCity;
 import org.betterx.betternether.world.structures.city.CityStructure;
 import org.betterx.wover.events.api.WorldLifecycle;
 import org.betterx.wover.feature.api.FeatureManager;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
 public class NetherFeatures {
+    public static final MapCodec<AvoidNetherCity> AVOID_NETHER_CITY = Registry.register(
+            BuiltInRegistries.PLACEMENT_MODIFIER_TYPE,
+            BN.id("avoid_nether_city"),
+            AvoidNetherCity.CODEC
+    );
+
     public static final JellyfishMushroomFeature JELLYFISH_MUSHROOM = register(
             BN.id("jellyfish_mushroom"), JellyfishMushroomFeature.CODEC, new JellyfishMushroomFeature());
     public static final CrystalFeature OBSIDIAN_CRYSTAL = register(
