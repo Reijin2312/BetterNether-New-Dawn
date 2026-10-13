@@ -31,6 +31,14 @@ def local_bclib = findProject(':BCLib') != null
 def local_wunderlib = findProject(':wunderlib') != null
 def local_wover = findProject(':WorldWeaver') != null
 
+sourceSets {
+    testmod {
+        compileClasspath += main.output + main.compileClasspath
+        // Never copy compile-only API jars (notably wthit-api) into the server runtime.
+        runtimeClasspath += output + main.runtimeClasspath
+    }
+}
+
 loom {
     accessWidenerPath = file("src/main/resources/betternether.accesswidener")
     runs {
@@ -44,6 +52,24 @@ loom {
             vmArg "-Dfabric-api.datagen.modid=betternether"
 
             runDir "build/datagen"
+        }
+        gametest {
+            server()
+            name "GameTest"
+            runDir "build/gametest"
+            vmArg "-Dfabric-api.gametest"
+            vmArg "-Dfabric-api.gametest.report-file=${file("build/gametest/report.xml")}"
+            source sourceSets.testmod
+            ideConfigGenerated true
+        }
+    }
+
+    mods {
+        betternether {
+            sourceSet sourceSets.main
+        }
+        betternether_testmod {
+            sourceSet sourceSets.testmod
         }
     }
 
@@ -100,6 +126,8 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-gametest-api-v1:2.0.4+6fc22b996a"
+    testmodImplementation sourceSets.main.output
 
     // https://mvnrepository.com/artifact/javax.annotation/jsr305
     compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'

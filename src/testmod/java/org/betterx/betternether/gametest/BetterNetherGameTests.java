@@ -1,0 +1,94 @@
+package org.betterx.betternether.gametest;
+
+import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.List;
+
+public final class BetterNetherGameTests implements FabricGameTest {
+    private static final BlockPos POS = new BlockPos(1, 1, 1);
+
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void correctedLootTablesProduceDrops(GameTestHelper helper) {
+        List<String> vines = List.of("black_vine", "blooming_vine", "gloomsculk_vine");
+        for (String id : List.of(
+                "black_vine", "blooming_vine", "gloomsculk_vine", "bone_cincinnasite_door",
+                "bone_reed_door", "gloomwood_transition_planks", "moss_cover",
+                "soul_lily_sapling", "whispering_gourd_lantern"
+        )) {
+            Block block = block(id);
+            helper.setBlock(POS, block.defaultBlockState());
+            List<ItemStack> drops = Block.getDrops(
+                    block.defaultBlockState(), helper.getLevel(), helper.absolutePos(POS), null, null,
+                    new ItemStack(vines.contains(id) ? Items.DIAMOND_HOE : Items.SHEARS)
+            );
+            helper.assertTrue(!drops.isEmpty(), id + " produced no drops through its live loot table");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void correctedVanillaAndModTagsAreLoaded(GameTestHelper helper) {
+        assertTagged(helper, "brick_pot", "minecraft", "flower_pots");
+        assertTagged(helper, "cincinnasite_pot", "minecraft", "flower_pots");
+        assertTagged(helper, "bone_button", "minecraft", "stone_buttons");
+        assertTagged(helper, "rubeus_bookshelf", "minecraft", "enchantment_power_provider");
+        assertTagged(helper, "rubeus_sapling", "minecraft", "washed_away_by_fluids");
+        helper.assertTrue(Blocks.CRIMSON_NYLIUM.defaultBlockState().is(tag("betternether", "nether_nylium")),
+                "vanilla crimson nylium is absent from BetterNether's soil tag");
+        helper.succeed();
+    }
+
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void rubeusLeavesUseVanillaDecayState(GameTestHelper helper) {
+        BlockState state = block("rubeus_leaves").defaultBlockState();
+        helper.assertTrue(state.hasProperty(LeavesBlock.DISTANCE), "Rubeus leaves have no vanilla distance property");
+        helper.assertTrue(state.hasProperty(LeavesBlock.PERSISTENT), "Rubeus leaves have no vanilla persistent property");
+        helper.assertTrue(state.isRandomlyTicking(), "Rubeus leaves cannot run vanilla decay ticks");
+        helper.succeed();
+    }
+
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void supportSensitivePlantsRejectAir(GameTestHelper helper) {
+        for (String id : List.of("red_mold", "potted_plant")) {
+            Block block = block(id);
+            helper.setBlock(POS.below(), Blocks.AIR);
+            helper.setBlock(POS, block.defaultBlockState());
+            helper.assertTrue(!block.defaultBlockState().canSurvive(helper.getLevel(), helper.absolutePos(POS)),
+                    id + " survives with no supporting block");
+        }
+        Block cone = block("rubeus_cone");
+        helper.setBlock(POS.above(), Blocks.AIR);
+        helper.setBlock(POS, cone.defaultBlockState());
+        helper.assertTrue(!cone.defaultBlockState().canSurvive(helper.getLevel(), helper.absolutePos(POS)),
+                "rubeus_cone survives with no ceiling support");
+        helper.succeed();
+    }
+
+    private static void assertTagged(GameTestHelper helper, String blockId, String namespace, String path) {
+        helper.assertTrue(block(blockId).defaultBlockState().is(tag(namespace, path)),
+                blockId + " is absent from #" + namespace + ":" + path);
+    }
+
+    private static TagKey<Block> tag(String namespace, String path) {
+        return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(namespace, path));
+    }
+
+    private static Block block(String path) {
+        Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("betternether", path));
+        if (block == Blocks.AIR) throw new IllegalStateException("Missing BetterNether block: " + path);
+        return block;
+    }
+}
