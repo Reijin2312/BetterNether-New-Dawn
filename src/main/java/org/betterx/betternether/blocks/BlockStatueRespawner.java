@@ -105,7 +105,7 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
                         pos.getZ() + world.getRandom().nextFloat(), 0, 0, 0
                 );
             if (!world.isClientSide()) {
-                player.sendOverlayMessage(Component.translatable("message.spawn_set", new Object[0]));
+                player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
                 ((ServerPlayer) player).setRespawnPosition(
                         new ServerPlayer.RespawnConfig(LevelData.RespawnData.of(world.dimension(), pos, player.getYHeadRot(), 0.0F), false),
                         false
@@ -114,8 +114,9 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
             player.playSound(SoundEvents.TOTEM_USE, 0.7F, 1.0F);
             return InteractionResult.SUCCESS;
         } else if (!world.isClientSide()) {
-            player.sendOverlayMessage(
-                    Component.translatable("message.spawn_help", requiredItemCountText, requiredItemNameText)
+            player.displayClientMessage(
+                    Component.translatable("message.spawn_help", requiredItemCountText, requiredItemNameText),
+                    true
             );
         }
         return InteractionResult.SUCCESS;
