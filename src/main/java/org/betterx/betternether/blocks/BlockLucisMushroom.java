@@ -41,6 +41,7 @@ public class BlockLucisMushroom extends BlockBaseNotFull implements AddMineableA
                 .sound(SoundType.WOOD)
                 .strength(1F)
         );
+        this.setRenderLayer(BNRenderLayer.CUTOUT);
         this.registerDefaultState(getStateDefinition().any()
                                                       .setValue(FACING, Direction.NORTH)
                                                       .setValue(SHAPE, EnumLucisShape.CORNER));

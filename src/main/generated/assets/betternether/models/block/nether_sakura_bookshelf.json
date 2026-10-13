@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "betternether:block/template/bookshelf",
   "textures": {
     "end": "betternether:block/nether_sakura_planks",
     "side": "betternether:block/nether_sakura_bookshelf"

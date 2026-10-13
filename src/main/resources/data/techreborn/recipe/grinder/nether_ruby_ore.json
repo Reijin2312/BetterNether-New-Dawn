@@ -10,12 +10,12 @@
   "time": 200,
   "ingredients": [
     {
-      "item": "betternether:nether_ruby_ore"
+      "ingredient": "betternether:nether_ruby_ore"
     }
   ],
-  "results": [
+  "outputs": [
     {
-      "item": "betternether:nether_ruby",
+      "id": "betternether:nether_ruby",
       "count": 2
     }
   ]

@@ -23,7 +23,70 @@
     },
     "minecraft:visual/fog_color": "#3ea93d",
     "minecraft:visual/sky_color": "#6eb1ff",
-    "minecraft:visual/water_fog_color": "#050533"
+    "minecraft:visual/water_fog_color": "#050533",
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {
+          "ambient": [
+            {
+              "type": "betternether:firefly",
+              "count": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 1,
+                "max_inclusive": 3
+              },
+              "weight": 5
+            },
+            {
+              "type": "betternether:hydrogen_jellyfish",
+              "count": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 2,
+                "max_inclusive": 6
+              },
+              "weight": 5
+            }
+          ],
+          "axolotls": [],
+          "creature": [],
+          "misc": [],
+          "monster": [
+            {
+              "type": "betternether:skull",
+              "count": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 2,
+                "max_inclusive": 4
+              },
+              "weight": 2
+            },
+            {
+              "type": "betternether:naga",
+              "count": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 3,
+                "max_inclusive": 5
+              },
+              "weight": 8
+            },
+            {
+              "type": "betternether:jungle_skeleton",
+              "count": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 2,
+                "max_inclusive": 4
+              },
+              "weight": 40
+            }
+          ],
+          "underground_water_creature": [],
+          "water_ambient": [],
+          "water_creature": []
+        }
+      },
+      "modifier": "overlay"
+    }
   },
   "carvers": "minecraft:nether_cave",
   "downfall": 0,
@@ -84,63 +147,5 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {},
-  "spawners": {
-    "ambient": [
-      {
-        "type": "betternether:firefly",
-        "count": {
-          "type": "minecraft:uniform",
-          "min_inclusive": 1,
-          "max_inclusive": 3
-        },
-        "weight": 5
-      },
-      {
-        "type": "betternether:hydrogen_jellyfish",
-        "count": {
-          "type": "minecraft:uniform",
-          "min_inclusive": 2,
-          "max_inclusive": 6
-        },
-        "weight": 5
-      }
-    ],
-    "axolotls": [],
-    "creature": [],
-    "misc": [],
-    "monster": [
-      {
-        "type": "betternether:skull",
-        "count": {
-          "type": "minecraft:uniform",
-          "min_inclusive": 2,
-          "max_inclusive": 4
-        },
-        "weight": 2
-      },
-      {
-        "type": "betternether:naga",
-        "count": {
-          "type": "minecraft:uniform",
-          "min_inclusive": 3,
-          "max_inclusive": 5
-        },
-        "weight": 8
-      },
-      {
-        "type": "betternether:jungle_skeleton",
-        "count": {
-          "type": "minecraft:uniform",
-          "min_inclusive": 2,
-          "max_inclusive": 4
-        },
-        "weight": 40
-      }
-    ],
-    "underground_water_creature": [],
-    "water_ambient": [],
-    "water_creature": []
-  },
   "temperature": 2
 }
