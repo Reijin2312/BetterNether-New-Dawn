@@ -94,7 +94,7 @@ public class BlockWartSeed extends BlockBaseNotFull implements BonemealableBlock
 
     @Override
     public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
-        return random.nextInt(8) == 0;
+        return random.nextFloat() < 0.45F;
     }
 
     @Override
