@@ -7,7 +7,6 @@ import org.betterx.betternether.world.structures.piece.CavePiece;
 import org.betterx.betternether.world.structures.piece.CityPiece;
 import com.mojang.datafixers.util.Either;
 import it.unimi.dsi.fastutil.longs.LongSet;
-import org.betterx.wover.feature.api.WriteZone;
 import org.betterx.wover.structure.api.StructureUtils;
 
 import net.minecraft.core.BlockPos;
@@ -158,8 +157,8 @@ public class CityStructure extends Structure {
      */
     public static boolean buildingsWithin(ServerLevelAccessor level, BlockPos origin, int reach) {
         return buildingsIntersect(level, origin, new BoundingBox(
-                origin.getX() - reach, level.getMinY(), origin.getZ() - reach,
-                origin.getX() + reach, level.getMaxY(), origin.getZ() + reach
+                origin.getX() - reach, level.getMinBuildHeight(), origin.getZ() - reach,
+                origin.getX() + reach, level.getMaxBuildHeight(), origin.getZ() + reach
         ));
     }
 
@@ -174,7 +173,7 @@ public class CityStructure extends Structure {
      * street.
      * <p>
      * The starts are collected from every chunk the feature can actually write into: {@code footprint}
-     * clipped to the {@link WriteZone} (the 3x3 chunks around the one being decorated). Reading only
+     * clipped to the chunks available to the current worldgen region. Reading only
      * {@code origin}'s own chunk was not enough. A chunk references a city only when the city's overall
      * box reaches it, and that box is the cave, which reaches just 8 blocks past the outermost building -
      * an anchor tree reaches up to 23. A tree a chunk outside the cave saw no city at all and grew into
@@ -203,17 +202,13 @@ public class CityStructure extends Structure {
      */
     public static boolean cityWithin(ServerLevelAccessor level, BlockPos origin, int reach) {
         return intersects(level, new BoundingBox(
-                origin.getX() - reach, level.getMinY(), origin.getZ() - reach,
-                origin.getX() + reach, level.getMaxY(), origin.getZ() + reach
+                origin.getX() - reach, level.getMinBuildHeight(), origin.getZ() - reach,
+                origin.getX() + reach, level.getMaxBuildHeight(), origin.getZ() + reach
         ), true);
     }
 
     private static boolean intersects(ServerLevelAccessor level, BoundingBox footprint, boolean includeCave) {
-        final WriteZone zone = WriteZone.of(level);
-        if (zone.isDisjoint(footprint.minX(), footprint.minZ(), footprint.maxX(), footprint.maxZ())) return false;
-        // Outside worldgen (a sapling, /place feature, a gametest) the zone is unbounded and this is the
-        // footprint itself.
-        final BoundingBox reachable = zone.clip(footprint);
+        final BoundingBox reachable = footprint;
 
         final Set<StructureStart> seen = Collections.newSetFromMap(new IdentityHashMap<>());
         final int minChunkX = SectionPos.blockToSectionCoord(reachable.minX());
@@ -222,19 +217,20 @@ public class CityStructure extends Structure {
         final int maxChunkZ = SectionPos.blockToSectionCoord(reachable.maxZ());
         for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++) {
             for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ++) {
+                if (level instanceof WorldGenRegion region && !region.hasChunk(chunkX, chunkZ)) continue;
                 final Map<Structure, LongSet> references = level
                         .getChunk(chunkX, chunkZ, ChunkStatus.STRUCTURE_REFERENCES)
                         .getAllReferences();
                 for (Map.Entry<Structure, LongSet> entry : references.entrySet()) {
                     if (!(entry.getKey() instanceof CityStructure)) continue;
                     for (long reference : entry.getValue()) {
-                        final ChunkPos startChunk = ChunkPos.unpack(reference);
+                        final ChunkPos startChunk = new ChunkPos(reference);
                         // A neighbour may reference a start one chunk further out than the region holds
                         // starts for; a city is far too small to reach the write zone from there.
-                        if (level instanceof WorldGenRegion region && !region.hasChunk(startChunk.x(), startChunk.z()))
+                        if (level instanceof WorldGenRegion region && !region.hasChunk(startChunk.x, startChunk.z))
                             continue;
                         final StructureStart start = level
-                                .getChunk(startChunk.x(), startChunk.z(), ChunkStatus.STRUCTURE_STARTS)
+                                .getChunk(startChunk.x, startChunk.z, ChunkStatus.STRUCTURE_STARTS)
                                 .getStartForStructure(entry.getKey());
                         if (start == null || !start.isValid() || !seen.add(start)) continue;
                         for (StructurePiece piece : start.getPieces()) {

@@ -16,6 +16,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
@@ -75,7 +76,7 @@ public class StructureAvoidingProcessor extends StructureProcessor {
             StructureManager structureManager,
             BoundingBox within
     ) {
-        final Registry<Structure> structures = world.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+        final Registry<Structure> structures = world.registryAccess().registryOrThrow(Registries.STRUCTURE);
 
         final List<BoundingBox> result = new ArrayList<>();
         final var chunkPos = new net.minecraft.world.level.ChunkPos(
@@ -97,9 +98,8 @@ public class StructureAvoidingProcessor extends StructureProcessor {
      * @return {@code true} if a city yields to {@code structure}, i.e. it is in {@link #AVOIDED}
      */
     public static boolean isAvoided(Registry<Structure> structures, Structure structure) {
-        return structures.getResourceKey(structure)
-                         .flatMap(structures::get)
-                         .map(holder -> holder.is(AVOIDED))
+        return structures.getTag(AVOIDED)
+                         .map(tag -> tag.stream().anyMatch(holder -> holder.value() == structure))
                          .orElse(false);
     }
 
