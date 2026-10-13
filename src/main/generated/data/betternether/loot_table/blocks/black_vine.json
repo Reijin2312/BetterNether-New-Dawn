@@ -8,11 +8,7 @@
           "name": "betternether:black_vine"
         }
       ],
-      "rolls": {
-        "type": "minecraft:uniform",
-        "max": 2,
-        "min": 1
-      },
+      "rolls": 1,
       "condition": {
         "type": "minecraft:any_of",
         "terms": [
