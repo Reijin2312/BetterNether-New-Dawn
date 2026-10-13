@@ -114,6 +114,12 @@ foreach ($repo in $repos) {
     Assert-Match $anchor 'buildingsWithin' $repo 'large trees avoid city buildings'
     $features = Read-Relative $root 'src/main/java/org/betterx/betternether/registry/NetherFeatures.java'
     Assert-Match $features 'AVOID_NETHER_CITY' $repo 'city-avoidance placement modifier is registered'
+    if ($repo -eq 'BetterNether-26.3') {
+        Assert-Match $features 'RegisterEvent' $repo '26.3 NeoForge placement modifier uses the mod registration event'
+        Assert-Match $features 'Registries\.PLACEMENT_MODIFIER_TYPE' $repo '26.3 NeoForge registers the placement modifier in the correct registry'
+        $entrypoint = Read-Relative $root 'src/main/java/org/betterx/betternether/BetterNether.java'
+        Assert-Match $entrypoint 'NetherFeatures::onRegister' $repo '26.3 NeoForge wires placement registration before registries freeze'
+    }
 
     $firefly = Read-Relative $root 'src/main/java/org/betterx/betternether/entity/EntityFirefly.java'
     Assert-Match $firefly 'ColorBlue' $repo 'legacy firefly blue component is read'
