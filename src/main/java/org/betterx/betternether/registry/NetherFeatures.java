@@ -26,6 +26,7 @@ import org.betterx.betternether.world.features.WartCapFeature;
 import org.betterx.betternether.world.features.WartTreeFeature;
 import org.betterx.betternether.world.features.WillowBushFeature;
 import org.betterx.betternether.world.features.WillowTreeFeature;
+import org.betterx.betternether.world.structures.city.AvoidNetherCity;
 import org.betterx.betternether.world.structures.city.CityStructure;
 import org.betterx.wover.events.api.WorldLifecycle;
 import org.betterx.wover.feature.api.FeatureManager;
@@ -37,10 +38,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 public class NetherFeatures {
+    public static PlacementModifierType<AvoidNetherCity> AVOID_NETHER_CITY;
     // ????? ????????? ?? ????? RegisterEvent, ?? ????????? ????????
     public static Feature<NoneFeatureConfiguration> JELLYFISH_MUSHROOM;
     public static Feature<NoneFeatureConfiguration> OBSIDIAN_CRYSTAL;
@@ -84,6 +87,16 @@ public class NetherFeatures {
     }
 
     public static void onRegister(RegisterEvent event) {
+        if (event.getRegistryKey().equals(Registries.PLACEMENT_MODIFIER_TYPE)) {
+            event.register(
+                    Registries.PLACEMENT_MODIFIER_TYPE,
+                    helper -> {
+                        AVOID_NETHER_CITY = () -> AvoidNetherCity.CODEC;
+                        helper.register(BN.id("avoid_nether_city"), AVOID_NETHER_CITY);
+                    }
+            );
+            return;
+        }
         if (!event.getRegistryKey().equals(Registries.FEATURE)) {
             return;
         }
