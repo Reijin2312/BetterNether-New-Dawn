@@ -5,6 +5,7 @@ import org.betterx.betternether.blocks.materials.Materials;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -28,7 +29,9 @@ public class BlockRubeusCone extends BlockBaseNotFull implements AddMineableAxe 
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-        return world.getBlockState(pos.above()).isFaceSturdy(world, pos.above(), Direction.DOWN);
+        BlockPos above = pos.above();
+        BlockState support = world.getBlockState(above);
+        return support.is(BlockTags.LEAVES) || support.isFaceSturdy(world, above, Direction.DOWN);
     }
 
     @Override
