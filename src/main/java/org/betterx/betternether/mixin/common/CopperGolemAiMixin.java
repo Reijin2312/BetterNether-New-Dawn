@@ -1,6 +1,6 @@
 package org.betterx.betternether.mixin.common;
 
-import de.ambertation.wover.tag.api.predefined.CommonBlockTags;
+import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.world.entity.animal.golem.CopperGolemAi;
 import net.minecraft.world.level.block.state.BlockState;
