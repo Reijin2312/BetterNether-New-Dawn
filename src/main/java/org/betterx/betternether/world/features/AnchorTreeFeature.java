@@ -486,7 +486,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
             double max = b.getY() - a.getY();
             if (max < 1) max = 1;
             for (int y = a.getY(); y <= b.getY(); y++)
-                cylinder(lerpCos(a, b, y, (y - a.getY()) / max), radius, MAX_HEIGHT, context);
+                cylinder(lerpCos(a, b, y, (y - a.getY()) / max), radius, level.getMinY(), MAX_HEIGHT, context);
         }
     }
 
@@ -523,7 +523,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
         return result;
     }
 
-    private void cylinder(BlockPos pos, double radius, final int MAX_HEIGHT, StructureGeneratorThreadContext context) {
+    private void cylinder(BlockPos pos, double radius, final int minY, final int MAX_HEIGHT, StructureGeneratorThreadContext context) {
         int x1 = MHelper.floor(pos.getX() - radius);
         int z1 = MHelper.floor(pos.getZ() - radius);
         int x2 = MHelper.floor(pos.getX() + radius + 1);
@@ -540,7 +540,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
                         x * 0.5,
                         pos.getY() * 0.5,
                         z * 0.5
-                ) * 0.25 + 0.75) && pos.getY() > 2 && pos.getY() < MAX_HEIGHT - 2)
+                ) * 0.25 + 0.75) && pos.getY() > minY + 2 && pos.getY() < MAX_HEIGHT - 2)
                     context.BLOCKS.add(new BlockPos(x, pos.getY(), z));
             }
         }
@@ -582,7 +582,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
             elem.add(end);
             result.add(elem);
 
-            if (findSurface && end.getY() > 2 && end.getY() < MAX_HEIGHT - 2) {
+            if (findSurface && end.getY() > level.getMinY() + 2 && end.getY() < MAX_HEIGHT - 2) {
                 int dist = length < 0
                         ? -BlocksHelper.downRay(level, end, Math.abs(length * 2))
                         : BlocksHelper.upRay(level, end, Math.abs(length * 2));

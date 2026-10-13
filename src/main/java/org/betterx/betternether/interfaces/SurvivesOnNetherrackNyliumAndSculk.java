@@ -1,6 +1,7 @@
 package org.betterx.betternether.interfaces;
 
 import org.betterx.bclib.interfaces.SurvivesOnTags;
+import org.betterx.betternether.registry.NetherTags;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.tags.BlockTags;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.List;
 
 public interface SurvivesOnNetherrackNyliumAndSculk extends SurvivesOnTags {
-    List<TagKey<Block>> TAGS = List.of(CommonBlockTags.NETHERRACK, BlockTags.NYLIUM, CommonBlockTags.SCULK_LIKE
+    List<TagKey<Block>> TAGS = List.of(CommonBlockTags.NETHERRACK, NetherTags.NETHER_NYLIUM, CommonBlockTags.SCULK_LIKE
     );
 
     @Override
