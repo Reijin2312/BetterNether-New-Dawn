@@ -2,7 +2,6 @@ package org.betterx.betternether.blocks;
 
 import org.betterx.bclib.behaviours.interfaces.BehaviourSapling;
 import org.betterx.bclib.blocks.FeatureSaplingBlock;
-import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.interfaces.SurvivesOnNetherGround;
 import org.betterx.betternether.registry.features.configured.NetherTrees;
 import org.betterx.wover.state.api.WorldState;

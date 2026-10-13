@@ -12,7 +12,6 @@ import org.betterx.wover.block.api.BlockProperties.TripleShape;
 import org.betterx.wover.feature.api.features.GrowableFeature;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;

@@ -3,7 +3,6 @@ package org.betterx.betternether.interfaces;
 import org.betterx.bclib.interfaces.SurvivesOnTags;
 import org.betterx.betternether.registry.NetherTags;
 
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
