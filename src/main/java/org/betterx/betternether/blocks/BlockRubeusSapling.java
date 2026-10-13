@@ -29,9 +29,7 @@ public class BlockRubeusSapling extends FeatureSaplingBlock implements Bonemeala
 
     @Override
     public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
-        return BlocksHelper.isFertile(world.getBlockState(pos.below()))
-                ? (random.nextInt(8) == 0)
-                : (random.nextInt(16) == 0);
+        return random.nextFloat() < 0.45F;
     }
 //
 //	@Override

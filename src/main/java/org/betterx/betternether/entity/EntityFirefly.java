@@ -186,12 +186,14 @@ public class EntityFirefly extends DespawnableAnimal {
     protected void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
 
-        int color = tag.getIntOr("color", -1);
-        if (color == -1) {
-            float r = tag.getFloatOr("ColorRed", 1.0F);
-            float g = tag.getFloatOr("ColorGreen", 1.0F);
-            float b = tag.getFloatOr("ColorBlue", 1.0F);
-            color = ColorUtil.color((int) (r * 0xFF), (int) (g * 0xFF), (int) (b * 0xFF));
+        int color = tag.getIntOr("color", this.entityData.get(COLOR));
+        if (!tag.getInt("color").isPresent()) {
+            float r = tag.getFloatOr("ColorRed", Float.NaN);
+            float g = tag.getFloatOr("ColorGreen", Float.NaN);
+            float b = tag.getFloatOr("ColorBlue", Float.NaN);
+            if (!Float.isNaN(r) && !Float.isNaN(g) && !Float.isNaN(b)) {
+                color = ColorUtil.color((int) (r * 0xFF), (int) (g * 0xFF), (int) (b * 0xFF));
+            }
         }
 
         this.entityData.set(COLOR, color);

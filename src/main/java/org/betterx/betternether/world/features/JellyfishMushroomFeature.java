@@ -1,5 +1,7 @@
 package org.betterx.betternether.world.features;
 
+import org.betterx.betternether.registry.NetherTags;
+
 import com.mojang.serialization.MapCodec;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.blocks.BNBlockProperties;
@@ -31,7 +33,7 @@ public class JellyfishMushroomFeature extends ContextFeature implements Growable
             int MAX_HEIGHT,
             StructureGeneratorThreadContext context
     ) {
-        if (world.isEmptyBlock(pos) && world.getBlockState(pos.below()).is(BlockTags.NYLIUM)) {
+        if (world.isEmptyBlock(pos) && world.getBlockState(pos.below()).is(NetherTags.NETHER_NYLIUM)) {
             growHere(world, pos, random);
             return true;
         }

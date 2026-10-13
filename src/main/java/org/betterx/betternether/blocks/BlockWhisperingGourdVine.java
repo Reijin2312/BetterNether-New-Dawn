@@ -10,16 +10,24 @@ import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -47,6 +55,23 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
     }
 
     @Override
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader level,
+            ScheduledTickAccess scheduledTickAccess,
+            BlockPos pos,
+            Direction direction,
+            BlockPos neighborPos,
+            BlockState neighborState,
+            RandomSource random
+    ) {
+        if (!canSurvive(state, level, pos)) return Blocks.AIR.defaultBlockState();
+        if (level.getBlockState(pos.below()).getBlock() != this) return makeBottomState(state);
+        if (state.getValue(SHAPE) == BlockProperties.TripleShape.BOTTOM) return makeTopState(state);
+        return state;
+    }
+
+    @Override
     public InteractionResult useItemOn(
             ItemStack itemStack,
             BlockState state,
@@ -56,28 +81,15 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
             InteractionHand hand,
             BlockHitResult hit
     ) {
-        ItemStack tool = player.getItemInHand(hand);
-        if (BaseShearsItem.isShear(tool) && state.getValue(SHAPE) == BlockProperties.TripleShape.MIDDLE) {
+        if (BaseShearsItem.isShear(itemStack) && state.getValue(SHAPE) == BlockProperties.TripleShape.MIDDLE) {
             if (!world.isClientSide()) {
-                BlocksHelper.setWithUpdate(world, pos, state.setValue(SHAPE, BlockProperties.TripleShape.BOTTOM));
-                world.addFreshEntity(new ItemEntity(
-                        world,
-                        pos.getX() + 0.5,
-                        pos.getY() + 0.5,
-                        pos.getZ() + 0.5,
-                        new ItemStack(
-                                NetherBlocks.WHISPERING_GOURD)
-                ));
-                if (world.getRandom().nextBoolean()) {
-                    world.addFreshEntity(new ItemEntity(
-                            world,
-                            pos.getX() + 0.5,
-                            pos.getY() + 0.5,
-                            pos.getZ() + 0.5,
-                            new ItemStack(NetherBlocks.WHISPERING_GOURD)
-                    ));
-                }
+                BlocksHelper.setWithUpdate(world, pos, makeTopState(state));
+                popResource(world, pos, new ItemStack(NetherBlocks.WHISPERING_GOURD, 1 + world.getRandom().nextInt(2)));
+                player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
+                itemStack.hurtAndBreak(1, player, hand);
+                world.gameEvent(player, GameEvent.SHEAR, pos);
             }
+            world.playSound(player, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
             return world.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         } else {
             return super.useItemOn(itemStack, state, world, pos, player, hand, hit);

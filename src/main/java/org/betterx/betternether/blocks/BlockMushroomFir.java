@@ -6,12 +6,12 @@ import org.betterx.betternether.registry.NetherBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -132,6 +132,12 @@ public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood 
             BlockState neighborState,
             RandomSource random
     ) {
-        return canSurvive(state, world, pos) ? state : Blocks.AIR.defaultBlockState();
+        if (!canSurvive(state, world, pos)) scheduledTickAccess.scheduleTick(pos, this, 1);
+        return state;
+    }
+
+    @Override
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!state.canSurvive(level, pos)) level.destroyBlock(pos, true);
     }
 }
