@@ -1,4 +1,4 @@
-param()
+param([switch]$Only1211)
 
 $ErrorActionPreference = 'Stop'
 $workspace = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
@@ -9,6 +9,7 @@ $repos = @(
     'BetterNether-26.2', 'BetterNether-Fabric-26.2',
     'BetterNether-26.3', 'BetterNether-Fabric-26.3'
 )
+if ($Only1211) { $repos = @('BetterNether', 'BetterNether-Fabric-1.21.1') }
 $failures = [System.Collections.Generic.List[string]]::new()
 $checks = 0
 
@@ -50,11 +51,15 @@ $lootFiles = @(
 )
 $vineLoot = @('black_vine', 'blooming_vine', 'gloomsculk_vine')
 $tagFiles = @(
-    'src/main/generated/data/minecraft/tags/block/buttons.json',
-    'src/main/generated/data/minecraft/tags/block/logs.json',
+    'src/main/generated/data/minecraft/tags/block/stone_buttons.json',
     'src/main/generated/data/minecraft/tags/block/flower_pots.json',
+    'src/main/generated/data/minecraft/tags/block/enchantment_power_provider.json',
     'src/main/generated/data/minecraft/tags/block/washed_away_by_fluids.json',
-    'src/main/generated/data/minecraft/tags/item/buttons.json'
+    'src/main/generated/data/minecraft/tags/item/stone_buttons.json',
+    'src/main/generated/data/betternether/tags/block/mushroom_fir_logs.json',
+    'src/main/generated/data/betternether/tags/block/stalagnate_logs.json',
+    'src/main/generated/data/betternether/tags/block/willow_logs.json',
+    'src/main/generated/data/betternether/tags/block/nether_nylium.json'
 )
 
 foreach ($repo in $repos) {
@@ -77,8 +82,13 @@ foreach ($repo in $repos) {
         Assert-Match $lootText '"rolls"\s*:\s*1(?:\.0)?' $repo "$vine loot rolls exactly once"
     }
     foreach ($tag in $tagFiles) {
-        $null = Assert-Json $root $tag $repo
+        $tagText = Assert-Json $root $tag $repo
+        Assert-Match $tagText 'betternether:' $repo "$tag contains BetterNether entries"
     }
+
+    $nyliumTag = Assert-Json $root 'src/main/generated/data/betternether/tags/block/nether_nylium.json' $repo
+    Assert-Match $nyliumTag 'minecraft:crimson_nylium' $repo 'BetterNether soil tag includes crimson nylium'
+    Assert-Match $nyliumTag 'minecraft:warped_nylium' $repo 'BetterNether soil tag includes warped nylium'
 
     $cityAvoids = Assert-Json $root 'src/main/resources/data/betternether/tags/worldgen/structure/city_avoids.json' $repo
     Assert-Match $cityAvoids 'minecraft:fortress' $repo 'cities yield to vanilla fortresses'
@@ -113,10 +123,12 @@ foreach ($repo in $repos) {
 
     foreach ($sapling in @(
         'BlockCommonSapling', 'BlockGiantMoldSapling', 'BlockGloomwoodSapling',
-        'BlockJellyfishMushroomSapling', 'BlockMushroomFirSapling', 'BlockRubeusSapling', 'BlockWartSeed'
+        'BlockJellyfishMushroomSapling', 'BlockMushroomFirSapling', 'BlockRubeusSapling',
+        'BlockWartSeed', 'BlockWillowSapling'
     )) {
         $saplingText = Read-Relative $root "src/main/java/org/betterx/betternether/blocks/$sapling.java"
         Assert-Match $saplingText 'isBonemealSuccess' $repo "$sapling has vanilla-like bonemeal probability"
+        Assert-Match $saplingText 'nextFloat\(\)\s*<\s*0\.4(?:5)?F' $repo "$sapling uses its intended vanilla-like bonemeal probability"
     }
 
     $eyeVine = Read-Relative $root 'src/main/java/org/betterx/betternether/blocks/BlockEyeVine.java'
@@ -149,6 +161,10 @@ foreach ($repo in $repos) {
         Assert-Match $model '"parent"\s*:\s*"betternether:block/feather_fern"' $repo "$modelName uses the correct model parent"
         Assert-Match $model '"particle"' $repo "$modelName defines a particle texture"
     }
+
+    $lang = Assert-Json $root 'src/main/resources/assets/betternether/lang/en_us.json' $repo
+    Assert-Match $lang '"block\.betternether\.quartz_glass_framed_light_blue"\s*:\s*"Light Blue Framed Quartz Glass"' $repo 'light-blue framed glass translation spacing'
+    Assert-Match $lang '"block\.betternether\.weeping_obsidian"\s*:\s*"Weeping Obsidian"' $repo 'weeping obsidian translation spacing'
 
     $is1211 = $repo -in @('BetterNether', 'BetterNether-Fabric-1.21.1')
     if (-not $is1211) {
