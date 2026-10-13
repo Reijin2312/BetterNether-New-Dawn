@@ -7,9 +7,6 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -23,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
  * {@code new PlayerModel(...)} in that lambda to mark armor models as "ignored". A replacement layer built from
  * our own lambda escaped that marker, so 3D Skin Layers attached its voxel skin meshes to the armor (#313).
  */
-@Environment(EnvType.CLIENT)
 @Mixin(AvatarRenderer.class)
 public abstract class PlayerArmorMixin {
     @ModifyArg(
