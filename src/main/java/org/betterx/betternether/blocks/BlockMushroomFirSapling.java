@@ -12,7 +12,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.state.BlockState;
 
 
@@ -30,7 +29,9 @@ public class BlockMushroomFirSapling extends FeatureSaplingBlock implements Bone
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
-        return random.nextFloat() < 0.45F;
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+        return BlocksHelper.isFertile(world.getBlockState(pos.below()))
+                ? (random.nextInt(8) == 0)
+                : (random.nextInt(16) == 0);
     }
 }
