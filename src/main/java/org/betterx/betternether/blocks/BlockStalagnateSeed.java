@@ -5,7 +5,7 @@ import org.betterx.bclib.blocks.FeatureSaplingBlock;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.interfaces.SurvivesOnNetherrack;
 import org.betterx.betternether.registry.features.configured.NetherTrees;
-import org.betterx.wover.feature.api.configured.FeatureKey;
+import org.betterx.wover.feature.api.configured.ConfiguredFeatureKey;
 import org.betterx.wover.state.api.WorldState;
 
 import net.minecraft.core.BlockPos;
@@ -18,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -69,14 +68,14 @@ public class BlockStalagnateSeed extends FeatureSaplingBlock implements Bonemeal
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
-        return super.isBonemealSuccess(world, random, pos, state, source) && hasRoomToGrow(world, pos, state);
-    }
-
-    private static boolean hasRoomToGrow(Level world, BlockPos pos, BlockState state) {
-        return growsDownward(state)
-                ? BlocksHelper.downRay(world, pos, MIN_LENGTH) > 0
-                : BlocksHelper.upRay(world, pos, MIN_LENGTH) > 0;
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+        if (super.isBonemealSuccess(world, random, pos, state)) {
+            if (growsDownward(state))
+                return BlocksHelper.downRay(world, pos, MIN_LENGTH) > 0;
+            else
+                return BlocksHelper.upRay(world, pos, MIN_LENGTH) > 0;
+        }
+        return false;
     }
 
     @Override
@@ -107,7 +106,7 @@ public class BlockStalagnateSeed extends FeatureSaplingBlock implements Bonemeal
             @NotNull RandomSource random
     ) {
         if (WorldState.registryAccess() == null) return false;
-        final FeatureKey<?> featureHolder;
+        final ConfiguredFeatureKey<?> featureHolder;
         if (growsDownward(state)) {
             featureHolder = NetherTrees.STALAGNATE_DOWN;
         } else {

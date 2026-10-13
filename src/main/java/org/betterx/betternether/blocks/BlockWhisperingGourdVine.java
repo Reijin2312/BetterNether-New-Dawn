@@ -10,24 +10,15 @@ import org.betterx.wover.loot.api.BlockLootProvider;
 import org.betterx.wover.loot.api.LootLookupProvider;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ScheduledTickAccess;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -35,8 +26,9 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
-import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.BlockHitResult;
 
 import org.jetbrains.annotations.NotNull;
@@ -55,23 +47,6 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
     }
 
     @Override
-    protected BlockState updateShape(
-            BlockState state,
-            LevelReader level,
-            ScheduledTickAccess scheduledTickAccess,
-            BlockPos pos,
-            Direction direction,
-            BlockPos neighborPos,
-            BlockState neighborState,
-            RandomSource random
-    ) {
-        if (!canSurvive(state, level, pos)) return Blocks.AIR.defaultBlockState();
-        if (level.getBlockState(pos.below()).getBlock() != this) return makeBottomState(state);
-        if (state.getValue(SHAPE) == BlockProperties.TripleShape.BOTTOM) return makeTopState(state);
-        return state;
-    }
-
-    @Override
     public InteractionResult useItemOn(
             ItemStack itemStack,
             BlockState state,
@@ -81,15 +56,28 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
             InteractionHand hand,
             BlockHitResult hit
     ) {
-        if (BaseShearsItem.isShear(itemStack) && state.getValue(SHAPE) == BlockProperties.TripleShape.MIDDLE) {
+        ItemStack tool = player.getItemInHand(hand);
+        if (BaseShearsItem.isShear(tool) && state.getValue(SHAPE) == BlockProperties.TripleShape.MIDDLE) {
             if (!world.isClientSide()) {
-                BlocksHelper.setWithUpdate(world, pos, makeTopState(state));
-                popResource(world, pos, new ItemStack(NetherBlocks.WHISPERING_GOURD, 1 + world.getRandom().nextInt(2)));
-                player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
-                itemStack.hurtAndBreak(1, player, hand);
-                world.gameEvent(player, GameEvent.SHEAR, pos);
+                BlocksHelper.setWithUpdate(world, pos, state.setValue(SHAPE, BlockProperties.TripleShape.BOTTOM));
+                world.addFreshEntity(new ItemEntity(
+                        world,
+                        pos.getX() + 0.5,
+                        pos.getY() + 0.5,
+                        pos.getZ() + 0.5,
+                        new ItemStack(
+                                NetherBlocks.WHISPERING_GOURD)
+                ));
+                if (world.getRandom().nextBoolean()) {
+                    world.addFreshEntity(new ItemEntity(
+                            world,
+                            pos.getX() + 0.5,
+                            pos.getY() + 0.5,
+                            pos.getZ() + 0.5,
+                            new ItemStack(NetherBlocks.WHISPERING_GOURD)
+                    ));
+                }
             }
-            world.playSound(player, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
             return world.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         } else {
             return super.useItemOn(itemStack, state, world, pos, player, hand, hit);
@@ -102,20 +90,20 @@ public class BlockWhisperingGourdVine extends BaseVineBlock.Growing implements B
             @NotNull LootLookupProvider provider,
             @NotNull ResourceKey<LootTable> tableKey
     ) {
-        var fruityState = MatchBlock.blockMatches(
-                provider.getProvider().lookupOrThrow(Registries.BLOCK),
-                this,
-                net.minecraft.advancements.predicates.StatePropertiesPredicate.Builder.properties()
+        var fruityState = LootItemBlockStatePropertyCondition
+                .hasBlockStateProperties(this)
+                .setProperties(net.minecraft.advancements.predicates.StatePropertiesPredicate.Builder
+                        .properties()
                         .hasProperty(SHAPE, BlockProperties.TripleShape.TOP))
                 .invert();
 
 
         return LootTable.lootTable().withPool(LootPool
                 .lootPool()
-                .setRolls(ContextIntProviders.exactly(1))
+                .setRolls(ConstantValue.exactly(1.0F))
                 .add(LootItem.lootTableItem(NetherBlocks.WHISPERING_GOURD.asItem())
                              .when(fruityState.and(provider.shearsOrSilkTouchCondition()))
-                             .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 2)))
+                             .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2)))
                              .otherwise(LootItem.lootTableItem(this.asItem())
                                                 .when(ExplosionCondition.survivesExplosion())
                                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(provider.fortune(), LootLookupProvider.VANILLA_LEAVES_SAPLING_CHANCES))

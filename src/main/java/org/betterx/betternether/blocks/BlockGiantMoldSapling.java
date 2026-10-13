@@ -15,7 +15,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
@@ -61,28 +60,26 @@ public class BlockGiantMoldSapling extends BlockBaseNotFull implements Bonemeala
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state, BonemealSource source) {
+    public boolean isValidBonemealTarget(LevelReader world, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
-        return random.nextFloat() < 0.4F;
-    }
-
-    private void grow(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
-        NetherTrees.GIANT_MOLD.placeInWorld(WorldState.registryAccess(), world, pos, random);
+    public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
+        return BlocksHelper.isFertile(world.getBlockState(pos.below()))
+                ? (random.nextInt(8) == 0)
+                : (random.nextInt(16) == 0);
     }
 
     @Override
-    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
-        grow(world, random, pos, state);
+    public void performBonemeal(ServerLevel world, RandomSource random, BlockPos pos, BlockState state) {
+        NetherTrees.GIANT_MOLD.placeInWorld(WorldState.registryAccess(), world, pos, random);
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state, world, pos, random);
-        if (BlocksHelper.isFertile(world.getBlockState(pos.below())) ? random.nextInt(8) == 0 : random.nextInt(16) == 0)
-            grow(world, random, pos, state);
+        if (isBonemealSuccess(world, random, pos, state))
+            performBonemeal(world, random, pos, state);
     }
 }
