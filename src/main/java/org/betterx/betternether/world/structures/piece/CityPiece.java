@@ -3,6 +3,7 @@ package org.betterx.betternether.world.structures.piece;
 import org.betterx.betternether.BlocksHelper;
 import org.betterx.betternether.registry.NetherStructurePieces;
 import org.betterx.betternether.world.structures.city.BuildingStructureProcessor;
+import org.betterx.betternether.world.structures.city.StructureAvoidingProcessor;
 import org.betterx.betternether.world.structures.city.StructureCityBuilding;
 import org.betterx.betternether.world.structures.city.palette.CityPalette;
 import org.betterx.betternether.world.structures.city.palette.Palettes;
@@ -95,7 +96,10 @@ public class CityPiece extends CustomPiece {
         int cmaxY = Math.min(clamped.maxY(), blockBox.maxY());
         clamped = new BoundingBox(cminX, cminY, cminZ, cmaxX, cmaxY, cmaxZ);
 
-        building.placeInChunk(world, pos, clamped, paletteProcessor);
+        final StructureAvoidingProcessor avoiding = new StructureAvoidingProcessor(
+                StructureAvoidingProcessor.collect(world, arg, clamped)
+        );
+        building.placeInChunk(world, pos, clamped, paletteProcessor, avoiding);
 
         ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
 
@@ -110,6 +114,7 @@ public class CityPiece extends CustomPiece {
                 if (!state.isAir() && state.isCollisionShapeFullBlock(world, POS)) {
                     for (int y = clamped.minY() - 1; y > 4; y--) {
                         POS.setY(y);
+                        if (avoiding.claimed(POS)) continue;
                         BlocksHelper.setWithoutUpdate(world, POS, state);
                         if (BlocksHelper.isNetherGroundMagma(world.getBlockState(POS.below())))
                             break;
