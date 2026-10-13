@@ -70,13 +70,13 @@ public class BlockStalagnateSeed extends FeatureSaplingBlock implements Bonemeal
 
     @Override
     public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
-        if (super.isBonemealSuccess(world, random, pos, state, source)) {
-            if (growsDownward(state))
-                return BlocksHelper.downRay(world, pos, MIN_LENGTH) > 0;
-            else
-                return BlocksHelper.upRay(world, pos, MIN_LENGTH) > 0;
-        }
-        return false;
+        return super.isBonemealSuccess(world, random, pos, state, source) && hasRoomToGrow(world, pos, state);
+    }
+
+    private static boolean hasRoomToGrow(Level world, BlockPos pos, BlockState state) {
+        return growsDownward(state)
+                ? BlocksHelper.downRay(world, pos, MIN_LENGTH) > 0
+                : BlocksHelper.upRay(world, pos, MIN_LENGTH) > 0;
     }
 
     @Override
