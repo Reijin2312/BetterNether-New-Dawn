@@ -36,19 +36,16 @@ import org.betterx.wover.feature.api.FeatureManager;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
+import net.neoforged.neoforge.registries.RegisterEvent;
+
 public class NetherFeatures {
-    public static final MapCodec<AvoidNetherCity> AVOID_NETHER_CITY = Registry.register(
-            BuiltInRegistries.PLACEMENT_MODIFIER_TYPE,
-            BN.id("avoid_nether_city"),
-            AvoidNetherCity.CODEC
-    );
+    public static final MapCodec<AvoidNetherCity> AVOID_NETHER_CITY = AvoidNetherCity.CODEC;
 
     public static final JellyfishMushroomFeature JELLYFISH_MUSHROOM = register(
             BN.id("jellyfish_mushroom"), JellyfishMushroomFeature.CODEC, new JellyfishMushroomFeature());
@@ -113,6 +110,15 @@ public class NetherFeatures {
                 .feature(NetherOresPlaced.NETHER_RUBY_ORE_RARE)
                 .feature(NetherOresPlaced.NETHER_LAPIS_ORE)
                 .feature(NetherOresPlaced.NETHER_REDSTONE_ORE);
+    }
+
+    public static void onRegister(RegisterEvent event) {
+        if (event.getRegistryKey().equals(Registries.PLACEMENT_MODIFIER_TYPE)) {
+            event.register(
+                    Registries.PLACEMENT_MODIFIER_TYPE,
+                    helper -> helper.register(BN.id("avoid_nether_city"), AVOID_NETHER_CITY)
+            );
+        }
     }
 
     public static void register() {

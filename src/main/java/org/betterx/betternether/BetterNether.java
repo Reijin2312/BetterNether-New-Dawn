@@ -44,6 +44,7 @@ public class BetterNether {
         modBus.addListener(RegisterEvent.class, NetherEntities::onRegister);
         modBus.addListener(RegisterEvent.class, NetherParticles::onRegister);
         modBus.addListener(RegisterEvent.class, NetherPoiTypes::onRegister);
+        modBus.addListener(RegisterEvent.class, NetherFeatures::onRegister);
         modBus.addListener(net.neoforged.neoforge.registries.RegisterEvent.class, BlockEntitiesRegistry::register);
         modBus.addListener(RegisterEvent.class, this::ensureBlocksLoaded);
         modBus.addListener(RegisterEvent.class, this::ensureItemsLoaded);
