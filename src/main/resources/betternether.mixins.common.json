@@ -9,6 +9,7 @@
     "BlockBehaviourPropertiesAccessor",
     "BlockBehaviourMixin",
     "CraftingScreenHandlerMixin",
+    "CopperGolemAiMixin",
     "DeltaFeatureMixin",
     "FlatLevelGeneratorPresetsMixin",
     "LightningRodBlockMixin",
