@@ -76,9 +76,7 @@ abstract class BaseBlockCommonSapling extends BlockBaseNotFull implements Boneme
 
     @Override
     public boolean isBonemealSuccess(Level world, RandomSource random, BlockPos pos, BlockState state) {
-        return BlocksHelper.isFertile(world.getBlockState(pos.below()))
-                ? (random.nextBoolean())
-                : (random.nextInt(4) == 0);
+        return random.nextFloat() < 0.45F;
     }
 
     protected boolean canGrowTerrain(Level world, RandomSource random, BlockPos pos, BlockState state) {

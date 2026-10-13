@@ -21,6 +21,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Collections;
@@ -56,8 +57,22 @@ public class BlockPottedPlant extends BlockBaseNotFull implements AddMineableHoe
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
         Block block = state.getValue(PLANT).getBlock();
-        Vec3 vec3d = block.defaultBlockState().getOffset(view, pos);
-        return block.getShape(block.defaultBlockState(), view, pos, ePos).move(-vec3d.x, -0.5 - vec3d.y, -vec3d.z);
+        BlockState plantState = block.defaultBlockState();
+        Vec3 vec3d = plantState.getOffset(view, pos);
+        return Shapes.or(
+                Shapes.block(),
+                plantState.getShape(view, pos, ePos).move(-vec3d.x, -0.5 - vec3d.y, -vec3d.z)
+        );
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext context) {
+        return Shapes.block();
+    }
+
+    @Override
+    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter view, BlockPos pos) {
+        return Shapes.empty();
     }
 
     @Override

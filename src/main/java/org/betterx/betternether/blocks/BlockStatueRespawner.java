@@ -106,13 +106,13 @@ public class BlockStatueRespawner extends BlockBaseNotFull implements BehaviourM
                         pos.getY() + y + world.random.nextFloat() * 0.2,
                         pos.getZ() + world.random.nextFloat(), 0, 0, 0
                 );
-            player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
             if (!world.isClientSide) {
+                player.displayClientMessage(Component.translatable("message.spawn_set", new Object[0]), true);
                 ((ServerPlayer) player).setRespawnPosition(world.dimension(), pos, player.getYHeadRot(), true, false);
             }
             player.playSound(SoundEvents.TOTEM_USE, 0.7F, 1.0F);
             return InteractionResult.SUCCESS;
-        } else {
+        } else if (!world.isClientSide) {
             player.displayClientMessage(
                     Component.translatable("message.spawn_help", requiredItemCountText, requiredItemNameText),
                     true
