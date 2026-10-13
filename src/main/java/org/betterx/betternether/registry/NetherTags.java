@@ -17,6 +17,7 @@ public class NetherTags {
     public static final TagKey<Item> SOUL_GROUND_ITEM = TagManager.ITEMS.makeTag(BetterNether.C, "soul_ground");
 
     public static final TagKey<Block> NETHER_FARMLAND = TagManager.BLOCKS.makeTag(BetterNether.C, "nether_farmland");
+    public static final TagKey<Block> NETHER_NYLIUM = TagManager.BLOCKS.makeTag(BetterNether.C, "nether_nylium");
 
 
     public static final TagKey<Block> NETHER_SAND = TagManager.BLOCKS.makeTag(BetterNether.C, "nether_sand");
