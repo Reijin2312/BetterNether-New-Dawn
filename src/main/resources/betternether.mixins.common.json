@@ -9,6 +9,7 @@
     "BlockBehaviourPropertiesAccessor",
     "BlockBehaviourMixin",
     "BrewingRecipeRegistryMixin",
+    "CopperGolemAiMixin",
     "CraftingScreenHandlerMixin",
     "DeltaFeatureMixin",
     "LightningRodBlockMixin",
