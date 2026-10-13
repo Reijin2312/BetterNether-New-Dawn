@@ -3,12 +3,19 @@ package org.betterx.betternether.registry;
 import org.betterx.betternether.BetterNether;
 import org.betterx.wover.tag.api.TagManager;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class NetherTags {
+    public static final TagKey<Structure> CITY_AVOIDS = TagKey.create(
+            Registries.STRUCTURE,
+            BetterNether.C.id("city_avoids")
+    );
+
     public static final TagKey<Biome> BETTER_NETHER_DECORATIONS = TagManager.BIOMES.makeStructureTag(
             BetterNether.C,
             "nether_decorations"
