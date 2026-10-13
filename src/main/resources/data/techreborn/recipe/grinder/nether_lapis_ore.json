@@ -12,12 +12,12 @@
   "time": 200,
   "ingredients": [
     {
-      "item": "betternether:nether_lapis_ore"
+      "ingredient": "betternether:nether_lapis_ore"
     }
   ],
-  "results": [
+  "outputs": [
     {
-      "item": "betternether:lapis_pile",
+      "id": "betternether:lapis_pile",
       "count": 5
     }
   ]

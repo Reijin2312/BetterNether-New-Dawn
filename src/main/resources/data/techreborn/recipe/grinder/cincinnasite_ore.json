@@ -12,12 +12,12 @@
   "time": 200,
   "ingredients": [
     {
-      "item": "betternether:cincinnasite_ore"
+      "ingredient": "betternether:cincinnasite_ore"
     }
   ],
-  "results": [
+  "outputs": [
     {
-      "item": "betternether:cincinnasite",
+      "id": "betternether:cincinnasite",
       "count": 2
     }
   ]
