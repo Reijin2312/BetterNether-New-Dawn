@@ -29,6 +29,7 @@ public final class BetterNetherGameTests implements FabricGameTest {
                 "soul_lily_sapling", "whispering_gourd_lantern"
         )) {
             Block block = block(id);
+            helper.setBlock(POS.below(), Blocks.NETHERRACK);
             helper.setBlock(POS, block.defaultBlockState());
             List<ItemStack> drops = Block.getDrops(
                     block.defaultBlockState(), helper.getLevel(), helper.absolutePos(POS), null, null,
