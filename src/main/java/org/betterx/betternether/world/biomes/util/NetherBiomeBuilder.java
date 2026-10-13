@@ -33,6 +33,8 @@ import net.minecraft.world.level.levelgen.VerticalAnchor;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public class NetherBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuilder<NetherBiomeBuilder> {
 
     protected NetherBiomeBuilder(
@@ -132,7 +134,7 @@ public class NetherBiomeBuilder extends WoverBiomeBuilder.AbstractWoverBiomeBuil
 
     public static <C extends NetherBiomeConfig> NetherBiomeKey<C> createKey(@NotNull String name) {
         return new NetherBiomeKey<>(BetterNether.C.id(name.replace(' ', '_')
-                                                          .toLowerCase()));
+                                                          .toLowerCase(Locale.ROOT)));
     }
 
     @Override
