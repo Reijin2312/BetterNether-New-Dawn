@@ -134,7 +134,7 @@ public class BlockMushroomFir extends BlockBaseNotFull implements BehaviourWood 
             BlockPos pos,
             BlockPos neighborPos
     ) {
-        if (!canSurvive(state, world, pos)) scheduledTickAccess.scheduleTick(pos, this, 1);
+        if (!canSurvive(state, world, pos)) world.scheduleTick(pos, this, 1);
         return state;
     }
 
