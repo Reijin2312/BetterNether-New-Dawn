@@ -6,6 +6,7 @@ import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
@@ -62,7 +63,7 @@ public class RubyFire {
             if (FIRE_CONVERSIONS.isEmpty()) buildConversionTable(level);
 
             boolean didConvert = false;
-            int xpDrop = 0;
+            float xpDrop = 0;
             try {
                 final List<ItemStack> drops = Block.getDrops(brokenBlock, level, blockPos, null, player, breakingItem);
                 convertedDrops.get().clear();
@@ -72,11 +73,8 @@ public class RubyFire {
                     BlastingRecipe result = resultHolder != null ? resultHolder.value() : null;
                     if (result != null) {
                         didConvert = true;
-                        final ItemStack resultStack = result.assemble(
-                                new SingleRecipeInput(stack),
-                                level.registryAccess()
-                        );
-                        xpDrop += result.experience();
+                        final ItemStack resultStack = result.assemble(new SingleRecipeInput(stack));
+                        xpDrop += result.experience() * stack.getCount();
                         convertedDrops.get()
                                       .add(new ItemStack(
                                               resultStack.getItem(),
@@ -84,6 +82,21 @@ public class RubyFire {
                                       ));
                     } else {
                         convertedDrops.get().add(stack);
+                    }
+                }
+
+                if (!didConvert && !drops.isEmpty() && brokenBlock.is(CommonBlockTags.ORES)) {
+                    RecipeHolder<BlastingRecipe> oreHolder = FIRE_CONVERSIONS.get(brokenBlock.getBlock().asItem());
+                    if (oreHolder != null) {
+                        ItemStack resultStack = oreHolder.value().assemble(
+                                new SingleRecipeInput(new ItemStack(brokenBlock.getBlock()))
+                        );
+                        if (!resultStack.isEmpty() && drops.stream().noneMatch(drop -> drop.is(resultStack.getItem()))) {
+                            didConvert = true;
+                            xpDrop = oreHolder.value().experience();
+                            convertedDrops.get().clear();
+                            convertedDrops.get().add(resultStack);
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -105,9 +118,12 @@ public class RubyFire {
         return false;
     }
 
-    private static void popExperience(ServerLevel level, BlockPos blockPos, int amount) {
+    private static void popExperience(ServerLevel level, BlockPos blockPos, float amount) {
         if (level.getGameRules().get(GameRules.BLOCK_DROPS)) {
-            ExperienceOrb.award(level, Vec3.atCenterOf(blockPos), amount);
+            int xp = Mth.floor(amount);
+            float fraction = Mth.frac(amount);
+            if (fraction != 0.0F && level.getRandom().nextFloat() < fraction) xp++;
+            if (xp > 0) ExperienceOrb.award(level, Vec3.atCenterOf(blockPos), xp);
         }
     }
 
