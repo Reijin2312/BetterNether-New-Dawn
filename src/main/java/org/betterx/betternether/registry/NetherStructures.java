@@ -14,7 +14,7 @@ public class NetherStructures {
     // Nether City
     public static final StructureKey.Simple<CityStructure> CITY_STRUCTURE = StructureManager
             .structure(BetterNether.C.id("nether_city"), CityStructure::new)
-            .step(GenerationStep.Decoration.SURFACE_STRUCTURES);
+            .step(GenerationStep.Decoration.FLUID_SPRINGS);
 
     public static final StructureKey.Simple<Pyramids> PYRAMIDS = StructureManager
             .structure(BetterNether.C.id("pyramid"), Pyramids::new, Pyramids.CODEC)
