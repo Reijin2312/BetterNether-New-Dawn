@@ -4,18 +4,52 @@ import org.betterx.betternether.BN;
 import org.betterx.betternether.registry.features.placed.NetherOresPlaced;
 import org.betterx.betternether.world.biomes.util.NetherBiomeBuilder;
 import org.betterx.betternether.world.features.*;
+import org.betterx.betternether.world.features.AnchorTreeBranchFeature;
+import org.betterx.betternether.world.features.AnchorTreeFeature;
+import org.betterx.betternether.world.features.AnchorTreeRootFeature;
+import org.betterx.betternether.world.features.BigBrownMushroomFeature;
+import org.betterx.betternether.world.features.CavesFeature;
+import org.betterx.betternether.world.features.CrystalFeature;
+import org.betterx.betternether.world.features.GloomwoodTreeFeature;
+import org.betterx.betternether.world.features.JellyfishMushroomFeature;
+import org.betterx.betternether.world.features.LucisFeature;
+import org.betterx.betternether.world.features.MushroomFirFeature;
+import org.betterx.betternether.world.features.NetherSakuraBushFeature;
+import org.betterx.betternether.world.features.NetherSakuraFeature;
+import org.betterx.betternether.world.features.OldWillowTree;
+import org.betterx.betternether.world.features.PathsFeature;
+import org.betterx.betternether.world.features.RubeusBushFeature;
+import org.betterx.betternether.world.features.RubeusTreeFeature;
+import org.betterx.betternether.world.features.SoulLilyFeature;
+import org.betterx.betternether.world.features.TwistedVinesFeature;
+import org.betterx.betternether.world.features.WartBushFeature;
+import org.betterx.betternether.world.features.WartCapFeature;
+import org.betterx.betternether.world.features.WartTreeFeature;
+import org.betterx.betternether.world.features.WillowBushFeature;
+import org.betterx.betternether.world.features.WillowTreeFeature;
+import org.betterx.betternether.world.structures.city.AvoidNetherCity;
 import org.betterx.betternether.world.structures.city.CityStructure;
 import org.betterx.wover.events.api.WorldLifecycle;
 import org.betterx.wover.feature.api.FeatureManager;
 
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 public class NetherFeatures {
+    // Будут заполнены во время RegisterEvent, до заморозки реестров
+    public static final PlacementModifierType<AvoidNetherCity> AVOID_NETHER_CITY = Registry.register(
+            BuiltInRegistries.PLACEMENT_MODIFIER_TYPE,
+            BN.id("avoid_nether_city"),
+            () -> AvoidNetherCity.CODEC
+    );
+    // ????? ????????? ?? ????? RegisterEvent, ?? ????????? ????????
     public static Feature<NoneFeatureConfiguration> JELLYFISH_MUSHROOM;
     public static Feature<NoneFeatureConfiguration> OBSIDIAN_CRYSTAL;
     public static Feature<NoneFeatureConfiguration> WART_BUSH;
@@ -57,7 +91,6 @@ public class NetherFeatures {
                 .feature(NetherOresPlaced.NETHER_LAPIS_ORE)
                 .feature(NetherOresPlaced.NETHER_REDSTONE_ORE);
     }
-
 
     public static void register() {
         if (registered) return;

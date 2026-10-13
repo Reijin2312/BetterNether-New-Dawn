@@ -6,6 +6,7 @@ import org.betterx.betternether.blocks.BlockPlantWall;
 import org.betterx.betternether.noise.OpenSimplexNoise;
 import org.betterx.betternether.registry.NetherBlocks;
 import org.betterx.betternether.world.structures.StructureGeneratorThreadContext;
+import org.betterx.betternether.world.structures.city.CityStructure;
 import org.betterx.betternether.world.structures.plants.LegacyStructureAnchorTree;
 import org.betterx.wover.feature.api.features.GrowableFeature;
 
@@ -66,6 +67,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
      * stump. The scale is pinned here; the Y bound keeps coming from the real generator depth.
      */
     private static final int SHAPED_FOR_DEPTH = 128;
+    private static final int CITY_CLEARANCE = 16 + 7;
 
     private static int toMiddle(int val) {
 
@@ -84,7 +86,7 @@ public class AnchorTreeFeature extends ContextFeature<NoneFeatureConfiguration> 
         pos = new BlockPos(toMiddle(pos.getX()), pos.getY(), toMiddle(pos.getZ()));
 
         BlockPos down = pos.below(BlocksHelper.downRay(world, pos, MAX_HEIGHT));
-        if (canGenerate(pos)) {
+        if (canGenerate(pos) && !CityStructure.buildingsWithin(world, pos, CITY_CLEARANCE)) {
             // Result deliberately dropped: this returned an unconditional true before, and worldgen keeps
             // it that way. Propagating the real outcome cannot move a block - the placement pipeline only
             // accumulates it into a "placed anything" flag - but the willow crown taught that reasoning of
