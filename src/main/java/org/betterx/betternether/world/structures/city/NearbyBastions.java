@@ -52,11 +52,11 @@ public final class NearbyBastions {
         final long seed = context.seed();
         final int spacing = placement.spacing();
         final List<Structure.GenerationStub> result = new ArrayList<>(1);
-        for (int gx = Math.floorDiv(center.x() - range, spacing); gx <= Math.floorDiv(center.x() + range, spacing); gx++) {
-            for (int gz = Math.floorDiv(center.z() - range, spacing); gz <= Math.floorDiv(center.z() + range, spacing); gz++) {
+        for (int gx = Math.floorDiv(center.x - range, spacing); gx <= Math.floorDiv(center.x + range, spacing); gx++) {
+            for (int gz = Math.floorDiv(center.z - range, spacing); gz <= Math.floorDiv(center.z + range, spacing); gz++) {
                 final ChunkPos start = placement.getPotentialStructureChunk(seed, gx * spacing, gz * spacing);
-                if (Math.abs(start.x() - center.x()) > range || Math.abs(start.z() - center.z()) > range) continue;
-                if (!placement.applyAdditionalChunkRestrictions(start.x(), start.z(), seed)) continue;
+                if (Math.abs(start.x - center.x) > range || Math.abs(start.z - center.z) > range) continue;
+                if (!placement.applyAdditionalChunkRestrictions(start.x, start.z, seed)) continue;
                 final Selected selected = selectedAt(context, set, start);
                 if (selected != null && selected.structure.is(key -> key.identifier().equals(BASTION))) {
                     result.add(selected.stub);
@@ -76,7 +76,7 @@ public final class NearbyBastions {
     public static Selected selectedAt(Structure.GenerationContext context, StructureSet set, ChunkPos start) {
         final List<StructureSet.StructureSelectionEntry> options = new ArrayList<>(set.structures());
         final WorldgenRandom random = new WorldgenRandom(new LegacyRandomSource(0L));
-        random.setLargeFeatureSeed(context.seed(), start.x(), start.z());
+        random.setLargeFeatureSeed(context.seed(), start.x, start.z);
         int total = 0;
         for (StructureSet.StructureSelectionEntry option : options) total += option.weight();
 

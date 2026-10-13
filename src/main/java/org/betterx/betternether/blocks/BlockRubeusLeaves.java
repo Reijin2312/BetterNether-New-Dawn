@@ -12,8 +12,11 @@ import net.minecraft.world.level.block.TintedParticleLeavesBlock;
  * unaffected.
  */
 public class BlockRubeusLeaves extends TintedParticleLeavesBlock {
-    public BlockRubeusLeaves(Block sapling, Properties settings) {
+    public BlockRubeusLeaves(Block sapling) {
         // sapling no longer tracked by the vanilla leaves block in 1.21.6
-        super(0.01F, settings);
+        super(0.01F, org.betterx.bclib.behaviours.BehaviourBuilders.createLeaves(
+                net.minecraft.world.level.material.MapColor.COLOR_LIGHT_BLUE,
+                false
+        ).noOcclusion());
     }
 }

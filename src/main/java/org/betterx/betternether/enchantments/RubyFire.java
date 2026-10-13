@@ -73,7 +73,10 @@ public class RubyFire {
                     BlastingRecipe result = resultHolder != null ? resultHolder.value() : null;
                     if (result != null) {
                         didConvert = true;
-                        final ItemStack resultStack = result.assemble(new SingleRecipeInput(stack));
+                        final ItemStack resultStack = result.assemble(
+                                new SingleRecipeInput(stack),
+                                level.registryAccess()
+                        );
                         xpDrop += result.experience() * stack.getCount();
                         convertedDrops.get()
                                       .add(new ItemStack(
@@ -89,7 +92,8 @@ public class RubyFire {
                     RecipeHolder<BlastingRecipe> oreHolder = FIRE_CONVERSIONS.get(brokenBlock.getBlock().asItem());
                     if (oreHolder != null) {
                         ItemStack resultStack = oreHolder.value().assemble(
-                                new SingleRecipeInput(new ItemStack(brokenBlock.getBlock()))
+                                new SingleRecipeInput(new ItemStack(brokenBlock.getBlock())),
+                                level.registryAccess()
                         );
                         if (!resultStack.isEmpty() && drops.stream().noneMatch(drop -> drop.is(resultStack.getItem()))) {
                             didConvert = true;
