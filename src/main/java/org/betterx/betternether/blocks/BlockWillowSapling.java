@@ -70,9 +70,7 @@ public class BlockWillowSapling extends FeatureSaplingBlock implements Bonemeala
             BlockPos pos,
             @NotNull BlockState state
     ) {
-        return (BlocksHelper.isFertile(world.getBlockState(pos.below()))
-                ? (random.nextInt(8) == 0)
-                : (random.nextInt(16) == 0));
+        return random.nextFloat() < 0.45F;
     }
 
     @Override
