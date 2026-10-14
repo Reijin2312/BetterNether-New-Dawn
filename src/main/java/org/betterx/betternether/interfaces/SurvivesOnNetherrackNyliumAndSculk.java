@@ -4,7 +4,6 @@ import org.betterx.bclib.interfaces.SurvivesOnTags;
 import org.betterx.betternether.registry.NetherTags;
 import org.betterx.wover.tag.api.predefined.CommonBlockTags;
 
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
