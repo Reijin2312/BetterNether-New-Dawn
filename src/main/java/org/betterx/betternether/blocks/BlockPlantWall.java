@@ -6,8 +6,13 @@ import org.betterx.betternether.blocks.materials.Materials;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +30,7 @@ import com.google.common.collect.Maps;
 import java.util.EnumMap;
 import net.minecraft.world.level.LevelAccessor;
 
-public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
+public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant, BonemealableBlock {
     private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(ImmutableMap.of(
             Direction.NORTH, box(2, 2, 10, 14, 14, 16),
             Direction.SOUTH, box(2, 2, 0, 14, 14, 6),
@@ -35,8 +40,33 @@ public class BlockPlantWall extends BlockBaseNotFull implements BehaviourPlant {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public BlockPlantWall(MapColor color) {
-        super(Materials.makeNetherGrass(color).offsetType(OffsetType.NONE));
+        this(color, SoundType.GRASS);
+    }
+
+    public BlockPlantWall(MapColor color, SoundType sound) {
+        super(Materials.makeNetherGrass(color).sound(sound).offsetType(OffsetType.NONE));
         this.setRenderLayer(BNRenderLayer.CUTOUT);
+    }
+
+    @Override
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+        return true;
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        level.addFreshEntity(new ItemEntity(
+                level,
+                pos.getX() + 0.5,
+                pos.getY() + 0.5,
+                pos.getZ() + 0.5,
+                new ItemStack(this)
+        ));
     }
 
     public float getShadeBrightness(BlockState state, BlockGetter view, BlockPos pos) {

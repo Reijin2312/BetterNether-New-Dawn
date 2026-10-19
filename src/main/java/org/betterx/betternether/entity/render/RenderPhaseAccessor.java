@@ -70,6 +70,6 @@ public abstract class RenderPhaseAccessor extends RenderStateShard { //extends S
 
     public static RenderType getFirefly(ResourceLocation texture) {
         //return getDebugLayer(texture, RenderPhaseAccessor::getFireflySetup);
-        return FIREFLY_RENDER_LAYER.apply(texture);
+        return RenderType.entityTranslucent(texture);
     }
 }
