@@ -32,6 +32,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
@@ -963,12 +964,12 @@ public class NetherBlocks {
 
             WALL_MUSHROOM_BROWN = registerBlock(
             "wall_mushroom_brown",
-            () -> new BlockPlantWall(MapColor.COLOR_BROWN)
+            () -> new BlockPlantWall(MapColor.COLOR_BROWN, SoundType.FUNGUS)
     );
 
             WALL_MUSHROOM_RED = registerBlock(
             "wall_mushroom_red",
-            () -> new BlockPlantWall(MapColor.COLOR_RED)
+            () -> new BlockPlantWall(MapColor.COLOR_RED, SoundType.FUNGUS)
     );
 
             JUNGLE_MOSS = registerBlock(
